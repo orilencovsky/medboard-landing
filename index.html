@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MedBoard IL — Landing Page Previews</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #0f172a; color: #f1f5f9; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 20px; padding: 40px 20px; }
+  h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  p { color: #94a3b8; margin-bottom: 32px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 600px; width: 100%; }
+  a { display: block; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 24px 20px; text-decoration: none; color: #f1f5f9; transition: all 0.15s; }
+  a:hover { background: rgba(255,255,255,0.1); border-color: rgba(59,130,246,0.5); transform: translateY(-2px); }
+  .label { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+  .title { font-size: 16px; font-weight: 700; }
+  .badge { display: inline-block; margin-top: 10px; font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+  .blue { background: rgba(37,99,235,0.2); color: #93c5fd; }
+  .dark { background: rgba(167,139,250,0.2); color: #c4b5fd; }
+</style>
+</head>
+<body>
+  <h1>🩺 MedBoard IL</h1>
+  <p>בחר גרסה לתצוגה מקדימה / Choose a version to preview</p>
+  <div class="grid">
+    <a href="landing-a.html">
+      <div class="label">Option A · English</div>
+      <div class="title">Clean & Clinical</div>
+      <span class="badge blue">Blue / White</span>
+    </a>
+    <a href="landing-a-he.html">
+      <div class="label">אפשרות א · עברית</div>
+      <div class="title">נקי ומקצועי</div>
+      <span class="badge blue">כחול / לבן</span>
+    </a>
+    <a href="landing-b.html">
+      <div class="label">Option B · English</div>
+      <div class="title">Bold Marketing</div>
+      <span class="badge dark">Dark / Gradient</span>
+    </a>
+    <a href="landing-b-he.html">
+      <div class="label">אפשרות ב · עברית</div>
+      <div class="title">מרקטינג נועז</div>
+      <span class="badge dark">כהה / גרדיאנט</span>
+    </a>
+  </div>
+</body>
+</html>
