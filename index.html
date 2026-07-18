@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<script>
+  // Route Hebrew-preference visitors to the localized Israeli page once.
+  // Respects an explicit English choice (via ?lang=en) so it never traps anyone.
+  (function () {
+    try {
+      var p = new URLSearchParams(location.search);
+      if (p.get('lang') === 'en') { localStorage.setItem('mbil_lang', 'en'); return; }
+      if (localStorage.getItem('mbil_lang') === 'en') return;
+      if ((navigator.language || '').toLowerCase().indexOf('he') === 0) location.replace('/he');
+    } catch (e) {}
+  })();
+</script>
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBPKT4TS21"></script>
 <script>
@@ -16,7 +28,7 @@
 <link rel="alternate" hreflang="en" href="https://medboard-landing.vercel.app/" />
 <link rel="alternate" hreflang="he" href="https://medboard-landing.vercel.app/he" />
 <link rel="alternate" hreflang="x-default" href="https://medboard-landing.vercel.app/" />
-<meta name="description" content="AI-powered prep for Israeli medical board exams: active recall, spaced repetition, and a Socratic AI tutor grounded in your examiners' real sources." />
+<meta name="description" content="Active recall, spaced repetition, and a Socratic AI tutor grounded in the real sources your board exam uses." />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#2563eb" />
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🩺</text></svg>' />
@@ -24,7 +36,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MedBoard IL" />
 <meta property="og:title" content="MedBoard IL — AI-Powered Medical Board Prep" />
-<meta property="og:description" content="AI-powered prep for Israeli medical board exams: active recall, spaced repetition, and a Socratic AI tutor grounded in your examiners' real sources." />
+<meta property="og:description" content="Active recall, spaced repetition, and a Socratic AI tutor grounded in the real sources your board exam uses." />
 <meta property="og:url" content="https://medboard-landing.vercel.app/" />
 <meta property="og:image" content="https://medboard-landing.vercel.app/og-image.png" />
 <meta property="og:image:width" content="1200" />
@@ -34,7 +46,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="MedBoard IL — AI-Powered Medical Board Prep" />
-<meta name="twitter:description" content="AI-powered prep for Israeli medical board exams: active recall, spaced repetition, and a Socratic AI tutor grounded in your examiners' real sources." />
+<meta name="twitter:description" content="Active recall, spaced repetition, and a Socratic AI tutor grounded in the real sources your board exam uses." />
 <meta name="twitter:image" content="https://medboard-landing.vercel.app/og-image.png" />
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -46,7 +58,7 @@
   "operatingSystem": "Web",
   "url": "https://medboard-landing.vercel.app/",
   "inLanguage": ["en", "he"],
-  "description": "AI-powered prep for Israeli medical board exams: active recall, spaced repetition, and a Socratic AI tutor grounded in your examiners' real sources.",
+  "description": "Active recall, spaced repetition, and a Socratic AI tutor grounded in the real sources your board exam uses.",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
 </script>
@@ -427,7 +439,7 @@
 <div class="hero">
   <div class="hero-badge">🧠 Science-Based Learning · AI-Powered</div>
   <h1>The smarter way to prepare for <span>medical boards</span></h1>
-  <p class="hero-sub">Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the sources your examiners use. Built for Israeli medical residents.</p>
+  <p class="hero-sub">Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the real sources your exam is written from. Built for medical residents, worldwide.</p>
   <div class="hero-cta">
     <a href="https://pilot-rust-nine.vercel.app/" class="btn-primary">Start studying free →</a>
     <a href="#how" class="btn-ghost">▶ See how it works</a>
@@ -569,16 +581,16 @@
 <section class="pilot" id="pilot">
   <div class="section-inner">
     <div class="section-tag" style="background:rgba(96,165,250,0.15); color:#93c5fd; border-color:rgba(96,165,250,0.3)">Current Pilot</div>
-    <h2 class="section-title">Built for Israeli medical residents — and beyond</h2>
-    <p class="section-sub">The first pilot covers the Stage A board exam in Nephrology (שלב א — נפרולוגיה). The architecture is subject-agnostic: the same engine can power any structured body of knowledge.<br><br><em>"Nephrology is the pilot, not the ceiling."</em></p>
+    <h2 class="section-title">Start with one exam — architected for every exam</h2>
+    <p class="section-sub">Our first pilot covers a Stage-A Nephrology board exam. The architecture is subject- and exam-agnostic: the same engine can power any structured body of knowledge, in any country.<br><br><em>"Nephrology is the pilot, not the ceiling."</em></p>
     <div class="pilot-tags">
-      <span class="pilot-tag">מבחן שלב א</span>
-      <span class="pilot-tag">נפרולוגיה</span>
-      <span class="pilot-tag">המודיאליזה</span>
-      <span class="pilot-tag">גלומרולופתיות</span>
-      <span class="pilot-tag">השתלת כליה</span>
+      <span class="pilot-tag">Stage-A exam</span>
+      <span class="pilot-tag">Nephrology</span>
+      <span class="pilot-tag">Hemodialysis</span>
+      <span class="pilot-tag">Glomerulopathies</span>
+      <span class="pilot-tag">Kidney transplant</span>
       <span class="pilot-tag">CKD</span>
-      <span class="pilot-tag">דיאליזה ציפקית</span>
+      <span class="pilot-tag">Peritoneal dialysis</span>
       <span class="pilot-tag">+ 9 more topics</span>
     </div>
   </div>
@@ -588,14 +600,14 @@
 <div class="cta-section">
   <div class="cta-box">
     <h2>Ready to study smarter?</h2>
-    <p>Join Israeli residents who are preparing for boards the science-backed way.</p>
+    <p>Join residents preparing for their boards the science-backed way.</p>
     <a href="https://pilot-rust-nine.vercel.app/" class="btn-primary" style="font-size:16px; padding:16px 36px">Get early access — it's free →</a>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 <span>MedBoard IL</span> · Built for Israeli medical residents · All rights reserved</p>
+  <p>© 2026 <span>MedBoard IL</span> · Study smarter for your board exams · All rights reserved</p>
 </footer>
 
 </body>
