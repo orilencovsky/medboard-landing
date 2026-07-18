@@ -97,6 +97,7 @@
     display: flex; align-items: center; gap: 10px;
     color: #fff; font-size: 18px; font-weight: 800;
     text-decoration: none; letter-spacing: 0;
+    white-space: nowrap; flex-shrink: 0;
   }
   .nav-logo .icon {
     width: 32px; height: 32px;
@@ -105,12 +106,12 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 16px;
   }
-  .nav-links { display: flex; align-items: center; gap: 8px; flex-direction: row-reverse; }
+  .nav-links { display: flex; align-items: center; gap: 8px; flex-direction: row-reverse; flex-shrink: 0; }
   .nav-link {
     color: rgba(255,255,255,0.65); text-decoration: none;
     font-size: 14px; font-weight: 600;
     padding: 8px 14px; border-radius: 8px;
-    transition: all 0.15s;
+    transition: all 0.15s; white-space: nowrap;
   }
   .nav-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
   .btn-nav {
@@ -119,7 +120,7 @@
     padding: 8px 18px; font-size: 14px; font-weight: 700;
     cursor: pointer; text-decoration: none;
     box-shadow: 0 2px 8px rgba(37,99,235,0.4);
-    transition: all 0.15s;
+    transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
   }
   .btn-nav:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,0.5); }
 
@@ -207,6 +208,7 @@
   .section-sub {
     font-size: 17px; color: var(--text-muted);
     max-width: 560px; line-height: 1.75;
+    text-wrap: balance;
   }
 
   /* PILLARS */
@@ -300,8 +302,13 @@
   }
   footer span { color: rgba(255,255,255,0.8); font-weight: 700; }
 
+  @media (max-width: 768px) {
+    nav { padding: 0 16px; }
+    .nav-links { gap: 4px; }
+    .nav-link[href^="#"] { display: none; }
+  }
   @media (max-width: 640px) {
-    nav { padding: 0 20px; }
+    nav { padding: 0 16px; }
     .hero { padding: 60px 20px 80px; }
     section { padding: 60px 20px; }
     .stats { gap: 24px; }
@@ -327,21 +334,21 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">🧠 למידה מבוססת-מדע · מונע בינה מלאכותית</div>
+  <div class="hero-badge">🧠 למידה מבוססת-מדע · מופעלת בבינה מלאכותית</div>
   <h1>הדרך החכמה יותר<br>להתכונן ל<span>מבחני הרישוי</span></h1>
-  <p class="hero-sub">היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — הכל מעוגן בציטוטים מילוליים מהספרים שהמבחינים שלך משתמשים בהם. בנוי למתמחים ישראלים.</p>
+  <p class="hero-sub">היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — כל תשובה מעוגנת בציטוט מילולי מהמקורות שעליהם מבוסס המבחן. נבנה במיוחד למתמחים בישראל.</p>
   <div class="hero-cta">
-    <a href="https://pilot-rust-nine.vercel.app/" class="btn-primary">← התחל ללמוד בחינם</a>
-    <a href="#how" class="btn-ghost">▶ ראה איך זה עובד</a>
+    <a href="https://pilot-rust-nine.vercel.app/" class="btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>התחל ללמוד בחינם</a>
+    <a href="#how" class="btn-ghost"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>ראה איך זה עובד</a>
   </div>
   <div class="stats">
     <div class="stat">
       <div class="stat-num">1,000+</div>
-      <div class="stat-label">שאלות ברמת הבורד</div>
+      <div class="stat-label">שאלות ברמת מבחן הרישוי</div>
     </div>
     <div class="stat">
-      <div class="stat-num">16</div>
-      <div class="stat-label">נושאים בנפרולוגיה</div>
+      <div class="stat-num">9</div>
+      <div class="stat-label">עקרונות למידה מבוססי-מחקר</div>
     </div>
     <div class="stat">
       <div class="stat-num">100%</div>
@@ -358,8 +365,8 @@
 <section class="pillars">
   <div class="section-inner">
     <div class="section-tag">המדע</div>
-    <h2 class="section-title">למידה שמבוססת על איך המוח באמת עובד</h2>
-    <p class="section-sub">MedBoard IL בנויה על חמישה עקרונות מבוססי-מחקר — לא רק בנק שאלות עם צ'אטבוט מחובר בכוח.</p>
+    <h2 class="section-title">למידה שמבוססת על איך שהמוח באמת עובד</h2>
+    <p class="section-sub">MedBoard IL בנויה על תשעה עקרונות למידה מבוססי-מחקר — עם שכבת AI שמתאימה את עצמה לכל אחד.</p>
     <div class="pillars-grid">
       <div class="pillar-card">
         <div class="pillar-icon">🔁</div>
@@ -372,14 +379,34 @@
         <p class="pillar-desc">תזמון חזרות שמנצח את עקומת השכחה — שאלות חוזרות בדיוק כשהזיכרון מתחיל לדעוך.</p>
       </div>
       <div class="pillar-card">
+        <div class="pillar-icon">🔀</div>
+        <div class="pillar-title">שזירת נושאים</div>
+        <p class="pillar-desc">הנושאים מעורבבים ולא מוגשים בבלוקים. מעבר בין מקצועות מכריח את המוח להבחין — בדיוק כמו במבחן האמיתי.</p>
+      </div>
+      <div class="pillar-card">
         <div class="pillar-icon">🗺️</div>
         <div class="pillar-title">תרגול ממוקד</div>
-        <p class="pillar-desc">מפת חום חושפת את הנושאים החלשים שלך, כדי שכל דקת לימוד תלך לאן שהכי משתלם.</p>
+        <p class="pillar-desc">זמן הלימוד זורם קודם כל לנושאים החלשים ביותר — לא מתפזר שווה בשווה על חומר שכבר שלטת בו.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🎯</div>
+        <div class="pillar-title">חזרה על טעויות</div>
+        <p class="pillar-desc">השאלות שטעית בהן — ואלו שהיית בטוח לגביהן אבל טעית — חוזרות כחפיסה ממוקדת לתרגול.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">💡</div>
+        <div class="pillar-title">הסבר עצמי</div>
+        <p class="pillar-desc">לפני שהתשובה נחשפת, אתה מסביר את ההיגיון שלך במילים שלך — הפעולה שהכי מעמיקה את ההבנה.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">⚖️</div>
+        <div class="pillar-title">כיול ביטחון</div>
+        <p class="pillar-desc">דרג כמה אתה בטוח לפני כל תשובה. האפליקציה חושפת איפה אתה בטוח אבל טועה — הפער המסוכן ביותר.</p>
       </div>
       <div class="pillar-card">
         <div class="pillar-icon">🤖</div>
-        <div class="pillar-title">הוראה סוקרטית של AI</div>
-        <p class="pillar-desc">מורה-AI לכל שאלה ששואל לפני שהוא עונה — ומתאים את עצמו לאופן החשיבה שלך.</p>
+        <div class="pillar-title">גילוי מודרך</div>
+        <p class="pillar-desc">המורה שולף ממך את התשובה דרך שאלות במקום להגיש אותה — המאמץ של החשיבה הוא מה שמקבע את הידע.</p>
       </div>
       <div class="pillar-card">
         <div class="pillar-icon">📖</div>
@@ -398,23 +425,23 @@
         <div class="section-tag">תכונות</div>
         <h2 class="section-title">כל מה שצריך כדי לעבור — בלי יותר מדי</h2>
       </div>
-      <p class="section-sub" style="padding-top:40px">פלטפורמה אחת לשאלות, ביקורת, צ'אט AI ומעקב התקדמות. בלי לנהל כמה אפליקציות.</p>
+      <p class="section-sub" style="padding-top:40px">פלטפורמה אחת לשאלות, חזרה, צ'אט AI ומעקב התקדמות. בלי לנהל כמה אפליקציות.</p>
     </div>
     <div class="features-grid">
       <div class="feature-card">
         <span class="icon">📝</span>
         <h3>בנק שאלות מאומת</h3>
-        <p>אלפי שאלות ברמת הבורד מבוססות מבחני שלב א 2020–2025, שכל אחת מהן עברה ביקורת מומחה לפני שהגיעה אליך.</p>
+        <p>אלפי שאלות ברמת מבחן הרישוי, מבוססות על מבחני שלב א משנים 2020–2025, שכל אחת עברה בדיקת מומחה לפני שהגיעה אליך.</p>
       </div>
       <div class="feature-card">
         <span class="icon">✨</span>
         <h3>מחולל שאלות AI</h3>
-        <p>ה-AI מנסח שאלות חדשות מעוגנות בספריית המקורות, שעוברות ביקורת אנושית לפני שמגיעות למתמחה.</p>
+        <p>ה-AI מנסח שאלות חדשות מעוגנות בספריית המקורות, שעוברות בדיקה אנושית לפני שמגיעות למתמחה.</p>
       </div>
       <div class="feature-card">
         <span class="icon">💬</span>
         <h3>צ'אט AI סוקרטי לכל שאלה</h3>
-        <p>תקוע בשאלה? מורה ה-AI מנחה אותך בשאלות ולא נותן את התשובה מיד — בסטרימינג בזמן אמת.</p>
+        <p>תקוע בשאלה? מורה ה-AI מנחה אותך בשאלות במקום לתת מיד את התשובה — הכל בזמן אמת.</p>
       </div>
       <div class="feature-card">
         <span class="icon">🗺️</span>
@@ -430,6 +457,11 @@
         <span class="icon">🏅</span>
         <h3>מעקב התקדמות</h3>
         <p>רצפים, תגים והיסטוריה מלאה של הניסיונות שלך — גלויים בלוח המחוונים.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🏆</span>
+        <h3>לוח מובילים ודו-קרבים</h3>
+        <p>טפס בלוח מובילים מדורג מול מתמחים אחרים — ובקרוב גם דו-קרבים בזמן אמת, ראש בראש.</p>
       </div>
     </div>
   </div>
@@ -470,18 +502,12 @@
 <!-- PILOT -->
 <section class="pilot" id="pilot">
   <div class="section-inner">
-    <div class="section-tag" style="background:rgba(96,165,250,0.15); color:#93c5fd; border-color:rgba(96,165,250,0.3)">פיילוט נוכחי</div>
-    <h2 class="section-title">בנוי למתמחים ישראלים — ומעבר לכך</h2>
-    <p class="section-sub">הפיילוט הראשון מכסה את מבחן שלב א בנפרולוגיה. הארכיטקטורה אגנוסטית לתחום: אותו מנוע יכול להניע כל גוף ידע מובנה.<br><br><em>"נפרולוגיה היא הפיילוט — לא התקרה."</em></p>
+    <div class="section-tag" style="background:rgba(96,165,250,0.15); color:#93c5fd; border-color:rgba(96,165,250,0.3)">החזון</div>
+    <h2 class="section-title">מנוע אחד, כל מבחן רישוי</h2>
+    <p class="section-sub">MedBoard IL אגנוסטית לתחום — אותו מנוע מבוסס-מדע יכול להניע כל מבחן רישוי מובנה, בכל התמחות. מסלול המבחן הראשון פעיל בפיילוט כבר עכשיו, ועוד מקצועות בדרך.<br><br><em>"המקצוע הראשון הוא הפיילוט — לא התקרה."</em></p>
     <div class="pilot-tags">
-      <span class="pilot-tag">מבחן שלב א</span>
-      <span class="pilot-tag">נפרולוגיה</span>
-      <span class="pilot-tag">המודיאליזה</span>
-      <span class="pilot-tag">גלומרולופתיות</span>
-      <span class="pilot-tag">השתלת כליה</span>
-      <span class="pilot-tag">CKD</span>
-      <span class="pilot-tag">דיאליזה ציפקית</span>
-      <span class="pilot-tag">+ 9 נושאים נוספים</span>
+      <span class="pilot-tag" style="background:rgba(96,165,250,0.2); color:#93c5fd; border-color:rgba(96,165,250,0.4)">✓ נפרולוגיה (שלב א) — פעיל עכשיו</span>
+      <span class="pilot-tag">עוד התמחויות בקרוב</span>
     </div>
   </div>
 </section>
