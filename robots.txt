@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://medboard-landing.vercel.app/sitemap.xml
+Sitemap: https://meduxa.ai/sitemap.xml
