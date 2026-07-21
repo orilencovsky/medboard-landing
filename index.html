@@ -74,7 +74,36 @@
     [data-mq-stats] { gap: 20px !important; }
     [data-mq-burger] { display: flex !important; }
   }
+  @media (max-width: 600px) {
+    [data-mq-nav] { padding: 0 14px !important; }
+    [data-mq-navright] { gap: 10px !important; }
+    [data-mq-cta] { padding: 9px 14px !important; font-size: 14px !important; gap: 6px !important; }
+    [data-mq-cta] > svg { display: none !important; }
+    [data-mq-cta-full] { display: none !important; }
+    [data-mq-cta-short] { display: inline !important; }
+    [data-mq-lang] { padding: 6px 10px !important; font-size: 13px !important; }
+    [data-mq-logo] { gap: 8px !important; }
+    [data-mq-logo] > svg { width: 30px !important; height: 30px !important; }
+    [data-mq-logo-text] > span { font-size: 18px !important; }
+    .hero-video { display: none !important; }
+    [data-mq-hero] { padding: 40px 18px 48px !important; }
+    [data-mq-hero-title] { font-size: 32px !important; }
+    [data-mq-hero-sub] { font-size: 17px !important; }
+    [data-mq-hero-actions] { flex-direction: column !important; align-items: stretch !important; }
+    [data-mq-hero-actions] > a { text-align: center !important; }
+    [data-mq-stats] { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    [data-mq-demo] { padding: 18px !important; }
+    [data-mq-demo-q] { font-size: 16px !important; }
+    [data-mq-demo-opts] > div { font-size: 14px !important; }
+    [data-mq-section] { padding: 48px 18px !important; }
+    [data-mq-h2] { font-size: 26px !important; }
+    [data-mq-cards] > div { padding: 20px !important; }
+    [data-mq-form] { flex-direction: column !important; }
+    [data-mq-form] > input, [data-mq-form] > button { width: 100% !important; min-width: 0 !important; }
+    [data-mq-footer] { flex-direction: column !important; text-align: center !important; gap: 10px !important; }
+  }
   [data-mq-burger] { display: none; }
+  [data-mq-cta-short] { display: none; }
   html { scroll-behavior: smooth; }
   header[data-mq-hero], section[data-mq-section] { scroll-margin-top: 80px; }
   .nav-link { color:#B8D4EA; font-size:15px; font-weight:500; transition:color .15s; }
@@ -90,7 +119,7 @@
   <!-- NAV -->
   <nav style="position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15);">
     <div data-mq-nav style="max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: center; justify-content: space-between;">
-      <div style="display: flex; align-items: center; gap: 12px;">
+      <div data-mq-logo style="display: flex; align-items: center; gap: 12px;">
         <svg width="36" height="36" viewBox="0 0 96 96" fill="none">
           <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
           <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
@@ -98,15 +127,15 @@
           <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
           <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
         </svg>
-        <span style="display: flex; align-items: baseline;"><span style="font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE;">.ai</span></span>
+        <span data-mq-logo-text style="display: flex; align-items: baseline;"><span style="font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE;">.ai</span></span>
       </div>
-      <div style="display: flex; align-items: center; gap: 26px;">
+      <div data-mq-navright style="display: flex; align-items: center; gap: 26px;">
         <a data-mq-hide class="nav-link" href="#science">The Science</a>
         <a data-mq-hide class="nav-link" href="#features">Features</a>
         <a data-mq-hide class="nav-link" href="#how">How it works</a>
         <a data-mq-hide class="nav-link" href="#vision">Vision</a>
-        <a href="/he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px;">עברית</a>
-        <a href="#pilot" style="background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">Get Early Access<svg width="20" height="16" viewBox="0 0 32 24" fill="none" stroke="#062033" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l6 6-6 6"/><path d="M12 6l6 6-6 6"/></svg></a>
+        <a data-mq-lang href="/he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px;">עברית</a>
+        <a data-mq-cta href="#pilot" style="background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;"><span data-mq-cta-full>Get Early Access</span><span data-mq-cta-short>Join</span><svg width="20" height="16" viewBox="0 0 32 24" fill="none" stroke="#062033" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l6 6-6 6"/><path d="M12 6l6 6-6 6"/></svg></a>
         <button data-mq-burger onclick="toggleMenu()" aria-label="Menu" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5 H 17 M 3 10 H 17 M 3 15 H 17" stroke="#7DD3FC" stroke-width="2" stroke-linecap="round"></path></svg>
         </button>
@@ -137,8 +166,8 @@
       <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 26px;">
         <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block; animation: dotPulse 2s infinite;"></span> Science-Based Learning · AI-Powered</span>
         <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">The smarter way to prepare<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">for medical boards</span></h1>
-        <p style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the real sources your exam is written from. Built for medical residents, worldwide.</p>
-        <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the real sources your exam is written from. Built for medical residents, worldwide.</p>
+        <div data-mq-hero-actions style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
           <a href="#pilot" style="background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 24px rgba(14,165,233,.4);">Start studying free</a>
           <a href="#how" style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">See how it works</a>
         </div>
@@ -152,13 +181,13 @@
 
       <!-- Product demo card -->
       <div style="flex: 1 1 420px; max-width: 520px;">
-        <div style="background: #0B2545; border: 1px solid #1E4A6E; border-radius: 20px; padding: 26px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 18px;">
+        <div data-mq-demo style="background: #0B2545; border: 1px solid #1E4A6E; border-radius: 20px; padding: 26px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 18px;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B87A8;">Q-1838 · AKI</span>
             <span style="font-size: 13px; font-weight: 600; color: #5EEAD4;">Scheduled review · day 6</span>
           </div>
-          <div style="font-size: 18px; font-weight: 600; color: #E2F4FD; line-height: 1.6;">A 67-year-old man with diabetic CKD undergoes coronary catheterization. Creatinine was 1.5 mg/dL before the procedure, 1.77 mg/dL two days later. Per KDIGO criteria, which is correct?</div>
-          <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div data-mq-demo-q style="font-size: 18px; font-weight: 600; color: #E2F4FD; line-height: 1.6;">A 67-year-old man with diabetic CKD undergoes coronary catheterization. Creatinine was 1.5 mg/dL before the procedure, 1.77 mg/dL two days later. Per KDIGO criteria, which is correct?</div>
+          <div data-mq-demo-opts style="display: flex; flex-direction: column; gap: 10px;">
             <div style="border: 1px solid #22D3EE; background: rgba(34,211,238,.08); border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #67E8F9; font-weight: 600; display: flex; justify-content: space-between; align-items: center;"><span>Does not meet AKI criteria</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">✓</span></div>
             <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">Has AKI stage 1</div>
             <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">Has AKI stage 2</div>
@@ -187,7 +216,7 @@
       <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Learning backed by how the brain actually works</h2>
       <p style="margin: 0; font-size: 18px; color: #475569; max-width: 640px; line-height: 1.65;">MeduXa is built on nine evidence-based learning principles — with an AI layer that adapts to each student.</p>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+    <div data-mq-cards style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
       <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
         <div style="display: flex; align-items: center; gap: 12px;">
           <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px;">01</span>
@@ -262,7 +291,7 @@
         <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Everything you need to pass — nothing you don't</h2>
         <p style="margin: 0; font-size: 18px; color: #475569; max-width: 620px; line-height: 1.65;">One platform for questions, review, AI chat, and progress tracking. No juggling apps.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+      <div data-mq-cards style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
           <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>Curated question bank</h3>
           <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Thousands of board-style questions built on past exams, each vetted through expert review before reaching you.</p>
@@ -301,7 +330,7 @@
       <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em;">HOW IT WORKS</span>
       <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">From first question to exam day</h2>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+    <div data-mq-cards style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
       <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
         <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500;">1</div>
         <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">Pick your topic</h3>
@@ -351,7 +380,7 @@
       </svg>
       <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Ready to study smarter?</h2>
       <p style="margin: 0; font-size: 18px; color: #475569; line-height: 1.65;">Join residents preparing for their boards the science-backed way.</p>
-      <form id="waitlistForm" style="display: flex; gap: 12px; width: 100%; max-width: 520px; margin-top: 8px; flex-wrap: wrap; justify-content: center;">
+      <form data-mq-form id="waitlistForm" style="display: flex; gap: 12px; width: 100%; max-width: 520px; margin-top: 8px; flex-wrap: wrap; justify-content: center;">
         <input id="waitlistEmail" type="email" required placeholder="Your email" style="flex: 1; min-width: 220px; background: #F0F6FA; border: 1px solid #CBD5E1; border-radius: 12px; padding: 15px 20px; font-size: 16px; color: #0F172A; font-family: 'IBM Plex Sans', sans-serif; outline: none;">
         <button id="waitlistSubmit" type="submit" style="background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; border: none; border-radius: 12px; padding: 15px 30px; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; white-space: nowrap;">Get early access</button>
       </form>
@@ -361,7 +390,7 @@
 
   <!-- FOOTER -->
   <footer style="background: #04101E; padding: 36px 32px;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+    <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
       <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · Study smarter for your board exams · All rights reserved</span>
     </div>

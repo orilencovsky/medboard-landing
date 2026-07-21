@@ -34,8 +34,13 @@ The new media block to append immediately after the `@media (max-width: 900px) {
   [data-mq-nav] { padding: 0 14px !important; }
   [data-mq-navright] { gap: 10px !important; }
   [data-mq-cta] { padding: 9px 14px !important; font-size: 14px !important; gap: 6px !important; }
+  [data-mq-cta] > svg { display: none !important; }
   [data-mq-cta-full] { display: none !important; }
   [data-mq-cta-short] { display: inline !important; }
+  [data-mq-lang] { padding: 6px 10px !important; font-size: 13px !important; }
+  [data-mq-logo] { gap: 8px !important; }
+  [data-mq-logo] > svg { width: 30px !important; height: 30px !important; }
+  [data-mq-logo-text] > span { font-size: 18px !important; }
   [data-mq-hero] { padding: 40px 18px 48px !important; }
   [data-mq-hero-title] { font-size: 32px !important; }
   [data-mq-hero-sub] { font-size: 17px !important; }
@@ -80,6 +85,11 @@ Ten hook additions per file. Exact anchor strings differ slightly EN vs HE and a
 | 8 | Three card-grid `<div style="display: grid; …">` (science, features, how) | `data-mq-cards` (×3) |
 | 9 | Waitlist `<form id="waitlistForm" …>` | `data-mq-form` |
 | 10 | Footer inner `<div style="…justify-content: space-between; …">` | `data-mq-footer` |
+| 11 | Nav logo cluster `<div style="display: flex; align-items: center; gap: 12px;">` | `data-mq-logo` |
+| 12 | Nav wordmark `<span style="display: flex; align-items: baseline;…">` | `data-mq-logo-text` |
+| 13 | Nav language switch `<a href="/he">עברית</a>` (EN) / `<a href="/?lang=en">EN</a>` (HE) | `data-mq-lang` |
+
+Hooks 11–13 were added after the first 375px measurement showed the nav row still overflowing by 17px: logo 164px + right cluster 214px exceeded the 347px content width. Shrinking the logo, the language pill, and dropping the CTA's decorative chevron brought the row to 314px with 33px of slack.
 
 `data-mq-stats` already exists on the stats row — no edit needed there.
 
