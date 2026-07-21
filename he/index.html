@@ -73,7 +73,6 @@
     [data-mq-logo] { gap: 8px !important; }
     [data-mq-logo] > svg { width: 30px !important; height: 30px !important; }
     [data-mq-logo-text] > span { font-size: 18px !important; }
-    .hero-video { display: none !important; }
     [data-mq-hero] { padding: 40px 18px 48px !important; }
     [data-mq-hero-title] { font-size: 32px !important; }
     [data-mq-hero-sub] { font-size: 17px !important; }
@@ -144,9 +143,15 @@
   <!-- HERO -->
   <header data-mq-hero style="background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); padding: 88px 32px 100px; position: relative; overflow: hidden;">
     <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
+      <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
+      <source src="/hero.webm" type="video/webm">
       <source src="/hero.mp4" type="video/mp4">
     </video>
     <video class="hero-video" muted loop playsinline preload="auto" aria-hidden="true" style="opacity: 0;">
+      <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
+      <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
+      <source src="/hero.webm" type="video/webm">
       <source src="/hero.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>

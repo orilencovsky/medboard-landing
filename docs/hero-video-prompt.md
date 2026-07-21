@@ -33,5 +33,5 @@ Negative / avoid (if the tool supports it): text, watermark, people, faces, hosp
 
 1. Save the raw clip anywhere (e.g. `~/Downloads/hero-raw.mp4`).
 2. Run `./scripts/prep-hero-video.sh ~/Downloads/hero-raw.mp4` (needs `brew install ffmpeg` once).
-3. It writes `hero.mp4` + `hero.webm` at the repo root — the pages already reference them.
+3. It writes `hero.mp4` + `hero.webm` (desktop) and `hero-mobile.mp4` + `hero-mobile.webm` (phones, ≤600px) at the repo root — the pages already reference all four via `<source media>`.
 4. Commit + push to deploy.

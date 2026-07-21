@@ -461,6 +461,36 @@ Then, per the user's standing preference, show a bullet-point changelog of what 
 
 ---
 
+## Addendum: hero video restored on phones (post-launch follow-up)
+
+The original spec hid `.hero-video` on phones to save cellular data. After
+shipping, the user asked whether a mobile-tuned video could run instead of
+being hidden entirely. Investigated and built:
+
+- The source footage (abstract flowing gradients, no hard edges/text)
+  compresses extremely well: an 800px-wide encode came out at **214KB
+  (mp4) / 178KB (webm)** — under 5% of the desktop file's 4.4MB — with no
+  visible quality loss given the page's own 82–88% dark overlay.
+- Added `hero-mobile.mp4` / `hero-mobile.webm` (800px wide, crf 26/34) and
+  regenerated `hero.webm` (1600px, crf 40, 307KB) — the desktop webm the
+  prep script always generated but was never committed, so the page fell
+  back to the 4.4MB mp4 for every browser including webm-capable ones.
+- Wired via native `<source media="(max-width: 600px)">` inside both
+  `<video>` elements (webm before mp4 in each tier, mobile tier before
+  desktop tier) — the browser fetches exactly one file, no JS needed, no
+  double-download race. Removed the `.hero-video { display: none }` rule
+  from the 600px block.
+- `scripts/prep-hero-video.sh` now generates all four outputs from one
+  raw clip, so future clip swaps can't silently drop the webm pair again.
+
+**Verified** via `performance.clearResourceTimings()` + reload (immune to
+the browser pane's cross-navigation network-log accumulation that a plain
+network-request read would double-count): at 375px both EN and HE fetch
+only `hero-mobile.webm`; at 1280px both fetch only `hero.webm` (a bonus —
+desktop dropped from 4.4MB to 307KB too, since the missing webm is now
+present). `videoWidth`/`videoHeight` on the mobile fetch read 800×450,
+confirming the mobile file is what actually decoded, not a fallback.
+
 ## Self-Review
 
 **Spec coverage:**
