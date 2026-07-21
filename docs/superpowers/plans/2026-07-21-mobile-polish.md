@@ -89,6 +89,16 @@ Ten hook additions per file. Exact anchor strings differ slightly EN vs HE and a
 | 12 | Nav wordmark `<span style="display: flex; align-items: baseline;…">` | `data-mq-logo-text` |
 | 13 | Nav language switch `<a href="/he">עברית</a>` (EN) / `<a href="/?lang=en">EN</a>` (HE) | `data-mq-lang` |
 
+A second, narrower tier was also added after testing at 320px (iPhone SE class), where the row still overflowed by 8px:
+
+```css
+@media (max-width: 350px) {
+  [data-mq-logo-text] { display: none !important; }
+}
+```
+
+Threshold 350px, not 380px: measured slack is 33px at 375px and 18px at 360px, reaching zero near 342px — so only SE-class widths drop the wordmark, and the logo mark still carries the brand there.
+
 Hooks 11–13 were added after the first 375px measurement showed the nav row still overflowing by 17px: logo 164px + right cluster 214px exceeded the 347px content width. Shrinking the logo, the language pill, and dropping the CTA's decorative chevron brought the row to 314px with 33px of slack.
 
 `data-mq-stats` already exists on the stats row — no edit needed there.

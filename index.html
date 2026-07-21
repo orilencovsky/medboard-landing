@@ -102,6 +102,10 @@
     [data-mq-form] > input, [data-mq-form] > button { width: 100% !important; min-width: 0 !important; }
     [data-mq-footer] { flex-direction: column !important; text-align: center !important; gap: 10px !important; }
   }
+  /* Smallest phones (iPhone SE class): the wordmark is what stops the nav row fitting. */
+  @media (max-width: 350px) {
+    [data-mq-logo-text] { display: none !important; }
+  }
   [data-mq-burger] { display: none; }
   [data-mq-cta-short] { display: none; }
   html { scroll-behavior: smooth; }
