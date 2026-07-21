@@ -58,7 +58,7 @@
   body { margin: 0; background: #061225; font-family: 'IBM Plex Sans', sans-serif; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #22D3EE; }
   @keyframes dotPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
-  .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+  .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: opacity 1s linear; }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
   @media (prefers-reduced-motion: reduce) { .hero-video { display: none; } .hero-mark path { animation: none; } }
   @keyframes heroDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
@@ -123,6 +123,9 @@
   <!-- HERO -->
   <header data-mq-hero style="background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); padding: 88px 32px 100px; position: relative; overflow: hidden;">
     <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="/hero.mp4" type="video/mp4">
+    </video>
+    <video class="hero-video" muted loop playsinline preload="auto" aria-hidden="true" style="opacity: 0;">
       <source src="/hero.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
@@ -407,6 +410,32 @@
         msg.style.color = '#DC2626';
       });
     });
+  })();
+</script>
+<script>
+  // Seamless hero loop: crossfade between two copies of the clip so the
+  // restart cut is never visible. The file is cached, so no extra download.
+  (function () {
+    var vids = document.querySelectorAll('.hero-video');
+    if (vids.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      vids.forEach(function (v) { v.pause(); });
+      return;
+    }
+    var FADE = 1.0, front = 0;
+    function swap() {
+      var a = vids[front], b = vids[1 - front];
+      try { b.currentTime = 0; } catch (e) {}
+      var p = b.play(); if (p && p.catch) p.catch(function () {});
+      b.style.opacity = '1';
+      a.style.opacity = '0';
+      setTimeout(function () { a.pause(); }, 1200);
+      front = 1 - front;
+    }
+    setInterval(function () {
+      var a = vids[front];
+      if (a.duration && !a.paused && a.currentTime > a.duration - FADE) swap();
+    }, 250);
   })();
 </script>
 </body>
