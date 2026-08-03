@@ -1,0 +1,15 @@
+{
+  "pkg": "meduxa-landing-ds",
+  "globalName": "MeduXaLanding",
+  "projectId": "83b3256e-0a77-4c3f-9071-9814d1bb2ff4",
+  "shape": "package",
+  "buildCmd": "npm run build",
+  "cssEntry": "src/styles.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "overrides": {
+    "Navbar": { "cardMode": "column" },
+    "Hero": { "cardMode": "column" },
+    "VisionSection": { "cardMode": "column" },
+    "Footer": { "cardMode": "column" }
+  }
+}

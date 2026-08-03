@@ -1,0 +1,97 @@
+/* MeduXa landing design tokens — extracted from the shipped landing page (index.html / he/index.html). */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Brand ink/navy scale */
+  --ds-ink: #061225;
+  --ds-deep: #0A1F3D;
+  --ds-navy2: #0C2A4E;
+  --ds-navy-card: #0B2545;
+  --ds-navy-border: #1E4A6E;
+  --ds-navy-line: #153650;
+  --ds-navy-tint: #081D3A;
+  --ds-footer-ink: #04101E;
+
+  /* Cyan/sky accent scale */
+  --ds-cyan: #22D3EE;
+  --ds-cyan-soft: #67E8F9;
+  --ds-cyan-pale: #7DD3FC;
+  --ds-sky: #0EA5E9;
+  --ds-sky-light: #38BDF8;
+  --ds-teal: #5EEAD4;
+
+  /* Text on dark */
+  --ds-text-onDark-primary: #ffffff;
+  --ds-text-onDark-secondary: #B8D4EA;
+  --ds-text-onDark-muted: #7DA2C4;
+  --ds-text-onDark-faint: #5B87A8;
+  --ds-text-onDark-nav: #9CC3DF;
+
+  /* Text on light */
+  --ds-text-heading: #0F172A;
+  --ds-text-body: #475569;
+  --ds-text-faint: #94A3B8;
+  --ds-text-cyan-accent: #0E7490;
+
+  /* Surfaces */
+  --ds-bg-app: #F0F6FA;
+  --ds-bg-white: #ffffff;
+  --ds-border-light: #E2E8F0;
+  --ds-border-input: #CBD5E1;
+  --ds-danger: #DC2626;
+
+  /* Gradients */
+  --ds-gradient-hero-bg: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%);
+  --ds-gradient-vision-bg: linear-gradient(165deg, #061225 0%, #0A1F3D 100%);
+  --ds-gradient-cta: linear-gradient(135deg, #0EA5E9, #22D3EE);
+  --ds-gradient-heading-accent: linear-gradient(90deg, #38BDF8, #22D3EE);
+
+  /* Type */
+  --ds-font-sans: 'IBM Plex Sans', sans-serif;
+  --ds-font-mono: 'IBM Plex Mono', monospace;
+
+  /* Radii */
+  --ds-radius-sm: 8px;
+  --ds-radius-md: 12px;
+  --ds-radius-lg: 16px;
+  --ds-radius-xl: 20px;
+  --ds-radius-pill: 100px;
+}
+
+@keyframes ds-dot-pulse {
+  0%, 100% { opacity: .45; }
+  50% { opacity: 1; }
+}
+
+@keyframes ds-hero-draw {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+.ds-nav-link {
+  color: var(--ds-text-onDark-secondary);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .15s;
+}
+.ds-nav-link:hover { color: var(--ds-cyan); }
+
+.ds-m-link {
+  color: var(--ds-text-onDark-secondary);
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 12px 8px;
+  border-radius: var(--ds-radius-sm);
+  transition: color .15s, background .15s;
+  display: block;
+}
+.ds-m-link:hover { color: var(--ds-cyan); background: rgba(34,211,238,.06); }
+
+.ds-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: ds-hero-draw 3.5s ease-out both; }
+.ds-mark path:nth-child(2) { animation-delay: .4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-mark path { animation: none; }
+}
