@@ -43,8 +43,8 @@
   /* Gradients */
   --ds-gradient-hero-bg: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%);
   --ds-gradient-vision-bg: linear-gradient(165deg, #061225 0%, #0A1F3D 100%);
-  --ds-gradient-cta: linear-gradient(135deg, #0EA5E9, #22D3EE);
-  --ds-gradient-heading-accent: linear-gradient(90deg, #38BDF8, #22D3EE);
+  --ds-gradient-cta: linear-gradient(135deg, #0EA5E9, #22D3EE); /* @kind color */
+  --ds-gradient-heading-accent: linear-gradient(90deg, #38BDF8, #22D3EE); /* @kind color */
 
   /* Type */
   --ds-font-sans: 'IBM Plex Sans', sans-serif;
