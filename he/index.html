@@ -125,6 +125,13 @@
     .sci-grid { grid-template-columns: 1fr; }
     .sci-card { --flatten: 0; }
   }
+  .sci-cite { color: #22D3EE; text-decoration: none; font-weight: 700; margin-inline-start: 3px; }
+  .sci-cite:hover, .sci-cite:focus-visible { text-decoration: underline; }
+  .sci-refs { position: relative; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(125,162,196,.18); }
+  .sci-refs-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #5B87A8; margin: 0 0 12px; }
+  .sci-refs ol { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .sci-refs li { font-size: 13px; line-height: 1.6; color: #7DA2C4; }
+  .sci-refs a { color: #7DD3FC; text-decoration: underline; text-underline-offset: 2px; }
   @keyframes heroDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
   .hero-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: heroDraw 3.5s ease-out both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
@@ -305,7 +312,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">היזכרות פעילה</span>
+            <span class="sci-back-label">היזכרות פעילה<a class="sci-cite" href="#sci-ref-1" aria-label="Reference 1"><sup>[1]</sup></a></span>
             <p class="sci-back-desc">למידה מונעת משליפת תשובות, לא מקריאה חוזרת. כל סשן מכריח שליפה מהזיכרון.</p>
           </div>
         </div>
@@ -320,7 +327,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">חזרה מרווחת</span>
+            <span class="sci-back-label">חזרה מרווחת<a class="sci-cite" href="#sci-ref-2" aria-label="Reference 2"><sup>[2]</sup></a></span>
             <p class="sci-back-desc">החזרות מתוזמנות נגד עקומת השכחה — שאלות צצות מחדש בדיוק כשהזיכרון דועך.</p>
           </div>
         </div>
@@ -335,7 +342,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">תרגול משולב</span>
+            <span class="sci-back-label">תרגול משולב<a class="sci-cite" href="#sci-ref-3" aria-label="Reference 3"><sup>[3]</sup></a></span>
             <p class="sci-back-desc">נושאים מעורבבים, לא בבלוקים. המעבר בין נושאים מכריח את המוח להבחין — כמו בבחינה האמיתית.</p>
           </div>
         </div>
@@ -350,7 +357,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">תרגול ממוקד</span>
+            <span class="sci-back-label">תרגול ממוקד<a class="sci-cite" href="#sci-ref-4" aria-label="Reference 4"><sup>[4]</sup></a></span>
             <p class="sci-back-desc">זמן הלמידה זורם קודם לנושאים החלשים ביותר — אף פעם לא מפוזר שווה על חומר שכבר שולט בו.</p>
           </div>
         </div>
@@ -365,7 +372,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">תיקון מונע-טעויות</span>
+            <span class="sci-back-label">תיקון מונע-טעויות<a class="sci-cite" href="#sci-ref-5" aria-label="Reference 5"><sup>[5]</sup></a></span>
             <p class="sci-back-desc">השאלות שפספסת — ואלה שהיית בטוח בהן וטעית — חוזרות כחפיסה ממוקדת לתרגול.</p>
           </div>
         </div>
@@ -380,7 +387,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">הסבר עצמי</span>
+            <span class="sci-back-label">הסבר עצמי<a class="sci-cite" href="#sci-ref-6" aria-label="Reference 6"><sup>[6]</sup></a></span>
             <p class="sci-back-desc">לפני שהתשובה נפתחת, אתה מסביר את ההיגיון במילים שלך — הפעולה שמעמיקה הבנה יותר מכול.</p>
           </div>
         </div>
@@ -395,7 +402,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">כיול ביטחון</span>
+            <span class="sci-back-label">כיול ביטחון<a class="sci-cite" href="#sci-ref-7" aria-label="Reference 7"><sup>[7]</sup></a></span>
             <p class="sci-back-desc">דרג כמה אתה בטוח לפני כל תשובה. האפליקציה חושפת איפה אתה בטוח אבל טועה — הפער המסוכן ביותר.</p>
           </div>
         </div>
@@ -410,7 +417,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">גילוי מודרך</span>
+            <span class="sci-back-label">גילוי מודרך<a class="sci-cite" href="#sci-ref-8" aria-label="Reference 8"><sup>[8]</sup></a></span>
             <p class="sci-back-desc">המורה שולף ממך את התשובה בשאלות במקום למסור אותה — המאמץ של החשיבה הוא מה שמקבע.</p>
           </div>
         </div>
@@ -430,6 +437,19 @@
           </div>
         </div>
       </div>
+      </div>
+      <div class="sci-refs">
+        <p class="sci-refs-title">מקורות</p>
+        <ol>
+        <li id="sci-ref-1">1. Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science, 17</em>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-2">2. Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin, 132</em>(3), 354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-3">3. Brunmair, M., & Richter, T. (2019). Similarity matters: A meta-analysis of interleaved learning and its moderators. <em>Psychological Bulletin, 145</em>(11), 1029–1052. <a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-4">4. Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. <em>Review of Educational Research, 60</em>(2), 265–299. <a href="https://doi.org/10.3102/00346543060002265" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-5">5. Metcalfe, J. (2017). Learning from errors. <em>Annual Review of Psychology, 68</em>, 465–489. <a href="https://doi.org/10.1146/annurev-psych-010416-044022" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-6">6. Bisra, K., Liu, Q., Nesbit, J. C., Salimi, F., & Winne, P. H. (2018). Inducing self-explanation: A meta-analysis. <em>Educational Psychology Review, 30</em>(3), 703–725. <a href="https://doi.org/10.1007/s10648-018-9434-x" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-7">7. Gardner-Medwin, A. R. (2006). Confidence-based marking: Towards deeper learning and better exams. In <em>Innovative Assessment in Higher Education</em>. Routledge. <a href="https://www.tmedwin.net/~ucgbarg/tea/innovass4.pdf" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-8">8. Alfieri, L., Brooks, P. J., Aldrich, N. J., & Tenenbaum, J. M. (2011). Does discovery-based instruction enhance learning? <em>Journal of Educational Psychology, 103</em>(1), 1–18. <a href="https://doi.org/10.1037/a0021017" target="_blank" rel="noopener">↗</a></li>
+        </ol>
       </div>
     </div>
   </section>

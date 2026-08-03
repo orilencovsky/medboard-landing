@@ -137,6 +137,13 @@
     .sci-grid { grid-template-columns: 1fr; }
     .sci-card { --flatten: 0; }
   }
+  .sci-cite { color: #22D3EE; text-decoration: none; font-weight: 700; margin-inline-start: 3px; }
+  .sci-cite:hover, .sci-cite:focus-visible { text-decoration: underline; }
+  .sci-refs { position: relative; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(125,162,196,.18); }
+  .sci-refs-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #5B87A8; margin: 0 0 12px; }
+  .sci-refs ol { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .sci-refs li { font-size: 13px; line-height: 1.6; color: #7DA2C4; }
+  .sci-refs a { color: #7DD3FC; text-decoration: underline; text-underline-offset: 2px; }
   @keyframes heroDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
   .hero-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: heroDraw 3.5s ease-out both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
@@ -317,7 +324,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">ACTIVE RECALL</span>
+            <span class="sci-back-label">ACTIVE RECALL<a class="sci-cite" href="#sci-ref-1" aria-label="Reference 1"><sup>[1]</sup></a></span>
             <p class="sci-back-desc">Learning is driven by retrieving answers, not re-reading them. Every session forces retrieval.</p>
           </div>
         </div>
@@ -332,7 +339,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SPACED REPETITION</span>
+            <span class="sci-back-label">SPACED REPETITION<a class="sci-cite" href="#sci-ref-2" aria-label="Reference 2"><sup>[2]</sup></a></span>
             <p class="sci-back-desc">Review is scheduled to fight the forgetting curve — questions resurface exactly when memory fades.</p>
           </div>
         </div>
@@ -347,7 +354,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">INTERLEAVED PRACTICE</span>
+            <span class="sci-back-label">INTERLEAVED PRACTICE<a class="sci-cite" href="#sci-ref-3" aria-label="Reference 3"><sup>[3]</sup></a></span>
             <p class="sci-back-desc">Topics are mixed, not blocked. Switching between subjects forces your brain to discriminate — the way the real exam demands.</p>
           </div>
         </div>
@@ -362,7 +369,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">TARGETED PRACTICE</span>
+            <span class="sci-back-label">TARGETED PRACTICE<a class="sci-cite" href="#sci-ref-4" aria-label="Reference 4"><sup>[4]</sup></a></span>
             <p class="sci-back-desc">Study time flows to your weakest topics first — never spread evenly across material you've already mastered.</p>
           </div>
         </div>
@@ -377,7 +384,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">ERROR-DRIVEN REMEDIATION</span>
+            <span class="sci-back-label">ERROR-DRIVEN REMEDIATION<a class="sci-cite" href="#sci-ref-5" aria-label="Reference 5"><sup>[5]</sup></a></span>
             <p class="sci-back-desc">The questions you missed — and the ones you were sure about but got wrong — come back as a focused deck to drill.</p>
           </div>
         </div>
@@ -392,7 +399,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SELF-EXPLANATION</span>
+            <span class="sci-back-label">SELF-EXPLANATION<a class="sci-cite" href="#sci-ref-6" aria-label="Reference 6"><sup>[6]</sup></a></span>
             <p class="sci-back-desc">Before the answer unlocks, you explain your reasoning in your own words — the single act that deepens understanding most.</p>
           </div>
         </div>
@@ -407,7 +414,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">CONFIDENCE CALIBRATION</span>
+            <span class="sci-back-label">CONFIDENCE CALIBRATION<a class="sci-cite" href="#sci-ref-7" aria-label="Reference 7"><sup>[7]</sup></a></span>
             <p class="sci-back-desc">Rate how sure you are before each answer. The app surfaces where you're confident but wrong — the most dangerous gap.</p>
           </div>
         </div>
@@ -422,7 +429,7 @@
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">GUIDED DISCOVERY</span>
+            <span class="sci-back-label">GUIDED DISCOVERY<a class="sci-cite" href="#sci-ref-8" aria-label="Reference 8"><sup>[8]</sup></a></span>
             <p class="sci-back-desc">The tutor draws the answer out of you with questions instead of handing it over — the effort of reasoning is what makes it stick.</p>
           </div>
         </div>
@@ -442,6 +449,19 @@
           </div>
         </div>
       </div>
+      </div>
+      <div class="sci-refs">
+        <p class="sci-refs-title">REFERENCES</p>
+        <ol>
+        <li id="sci-ref-1">1. Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science, 17</em>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-2">2. Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin, 132</em>(3), 354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-3">3. Brunmair, M., & Richter, T. (2019). Similarity matters: A meta-analysis of interleaved learning and its moderators. <em>Psychological Bulletin, 145</em>(11), 1029–1052. <a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-4">4. Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. <em>Review of Educational Research, 60</em>(2), 265–299. <a href="https://doi.org/10.3102/00346543060002265" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-5">5. Metcalfe, J. (2017). Learning from errors. <em>Annual Review of Psychology, 68</em>, 465–489. <a href="https://doi.org/10.1146/annurev-psych-010416-044022" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-6">6. Bisra, K., Liu, Q., Nesbit, J. C., Salimi, F., & Winne, P. H. (2018). Inducing self-explanation: A meta-analysis. <em>Educational Psychology Review, 30</em>(3), 703–725. <a href="https://doi.org/10.1007/s10648-018-9434-x" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-7">7. Gardner-Medwin, A. R. (2006). Confidence-based marking: Towards deeper learning and better exams. In <em>Innovative Assessment in Higher Education</em>. Routledge. <a href="https://www.tmedwin.net/~ucgbarg/tea/innovass4.pdf" target="_blank" rel="noopener">↗</a></li>
+        <li id="sci-ref-8">8. Alfieri, L., Brooks, P. J., Aldrich, N. J., & Tenenbaum, J. M. (2011). Does discovery-based instruction enhance learning? <em>Journal of Educational Psychology, 103</em>(1), 1–18. <a href="https://doi.org/10.1037/a0021017" target="_blank" rel="noopener">↗</a></li>
+        </ol>
       </div>
     </div>
   </section>
