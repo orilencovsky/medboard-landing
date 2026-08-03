@@ -49,6 +49,82 @@
   .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: opacity 1s linear; }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
   @media (prefers-reduced-motion: reduce) { .hero-video { display: none; } .hero-mark path { animation: none; } }
+
+  /* ===== Science section (flashcard deck) ===== */
+  .sci-section { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); padding: 108px 32px 124px; }
+  .sci-bg-grid, .sci-bg-glow, .sci-bg-scrim { position: absolute; inset: 0; pointer-events: none; }
+  .sci-bg-grid {
+    opacity: .55;
+    background:
+      repeating-linear-gradient(90deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(90deg, rgba(56,189,248,.06) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.06) 0 1px, transparent 1px 18px);
+  }
+  .sci-bg-glow {
+    opacity: .55;
+    background:
+      radial-gradient(46% 38% at calc(50% + var(--sci-dir, 1) * -36%) 8%, rgba(34,211,238,.42), transparent 70%),
+      radial-gradient(52% 44% at calc(50% + var(--sci-dir, 1) * 38%) 26%, rgba(56,189,248,.36), transparent 72%),
+      radial-gradient(60% 42% at 50% 104%, rgba(34,211,238,.3), transparent 70%);
+  }
+  .sci-bg-scrim { background: radial-gradient(125% 95% at 50% 0%, rgba(6,18,37,.3), rgba(6,18,37,.58) 60%, rgba(6,18,37,.76) 100%); }
+  .sci-hint { display: flex; justify-content: center; margin-top: -18px; margin-bottom: 54px; }
+  .sci-hint span { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .18em; color: #5B87A8; border: 1px solid #1E4A6E; border-radius: 100px; padding: 7px 16px; }
+  .sci-grid { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; align-items: start; }
+  .sci-card { position: relative; cursor: pointer; border-radius: 20px; outline: none;
+    margin-top: calc(var(--flatten, 1) * var(--stagger, 0) * 1px);
+    transform: rotate(calc(var(--flatten, 1) * var(--sci-dir, 1) * var(--rot, 0) * 1deg));
+  }
+  .sci-card:focus-visible { box-shadow: 0 0 0 3px rgba(34,211,238,.55); outline: 2px solid transparent; }
+  .sci-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: 20px; background: #081D3A; border: 1px solid #153650;
+    opacity: var(--flatten, 1);
+    transform: translate(calc(var(--sci-dir, 1) * var(--tx, 0) * 1px), calc(var(--ty, 0) * 1px)) rotate(calc(var(--sci-dir, 1) * var(--twin-rot, 0) * 1deg));
+  }
+  .sci-card-texture { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; border-radius: 20px; opacity: .9; transform: scaleX(var(--sci-dir, 1)); background: var(--texture); }
+  .sci-card-faces { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .sci-card-front, .sci-card-back { position: absolute; inset: 0; border-radius: 20px; box-shadow: 0 24px 60px rgba(2,8,20,.5); padding: 26px; display: flex; flex-direction: column; }
+  .sci-card-front { justify-content: space-between; overflow: hidden; background: linear-gradient(180deg, rgba(8,20,40,.68), rgba(8,20,40,.34) 48%, rgba(8,20,40,.74)); border: 1px solid #1E4A6E; opacity: 1; transition: opacity .34s ease; }
+  .sci-card-back { gap: 16px; background: linear-gradient(180deg, rgba(10,26,48,.9), rgba(8,20,40,.84)); border: 1px solid #22D3EE; opacity: 0; transform: translateY(12px); transition: opacity .34s ease, transform .34s cubic-bezier(.22,.8,.25,1); }
+  .sci-card:hover:not(.is-flipped) .sci-card-front, .sci-card.is-flipped:not(:hover) .sci-card-front { opacity: 0; }
+  .sci-card:hover:not(.is-flipped) .sci-card-back, .sci-card.is-flipped:not(:hover) .sci-card-back { opacity: 1; transform: translateY(0); }
+  .sci-eyebrow { position: relative; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .2em; color: #5B87A8; }
+  .sci-card-front h3 { position: relative; margin: 0; font-size: 26px; font-weight: 600; line-height: 1.28; color: #E2F4FD; }
+  .sci-reveal { position: relative; display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #22D3EE; }
+  .sci-reveal span { display: inline-block; transform: scaleX(var(--sci-dir, 1)); }
+  .sci-back-bar { width: 40px; height: 2px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); border-radius: 100px; }
+  .sci-back-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #7DD3FC; }
+  .sci-back-desc { margin: 0; font-size: 15px; line-height: 1.7; color: #B8D4EA; }
+  @media (prefers-reduced-motion: reduce) {
+    .sci-card-front, .sci-card-back { transition: none; }
+  }
+  @media (max-width: 980px) {
+    .sci-section { padding: 88px 26px 100px; }
+    .sci-bg-grid { background:
+      repeating-linear-gradient(90deg, rgba(56,189,248,.16) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.16) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(90deg, rgba(56,189,248,.06) 0 1px, transparent 1px 14px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.06) 0 1px, transparent 1px 14px);
+    }
+    .sci-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .sci-section { padding: 68px 20px 76px; }
+    .sci-bg-grid { background:
+      repeating-linear-gradient(90deg, rgba(56,189,248,.16) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.16) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(56,189,248,.06) 0 1px, transparent 1px 10px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.06) 0 1px, transparent 1px 10px);
+    }
+    .sci-bg-glow { background:
+      radial-gradient(92% 26% at calc(50% + var(--sci-dir, 1) * -36%) 8%, rgba(34,211,238,.42), transparent 70%),
+      radial-gradient(92% 26% at calc(50% + var(--sci-dir, 1) * 38%) 26%, rgba(56,189,248,.36), transparent 72%),
+      radial-gradient(92% 26% at 50% 104%, rgba(34,211,238,.3), transparent 70%);
+    }
+    .sci-grid { grid-template-columns: 1fr; }
+    .sci-card { --flatten: 0; }
+  }
   @keyframes heroDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
   .hero-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: heroDraw 3.5s ease-out both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
@@ -207,75 +283,153 @@
   </header>
 
   <!-- SCIENCE — 9 principles -->
-  <section id="science" data-mq-section style="max-width: 1200px; margin: 0 auto; padding: 96px 32px;">
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 52px;">
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em; direction: ltr;">THE SCIENCE</span>
-      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">למידה שמבוססת על איך שהמוח באמת עובד</h2>
-      <p style="margin: 0; font-size: 18px; color: #475569; max-width: 640px; line-height: 1.65;">MeduXa בנויה על תשעה עקרונות למידה מבוססי-ראיות — עם שכבת AI שמסתגלת לכל סטודנט.</p>
-    </div>
-    <div data-mq-cards style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">01</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">היזכרות פעילה</h3>
-        </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">למידה מונעת משליפת תשובות, לא מקריאה חוזרת. כל סשן מכריח שליפה מהזיכרון.</p>
+  <section id="science" data-mq-section class="sci-section" style="--sci-dir:-1;">
+    <div class="sci-bg-grid"></div>
+    <div class="sci-bg-glow"></div>
+    <div class="sci-bg-scrim"></div>
+    <div style="position: relative; max-width: 1200px; margin: 0 auto;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 22px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #22D3EE; letter-spacing: .14em; direction: ltr;">THE SCIENCE</span>
+        <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">למידה שמבוססת על איך שהמוח באמת עובד</h2>
+        <p style="margin: 0; font-size: 18px; color: #B8D4EA; max-width: 640px; line-height: 1.65;">MeduXa בנויה על תשעה עקרונות למידה מבוססי-ראיות — עם שכבת AI שמסתגלת לכל סטודנט.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">02</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">חזרה מרווחת</h3>
+      <div class="sci-hint"><span style="direction: ltr;">HOVER OR TAP ANY CARD TO REVEAL IT</span></div>
+      <div class="sci-grid" onmouseover="sciOver(event)" onmouseout="sciOut(event)" onclick="sciClick(event)" onkeydown="sciKeyDown(event)">
+      <div class="sci-card" data-card="1" tabindex="0" role="button" aria-expanded="false" style="min-height:296px; --stagger:0; --rot:-1.1; --tx:8; --ty:11; --twin-rot:1.7; --texture:radial-gradient(circle at center, rgba(56,189,248,0.62) 0 1px, transparent 1.7px) 0 0/17px 17px;">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>היזכרות פעילה</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">היזכרות פעילה</span>
+            <p class="sci-back-desc">למידה מונעת משליפת תשובות, לא מקריאה חוזרת. כל סשן מכריח שליפה מהזיכרון.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">החזרות מתוזמנות נגד עקומת השכחה — שאלות צצות מחדש בדיוק כשהזיכרון דועך.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">03</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">תרגול משולב</h3>
+      <div class="sci-card" data-card="2" tabindex="0" role="button" aria-expanded="false" style="min-height:312px; --stagger:22; --rot:0.8; --tx:-8; --ty:11; --twin-rot:-1.5; --texture:repeating-linear-gradient(90deg, rgba(56,189,248,0.53) 0 2px, transparent 2px 14px), repeating-linear-gradient(90deg, transparent 0 140px, rgba(34,211,238,0.38) 140px 142px, transparent 142px 190px);">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>חזרה מרווחת</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">חזרה מרווחת</span>
+            <p class="sci-back-desc">החזרות מתוזמנות נגד עקומת השכחה — שאלות צצות מחדש בדיוק כשהזיכרון דועך.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">נושאים מעורבבים, לא בבלוקים. המעבר בין נושאים מכריח את המוח להבחין — כמו בבחינה האמיתית.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">04</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">תרגול ממוקד</h3>
+      <div class="sci-card" data-card="3" tabindex="0" role="button" aria-expanded="false" style="min-height:344px; --stagger:8; --rot:-0.6; --tx:9; --ty:9; --twin-rot:1.3; --texture:repeating-linear-gradient(45deg, rgba(56,189,248,0.38) 0 1px, transparent 1px 15px), repeating-linear-gradient(-45deg, rgba(34,211,238,0.34) 0 1px, transparent 1px 15px);">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>תרגול משולב</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">תרגול משולב</span>
+            <p class="sci-back-desc">נושאים מעורבבים, לא בבלוקים. המעבר בין נושאים מכריח את המוח להבחין — כמו בבחינה האמיתית.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">זמן הלמידה זורם קודם לנושאים החלשים ביותר — אף פעם לא מפוזר שווה על חומר שכבר שולט בו.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">05</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">תיקון מונע-טעויות</h3>
+      <div class="sci-card" data-card="4" tabindex="0" role="button" aria-expanded="false" style="min-height:312px; --stagger:14; --rot:0.9; --tx:-9; --ty:10; --twin-rot:-1.6; --texture:repeating-radial-gradient(circle at 80% 20%, rgba(34,211,238,0.48) 0 1px, transparent 1px 17px);">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>תרגול ממוקד</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">תרגול ממוקד</span>
+            <p class="sci-back-desc">זמן הלמידה זורם קודם לנושאים החלשים ביותר — אף פעם לא מפוזר שווה על חומר שכבר שולט בו.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">השאלות שפספסת — ואלה שהיית בטוח בהן וטעית — חוזרות כחפיסה ממוקדת לתרגול.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">06</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">הסבר עצמי</h3>
+      <div class="sci-card" data-card="5" tabindex="0" role="button" aria-expanded="false" style="min-height:344px; --stagger:0; --rot:-1.2; --tx:8; --ty:12; --twin-rot:1.8; --texture:repeating-linear-gradient(90deg, rgba(56,189,248,0.29) 0 1px, transparent 1px 24px), repeating-linear-gradient(180deg, rgba(56,189,248,0.29) 0 1px, transparent 1px 24px), repeating-linear-gradient(135deg, rgba(34,211,238,0.48) 0 2px, transparent 2px 26px);">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>תיקון מונע-טעויות</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">תיקון מונע-טעויות</span>
+            <p class="sci-back-desc">השאלות שפספסת — ואלה שהיית בטוח בהן וטעית — חוזרות כחפיסה ממוקדת לתרגול.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">לפני שהתשובה נפתחת, אתה מסביר את ההיגיון במילים שלך — הפעולה שמעמיקה הבנה יותר מכול.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">07</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">כיול ביטחון</h3>
+      <div class="sci-card" data-card="6" tabindex="0" role="button" aria-expanded="false" style="min-height:330px; --stagger:26; --rot:0.6; --tx:-8; --ty:11; --twin-rot:-1.4; --texture:repeating-linear-gradient(180deg, rgba(56,189,248,0.43) 0 1px, transparent 1px 21px);">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>הסבר עצמי</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">הסבר עצמי</span>
+            <p class="sci-back-desc">לפני שהתשובה נפתחת, אתה מסביר את ההיגיון במילים שלך — הפעולה שמעמיקה הבנה יותר מכול.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">דרג כמה אתה בטוח לפני כל תשובה. האפליקציה חושפת איפה אתה בטוח אבל טועה — הפער המסוכן ביותר.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">08</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">גילוי מודרך</h3>
+      <div class="sci-card" data-card="7" tabindex="0" role="button" aria-expanded="false" style="min-height:344px; --stagger:6; --rot:-0.9; --tx:9; --ty:10; --twin-rot:1.5; --texture:repeating-linear-gradient(90deg, rgba(34,211,238,0.53) 0 5px, transparent 5px 19px);">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>כיול ביטחון</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">כיול ביטחון</span>
+            <p class="sci-back-desc">דרג כמה אתה בטוח לפני כל תשובה. האפליקציה חושפת איפה אתה בטוח אבל טועה — הפער המסוכן ביותר.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">המורה שולף ממך את התשובה בשאלות במקום למסור אותה — המאמץ של החשיבה הוא מה שמקבע.</p>
       </div>
-      <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0EA5E9; background: #E8F6FD; border-radius: 8px; padding: 4px 10px; direction: ltr;">09</span>
-          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F172A;">אמת מעוגנת-מקור</h3>
+      <div class="sci-card" data-card="8" tabindex="0" role="button" aria-expanded="false" style="min-height:330px; --stagger:20; --rot:1.1; --tx:-9; --ty:11; --twin-rot:-1.7; --texture:conic-gradient(from 200deg at 22% 82%, rgba(34,211,238,0.53), transparent 38%), conic-gradient(from 20deg at 84% 16%, rgba(56,189,248,0.43), transparent 34%);">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>גילוי מודרך</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">גילוי מודרך</span>
+            <p class="sci-back-desc">המורה שולף ממך את התשובה בשאלות במקום למסור אותה — המאמץ של החשיבה הוא מה שמקבע.</p>
+          </div>
         </div>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">כל הסבר מגובה בציטוט מילה-במילה מהספר. אף פעם לא הזיה.</p>
+      </div>
+      <div class="sci-card" data-card="9" tabindex="0" role="button" aria-expanded="false" style="min-height:296px; --stagger:0; --rot:-0.5; --tx:8; --ty:11; --twin-rot:1.4; --texture:repeating-linear-gradient(180deg, rgba(56,189,248,0.38) 0 1px, transparent 1px 13px), linear-gradient(180deg, transparent 52%, rgba(34,211,238,0.29));">
+        <div class="sci-card-texture"></div>
+        <div class="sci-card-faces">
+          <div class="sci-card-front">
+            <span class="sci-eyebrow">PRINCIPLE</span>
+            <h3>אמת מעוגנת-מקור</h3>
+            <span class="sci-reveal">REVEAL<span>→</span></span>
+          </div>
+          <div class="sci-card-back">
+            <span class="sci-back-bar"></span>
+            <span class="sci-back-label">אמת מעוגנת-מקור</span>
+            <p class="sci-back-desc">כל הסבר מגובה בציטוט מילה-במילה מהספר. אף פעם לא הזיה.</p>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -397,6 +551,12 @@
 <script>
   function toggleMenu(){var m=document.getElementById('mobileMenu');m.style.display=(m.style.display==='none'||!m.style.display)?'flex':'none';}
   function closeMenu(){document.getElementById('mobileMenu').style.display='none';}
+  function sciCardOf(el) { return el && el.closest ? el.closest('[data-card]') : null; }
+  function sciSync(c) { var revealed = c.matches(':hover') !== c.classList.contains('is-flipped'); c.setAttribute('aria-expanded', String(revealed)); }
+  function sciOver(e) { var c = sciCardOf(e.target); if (c) sciSync(c); }
+  function sciOut(e) { var c = sciCardOf(e.target); if (c) sciSync(c); }
+  function sciClick(e) { var c = sciCardOf(e.target); if (!c) return; c.classList.toggle('is-flipped'); sciSync(c); }
+  function sciKeyDown(e) { if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return; var c = sciCardOf(e.target); if (!c) return; e.preventDefault(); c.classList.toggle('is-flipped'); sciSync(c); }
 </script>
 <script>
   // Waitlist → Supabase (insert-only via publishable key; RLS blocks reads).
