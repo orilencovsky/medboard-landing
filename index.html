@@ -640,6 +640,14 @@
       vids.forEach(function (v) { v.pause(); });
       return;
     }
+    // iOS Low Power Mode (and some data-saver modes) silently block video
+    // autoplay and show a native play button instead. There's no way to
+    // force it, so fall back to hiding the video and letting the header's
+    // own gradient background show through instead of a stuck play button.
+    function hideVideos() { vids.forEach(function (v) { v.style.display = 'none'; }); }
+    var frontPlay = vids[0].play();
+    if (frontPlay && frontPlay.catch) frontPlay.catch(hideVideos);
+    setTimeout(function () { if (vids[0].paused) hideVideos(); }, 1500);
     var FADE = 1.0, front = 0;
     function swap() {
       var a = vids[front], b = vids[1 - front];
