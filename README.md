@@ -6,9 +6,9 @@ lives in a separate private repo and is served from `app.meduxa.ai`.
 
 | | |
 |---|---|
-| **Live (EN)** | https://meduxa.ai |
-| **Live (HE)** | https://meduxa.ai/he |
-| **Host** | Vercel (static, `cleanUrls: true`) |
+| **Live (HE)** | https://meduxa.ai |
+| **Live (EN)** | https://meduxa.ai/en |
+| **Host** | Vercel (static, `cleanUrls: true`; `/he` 301s to `/`) |
 | **Product** | Nephrology Stage A board prep — pilot launch September 8, 2026 |
 
 > The repo is still named `medboard-landing` after the product's former name, **MedBoard IL**.
@@ -17,13 +17,13 @@ lives in a separate private repo and is served from `app.meduxa.ai`.
 ## What's here
 
 ```
-index.html               English landing page (single file: markup + inline CSS + inline JS)
-he/index.html            Hebrew / RTL landing page — a full translation, not a wrapper
+index.html               Hebrew / RTL landing page — the root (single file: markup + inline CSS + inline JS)
+en/index.html            English landing page — a full translation, not a wrapper
 hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card image
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
-vercel.json              Vercel config (cleanUrls)
+vercel.json              Vercel config (cleanUrls, and the /he → / redirect)
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
@@ -35,7 +35,10 @@ inline styles and inline scripts. Open `index.html` in a browser, or serve the d
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ (EN) and http://localhost:8000/he/ (HE).
+Then visit http://localhost:8000/ (HE) and http://localhost:8000/en/ (EN).
+
+Note that the root page redirects a non-Hebrew browser to `/en` on first visit. To hold it on
+Hebrew while developing, use http://localhost:8000/?lang=he.
 
 ## Page structure
 
@@ -70,8 +73,8 @@ The script strips audio, scales to 1600px (desktop) and 800px (phone), and targe
 
 ## Editing conventions
 
-- **Both languages, every time.** `index.html` and `he/index.html` are independent files. A copy or
-  layout change made in one must be mirrored in the other, or the two drift.
+- **Both languages, every time.** `index.html` (Hebrew, the root) and `en/index.html` are independent
+  files. A copy or layout change made in one must be mirrored in the other, or the two drift.
 - **RTL is real, not flipped.** The Hebrew page is authored right-to-left; check it in a browser
   rather than assuming a mirrored desktop layout holds up.
 - **Phones are the tight case.** The `<=600px` breakpoint is tuned against SE-class viewports —

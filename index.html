@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8" />
 <script>
-  // Route Hebrew-preference visitors to the localized Israeli page once.
-  // Respects an explicit English choice (via ?lang=en) so it never traps anyone.
+  // The root is Hebrew. Route visitors whose browser isn't set to Hebrew to
+  // the English page once. Respects an explicit Hebrew choice (via ?lang=he)
+  // so it never traps anyone.
   (function () {
     try {
       var p = new URLSearchParams(location.search);
-      if (p.get('lang') === 'en') { localStorage.setItem('mbil_lang', 'en'); return; }
-      if (localStorage.getItem('mbil_lang') === 'en') return;
-      if ((navigator.language || '').toLowerCase().indexOf('he') === 0) location.replace('/he');
+      if (p.get('lang') === 'he') { localStorage.setItem('mbil_lang', 'he'); return; }
+      if (localStorage.getItem('mbil_lang') === 'he') return;
+      if ((navigator.language || '').toLowerCase().indexOf('he') !== 0) location.replace('/en');
     } catch (e) {}
   })();
 </script>
@@ -23,39 +24,39 @@
   gtag('config', 'G-EBPKT4TS21');
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MeduXa.ai — The smarter way to prepare for medical boards</title>
+<title>MeduXa.ai — הדרך החכמה להתכונן לבחינות ההתמחות</title>
 <link rel="canonical" href="https://meduxa.ai/" />
-<link rel="alternate" hreflang="en" href="https://meduxa.ai/" />
-<link rel="alternate" hreflang="he" href="https://meduxa.ai/he" />
-<link rel="alternate" hreflang="x-default" href="https://meduxa.ai/" />
-<meta name="description" content="Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the real sources your medical board exam is written from. Built for residents." />
+<link rel="alternate" hreflang="he" href="https://meduxa.ai/" />
+<link rel="alternate" hreflang="en" href="https://meduxa.ai/en" />
+<link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en" />
+<meta name="description" content="הדרך החכמה להתכונן לבחינות ההתמחות: היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — הכול מעוגן במקורות האמיתיים שמהם נכתבת הבחינה." />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#061225" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='%230B2545'/%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='none' stroke='%2322D3EE' stroke-width='3'/%3E%3Cpath d='M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74' stroke='%231E4A6E' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3Cpath d='M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22' stroke='%2338BDF8' stroke-width='7' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='48' cy='48' r='9' fill='%2322D3EE'/%3E%3C/svg%3E" />
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
-<meta property="og:title" content="MeduXa.ai — The smarter way to prepare for medical boards" />
-<meta property="og:description" content="Active recall, spaced repetition, and a Socratic AI tutor — grounded in the real sources your board exam is written from." />
+<meta property="og:title" content="MeduXa.ai — הדרך החכמה להתכונן לבחינות ההתמחות" />
+<meta property="og:description" content="היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — הכול מעוגן במקורות האמיתיים שמהם נכתבת הבחינה." />
 <meta property="og:url" content="https://meduxa.ai/" />
 <meta property="og:image" content="https://meduxa.ai/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:locale:alternate" content="he_IL" />
+<meta property="og:locale" content="he_IL" />
+<meta property="og:locale:alternate" content="en_US" />
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="MeduXa.ai — The smarter way to prepare for medical boards" />
-<meta name="twitter:description" content="Active recall, spaced repetition, and a Socratic AI tutor — grounded in the real sources your board exam is written from." />
+<meta name="twitter:title" content="MeduXa.ai — הדרך החכמה להתכונן לבחינות ההתמחות" />
+<meta name="twitter:description" content="היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — הכול מעוגן במקורות האמיתיים שמהם נכתבת הבחינה." />
 <meta name="twitter:image" content="https://meduxa.ai/og-image.png" />
 <!-- Structured data -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MeduXa.ai","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://meduxa.ai/","inLanguage":["en","he"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MeduXa.ai","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://meduxa.ai/","inLanguage":["he","en"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; background: #061225; font-family: 'IBM Plex Sans', sans-serif; }
+  body { margin: 0; background: #061225; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #22D3EE; }
   @keyframes dotPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
   .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: opacity 1s linear; }
@@ -220,7 +221,7 @@
 </head>
 <body>
 
-<div dir="ltr" style="background: #F0F6FA; min-height: 100vh;">
+<div dir="rtl" style="background: #F0F6FA; min-height: 100vh;">
 
   <!-- NAV -->
   <nav style="position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15);">
@@ -233,25 +234,25 @@
           <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
           <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
         </svg>
-        <span data-mq-logo-text style="display: flex; align-items: baseline;"><span style="font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE;">.ai</span></span>
+        <span data-mq-logo-text style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE;">.ai</span></span>
       </div>
       <div data-mq-navright style="display: flex; align-items: center; gap: 26px;">
-        <a data-mq-hide class="nav-link" href="#science">The Science</a>
-        <a data-mq-hide class="nav-link" href="#features">Features</a>
-        <a data-mq-hide class="nav-link" href="#how">How it works</a>
-        <a data-mq-hide class="nav-link" href="#vision">Vision</a>
-        <a data-mq-lang href="/he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px;">עברית</a>
-        <a data-mq-cta class="btn-action btn-action-md" href="#pilot" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;"><span data-mq-cta-full>Get Early Access</span><span data-mq-cta-short>Join</span><svg width="20" height="16" viewBox="0 0 32 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l6 6-6 6"/><path d="M12 6l6 6-6 6"/></svg></a>
-        <button data-mq-burger onclick="toggleMenu()" aria-label="Menu" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
+        <a data-mq-hide class="nav-link" href="#science">מדע הלמידה</a>
+        <a data-mq-hide class="nav-link" href="#features">פיצ'רים</a>
+        <a data-mq-hide class="nav-link" href="#how">איך זה עובד</a>
+        <a data-mq-hide class="nav-link" href="#vision">חזון</a>
+        <a data-mq-lang href="/en" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px; direction: ltr;">EN</a>
+        <a data-mq-cta class="btn-action btn-action-md" href="#pilot" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;"><span data-mq-cta-full>גישה מוקדמת</span><span data-mq-cta-short>הצטרפו</span><svg width="20" height="16" viewBox="0 0 32 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6l-6 6 6 6"/><path d="M28 6l-6 6 6 6"/></svg></a>
+        <button data-mq-burger onclick="toggleMenu()" aria-label="תפריט" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5 H 17 M 3 10 H 17 M 3 15 H 17" stroke="#7DD3FC" stroke-width="2" stroke-linecap="round"></path></svg>
         </button>
       </div>
     </div>
     <div id="mobileMenu" style="display: none; background: rgba(6,18,37,.98); border-bottom: 1px solid rgba(34,211,238,.15); flex-direction: column; padding: 12px 24px 20px; gap: 4px;">
-      <a class="m-link" href="#science" onclick="closeMenu()">The Science</a>
-      <a class="m-link" href="#features" onclick="closeMenu()">Features</a>
-      <a class="m-link" href="#how" onclick="closeMenu()">How it works</a>
-      <a class="m-link" href="#vision" onclick="closeMenu()">Vision</a>
+      <a class="m-link" href="#science" onclick="closeMenu()">מדע הלמידה</a>
+      <a class="m-link" href="#features" onclick="closeMenu()">פיצ'רים</a>
+      <a class="m-link" href="#how" onclick="closeMenu()">איך זה עובד</a>
+      <a class="m-link" href="#vision" onclick="closeMenu()">חזון</a>
     </div>
   </nav>
 
@@ -270,24 +271,24 @@
       <source src="/hero.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
-    <svg class="hero-mark" width="900" height="900" viewBox="0 0 96 96" fill="none" style="position: absolute; right: -260px; top: -160px; opacity: .07; pointer-events: none; z-index: 2;">
+    <svg class="hero-mark" width="900" height="900" viewBox="0 0 96 96" fill="none" style="position: absolute; left: -260px; top: -160px; opacity: .07; pointer-events: none; z-index: 2;">
       <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
       <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
     </svg>
     <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; gap: 64px; align-items: center; flex-wrap: wrap;">
       <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 26px;">
-        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block; animation: dotPulse 2s infinite;"></span> Science-Based Learning · AI-Powered</span>
-        <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">The smarter way to prepare<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">for medical boards</span></h1>
-        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the real sources your exam is written from. Built for medical residents, worldwide.</p>
+        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block; animation: dotPulse 2s infinite;"></span> למידה מבוססת-מדע · מונעת AI</span>
+        <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">הדרך החכמה להתכונן<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">לבחינות ההתמחות</span></h1>
+        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — הכול מעוגן במקורות האמיתיים שמהם נכתבת הבחינה. נבנה עבור מתמחים.</p>
         <div data-mq-hero-actions style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-          <a class="btn-action btn-action-lg" href="#pilot" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">Start studying free</a>
-          <a href="#how" style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">See how it works</a>
+          <a class="btn-action btn-action-lg" href="#pilot" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">התחילו ללמוד — חינם</a>
+          <a href="#how" style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">איך זה עובד</a>
         </div>
         <div data-mq-stats style="display: flex; gap: 32px; margin-top: 8px; flex-wrap: wrap;">
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">1,000+</div><div style="font-size: 14px; color: #7DA2C4;">Board-style questions</div></div>
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">9</div><div style="font-size: 14px; color: #7DA2C4;">Evidence-based principles</div></div>
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">100%</div><div style="font-size: 14px; color: #7DA2C4;">Source-cited answers</div></div>
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">AI</div><div style="font-size: 14px; color: #7DA2C4;">Socratic tutor per question</div></div>
+          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">1,000+</div><div style="font-size: 14px; color: #7DA2C4;">שאלות ברמת הבחינה</div></div>
+          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">9</div><div style="font-size: 14px; color: #7DA2C4;">עקרונות מבוססי-ראיות</div></div>
+          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">100%</div><div style="font-size: 14px; color: #7DA2C4;">תשובות עם ציטוט מקור</div></div>
+          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">AI</div><div style="font-size: 14px; color: #7DA2C4;">מורה סוקרטי לכל שאלה</div></div>
         </div>
       </div>
 
@@ -295,26 +296,26 @@
       <div style="flex: 1 1 420px; max-width: 520px;">
         <div data-mq-demo style="background: #0B2545; border: 1px solid #1E4A6E; border-radius: 20px; padding: 26px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 18px;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B87A8;">Q-1838 · AKI</span>
-            <span style="font-size: 13px; font-weight: 600; color: #5EEAD4;">Scheduled review · day 6</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B87A8; direction: ltr;">Q-1838 · AKI</span>
+            <span style="font-size: 13px; font-weight: 600; color: #5EEAD4;">חזרה מתוזמנת · יום 6</span>
           </div>
-          <div data-mq-demo-q style="font-size: 18px; font-weight: 600; color: #E2F4FD; line-height: 1.6;">A 67-year-old man with diabetic CKD undergoes coronary catheterization. Creatinine was 1.5 mg/dL before the procedure, 1.77 mg/dL two days later. Per KDIGO criteria, which is correct?</div>
+          <div data-mq-demo-q style="font-size: 18px; font-weight: 600; color: #E2F4FD; line-height: 1.6;">בן 67 עם CKD על רקע סוכרת עובר צנתור כלילי. קראטינין לפני הפרוצדורה 1.5 מ״ג/ד״ל, יומיים אחרי — 1.77 מ״ג/ד״ל. לפי קריטריוני KDIGO, מה נכון?</div>
           <div data-mq-demo-opts style="display: flex; flex-direction: column; gap: 10px;">
-            <div style="border: 1.5px solid #7C5CFF; background: rgba(124,92,255,.12); border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #E2F4FD; font-weight: 600; display: flex; justify-content: space-between; align-items: center;"><span>Does not meet AKI criteria</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">✓</span></div>
-            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">Has AKI stage 1</div>
-            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">Has AKI stage 2</div>
-            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">Has AKI stage 3</div>
+            <div style="border: 1.5px solid #7C5CFF; background: rgba(124,92,255,.12); border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #E2F4FD; font-weight: 600; display: flex; justify-content: space-between; align-items: center;"><span>אינו עומד בקריטריונים ל-AKI</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; direction: ltr;">✓</span></div>
+            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">יש לו AKI דרגה 1</div>
+            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">יש לו AKI דרגה 2</div>
+            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">יש לו AKI דרגה 3</div>
           </div>
           <div style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;">
             <svg width="22" height="22" viewBox="0 0 96 96" fill="none" style="flex-shrink: 0; margin-top: 2px;">
               <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="8" stroke-linecap="round" fill="none"></path>
               <circle cx="48" cy="48" r="11" fill="#22D3EE"></circle>
             </svg>
-            <div style="font-size: 14px; color: #9CC3DF; line-height: 1.6;"><span style="color: #C9BCFF; font-weight: 600;">AI tutor:</span> Before we choose — what are the two KDIGO thresholds, absolute and relative, that define AKI? <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4; display: inline-block;">[KDIGO staging]</span></div>
+            <div style="font-size: 14px; color: #9CC3DF; line-height: 1.6;"><span style="color: #C9BCFF; font-weight: 600;">המורה AI:</span> לפני שנבחר — מהם שני הספים (מוחלט ויחסי) שמגדירים AKI לפי KDIGO? <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4; direction: ltr; display: inline-block;">[KDIGO staging]</span></div>
           </div>
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="flex: 1; height: 6px; background: #153650; border-radius: 3px; overflow: hidden;"><div style="width: 68%; height: 100%; background: linear-gradient(90deg, #0EA5E9, #22D3EE);"></div></div>
-            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8;">17/25</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8; direction: ltr;">17/25</span>
           </div>
         </div>
       </div>
@@ -322,30 +323,30 @@
   </header>
 
   <!-- SCIENCE — 9 principles -->
-  <section id="science" class="sci-section" style="--sci-dir:1;">
+  <section id="science" class="sci-section" style="--sci-dir:-1;">
     <div class="sci-bg-grid"></div>
     <div class="sci-bg-glow"></div>
     <div class="sci-bg-scrim"></div>
     <div style="position: relative; max-width: 1200px; margin: 0 auto;">
       <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 22px;">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #22D3EE; letter-spacing: .14em;">THE SCIENCE</span>
-        <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">Learning backed by how the brain actually works</h2>
-        <p style="margin: 0; font-size: 18px; color: #B8D4EA; max-width: 640px; line-height: 1.65;">MeduXa is built on nine evidence-based learning principles — with an AI layer that adapts to each student.</p>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #22D3EE; letter-spacing: .14em; direction: ltr;">THE SCIENCE</span>
+        <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">למידה שמבוססת על איך שהמוח באמת עובד</h2>
+        <p style="margin: 0; font-size: 18px; color: #B8D4EA; max-width: 640px; line-height: 1.65;">MeduXa בנויה על תשעה עקרונות למידה מבוססי-ראיות — עם שכבת AI שמסתגלת לכל סטודנט.</p>
       </div>
-      <div class="sci-hint"><span>HOVER OR TAP ANY CARD TO REVEAL IT</span></div>
+      <div class="sci-hint"><span style="direction: ltr;">HOVER OR TAP ANY CARD TO REVEAL IT</span></div>
       <div class="sci-grid" onmouseover="sciOver(event)" onmouseout="sciOut(event)" onclick="sciClick(event)" onkeydown="sciKeyDown(event)">
       <div class="sci-card" data-card="1" tabindex="0" role="button" aria-expanded="false" style="min-height:296px; --stagger:0; --rot:-1.1; --tx:8; --ty:11; --twin-rot:1.7; --texture:radial-gradient(circle at center, rgba(56,189,248,0.62) 0 1px, transparent 1.7px) 0 0/17px 17px;">
         <div class="sci-card-texture"></div>
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Active Recall</h3>
+            <h3>היזכרות פעילה</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">ACTIVE RECALL<a class="sci-cite" href="#sci-ref-1" aria-label="Reference 1"><sup>[1]</sup></a></span>
-            <p class="sci-back-desc">Learning is driven by retrieving answers, not re-reading them. Every session forces retrieval.</p>
+            <span class="sci-back-label">היזכרות פעילה<a class="sci-cite" href="#sci-ref-1" aria-label="Reference 1"><sup>[1]</sup></a></span>
+            <p class="sci-back-desc">למידה מונעת משליפת תשובות, לא מקריאה חוזרת. כל סשן מכריח שליפה מהזיכרון.</p>
           </div>
         </div>
       </div>
@@ -354,13 +355,13 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Spaced Repetition</h3>
+            <h3>חזרה מרווחת</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SPACED REPETITION<a class="sci-cite" href="#sci-ref-2" aria-label="Reference 2"><sup>[2]</sup></a></span>
-            <p class="sci-back-desc">Review is scheduled to fight the forgetting curve — questions resurface exactly when memory fades.</p>
+            <span class="sci-back-label">חזרה מרווחת<a class="sci-cite" href="#sci-ref-2" aria-label="Reference 2"><sup>[2]</sup></a></span>
+            <p class="sci-back-desc">החזרות מתוזמנות נגד עקומת השכחה — שאלות צצות מחדש בדיוק כשהזיכרון דועך.</p>
           </div>
         </div>
       </div>
@@ -369,13 +370,13 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Interleaved Practice</h3>
+            <h3>תרגול משולב</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">INTERLEAVED PRACTICE<a class="sci-cite" href="#sci-ref-3" aria-label="Reference 3"><sup>[3]</sup></a></span>
-            <p class="sci-back-desc">Topics are mixed, not blocked. Switching between subjects forces your brain to discriminate — the way the real exam demands.</p>
+            <span class="sci-back-label">תרגול משולב<a class="sci-cite" href="#sci-ref-3" aria-label="Reference 3"><sup>[3]</sup></a></span>
+            <p class="sci-back-desc">נושאים מעורבבים, לא בבלוקים. המעבר בין נושאים מכריח את המוח להבחין — כמו בבחינה האמיתית.</p>
           </div>
         </div>
       </div>
@@ -384,13 +385,13 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Targeted Practice</h3>
+            <h3>תרגול ממוקד</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">TARGETED PRACTICE<a class="sci-cite" href="#sci-ref-4" aria-label="Reference 4"><sup>[4]</sup></a></span>
-            <p class="sci-back-desc">Study time flows to your weakest topics first — never spread evenly across material you've already mastered.</p>
+            <span class="sci-back-label">תרגול ממוקד<a class="sci-cite" href="#sci-ref-4" aria-label="Reference 4"><sup>[4]</sup></a></span>
+            <p class="sci-back-desc">זמן הלמידה זורם קודם לנושאים החלשים ביותר — אף פעם לא מפוזר שווה על חומר שכבר שולט בו.</p>
           </div>
         </div>
       </div>
@@ -399,13 +400,13 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Error-Driven Remediation</h3>
+            <h3>תיקון מונע-טעויות</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">ERROR-DRIVEN REMEDIATION<a class="sci-cite" href="#sci-ref-5" aria-label="Reference 5"><sup>[5]</sup></a></span>
-            <p class="sci-back-desc">The questions you missed — and the ones you were sure about but got wrong — come back as a focused deck to drill.</p>
+            <span class="sci-back-label">תיקון מונע-טעויות<a class="sci-cite" href="#sci-ref-5" aria-label="Reference 5"><sup>[5]</sup></a></span>
+            <p class="sci-back-desc">השאלות שפספסת — ואלה שהיית בטוח בהן וטעית — חוזרות כחפיסה ממוקדת לתרגול.</p>
           </div>
         </div>
       </div>
@@ -414,13 +415,13 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Self-Explanation</h3>
+            <h3>הסבר עצמי</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SELF-EXPLANATION<a class="sci-cite" href="#sci-ref-6" aria-label="Reference 6"><sup>[6]</sup></a></span>
-            <p class="sci-back-desc">Before the answer unlocks, you explain your reasoning in your own words — the single act that deepens understanding most.</p>
+            <span class="sci-back-label">הסבר עצמי<a class="sci-cite" href="#sci-ref-6" aria-label="Reference 6"><sup>[6]</sup></a></span>
+            <p class="sci-back-desc">לפני שהתשובה נפתחת, אתה מסביר את ההיגיון במילים שלך — הפעולה שמעמיקה הבנה יותר מכול.</p>
           </div>
         </div>
       </div>
@@ -429,13 +430,13 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Confidence Calibration</h3>
+            <h3>כיול ביטחון</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">CONFIDENCE CALIBRATION<a class="sci-cite" href="#sci-ref-7" aria-label="Reference 7"><sup>[7]</sup></a></span>
-            <p class="sci-back-desc">Rate how sure you are before each answer. The app surfaces where you're confident but wrong — the most dangerous gap.</p>
+            <span class="sci-back-label">כיול ביטחון<a class="sci-cite" href="#sci-ref-7" aria-label="Reference 7"><sup>[7]</sup></a></span>
+            <p class="sci-back-desc">דרג כמה אתה בטוח לפני כל תשובה. האפליקציה חושפת איפה אתה בטוח אבל טועה — הפער המסוכן ביותר.</p>
           </div>
         </div>
       </div>
@@ -444,13 +445,13 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Guided Discovery</h3>
+            <h3>גילוי מודרך</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">GUIDED DISCOVERY<a class="sci-cite" href="#sci-ref-8" aria-label="Reference 8"><sup>[8]</sup></a></span>
-            <p class="sci-back-desc">The tutor draws the answer out of you with questions instead of handing it over — the effort of reasoning is what makes it stick.</p>
+            <span class="sci-back-label">גילוי מודרך<a class="sci-cite" href="#sci-ref-8" aria-label="Reference 8"><sup>[8]</sup></a></span>
+            <p class="sci-back-desc">המורה שולף ממך את התשובה בשאלות במקום למסור אותה — המאמץ של החשיבה הוא מה שמקבע.</p>
           </div>
         </div>
       </div>
@@ -459,19 +460,19 @@
         <div class="sci-card-faces">
           <div class="sci-card-front">
             <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Source-Grounded Truth</h3>
+            <h3>אמת מעוגנת-מקור</h3>
             <span class="sci-reveal">REVEAL<span>→</span></span>
           </div>
           <div class="sci-card-back">
             <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SOURCE-GROUNDED TRUTH</span>
-            <p class="sci-back-desc">Every explanation is backed by a verbatim citation from the textbook. Never a hallucination.</p>
+            <span class="sci-back-label">אמת מעוגנת-מקור</span>
+            <p class="sci-back-desc">כל הסבר מגובה בציטוט מילה-במילה מהספר. אף פעם לא הזיה.</p>
           </div>
         </div>
       </div>
       </div>
       <div class="sci-refs">
-        <p class="sci-refs-title">REFERENCES</p>
+        <p class="sci-refs-title">מקורות</p>
         <ol>
         <li id="sci-ref-1">1. Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science, 17</em>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener">↗</a></li>
         <li id="sci-ref-2">2. Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin, 132</em>(3), 354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener">↗</a></li>
@@ -490,38 +491,38 @@
   <section id="features" data-mq-section style="background: #fff; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
     <div style="max-width: 1200px; margin: 0 auto;">
       <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 52px;">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em;">FEATURES</span>
-        <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Everything you need to pass — nothing you don't</h2>
-        <p style="margin: 0; font-size: 18px; color: #475569; max-width: 620px; line-height: 1.65;">One platform for questions, review, AI chat, and progress tracking. No juggling apps.</p>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em; direction: ltr;">FEATURES</span>
+        <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">כל מה שצריך כדי לעבור — בלי מה שלא</h2>
+        <p style="margin: 0; font-size: 18px; color: #475569; max-width: 620px; line-height: 1.65;">פלטפורמה אחת לשאלות, חזרות, צ'אט AI ומעקב התקדמות. בלי לתמרן בין אפליקציות.</p>
       </div>
       <div data-mq-cards style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>Curated question bank</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Thousands of board-style questions built on past exams, each vetted through expert review before reaching you.</p>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>בנק שאלות אצור</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">אלפי שאלות ברמת הבחינה שנבנו על בסיס בחינות עבר, כל אחת עוברת ביקורת מומחה לפני שהיא מגיעה אליך.</p>
         </div>
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>AI question generator</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">The AI drafts smart new questions from the learned material, grounded in source texts and routed through human review.</p>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>מחולל שאלות AI</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">ה-AI מנסח שאלות חדשות וחכמות מהחומר הנלמד, מעוגנות בטקסטים המקוריים ועוברות ביקורת אנושית.</p>
         </div>
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>Socratic AI chat (per question)</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Stuck on a question? The AI tutor guides you with questions rather than just giving the answer — streamed in real time.</p>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>צ׳אט AI סוקרטי לכל שאלה</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">נתקעת? המורה מנחה אותך בשאלות במקום למסור את התשובה — בזמן אמת.</p>
         </div>
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>Topic heat map</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">See which topics are red, yellow, or green. Know exactly where to focus before exam day.</p>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>מפת חום נושאים</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">ראה אילו נושאים אדומים, צהובים או ירוקים. דע בדיוק איפה להתמקד לפני יום הבחינה.</p>
         </div>
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>Practice + Exam modes</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Relaxed practice with hints, or timed full-exam simulation — choose your mode per session.</p>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>מצבי תרגול + בחינה</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">תרגול רגוע עם רמזים, או סימולציית בחינה מלאה עם טיימר — בחר מצב לכל סשן.</p>
         </div>
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>Progress tracking</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Streaks, badges, and a full history of your attempts and improvement — visible at a glance on the dashboard.</p>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>מעקב התקדמות</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">רצפים, תגים והיסטוריה מלאה של הניסיונות והשיפור שלך — במבט אחד בדשבורד.</p>
         </div>
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>Leaderboard &amp; duels</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Climb a ranked leaderboard against fellow residents — with real-time, head-to-head duels coming soon.</p>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>טבלת מובילים ודו-קרבות</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">טפס בטבלת דירוג מול מתמחים אחרים — עם דו-קרבות ראש-בראש בזמן אמת, בקרוב.</p>
         </div>
       </div>
     </div>
@@ -530,29 +531,29 @@
   <!-- HOW IT WORKS -->
   <section id="how" data-mq-section style="max-width: 1200px; margin: 0 auto; padding: 96px 32px;">
     <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 52px;">
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em;">HOW IT WORKS</span>
-      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">From first question to exam day</h2>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em; direction: ltr;">HOW IT WORKS</span>
+      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">מהשאלה הראשונה ועד יום הבחינה</h2>
     </div>
     <div data-mq-cards style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
       <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
         <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500;">1</div>
-        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">Pick your topic</h3>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Filter by specialty, year, or difficulty and start a practice or exam session.</p>
+        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">בחר נושא</h3>
+        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">סנן לפי התמחות, שנה או רמת קושי והתחל סשן תרגול או בחינה.</p>
       </div>
       <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
         <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500;">2</div>
-        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">Answer &amp; learn</h3>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Submit an answer and instantly get a source-grounded explanation with verbatim textbook citations.</p>
+        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">ענה ולמד</h3>
+        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">הגש תשובה וקבל מיד הסבר מעוגן-מקור עם ציטוטים מילה-במילה מהספר.</p>
       </div>
       <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
         <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500;">3</div>
-        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">Chat with the AI tutor</h3>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">Not satisfied? Open the AI chat — it asks you guiding questions to deepen understanding, not just repeat the answer.</p>
+        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">שוחח עם המורה AI</h3>
+        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">לא הסתפקת? פתח את הצ׳אט — הוא שואל שאלות מנחות כדי להעמיק הבנה, לא רק לחזור על התשובה.</p>
       </div>
       <div style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
         <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); color: #062033; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500;">4</div>
-        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">Review what you missed</h3>
-        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">The spaced repetition engine brings back questions you struggled with at the optimal time.</p>
+        <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A;">חזור על מה שפספסת</h3>
+        <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">מנוע החזרה המרווחת מחזיר שאלות שהתקשית בהן בזמן האופטימלי.</p>
       </div>
     </div>
   </section>
@@ -560,13 +561,13 @@
   <!-- VISION -->
   <section id="vision" data-mq-section style="background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); padding: 96px 32px;">
     <div style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center;">
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #22D3EE; letter-spacing: .14em;">THE VISION</span>
-      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">One engine, every board exam</h2>
-      <p style="margin: 0; font-size: 19px; color: #B8D4EA; line-height: 1.7; max-width: 700px;">MeduXa is subject-agnostic — the same science-backed engine can power any structured board exam, in any specialty. The first exam track is live in the pilot right now, with more subjects rolling out.</p>
-      <p style="margin: 0; font-size: 20px; color: #67E8F9; font-weight: 600; font-style: italic;">"One platform to rule them all."</p>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #22D3EE; letter-spacing: .14em; direction: ltr;">THE VISION</span>
+      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">מנוע אחד, כל בחינת התמחות</h2>
+      <p style="margin: 0; font-size: 19px; color: #B8D4EA; line-height: 1.7; max-width: 700px;">MeduXa אגנוסטית לתחום — אותו מנוע מבוסס-מדע יכול להניע כל בחינה מובנית, בכל התמחות. המסלול הראשון חי בפיילוט ממש עכשיו, ונושאים נוספים בדרך.</p>
+      <p style="margin: 0; font-size: 20px; color: #67E8F9; font-weight: 600; font-style: italic;">"פלטפורמה אחת לשלוט בכולן."</p>
       <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 8px;">
-        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.35); color: #5EEAD4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">✓ Nephrology (Stage A) — live now</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.06); border: 1px solid #1E4A6E; color: #7DA2C4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">More specialties coming</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.35); color: #5EEAD4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">✓ נפרולוגיה (שלב א) — חי עכשיו</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.06); border: 1px solid #1E4A6E; color: #7DA2C4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">התמחויות נוספות בקרוב</span>
       </div>
     </div>
   </section>
@@ -581,21 +582,21 @@
         <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="5.5" stroke-linecap="round" fill="none"></path>
         <circle cx="48" cy="48" r="7" fill="#22D3EE"></circle>
       </svg>
-      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Ready to study smarter?</h2>
-      <p style="margin: 0; font-size: 18px; color: #475569; line-height: 1.65;">Join residents preparing for their boards the science-backed way.</p>
+      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">מוכנים ללמוד חכם יותר?</h2>
+      <p style="margin: 0; font-size: 18px; color: #475569; line-height: 1.65;">הצטרפו למתמחים שמתכוננים לבחינות בדרך מבוססת-המדע.</p>
       <form data-mq-form id="waitlistForm" style="display: flex; gap: 12px; width: 100%; max-width: 520px; margin-top: 8px; flex-wrap: wrap; justify-content: center;">
-        <input id="waitlistEmail" class="input-action" type="email" required placeholder="Your email" style="flex: 1; min-width: 220px; background: #F0F6FA; border-radius: 12px; padding: 15px 20px; font-size: 16px; color: #0F172A; font-family: 'IBM Plex Sans', sans-serif; outline: none;">
-        <button id="waitlistSubmit" class="btn-action" type="submit" style="border: none; border-radius: 12px; padding: 15px 30px; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; white-space: nowrap;">Get early access</button>
+        <input id="waitlistEmail" class="input-action" type="email" required placeholder="המייל שלך" style="flex: 1; min-width: 220px; background: #F0F6FA; border-radius: 12px; padding: 15px 20px; font-size: 16px; color: #0F172A; font-family: 'IBM Plex Sans Hebrew', sans-serif; outline: none;">
+        <button id="waitlistSubmit" class="btn-action" type="submit" style="border: none; border-radius: 12px; padding: 15px 30px; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans Hebrew', sans-serif; cursor: pointer; white-space: nowrap;">גישה מוקדמת</button>
       </form>
-      <span id="waitlistMsg" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #94A3B8;">free early access · no spam</span>
+      <span id="waitlistMsg" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #94A3B8; direction: ltr;">free early access · no spam</span>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer style="background: #04101E; padding: 36px 32px;">
     <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-      <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
-      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · Study smarter for your board exams · All rights reserved</span>
+      <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</span>
     </div>
   </footer>
 </div>
@@ -615,7 +616,7 @@
   (function () {
     var SUPA_URL = 'https://pappjpdsajkcoqrfqqqx.supabase.co';
     var SUPA_KEY = 'sb_publishable_tV1q0WG7_bMLfsCIqOU1tA_PH8gZfCU';
-    var LOCALE = 'en';
+    var LOCALE = 'he';
     var form = document.getElementById('waitlistForm');
     if (!form) return;
     var email = document.getElementById('waitlistEmail');
@@ -636,16 +637,18 @@
         },
         body: JSON.stringify({ email: val, locale: LOCALE, source: 'landing' })
       }).then(function (r) {
-        if (r.ok || r.status === 409) { // 409 = already on the list → still success
+        if (r.ok || r.status === 409) { // 409 = כבר ברשימה → עדיין הצלחה
           form.style.display = 'none';
-          msg.textContent = "✓ You're on the list — we'll be in touch.";
+          msg.textContent = '✓ נרשמת לרשימה — נהיה בקשר.';
           msg.style.color = '#0E7490';
+          msg.style.direction = 'rtl';
           if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist' });
         } else { throw new Error('status ' + r.status); }
       }).catch(function () {
-        btn.disabled = false; btn.textContent = 'Get early access';
-        msg.textContent = 'Something went wrong — please try again.';
+        btn.disabled = false; btn.textContent = 'גישה מוקדמת';
+        msg.textContent = 'משהו השתבש — נסו שוב.';
         msg.style.color = '#DC2626';
+        msg.style.direction = 'rtl';
       });
     });
   })();

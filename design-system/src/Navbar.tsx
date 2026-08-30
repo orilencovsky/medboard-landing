@@ -17,7 +17,7 @@ export interface NavbarProps {
 }
 
 /** Sticky top navigation bar — logo, section links, language switch, CTA, and a mobile hamburger menu. */
-export function Navbar({ links, langHref = '/he', langLabel = 'עברית', ctaHref, ctaLabel, ctaLabelShort = 'Join' }: NavbarProps) {
+export function Navbar({ links, langHref = '/?lang=he', langLabel = 'עברית', ctaHref, ctaLabel, ctaLabelShort = 'Join' }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
   return (
     <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(6,18,37,.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(34,211,238,.15)' }}>

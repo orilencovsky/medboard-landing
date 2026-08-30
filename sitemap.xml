@@ -3,14 +3,14 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://meduxa.ai/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/"/>
-    <xhtml:link rel="alternate" hreflang="he" href="https://meduxa.ai/he"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://meduxa.ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en"/>
   </url>
   <url>
-    <loc>https://meduxa.ai/he</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/"/>
-    <xhtml:link rel="alternate" hreflang="he" href="https://meduxa.ai/he"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/"/>
+    <loc>https://meduxa.ai/en</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://meduxa.ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en"/>
   </url>
 </urlset>
