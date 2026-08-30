@@ -65,7 +65,9 @@
      of AA for the 15px/700 button label. #6B4CF0 is 5.4:1. --ds-violet-light
      keeps its own value for strokes, borders and tints, which carry no text. */
   --ds-gradient-action: linear-gradient(135deg, #4A38C9, #6B4CF0); /* @kind color */
-  --ds-gradient-action-hover: linear-gradient(135deg, #3A2CA8, #6B4CF0); /* @kind color */
+  /* Both stops move one notch down the violet scale, so the hover reads at a
+     glance. Sharing #6B4CF0 with the base gradient made it nearly invisible. */
+  --ds-gradient-action-hover: linear-gradient(135deg, #3A2CA8, #4A38C9); /* @kind color */
 
   /* Type */
   --ds-font-sans: 'IBM Plex Sans', sans-serif;
@@ -110,10 +112,18 @@
 }
 .ds-m-link:hover { color: var(--ds-cyan); background: rgba(34,211,238,.06); }
 
-/* Violet action button — hover and focus states inline styles can't express. */
-.ds-btn-action { transition: background .15s ease; }
-.ds-btn-action:hover { background: var(--ds-gradient-action-hover); }
+/* Violet action button — hover and focus states inline styles can't express.
+   The hover gradient rides on a pseudo-element whose opacity cross-fades:
+   CSS cannot interpolate between two gradients, so transitioning `background`
+   directly snaps instead of easing. */
+.ds-btn-action { position: relative; z-index: 0; overflow: hidden; }
+.ds-btn-action::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+  background: var(--ds-gradient-action-hover); opacity: 0; transition: opacity .15s ease;
+}
+.ds-btn-action:hover::after { opacity: 1; }
 .ds-btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(124,92,255,.35); }
+@media (prefers-reduced-motion: reduce) { .ds-btn-action::after { transition: none; } }
 
 /* Violet focus ring for text inputs on light surfaces. */
 .ds-input-action:focus { border-color: var(--ds-violet-light); box-shadow: 0 0 0 3px rgba(124,92,255,.22); }
