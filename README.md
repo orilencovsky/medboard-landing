@@ -23,7 +23,7 @@ hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card image
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
-vercel.json              Vercel config (cleanUrls)
+vercel.json              Vercel config (cleanUrls + the language routing rules)
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
@@ -49,6 +49,37 @@ Both language versions share the same section order, anchored for in-page nav:
 | `#how` | "From first question to exam day" |
 | `#vision` | "One engine, every board exam" — the subject-agnostic story beyond nephrology |
 | `#pilot` | "Ready to study smarter?" — the nephrology pilot + waitlist signup |
+
+## Language routing
+
+`/` is the English page and `/he` is the Hebrew one; the choice between them is made by the
+**Vercel edge router**, in the `redirects` block of `vercel.json`. A request for `/` is sent on to
+`/he` when any of these holds:
+
+| # | Condition | Why |
+|---|---|---|
+| 1 | Cookie `mx_lang=he` | The visitor has been on the Hebrew page before |
+| 2 | `Accept-Language` starts with `he` | A Hebrew-language browser, anywhere in the world |
+| 3 | `x-vercel-ip-country: IL` | An Israeli visitor — even on an English-language browser |
+
+Rules 2 and 3 are skipped once the `mx_lang` cookie exists, so a stated preference always beats a
+guessed one. The redirects are **307 (temporary)**, and both pages carry `hreflang` tags, so each
+language stays independently indexable.
+
+The `mx_lang` cookie (one year, `SameSite=Lax`) is written client-side by the pages themselves,
+since only the router reads it:
+
+- `/he` sets `mx_lang=he` on load.
+- The `EN` switcher on `/he` links to `/?lang=en`; `index.html` turns that into `mx_lang=en` and
+  strips the `lang` param back out of the URL (leaving any `utm_*` intact) so a copied link doesn't
+  carry the lock to the next person.
+
+Every rule also requires the `lang` query param to be **absent** — that is what keeps `/?lang=en`
+from being bounced straight back to `/he` before the cookie can be written.
+
+> **Country detection only exists on Vercel.** Served locally over `python3 -m http.server` there is
+> no router, so `/` always renders English — test rules 2 and 3 on a preview deployment. `vercel dev`
+> does not evaluate the geolocation `has` condition either.
 
 ## Waitlist
 
