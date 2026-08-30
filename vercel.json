@@ -1,3 +1,39 @@
 {
-  "cleanUrls": true
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "cookie", "key": "mx_lang", "value": "he" }],
+      "missing": [{ "type": "query", "key": "lang" }],
+      "destination": "/he",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "missing": [
+        { "type": "cookie", "key": "mx_lang" },
+        { "type": "query", "key": "lang" }
+      ],
+      "has": [
+        {
+          "type": "header",
+          "key": "accept-language",
+          "value": "^[Hh][Ee]([-;,].*)?$"
+        }
+      ],
+      "destination": "/he",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "missing": [
+        { "type": "cookie", "key": "mx_lang" },
+        { "type": "query", "key": "lang" }
+      ],
+      "has": [{ "type": "header", "key": "x-vercel-ip-country", "value": "IL" }],
+      "destination": "/he",
+      "permanent": false
+    }
+  ]
 }
