@@ -61,7 +61,10 @@
   --ds-gradient-vision-bg: linear-gradient(165deg, #061225 0%, #0A1F3D 100%);
   --ds-gradient-cta: linear-gradient(135deg, #0EA5E9, #22D3EE); /* @kind color */
   --ds-gradient-heading-accent: linear-gradient(90deg, #38BDF8, #22D3EE); /* @kind color */
-  --ds-gradient-action: linear-gradient(135deg, #4A38C9, #7C5CFF); /* @kind color */
+  /* Ends at #6B4CF0, not --ds-violet-light: white on #7C5CFF is 4.35:1, short
+     of AA for the 15px/700 button label. #6B4CF0 is 5.4:1. --ds-violet-light
+     keeps its own value for strokes, borders and tints, which carry no text. */
+  --ds-gradient-action: linear-gradient(135deg, #4A38C9, #6B4CF0); /* @kind color */
   --ds-gradient-action-hover: linear-gradient(135deg, #3A2CA8, #6B4CF0); /* @kind color */
 
   /* Type */
