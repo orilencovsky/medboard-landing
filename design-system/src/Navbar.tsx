@@ -32,7 +32,7 @@ export function Navbar({ links, langHref = '/he', langLabel = 'עברית', ctaH
           <a href={langHref} style={{ color: 'var(--ds-cyan-pale)', fontSize: 14, fontWeight: 600, border: '1px solid var(--ds-navy-border)', borderRadius: 8, padding: '7px 14px', textDecoration: 'none' }}>
             {langLabel}
           </a>
-          <Button href={ctaHref} size="md">
+          <Button href={ctaHref} variant="action" size="md">
             {ctaLabel}
           </Button>
           <button

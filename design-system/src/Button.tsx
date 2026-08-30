@@ -5,8 +5,14 @@ export interface ButtonProps {
   href?: string;
   onClick?: React.MouseEventHandler;
   type?: 'button' | 'submit';
-  /** @default 'primary' */
-  variant?: 'primary' | 'secondary';
+  /**
+   * `action` is the violet commit button — sign-up, early access, anything the
+   * system does on the user's behalf. `primary` stays cyan for in-product
+   * actions that aren't a commit; `secondary` is the outline that pairs beside
+   * either.
+   * @default 'primary'
+   */
+  variant?: 'primary' | 'secondary' | 'action';
   /** @default 'md' */
   size?: 'md' | 'lg';
   disabled?: boolean;
@@ -30,6 +36,11 @@ const sizes = {
 };
 
 const variants: Record<string, React.CSSProperties> = {
+  action: {
+    background: 'var(--ds-gradient-action)',
+    color: '#fff',
+    boxShadow: '0 6px 24px rgba(74,56,201,.45)',
+  },
   primary: {
     background: 'var(--ds-gradient-cta)',
     color: '#062033',
@@ -43,18 +54,19 @@ const variants: Record<string, React.CSSProperties> = {
   },
 };
 
-/** MeduXa CTA button — gradient-filled primary or outlined secondary, used across nav, hero, and pilot sections. */
+/** MeduXa CTA button — violet action, cyan primary, or outlined secondary, used across nav, hero, and pilot sections. */
 export function Button({ children, href, onClick, type = 'button', variant = 'primary', size = 'md', disabled }: ButtonProps) {
   const style = { ...base, ...sizes[size], ...variants[variant], opacity: disabled ? 0.6 : 1 };
+  const className = variant === 'action' ? 'ds-btn-action' : undefined;
   if (href) {
     return (
-      <a href={href} style={style} onClick={onClick as any}>
+      <a href={href} className={className} style={style} onClick={onClick as any}>
         {children}
       </a>
     );
   }
   return (
-    <button type={type} onClick={onClick} disabled={disabled} style={style}>
+    <button type={type} className={className} onClick={onClick} disabled={disabled} style={style}>
       {children}
     </button>
   );

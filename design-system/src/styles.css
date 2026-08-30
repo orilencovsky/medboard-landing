@@ -20,6 +20,22 @@
   --ds-sky-light: #38BDF8;
   --ds-teal: #5EEAD4;
 
+  /* Indigo violet accent.
+     The split that governs both scales: cyan owns the learner's own data
+     (progress, mastery, scores, streaks, stat numbers, feature/step chips);
+     violet owns the system acting (commit actions, sign-up, AI-tutor
+     surfaces, selected state, focus rings). The two never appear on the
+     same control. */
+  --ds-violet-deep: #3A2CA8;
+  --ds-violet: #4A38C9;
+  --ds-violet-light: #7C5CFF;
+  --ds-violet-pale: #C9BCFF;
+  --ds-violet-tint: #EEEAFF;
+  --ds-violet-tint-border: #CFC4FF;
+
+  /* Reserved semantics — never a CTA, never brand. */
+  --ds-warning: #F59E0B;
+
   /* Text on dark */
   --ds-text-onDark-primary: #ffffff;
   --ds-text-onDark-secondary: #B8D4EA;
@@ -45,6 +61,8 @@
   --ds-gradient-vision-bg: linear-gradient(165deg, #061225 0%, #0A1F3D 100%);
   --ds-gradient-cta: linear-gradient(135deg, #0EA5E9, #22D3EE); /* @kind color */
   --ds-gradient-heading-accent: linear-gradient(90deg, #38BDF8, #22D3EE); /* @kind color */
+  --ds-gradient-action: linear-gradient(135deg, #4A38C9, #7C5CFF); /* @kind color */
+  --ds-gradient-action-hover: linear-gradient(135deg, #3A2CA8, #6B4CF0); /* @kind color */
 
   /* Type */
   --ds-font-sans: 'IBM Plex Sans', sans-serif;
@@ -88,6 +106,14 @@
   display: block;
 }
 .ds-m-link:hover { color: var(--ds-cyan); background: rgba(34,211,238,.06); }
+
+/* Violet action button — hover and focus states inline styles can't express. */
+.ds-btn-action { transition: background .15s ease; }
+.ds-btn-action:hover { background: var(--ds-gradient-action-hover); }
+.ds-btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(124,92,255,.35); }
+
+/* Violet focus ring for text inputs on light surfaces. */
+.ds-input-action:focus { border-color: var(--ds-violet-light); box-shadow: 0 0 0 3px rgba(124,92,255,.22); }
 
 .ds-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: ds-hero-draw 3.5s ease-out both; }
 .ds-mark path:nth-child(2) { animation-delay: .4s; }
