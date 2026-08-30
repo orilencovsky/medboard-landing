@@ -21,10 +21,12 @@ index.html               Hebrew / RTL landing page — the root (single file: ma
 en/index.html            English landing page — a full translation, not a wrapper
 hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
-og-image.png             Open Graph / Twitter card image
+og-image.png             Open Graph / Twitter card — English (/en)
+og-image-he.png          Open Graph / Twitter card — Hebrew (root)
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls, and the /he → / redirect)
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
+scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
 
