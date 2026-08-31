@@ -108,6 +108,8 @@ module.exports = async function handler(req, res) {
         model: 'claude-haiku-4-5',
         // The prompt caps the reply at 55 words; this is headroom, not a target.
         max_tokens: 300,
+        // Binary today (README § Adding a third language). A new locale needs its
+        // own SYSTEM_* prompt written in that language, not a translated one.
         system: body.locale === 'en' ? SYSTEM_EN : SYSTEM_HE,
         messages
       })

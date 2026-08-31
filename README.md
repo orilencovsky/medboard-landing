@@ -98,6 +98,25 @@ since the router would send them to `/en` anyway.
 > no router, so `/` always renders Hebrew — test rule 2 on a preview deployment. `vercel dev` does
 > not evaluate the geolocation `has` condition either.
 
+### Adding a third language
+
+Everything above is built for exactly two locales — the redirect rules are one binary choice
+(`mx_lang=en` present or not), not a per-language table. Arabic, Russian, and French are on the
+roadmap; when one is actually being added, plan for more than a new folder:
+
+- **Routing** — `vercel.json`'s `redirects` need a real per-language rule set instead of the current
+  he/en binary (cookie value, `Accept-Language` match, and a fallback per locale).
+- **The AI tutor** — `api/tutor.js` switches its system prompt on `body.locale`, currently only
+  `'en'` vs. everything-else-is-Hebrew (see `SYSTEM_HE` / `SYSTEM_EN`). A new locale needs its own
+  system prompt, written and reviewed in that language, not a mechanical translation of the Hebrew
+  or English one — it is instructing a live model on a clinical case.
+- **RTL** — Arabic reuses the Hebrew page's RTL patterns (`.ltr-iso` for embedded Latin numerals,
+  `dir` handling); Russian and French are LTR like `en/index.html`.
+- **hreflang** — every page's `<link rel="alternate" hreflang="...">` block lists all locales, so
+  each new page means an edit to all the *existing* pages too, not just a new one.
+- **Medical copy** — the KDIGO criteria and similar clinical content need a native-speaking medical
+  reviewer, not just a translator; this is body-copy accuracy, not marketing copy.
+
 ## Waitlist
 
 The signup form posts straight into the product's Supabase `waitlist` table using the **publishable**
