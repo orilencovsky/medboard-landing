@@ -83,11 +83,23 @@
   .qopt .mark { font-family: 'IBM Plex Mono', monospace; font-size: 13px; opacity: 0; }
   .qopt.sel { border: 1.5px solid #7C5CFF; background: rgba(124,92,255,.12); color: #E2F4FD; font-weight: 600; }
   .qopt.bad { border: 1.5px solid #F87171; background: rgba(248,113,113,.1); color: #FECACA; font-weight: 600; }
-  .qopt.sel .mark, .qopt.bad .mark { opacity: 1; }
+  /* The right answer, revealed after a wrong pick. Teal, never the violet of
+     .sel: this is the key, not something the visitor chose. */
+  .qopt.key { border: 1.5px solid #5EEAD4; background: rgba(94,234,212,.07); color: #CFFAFE; font-weight: 600; }
+  .qopt.sel .mark, .qopt.bad .mark, .qopt.key .mark { opacity: 1; }
+  /* Committed. The options stay clickable, but only as a review surface — the
+     one whose explanation is showing stands out and the rest step back. Opacity
+     and a halo, never colour, so this layers over .sel / .bad / .key alike; the
+     halo is the violet of .qtutor, tying the option to the box explaining it. */
+  .qcard.answered .qopt { opacity: .7; transition: border-color .15s, background .15s, opacity .15s, box-shadow .15s; }
+  .qcard.answered .qopt.reviewing, .qcard.answered .qopt:hover { opacity: 1; }
+  .qcard.answered .qopt.reviewing { box-shadow: 0 0 0 3px rgba(124,92,255,.22); }
 
   .qtutor { display: none; }
   .qcard.answered .qtutor { display: flex; }
   .qcard.answered .qhint { display: none; }
+  .qhint-review { display: none; }
+  .qcard.answered .qhint-review { display: block; }
 
   .qchat { display: none; }
   .qcard.answered .qchat { display: flex; }
@@ -360,16 +372,20 @@
           <div data-mq-demo-q style="font-size: 18px; font-weight: 600; color: #E2F4FD; line-height: 1.6;">A 67-year-old man with diabetic CKD undergoes coronary catheterization. Creatinine was 1.5 mg/dL before the procedure, 1.77 mg/dL two days later. Per KDIGO criteria, which is correct?</div>
 
           <div data-mq-demo-opts style="display: flex; flex-direction: column; gap: 10px;">
-            <div class="qopt" role="button" tabindex="0" data-correct="1" data-tutor="Exactly — on creatinine. A rise of 0.27 mg/dL does not reach the absolute threshold (0.3), and a ratio of 1.18 from baseline does not reach 1.5. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to rule AKI out with confidence?"><span>Does not meet AKI criteria</span><span class="mark"></span></div>
-            <div class="qopt" role="button" tabindex="0" data-tutor="Close. Stage 1 needs a rise of ≥0.3 mg/dL or 1.5–1.9× baseline — neither was crossed here. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to decide?"><span>Has AKI stage 1</span><span class="mark"></span></div>
-            <div class="qopt" role="button" tabindex="0" data-tutor="Stage 2 is 2.0–2.9× baseline, and the ratio here is 1.18 — not even the first stage's threshold was crossed. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to decide?"><span>Has AKI stage 2</span><span class="mark"></span></div>
-            <div class="qopt" role="button" tabindex="0" data-tutor="Stage 3 needs ≥3.0× baseline, creatinine ≥4.0 mg/dL or dialysis — far from the numbers here. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to decide?"><span>Has AKI stage 3</span><span class="mark"></span></div>
+            <div class="qopt" role="button" tabindex="0" data-correct="1" data-tutor="Exactly — on creatinine. A rise of 0.27 mg/dL does not reach the absolute threshold (0.3), and a ratio of 1.18 from baseline does not reach 1.5. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to rule AKI out with confidence?" data-review="The right answer, on creatinine: a rise of 0.27 mg/dL does not cross the 0.3 threshold, and a ratio of 1.18 from baseline does not reach 1.5. Urine output, an independent parameter for diagnosis, was never given in the stem."><span>Does not meet AKI criteria</span><span class="mark"></span></div>
+            <div class="qopt" role="button" tabindex="0" data-tutor="Close. Stage 1 needs a rise of ≥0.3 mg/dL or 1.5–1.9× baseline — neither was crossed here. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to decide?" data-review="Ruled out: stage 1 needs a rise of ≥0.3 mg/dL or 1.5–1.9× baseline. Here the rise is 0.27 and the ratio 1.18 — neither threshold is crossed."><span>Has AKI stage 1</span><span class="mark"></span></div>
+            <div class="qopt" role="button" tabindex="0" data-tutor="Stage 2 is 2.0–2.9× baseline, and the ratio here is 1.18 — not even the first stage's threshold was crossed. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to decide?" data-review="Ruled out: stage 2 is 2.0–2.9× baseline, and the ratio here is 1.18 — not even the first stage's threshold was crossed."><span>Has AKI stage 2</span><span class="mark"></span></div>
+            <div class="qopt" role="button" tabindex="0" data-tutor="Stage 3 needs ≥3.0× baseline, creatinine ≥4.0 mg/dL or dialysis — far from the numbers here. But KDIGO diagnoses and stages AKI on two parameters — which other value are we missing to decide?" data-review="Ruled out: stage 3 needs ≥3.0× baseline, creatinine ≥4.0 mg/dL or the start of dialysis — far from the numbers in the stem."><span>Has AKI stage 3</span><span class="mark"></span></div>
           </div>
 
           <div class="qreveal" style="display: flex; flex-direction: column; gap: 16px;">
             <div class="qhint" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #5B87A8;">Pick an answer →</div>
+            <!-- Replaces the hint once the verdict is in, so that options which
+                 no longer move the ✓ do not read as broken. Kept short enough to
+                 hold one line down to a 320px phone. -->
+            <div class="qhint-review" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #5B87A8;">Answer locked · read any option</div>
 
-            <div class="qtutor" style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; gap: 12px; align-items: flex-start;">
+            <div class="qtutor" aria-live="polite" style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; gap: 12px; align-items: flex-start;">
               <svg width="22" height="22" viewBox="0 0 96 96" fill="none" style="flex-shrink: 0; margin-top: 2px;">
                 <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="8" stroke-linecap="round" fill="none"></path>
                 <circle cx="48" cy="48" r="11" fill="#22D3EE"></circle>
@@ -750,19 +766,18 @@
   })();
 </script>
 <script>
-  // Hero demo card. The visitor picks an answer and gets the tutor line for
-  // that option; from there they may send one message to the live tutor behind
-  // /api/tutor, either by picking a chip or by typing.
+  // Hero demo card. The visitor picks an answer — once, the way they would sit
+  // the exam — and gets the tutor line for that option; from there they may send
+  // one message to the live tutor behind /api/tutor, either by picking a chip or
+  // by typing. After the pick the options become a review surface: clicking one
+  // swaps the explanation and touches nothing else.
   (function () {
     var card = document.querySelector('.qcard');
     if (!card) return;
 
-    var MAX_MESSAGES = 1;   // per visitor per answer, enforced again server-side
+    var MAX_MESSAGES = 1;   // per visitor, enforced again server-side
     var turns = 0, busy = false, history = [];
-    // Bumped on every answer. A reply that lands after the visitor has moved to
-    // another option belongs to a conversation that no longer exists, and
-    // appending it would leave two assistant turns in a row for the next send.
-    var gen = 0;
+    var picked = null;      // the committed answer; null until the visitor picks
 
     function bubble(kind, text) {
       var el = document.createElement('div');
@@ -794,7 +809,6 @@
       if (!text || busy) return;
       if (turns >= MAX_MESSAGES) { card.classList.add('limited'); return; }
       var thread = card.querySelector('.qthread');
-      var mine = gen;
       turns++; busy = true;
       card.classList.add('chatted');
       thread.appendChild(bubble('user', text));
@@ -809,22 +823,30 @@
       })
         .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
         .then(function (data) {
-          if (mine !== gen) return;
           var reply = clean(data && data.reply);
           pending.querySelector('.t-live').textContent = reply || 'One moment — no answer came back. Try again.';
           history.push({ role: 'assistant', content: reply });
           if (typeof gtag === 'function') gtag('event', 'tutor_reply_shown');
         })
         .catch(function () {
-          if (mine !== gen) return;
           pending.querySelector('.t-live').textContent = 'One moment — the connection to the tutor dropped. Try sending again.';
           history.pop(); turns--;   // refund the quota, the visitor never got an answer
         })
         .then(function () {
-          if (mine !== gen) return;
           busy = false;
           if (turns >= MAX_MESSAGES) card.classList.add('limited');
         });
+    }
+
+    // Point the tutor box at one option. The committed pick keeps its reactive
+    // line ("Exactly —", "Close.") — it was written as an answer to the visitor;
+    // every other option gets the neutral review line instead, which states the
+    // criterion without pretending they chose it.
+    function explain(opt) {
+      card.querySelectorAll('.qopt').forEach(function (o) { o.classList.remove('reviewing'); });
+      opt.classList.add('reviewing');
+      var line = opt === picked ? opt.getAttribute('data-tutor') : opt.getAttribute('data-review');
+      card.querySelector('.t-msg').textContent = line || '';
     }
 
     function activate(e) {
@@ -844,22 +866,27 @@
       var opt = e.target.closest('.qopt');
       if (!opt) return;
 
-      card.querySelectorAll('.qopt').forEach(function (o) {
-        o.classList.remove('sel', 'bad');
-        o.querySelector('.mark').textContent = '';
-      });
+      // Already answered, so this is review, not a second attempt: swap the
+      // explanation and leave the verdict, the thread and the quota alone.
+      if (picked) { explain(opt); return; }
+
+      picked = opt;
       var right = opt.getAttribute('data-correct') === '1';
       opt.classList.add(right ? 'sel' : 'bad');
       opt.querySelector('.mark').textContent = right ? '✓' : '✕';
+      // Got it wrong: show which one was right, the way the app does after an
+      // answer. The learner can read the rest by clicking through them.
+      if (!right) {
+        var key = card.querySelector('.qopt[data-correct="1"]');
+        key.classList.add('key');
+        key.querySelector('.mark').textContent = '✓';
+      }
       card.classList.add('answered');
 
       var line = opt.getAttribute('data-tutor') || '';
-      card.querySelector('.t-msg').textContent = line;
+      explain(opt);
 
-      // Start the conversation over, seeded with what the learner just picked.
-      card.querySelector('.qthread').innerHTML = '';
-      card.classList.remove('chatted', 'limited');
-      turns = 0; busy = false; gen++;
+      // The conversation is seeded once, with what the learner committed to.
       history = [
         { role: 'user', content: 'I chose the answer: "' + opt.querySelector('span').textContent.trim() + '".' },
         { role: 'assistant', content: line }

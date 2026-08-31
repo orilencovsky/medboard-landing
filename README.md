@@ -130,6 +130,14 @@ and gets the Socratic line written for *that* option (`data-tutor` on each `.qop
 panel lists the full KDIGO staging criteria. From there they may send **one** message to a live
 tutor — by picking one of the suggested chips or by typing — which posts to `/api/tutor`.
 
+That pick is taken **once**, the way the exam is sat: it sets the ✓/✕, reveals the right answer
+(`.qopt.key`) if they missed it, spends the one tutor message, and reports `demo_answer_selected`.
+After it the options become a review surface — clicking one only swaps the explanation, and shows
+`data-review`, a neutral line that states the criterion rather than reacting as though they had
+just chosen it. So each option needs **both** attributes, and the verdict, the thread and the
+message quota never reset. Re-picking used to reset all three, which let a visitor brute-force
+their way to the ✓ and refill the client-side quota at will.
+
 `api/tutor.js` holds the system prompt server-side, so the endpoint cannot be driven as a
 general-purpose chat. It needs `ANTHROPIC_API_KEY` set in **Vercel → Project → Settings →
 Environment Variables** (Production + Preview); without it the endpoint answers `503`
@@ -140,7 +148,7 @@ header is only sent when that variable is present. Spend is bounded on four laye
 
 | Layer | Limit |
 |---|---|
-| Client | 1 message per visitor per answer (`MAX_MESSAGES`) |
+| Client | 1 message per visitor (`MAX_MESSAGES`), not refilled by re-picking |
 | Endpoint | 3 requests/hour per IP; 600 requests/day global kill-switch |
 | Model | `claude-haiku-4-5`, `max_tokens: 300` |
 | Prompt | System prompt server-side only |
