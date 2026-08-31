@@ -35,12 +35,14 @@ export function WaitlistForm({ placeholder, submitLabel, helperText, onSubmit, s
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={placeholder}
+          className="ds-input-action"
           style={{ flex: 1, minWidth: 220, background: 'var(--ds-bg-app)', border: '1px solid var(--ds-border-input)', borderRadius: 'var(--ds-radius-md)', padding: '15px 20px', fontSize: 16, color: 'var(--ds-text-heading)', fontFamily: 'var(--ds-font-sans)', outline: 'none' }}
         />
         <button
           type="submit"
           disabled={state === 'submitting'}
-          style={{ background: 'var(--ds-gradient-cta)', color: '#062033', border: 'none', borderRadius: 'var(--ds-radius-md)', padding: '15px 30px', fontSize: 16, fontWeight: 700, fontFamily: 'var(--ds-font-sans)', cursor: 'pointer', whiteSpace: 'nowrap', opacity: state === 'submitting' ? 0.7 : 1 }}
+          className="ds-btn-action"
+          style={{ background: 'var(--ds-gradient-action)', color: '#fff', border: 'none', borderRadius: 'var(--ds-radius-md)', padding: '15px 30px', fontSize: 16, fontWeight: 700, fontFamily: 'var(--ds-font-sans)', cursor: 'pointer', whiteSpace: 'nowrap', opacity: state === 'submitting' ? 0.7 : 1 }}
         >
           {state === 'submitting' ? '…' : submitLabel}
         </button>

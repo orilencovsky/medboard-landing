@@ -6,9 +6,9 @@ lives in a separate private repo and is served from `app.meduxa.ai`.
 
 | | |
 |---|---|
-| **Live (EN)** | https://meduxa.ai |
-| **Live (HE)** | https://meduxa.ai/he |
-| **Host** | Vercel (static, `cleanUrls: true`) |
+| **Live (HE)** | https://meduxa.ai |
+| **Live (EN)** | https://meduxa.ai/en |
+| **Host** | Vercel (static, `cleanUrls: true`; `/he` 308s to `/?lang=he`) |
 | **Product** | Nephrology Stage A board prep — pilot launch September 8, 2026 |
 
 > The repo is still named `medboard-landing` after the product's former name, **MedBoard IL**.
@@ -17,14 +17,16 @@ lives in a separate private repo and is served from `app.meduxa.ai`.
 ## What's here
 
 ```
-index.html               English landing page (single file: markup + inline CSS + inline JS)
-he/index.html            Hebrew / RTL landing page — a full translation, not a wrapper
+index.html               Hebrew / RTL landing page — the root (single file: markup + inline CSS + inline JS)
+en/index.html            English landing page — a full translation, not a wrapper
 hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
-og-image.png             Open Graph / Twitter card image
+og-image.png             Open Graph / Twitter card — English (/en)
+og-image-he.png          Open Graph / Twitter card — Hebrew (root)
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
+scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
 
@@ -35,7 +37,10 @@ inline styles and inline scripts. Open `index.html` in a browser, or serve the d
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ (EN) and http://localhost:8000/he/ (HE).
+Then visit http://localhost:8000/ (HE) and http://localhost:8000/en/ (EN).
+
+Language routing happens at the Vercel edge, so locally `/` always renders Hebrew and `/en` always
+renders English — see **Language routing** below for how to exercise the real rules.
 
 ## Page structure
 
@@ -52,34 +57,43 @@ Both language versions share the same section order, anchored for in-page nav:
 
 ## Language routing
 
-`/` is the English page and `/he` is the Hebrew one; the choice between them is made by the
-**Vercel edge router**, in the `redirects` block of `vercel.json`. A request for `/` is sent on to
-`/he` when any of these holds:
+`/` is the Hebrew page and `/en` is the English one; the choice between them is made by the
+**Vercel edge router**, in the `redirects` block of `vercel.json`. Hebrew is the default — a request
+for `/` is sent on to `/en` only when one of these holds:
 
 | # | Condition | Why |
 |---|---|---|
-| 1 | Cookie `mx_lang=he` | The visitor has been on the Hebrew page before |
-| 2 | `Accept-Language` starts with `he` | A Hebrew-language browser, anywhere in the world |
-| 3 | `x-vercel-ip-country: IL` | An Israeli visitor — even on an English-language browser |
+| 1 | Cookie `mx_lang=en` | The visitor has chosen English before |
+| 2 | `Accept-Language` does **not** start with `he`, **and** `x-vercel-ip-country` is **not** `IL` | Neither a Hebrew-language browser nor an Israeli visitor |
 
-Rules 2 and 3 are skipped once the `mx_lang` cookie exists, so a stated preference always beats a
-guessed one. The redirects are **307 (temporary)**, and both pages carry `hreflang` tags, so each
-language stays independently indexable.
+Rule 2 is skipped once the `mx_lang` cookie exists, so a stated preference always beats a guessed
+one. Note it is a single rule with both conditions: an Israeli visitor on an English-language
+browser stays on Hebrew, which is the same call the previous English-root version made in reverse.
+The redirects are **307 (temporary)**, and both pages carry `hreflang` tags, so each language stays
+independently indexable.
 
 The `mx_lang` cookie (one year, `SameSite=Lax`) is written client-side by the pages themselves,
 since only the router reads it:
 
-- `/he` sets `mx_lang=he` on load.
-- The `EN` switcher on `/he` links to `/?lang=en`; `index.html` turns that into `mx_lang=en` and
-  strips the `lang` param back out of the URL (leaving any `utm_*` intact) so a copied link doesn't
-  carry the lock to the next person.
+- `/` sets `mx_lang=he` on load, and strips any `lang` param back out of the URL (leaving any
+  `utm_*` intact) so a copied link doesn't carry the lock to the next person.
+- `/en` sets `mx_lang=en` on load.
 
-Every rule also requires the `lang` query param to be **absent** — that is what keeps `/?lang=en`
-from being bounced straight back to `/he` before the cookie can be written.
+Every rule also requires the `lang` query param to be **absent** — that is what keeps `/?lang=he`
+from being bounced straight to `/en` before the cookie can be written. The `עברית` switcher on `/en`
+links to `/?lang=he` for exactly that reason.
+
+`/he` — the address the Hebrew page used to live at — **308s to `/?lang=he`**, not to `/`. The param
+matters: without it, an old Hebrew link followed by someone carrying an `mx_lang=en` cookie would be
+bounced straight to `/en`, and the explicit link would lose to the stale cookie.
+
+Visitors from before the cookie existed carry `mbil_lang` in localStorage. `/en` migrates a stored
+`he` over to the cookie once and sends them back to the root; a stored `en` needs no migration,
+since the router would send them to `/en` anyway.
 
 > **Country detection only exists on Vercel.** Served locally over `python3 -m http.server` there is
-> no router, so `/` always renders English — test rules 2 and 3 on a preview deployment. `vercel dev`
-> does not evaluate the geolocation `has` condition either.
+> no router, so `/` always renders Hebrew — test rule 2 on a preview deployment. `vercel dev` does
+> not evaluate the geolocation `has` condition either.
 
 ## Waitlist
 
@@ -101,8 +115,8 @@ The script strips audio, scales to 1600px (desktop) and 800px (phone), and targe
 
 ## Editing conventions
 
-- **Both languages, every time.** `index.html` and `he/index.html` are independent files. A copy or
-  layout change made in one must be mirrored in the other, or the two drift.
+- **Both languages, every time.** `index.html` (Hebrew, the root) and `en/index.html` are independent
+  files. A copy or layout change made in one must be mirrored in the other, or the two drift.
 - **RTL is real, not flipped.** The Hebrew page is authored right-to-left; check it in a browser
   rather than assuming a mirrored desktop layout holds up.
 - **Phones are the tight case.** The `<=600px` breakpoint is tuned against SE-class viewports —

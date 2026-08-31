@@ -21,15 +21,28 @@ This DS has no class-name system (no Tailwind-style utilities). Every color, gra
 | Category | Tokens |
 |---|---|
 | Ink/navy scale | `--ds-ink`, `--ds-deep`, `--ds-navy2`, `--ds-navy-card`, `--ds-navy-border`, `--ds-footer-ink` |
-| Accent | `--ds-cyan`, `--ds-cyan-soft`, `--ds-cyan-pale`, `--ds-sky`, `--ds-sky-light`, `--ds-teal` |
+| Accent — cyan | `--ds-cyan`, `--ds-cyan-soft`, `--ds-cyan-pale`, `--ds-sky`, `--ds-sky-light`, `--ds-teal` |
+| Accent — violet | `--ds-violet-deep`, `--ds-violet`, `--ds-violet-light`, `--ds-violet-pale`, `--ds-violet-tint`, `--ds-violet-tint-border` |
+| Reserved semantics | `--ds-warning` (amber, warnings only), `--ds-danger` (errors only) |
 | Text on dark | `--ds-text-onDark-primary/secondary/muted/faint` |
 | Text on light | `--ds-text-heading`, `--ds-text-body`, `--ds-text-faint`, `--ds-text-cyan-accent` |
 | Surfaces | `--ds-bg-app`, `--ds-bg-white`, `--ds-border-light`, `--ds-border-input` |
-| Gradients | `--ds-gradient-hero-bg`, `--ds-gradient-vision-bg`, `--ds-gradient-cta`, `--ds-gradient-heading-accent` |
+| Gradients | `--ds-gradient-hero-bg`, `--ds-gradient-vision-bg`, `--ds-gradient-cta`, `--ds-gradient-heading-accent`, `--ds-gradient-action`, `--ds-gradient-action-hover` |
 | Type | `--ds-font-sans` (IBM Plex Sans), `--ds-font-mono` (IBM Plex Mono) |
 | Radii | `--ds-radius-sm/md/lg/xl/pill` |
 
-`--ds-gradient-cta` (sky→cyan diagonal) is the brand's one recurring accent — it's what makes primary buttons, step-number chips, and feature-card dots all read as "the same product." Reach for it before inventing a new accent treatment.
+**Two accent scales, split by ownership.** This is the rule to follow, not just the hex values:
+
+| Scale | Owns |
+|---|---|
+| **Cyan / sky** (`--ds-gradient-cta`) | The learner's own data — progress bars, mastery %, scores, streaks, stat numbers, feature-card dots, step-number chips |
+| **Indigo violet** (`--ds-gradient-action`) | The system acting — commit actions, sign-up and early access, AI-tutor surfaces, selected state, focus rings |
+| `--ds-warning` (amber) | Warnings only. Never a CTA. |
+| `--ds-danger` (red) | Wrong answers and errors only. |
+
+The two accents never appear on the same control. The logo is unchanged — cyan mark, cyan `.ai` suffix.
+
+`Button` carries this split: `variant="action"` is the violet commit button (nav CTA, hero CTA, waitlist submit), `variant="primary"` stays cyan for in-product actions that aren't a commit, and `variant="secondary"` is the navy outline that pairs beside either. Reach for an existing variant before inventing a new accent treatment.
 
 Two plain CSS classes exist for hover states inline styles can't express: `.ds-nav-link` and `.ds-m-link` (desktop/mobile nav link hover-to-cyan). There's no broader class vocabulary beyond these two — everything else is inline `style` objects reading tokens.
 

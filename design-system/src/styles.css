@@ -20,6 +20,22 @@
   --ds-sky-light: #38BDF8;
   --ds-teal: #5EEAD4;
 
+  /* Indigo violet accent.
+     The split that governs both scales: cyan owns the learner's own data
+     (progress, mastery, scores, streaks, stat numbers, feature/step chips);
+     violet owns the system acting (commit actions, sign-up, AI-tutor
+     surfaces, selected state, focus rings). The two never appear on the
+     same control. */
+  --ds-violet-deep: #3A2CA8;
+  --ds-violet: #4A38C9;
+  --ds-violet-light: #7C5CFF;
+  --ds-violet-pale: #C9BCFF;
+  --ds-violet-tint: #EEEAFF;
+  --ds-violet-tint-border: #CFC4FF;
+
+  /* Reserved semantics — never a CTA, never brand. */
+  --ds-warning: #F59E0B;
+
   /* Text on dark */
   --ds-text-onDark-primary: #ffffff;
   --ds-text-onDark-secondary: #B8D4EA;
@@ -38,6 +54,12 @@
   --ds-bg-white: #ffffff;
   --ds-border-light: #E2E8F0;
   --ds-border-input: #CBD5E1;
+  /* Kept at #DC2626 deliberately. The Claude Design handoff names #D9381E for
+     errors; this one was already in use, is the higher contrast of the two
+     (4.83:1 on white vs 4.63:1), and the hue difference is imperceptible at
+     the 13px it renders. Don't flip it back on the next sync.
+     Both sit near the floor, so an error line on --ds-bg-app rather than white
+     would need something darker, around #B91C1C. */
   --ds-danger: #DC2626;
 
   /* Gradients */
@@ -45,6 +67,13 @@
   --ds-gradient-vision-bg: linear-gradient(165deg, #061225 0%, #0A1F3D 100%);
   --ds-gradient-cta: linear-gradient(135deg, #0EA5E9, #22D3EE); /* @kind color */
   --ds-gradient-heading-accent: linear-gradient(90deg, #38BDF8, #22D3EE); /* @kind color */
+  /* Ends at #6B4CF0, not --ds-violet-light: white on #7C5CFF is 4.35:1, short
+     of AA for the 15px/700 button label. #6B4CF0 is 5.4:1. --ds-violet-light
+     keeps its own value for strokes, borders and tints, which carry no text. */
+  --ds-gradient-action: linear-gradient(135deg, #4A38C9, #6B4CF0); /* @kind color */
+  /* Both stops move one notch down the violet scale, so the hover reads at a
+     glance. Sharing #6B4CF0 with the base gradient made it nearly invisible. */
+  --ds-gradient-action-hover: linear-gradient(135deg, #3A2CA8, #4A38C9); /* @kind color */
 
   /* Type */
   --ds-font-sans: 'IBM Plex Sans', sans-serif;
@@ -88,6 +117,22 @@
   display: block;
 }
 .ds-m-link:hover { color: var(--ds-cyan); background: rgba(34,211,238,.06); }
+
+/* Violet action button — hover and focus states inline styles can't express.
+   The hover gradient rides on a pseudo-element whose opacity cross-fades:
+   CSS cannot interpolate between two gradients, so transitioning `background`
+   directly snaps instead of easing. */
+.ds-btn-action { position: relative; z-index: 0; overflow: hidden; }
+.ds-btn-action::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+  background: var(--ds-gradient-action-hover); opacity: 0; transition: opacity .15s ease;
+}
+.ds-btn-action:hover::after { opacity: 1; }
+.ds-btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(124,92,255,.35); }
+@media (prefers-reduced-motion: reduce) { .ds-btn-action::after { transition: none; } }
+
+/* Violet focus ring for text inputs on light surfaces. */
+.ds-input-action:focus { border-color: var(--ds-violet-light); box-shadow: 0 0 0 3px rgba(124,92,255,.22); }
 
 .ds-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: ds-hero-draw 3.5s ease-out both; }
 .ds-mark path:nth-child(2) { animation-delay: .4s; }

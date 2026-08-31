@@ -44,7 +44,7 @@ export function Hero({ eyebrow, titleLine1, titleAccent, subtitle, primaryCtaHre
           </h1>
           <p style={{ margin: 0, fontSize: 20, color: 'var(--ds-text-onDark-secondary)', lineHeight: 1.65, maxWidth: 540 }}>{subtitle}</p>
           <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
-            <Button href={primaryCtaHref} variant="primary" size="lg">
+            <Button href={primaryCtaHref} variant="action" size="lg">
               {primaryCtaLabel}
             </Button>
             <Button href={secondaryCtaHref} variant="secondary" size="lg">

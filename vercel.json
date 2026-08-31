@@ -3,36 +3,30 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/he",
+      "destination": "/?lang=he",
+      "permanent": true
+    },
+    {
       "source": "/",
-      "has": [{ "type": "cookie", "key": "mx_lang", "value": "he" }],
+      "has": [{ "type": "cookie", "key": "mx_lang", "value": "en" }],
       "missing": [{ "type": "query", "key": "lang" }],
-      "destination": "/he",
+      "destination": "/en",
       "permanent": false
     },
     {
       "source": "/",
       "missing": [
         { "type": "cookie", "key": "mx_lang" },
-        { "type": "query", "key": "lang" }
-      ],
-      "has": [
+        { "type": "query", "key": "lang" },
         {
           "type": "header",
           "key": "accept-language",
           "value": "^[Hh][Ee]([-;,].*)?$"
-        }
+        },
+        { "type": "header", "key": "x-vercel-ip-country", "value": "IL" }
       ],
-      "destination": "/he",
-      "permanent": false
-    },
-    {
-      "source": "/",
-      "missing": [
-        { "type": "cookie", "key": "mx_lang" },
-        { "type": "query", "key": "lang" }
-      ],
-      "has": [{ "type": "header", "key": "x-vercel-ip-country", "value": "IL" }],
-      "destination": "/he",
+      "destination": "/en",
       "permanent": false
     }
   ]
