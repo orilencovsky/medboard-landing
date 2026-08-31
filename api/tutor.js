@@ -96,14 +96,19 @@ module.exports = async function handler(req, res) {
     content: String(m.content || '').slice(0, 600)
   }));
 
+  const headers = {
+    'content-type': 'application/json',
+    'x-api-key': process.env.ANTHROPIC_API_KEY,
+    'anthropic-version': '2023-06-01'
+  };
+  // Required only for a key that isn't scoped to a single workspace; omit
+  // ANTHROPIC_WORKSPACE_ID entirely for a key that already is.
+  if (process.env.ANTHROPIC_WORKSPACE_ID) headers['anthropic-workspace-id'] = process.env.ANTHROPIC_WORKSPACE_ID;
+
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
+      headers,
       body: JSON.stringify({
         model: 'claude-haiku-4-5',
         // The prompt caps the reply at 55 words; this is headroom, not a target.
