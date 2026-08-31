@@ -9,8 +9,10 @@
 // Point CHROME at the binary if it is not on PATH:
 //   CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome node scripts/make-og-image.mjs he
 //
-// Note: og-image.png was hand-made before this script existed, so regenerating
-// `en` will not reproduce it byte for byte — it is a close recreation.
+// Both committed cards come from here, so a copy change is an edit to LOCALES
+// below plus a re-run — not an image job. The PNGs compress poorly because of
+// the radial glow; run them through `pngquant --quality 80-95 --ext .png -f`
+// after regenerating if you have it.
 import { writeFileSync, unlinkSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
