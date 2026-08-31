@@ -45,7 +45,7 @@ export function DemoCard({ questionId, reviewLabel, question, options, tutorTip,
             key={i}
             style={
               opt.selected
-                ? { border: '1px solid var(--ds-cyan)', background: 'rgba(34,211,238,.08)', borderRadius: 10, padding: '12px 16px', fontSize: 15, color: '#67E8F9', fontWeight: 600, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
+                ? { border: '1.5px solid var(--ds-violet-light)', background: 'rgba(124,92,255,.12)', borderRadius: 10, padding: '12px 16px', fontSize: 15, color: '#E2F4FD', fontWeight: 600, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
                 : { border: '1px solid var(--ds-navy-border)', borderRadius: 10, padding: '12px 16px', fontSize: 15, color: 'var(--ds-text-onDark-secondary)' }
             }
           >
@@ -54,13 +54,13 @@ export function DemoCard({ questionId, reviewLabel, question, options, tutorTip,
           </div>
         ))}
       </div>
-      <div style={{ background: 'var(--ds-navy-tint)', border: '1px solid var(--ds-navy-line)', borderRadius: 'var(--ds-radius-md)', padding: '14px 16px', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+      <div style={{ background: 'rgba(124,92,255,.09)', border: '1px solid rgba(124,92,255,.28)', borderRadius: 'var(--ds-radius-md)', padding: '14px 16px', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
         <svg width="22" height="22" viewBox="0 0 96 96" fill="none" style={{ flexShrink: 0, marginTop: 2 }}>
           <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="var(--ds-sky-light)" strokeWidth="8" strokeLinecap="round" fill="none" />
           <circle cx="48" cy="48" r="11" fill="var(--ds-cyan)" />
         </svg>
         <div style={{ fontSize: 14, color: 'var(--ds-text-onDark-nav)', lineHeight: 1.6 }}>
-          <span style={{ color: 'var(--ds-cyan)', fontWeight: 600 }}>AI tutor:</span> {tutorTip}{' '}
+          <span style={{ color: 'var(--ds-violet-pale)', fontWeight: 600 }}>AI tutor:</span> {tutorTip}{' '}
           {tutorTag && <span style={{ fontFamily: 'var(--ds-font-mono)', fontSize: 12, color: 'var(--ds-text-onDark-faint)', display: 'inline-block' }}>[{tutorTag}]</span>}
         </div>
       </div>
