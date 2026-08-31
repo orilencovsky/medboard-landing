@@ -10,9 +10,14 @@
 //   CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome node scripts/make-og-image.mjs he
 //
 // Both committed cards come from here, so a copy change is an edit to LOCALES
-// below plus a re-run — not an image job. The PNGs compress poorly because of
-// the radial glow; run them through `pngquant --quality 80-95 --ext .png -f`
-// after regenerating if you have it.
+// below plus a re-run — not an image job.
+//
+// ALWAYS quantize after regenerating. The radial glow leaves a lot of subtle
+// variation, so a fresh 24-bit render lands around 320 KB; a palette PNG is
+// ~40 KB with no difference visible at display size (checked at 1:1 — the
+// dither only shows if you magnify). The committed cards are already quantized:
+//
+//   pngquant --quality 80-95 --ext .png -f og-image.png og-image-he.png
 import { writeFileSync, unlinkSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
