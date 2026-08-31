@@ -54,6 +54,12 @@
   --ds-bg-white: #ffffff;
   --ds-border-light: #E2E8F0;
   --ds-border-input: #CBD5E1;
+  /* Kept at #DC2626 deliberately. The Claude Design handoff names #D9381E for
+     errors; this one was already in use, is the higher contrast of the two
+     (4.83:1 on white vs 4.63:1), and the hue difference is imperceptible at
+     the 13px it renders. Don't flip it back on the next sync.
+     Both sit near the floor, so an error line on --ds-bg-app rather than white
+     would need something darker, around #B91C1C. */
   --ds-danger: #DC2626;
 
   /* Gradients */
