@@ -3,10 +3,24 @@
 <head>
 <meta charset="UTF-8" />
 <script>
-  // Landing here means the visitor wants English — un-stick a stale Hebrew
-  // lock from the root page's redirect (see /index.html), so a future visit
-  // to meduxa.ai routes here again instead of staying on Hebrew.
-  try { localStorage.setItem('mbil_lang', 'en'); } catch (e) {}
+  (function () {
+    try {
+      // A Hebrew choice used to live in localStorage, which the vercel.json
+      // router cannot read. Honour a returning visitor's old choice once, hand
+      // it over to the cookie, and send them back to the Hebrew root.
+      if (document.cookie.indexOf('mx_lang=') === -1 &&
+          localStorage.getItem('mbil_lang') === 'he') {
+        localStorage.removeItem('mbil_lang');
+        location.replace('/?lang=he');
+        return;
+      }
+      // Landing here means the visitor wants English. Record it in the cookie
+      // the router reads, so meduxa.ai keeps resolving to /en on later visits
+      // — even from a Hebrew-language browser or an Israeli address — and any
+      // earlier Hebrew choice is un-stuck.
+      document.cookie = 'mx_lang=en;path=/;max-age=31536000;samesite=lax';
+    } catch (e) {}
+  })();
 </script>
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBPKT4TS21"></script>

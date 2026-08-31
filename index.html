@@ -3,15 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <script>
-  // The root is Hebrew. Route visitors whose browser isn't set to Hebrew to
-  // the English page once. Respects an explicit Hebrew choice (via ?lang=he)
-  // so it never traps anyone.
+  // Language routing lives in vercel.json: the edge router sees the visitor's
+  // country and Accept-Language, so anyone who is neither Hebrew-speaking nor
+  // in Israel is sent to /en before this page is ever served. Reaching here
+  // means Hebrew is the right page.
+  // So: record that in the cookie the router reads, and drop any ?lang=he the
+  // switcher (or the /he redirect) left behind, so a copied URL doesn't carry
+  // the lock to the next person. Other params (utm_*) are preserved.
   (function () {
     try {
-      var p = new URLSearchParams(location.search);
-      if (p.get('lang') === 'he') { localStorage.setItem('mbil_lang', 'he'); return; }
-      if (localStorage.getItem('mbil_lang') === 'he') return;
-      if ((navigator.language || '').toLowerCase().indexOf('he') !== 0) location.replace('/en');
+      document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax';
+      var u = new URL(location.href);
+      if (!u.searchParams.has('lang')) return;
+      u.searchParams.delete('lang');
+      history.replaceState(null, '', u.pathname + u.search + u.hash);
     } catch (e) {}
   })();
 </script>
