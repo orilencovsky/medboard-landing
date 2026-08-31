@@ -119,7 +119,14 @@ module.exports = async function handler(req, res) {
         messages
       })
     });
-    if (!r.ok) return res.status(r.status === 429 ? 429 : 502).json({ error: 'upstream', status: r.status });
+    if (!r.ok) {
+      // Anthropic's error body is safe to relay as-is: a standard type/message
+      // pair, never the key itself. Worth the visibility on a misconfigured
+      // deployment — the alternative is debugging a bare status code blind.
+      let detail;
+      try { detail = (await r.json()).error; } catch (e) {}
+      return res.status(r.status === 429 ? 429 : 502).json({ error: 'upstream', status: r.status, detail });
+    }
     const data = await r.json();
     const reply = (data.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
     dayCount++;
