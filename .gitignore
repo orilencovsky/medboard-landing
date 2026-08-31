@@ -1,5 +1,9 @@
 .vercel
 
+# `vercel env pull` / `vercel dev` write ANTHROPIC_API_KEY into .env.local
+.env
+.env.*
+
 # design-sync (see .design-sync/NOTES.md)
 .ds-sync/
 ds-bundle/
