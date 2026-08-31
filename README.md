@@ -133,8 +133,10 @@ tutor — by picking one of the suggested chips or by typing — which posts to 
 `api/tutor.js` holds the system prompt server-side, so the endpoint cannot be driven as a
 general-purpose chat. It needs `ANTHROPIC_API_KEY` set in **Vercel → Project → Settings →
 Environment Variables** (Production + Preview); without it the endpoint answers `503`
-`not_configured` and the card shows its "connection dropped" message. Spend is bounded on four
-layers:
+`not_configured` and the card shows its "connection dropped" message. If that key is not scoped to
+a single workspace, the Anthropic API also requires an `anthropic-workspace-id` header, or every
+request 400s — set `ANTHROPIC_WORKSPACE_ID` (Console → Settings → Workspaces) alongside it; the
+header is only sent when that variable is present. Spend is bounded on four layers:
 
 | Layer | Limit |
 |---|---|
