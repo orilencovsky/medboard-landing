@@ -3,6 +3,18 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/probe-accept-language",
+      "missing": [
+        {
+          "type": "header",
+          "key": "accept-language",
+          "value": "^[Hh][Ee]([-;,].*)?$"
+        }
+      ],
+      "destination": "/en",
+      "permanent": false
+    },
+    {
       "source": "/he",
       "destination": "/?lang=he",
       "permanent": true
