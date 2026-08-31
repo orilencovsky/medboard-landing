@@ -64,9 +64,52 @@
   body { margin: 0; background: #061225; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #22D3EE; }
   @keyframes dotPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
+  /* The video sits in .hero-bg rather than in <header> directly: object-fit
+     re-crops on every height change, and the demo card below grows as it is
+     answered. The pin script at the bottom of the page freezes this box's
+     height so that growth never moves the frame. */
+  .hero-bg { position: absolute; left: 0; right: 0; top: 0; height: 100%; overflow: hidden; z-index: 0; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 78%, transparent 100%); }
   .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: opacity 1s linear; }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
   @media (prefers-reduced-motion: reduce) { .hero-video { display: none; } .hero-mark path { animation: none; } }
+
+  /* ===== Hero demo card (interactive) ===== */
+  /* Latin numerals and units inside Hebrew sentences, kept from reordering. */
+  .ltr-iso { direction: ltr; unicode-bidi: isolate; }
+  .qopt { border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA; display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .qopt:hover { border-color: #2E6D9E; background: rgba(34,211,238,.04); }
+  .qopt .mark { font-family: 'IBM Plex Mono', monospace; font-size: 13px; direction: ltr; unicode-bidi: isolate; opacity: 0; }
+  .qopt.sel { border: 1.5px solid #7C5CFF; background: rgba(124,92,255,.12); color: #E2F4FD; font-weight: 600; }
+  .qopt.bad { border: 1.5px solid #F87171; background: rgba(248,113,113,.1); color: #FECACA; font-weight: 600; }
+  .qopt.sel .mark, .qopt.bad .mark { opacity: 1; }
+
+  .qtutor { display: none; }
+  .qcard.answered .qtutor { display: flex; }
+  .qcard.answered .qhint { display: none; }
+
+  .qchat { display: none; }
+  .qcard.answered .qchat { display: flex; }
+  .qcard.chatted .qreplies { display: none; }
+  .qcard.limited .qinput-row { display: none !important; }
+  .qcard.limited .qreplies { display: none !important; }
+
+  .qreply { cursor: pointer; font-size: 13.5px; color: #A9C8E0; border: 1px solid #1E4A6E; border-radius: 999px; padding: 7px 13px; transition: border-color .15s, color .15s; }
+  .qreply:hover { border-color: #7C5CFF; color: #E2F4FD; }
+
+  .qexp { display: none; }
+  .qcard.expanded .qexp { display: flex; }
+  .qexp-btn { display: none; }
+  .qcard.answered .qexp-btn { display: inline-flex; }
+  .qcard.expanded .qexp-btn .chev { transform: rotate(180deg); }
+
+  .qopt:focus-visible, .qreply:focus-visible, .qexp-btn:focus-visible, .qsend:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }
+
+  @keyframes tDot { 0%,80%,100% { opacity: .25; } 40% { opacity: 1; } }
+  .t-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #C9BCFF; margin-inline-end: 3px; animation: tDot 1.2s infinite; }
+  .t-dot:nth-child(2) { animation-delay: .15s; }
+  .t-dot:nth-child(3) { animation-delay: .3s; }
 
   /* ===== Science section (flashcard deck) ===== */
   .sci-section { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); padding: 108px 32px 124px; }
@@ -183,6 +226,9 @@
     [data-mq-demo] { padding: 18px !important; }
     [data-mq-demo-q] { font-size: 16px !important; }
     [data-mq-demo-opts] > div { font-size: 14px !important; }
+    .qreply { font-size: 12.5px !important; padding: 6px 11px !important; }
+    /* 16px keeps iOS from zooming the viewport when the field takes focus. */
+    .qchat-input { font-size: 16px !important; }
     [data-mq-section] { padding: 48px 18px !important; }
     [data-mq-h2] { font-size: 26px !important; }
     [data-mq-cards] > div { padding: 20px !important; }
@@ -263,24 +309,28 @@
 
   <!-- HERO -->
   <header data-mq-hero style="background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); padding: 88px 32px 100px; position: relative; overflow: hidden;">
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-      <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
-      <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
-      <source src="/hero.webm" type="video/webm">
-      <source src="/hero.mp4" type="video/mp4">
-    </video>
-    <video class="hero-video" muted loop playsinline preload="auto" aria-hidden="true" style="opacity: 0;">
-      <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
-      <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
-      <source src="/hero.webm" type="video/webm">
-      <source src="/hero.mp4" type="video/mp4">
-    </video>
+    <div class="hero-bg">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
+        <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
+        <source src="/hero.webm" type="video/webm">
+        <source src="/hero.mp4" type="video/mp4">
+      </video>
+      <video class="hero-video" muted loop playsinline preload="auto" aria-hidden="true" style="opacity: 0;">
+        <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
+        <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
+        <source src="/hero.webm" type="video/webm">
+        <source src="/hero.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="hero-overlay"></div>
     <svg class="hero-mark" width="900" height="900" viewBox="0 0 96 96" fill="none" style="position: absolute; left: -260px; top: -160px; opacity: .07; pointer-events: none; z-index: 2;">
       <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
       <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
     </svg>
-    <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; gap: 64px; align-items: center; flex-wrap: wrap;">
+    <!-- flex-start, not center: the demo card grows as it is answered, and a
+         centred row would push the headline down with it. -->
+    <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; gap: 64px; align-items: flex-start; flex-wrap: wrap;">
       <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 26px;">
         <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block; animation: dotPulse 2s infinite;"></span> למידה מבוססת-מדע · מונעת AI</span>
         <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">הדרך החכמה להתכונן<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">לבחינות ההתמחות</span></h1>
@@ -297,27 +347,70 @@
         </div>
       </div>
 
-      <!-- Product demo card -->
+      <!-- Product demo card. Interactive: the visitor answers, gets the tutor
+           line for the option they picked, and may send one message to the live
+           tutor behind /api/tutor. Wired up at the bottom of the page. -->
       <div style="flex: 1 1 420px; max-width: 520px;">
-        <div data-mq-demo style="background: #0B2545; border: 1px solid #1E4A6E; border-radius: 20px; padding: 26px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 18px;">
+        <div class="qcard" data-mq-demo style="background: #0B2545; border: 1px solid #1E4A6E; border-radius: 20px; padding: 26px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 16px;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B87A8; direction: ltr;">Q-1838 · AKI</span>
             <span style="font-size: 13px; font-weight: 600; color: #5EEAD4;">חזרה מתוזמנת · יום 6</span>
           </div>
-          <div data-mq-demo-q style="font-size: 18px; font-weight: 600; color: #E2F4FD; line-height: 1.6;">בן 67 עם CKD על רקע סוכרת עובר צנתור כלילי. קראטינין לפני הפרוצדורה 1.5 מ״ג/ד״ל, יומיים אחרי — 1.77 מ״ג/ד״ל. לפי קריטריוני KDIGO, מה נכון?</div>
+
+          <div data-mq-demo-q style="font-size: 18px; font-weight: 600; color: #E2F4FD; line-height: 1.6;">בן 67 עם CKD על רקע סוכרת עובר צנתור כלילי. קראטינין לפני הפרוצדורה <span class="ltr-iso">1.5</span> מ״ג/ד״ל, ויומיים אחרי — <span class="ltr-iso">1.77</span> מ״ג/ד״ל. לפי קריטריוני KDIGO, מה נכון?</div>
+
           <div data-mq-demo-opts style="display: flex; flex-direction: column; gap: 10px;">
-            <div style="border: 1.5px solid #7C5CFF; background: rgba(124,92,255,.12); border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #E2F4FD; font-weight: 600; display: flex; justify-content: space-between; align-items: center;"><span>אינו עומד בקריטריונים ל-AKI</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; direction: ltr;">✓</span></div>
-            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">יש לו AKI דרגה 1</div>
-            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">יש לו AKI דרגה 2</div>
-            <div style="border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA;">יש לו AKI דרגה 3</div>
+            <div class="qopt" role="button" tabindex="0" data-correct="1" data-tutor="בדיוק — על פי הקראטינין. עלייה של 0.27 מ״ג/ד״ל אינה מגיעה לסף המוחלט (0.3), ויחס של 1.18 מהבסיס אינו מגיע ל-1.5. אבל KDIGO מאבחן ומדרג AKI לפי שני פרמטרים — איזה נתון נוסף חסר לנו כדי לשלול AKI בביטחון?"><span>אינו עומד בקריטריונים ל-AKI</span><span class="mark"></span></div>
+            <div class="qopt" role="button" tabindex="0" data-tutor="קרוב. דרגה 1 דורשת עלייה של ≥0.3 מ״ג/ד״ל או 1.5–1.9 מהבסיס — שניהם לא נחצו כאן. אבל KDIGO מאבחן ומדרג AKI לפי שני פרמטרים — איזה נתון נוסף חסר לנו כדי להכריע?"><span>יש לו AKI דרגה 1</span><span class="mark"></span></div>
+            <div class="qopt" role="button" tabindex="0" data-tutor="דרגה 2 היא 2.0–2.9 מהבסיס, והיחס כאן הוא 1.18 — אפילו סף הדרגה הראשונה לא נחצה. אבל KDIGO מאבחן ומדרג AKI לפי שני פרמטרים — איזה נתון נוסף חסר לנו כדי להכריע?"><span>יש לו AKI דרגה 2</span><span class="mark"></span></div>
+            <div class="qopt" role="button" tabindex="0" data-tutor="דרגה 3 דורשת ≥3.0 מהבסיס, קראטינין ≥4.0 או דיאליזה — רחוק מהמספרים כאן. אבל KDIGO מאבחן ומדרג AKI לפי שני פרמטרים — איזה נתון נוסף חסר לנו כדי להכריע?"><span>יש לו AKI דרגה 3</span><span class="mark"></span></div>
           </div>
-          <div style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;">
-            <svg width="22" height="22" viewBox="0 0 96 96" fill="none" style="flex-shrink: 0; margin-top: 2px;">
-              <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="8" stroke-linecap="round" fill="none"></path>
-              <circle cx="48" cy="48" r="11" fill="#22D3EE"></circle>
-            </svg>
-            <div style="font-size: 14px; color: #9CC3DF; line-height: 1.6;"><span style="color: #C9BCFF; font-weight: 600;">המורה AI:</span> לפני שנבחר — מהם שני הספים (מוחלט ויחסי) שמגדירים AKI לפי KDIGO? <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4; direction: ltr; display: inline-block;">[KDIGO staging]</span></div>
+
+          <div class="qreveal" style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="qhint" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #5B87A8;">בחרו תשובה ←</div>
+
+            <div class="qtutor" style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; gap: 12px; align-items: flex-start;">
+              <svg width="22" height="22" viewBox="0 0 96 96" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+                <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="8" stroke-linecap="round" fill="none"></path>
+                <circle cx="48" cy="48" r="11" fill="#22D3EE"></circle>
+              </svg>
+              <div style="font-size: 14px; color: #9CC3DF; line-height: 1.6;"><span style="color: #C9BCFF; font-weight: 600;">המורה AI:</span> <span class="t-msg"></span> <span class="ltr-iso" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4;">[KDIGO staging]</span></div>
+            </div>
+
+            <div class="qchat" style="flex-direction: column; gap: 10px;">
+              <div class="qthread" style="display: flex; flex-direction: column; gap: 10px;"></div>
+              <div class="qreplies" style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8;">תשובתכם:</span>
+                <div class="qreply" role="button" tabindex="0">תפוקת שתן</div>
+                <div class="qreply" role="button" tabindex="0">רמת אוריאה בדם</div>
+                <div class="qreply" role="button" tabindex="0">eGFR מחושב</div>
+              </div>
+              <div class="qinput-row" style="display: flex; align-items: center; gap: 8px; background: #08203D; border: 1px solid #1E4A6E; border-radius: 12px; padding: 8px 13px;">
+                <input class="qchat-input" aria-label="השיבו למורה AI" placeholder="השיבו למורה, או שאלו כל דבר על המקרה…" maxlength="240" style="flex: 1; background: transparent; border: none; outline: none; color: #E2F4FD; font-family: inherit; font-size: 14px;">
+                <div class="qsend" role="button" tabindex="0" aria-label="שליחה" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #0EA5E9, #22D3EE);">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="transform: scaleX(-1);"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="#04263C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="qexp-btn" role="button" tabindex="0" aria-expanded="false" style="align-self: flex-start; align-items: center; gap: 8px; cursor: pointer; color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 10px; padding: 9px 14px;">
+              <span>הרחיבו את ההסבר · דרגות AKI</span>
+              <svg class="chev" width="12" height="12" viewBox="0 0 12 12" fill="none" style="transition: transform .18s ease;"><path d="M2 4.5 L6 8.5 L10 4.5" stroke="#7DD3FC" stroke-width="1.8" stroke-linecap="round" fill="none"></path></svg>
+            </div>
           </div>
+
+          <div class="qexp" style="flex-direction: column; gap: 11px; background: rgba(34,211,238,.05); border: 1px solid rgba(34,211,238,.2); border-radius: 12px; padding: 16px;">
+            <div style="font-size: 14px; font-weight: 700; color: #E2F4FD;">דרגות AKI לפי KDIGO (2012)</div>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; color: #9CC3DF; line-height: 1.55;">
+              <div><span style="color: #67E8F9; font-weight: 600;">אבחנה:</span> עליית קראטינין ≥<span class="ltr-iso">0.3</span> מ״ג/ד״ל תוך <span class="ltr-iso">48</span> שעות, או ≥<span class="ltr-iso">1.5</span>× מהבסיס תוך <span class="ltr-iso">7</span> ימים, או תפוקת שתן &lt;<span class="ltr-iso">0.5</span> מל/ק״ג/שעה למשך <span class="ltr-iso">6</span> שעות.</div>
+              <div><span style="color: #67E8F9; font-weight: 600;">דרגה 1:</span> ≥<span class="ltr-iso">0.3</span> מ״ג/ד״ל או <span class="ltr-iso">1.5–1.9</span>× מהבסיס, <span style="color:#5EEAD4;">או</span> תפוקת שתן &lt;<span class="ltr-iso">0.5</span> מל/ק״ג/שעה למשך <span class="ltr-iso">6–12</span> שעות.</div>
+              <div><span style="color: #67E8F9; font-weight: 600;">דרגה 2:</span> <span class="ltr-iso">2.0–2.9</span>× מהבסיס, <span style="color:#5EEAD4;">או</span> תפוקת שתן &lt;<span class="ltr-iso">0.5</span> מל/ק״ג/שעה למשך ≥<span class="ltr-iso">12</span> שעות.</div>
+              <div><span style="color: #67E8F9; font-weight: 600;">דרגה 3:</span> ≥<span class="ltr-iso">3.0</span>× מהבסיס, או קראטינין ≥<span class="ltr-iso">4.0</span> מ״ג/ד״ל, או התחלת דיאליזה, <span style="color:#5EEAD4;">או</span> תפוקת שתן &lt;<span class="ltr-iso">0.3</span> מל/ק״ג/שעה למשך ≥<span class="ltr-iso">24</span> שעות, או אנוריה ≥<span class="ltr-iso">12</span> שעות.</div>
+            </div>
+            <div style="border-top: 1px solid rgba(34,211,238,.18); padding-top: 10px; font-size: 13.5px; color: #B8D4EA; line-height: 1.55;"><span style="color: #5EEAD4; font-weight: 600;">במקרה הזה:</span> הפרש של <span class="ltr-iso">0.27</span> מ״ג/ד״ל (מתחת ל-<span class="ltr-iso">0.3</span>) ויחס של <span class="ltr-iso">1.18</span>× (מתחת ל-<span class="ltr-iso">1.5</span>) — שני ספי הקראטינין לא נחצו. תפוקת השתן לא נמסרה, ובלעדיה אי אפשר לשלול AKI בביטחון.</div>
+            <div class="ltr-iso" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8;">KDIGO CPG for AKI · Section 2.1</div>
+          </div>
+
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="flex: 1; height: 6px; background: #153650; border-radius: 3px; overflow: hidden;"><div style="width: 68%; height: 100%; background: linear-gradient(90deg, #0EA5E9, #22D3EE);"></div></div>
             <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8; direction: ltr;">17/25</span>
@@ -655,6 +748,179 @@
         msg.style.color = '#DC2626';
         msg.style.direction = 'rtl';
       });
+    });
+  })();
+</script>
+<script>
+  // Hero demo card. The visitor picks an answer and gets the tutor line for
+  // that option; from there they may send one message to the live tutor behind
+  // /api/tutor, either by picking a chip or by typing.
+  (function () {
+    var card = document.querySelector('.qcard');
+    if (!card) return;
+
+    var MAX_MESSAGES = 1;   // per visitor per answer, enforced again server-side
+    var turns = 0, busy = false, history = [];
+    // Bumped on every answer. A reply that lands after the visitor has moved to
+    // another option belongs to a conversation that no longer exists, and
+    // appending it would leave two assistant turns in a row for the next send.
+    var gen = 0;
+
+    function bubble(kind, text) {
+      var el = document.createElement('div');
+      if (kind === 'user') {
+        el.style.cssText = 'align-self:flex-start; max-width:88%; background:#12395A; border:1px solid #1E4A6E; border-radius:12px 12px 12px 4px; padding:10px 13px; font-size:14px; color:#D6EBF8; line-height:1.55;';
+        el.textContent = text;
+        return el;
+      }
+      el.style.cssText = 'display:flex; gap:12px; align-items:flex-start; background:rgba(124,92,255,.09); border:1px solid rgba(124,92,255,.28); border-radius:12px; padding:14px 16px;';
+      el.innerHTML = '<svg width="22" height="22" viewBox="0 0 96 96" fill="none" style="flex-shrink:0; margin-top:2px;">'
+        + '<path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="8" stroke-linecap="round" fill="none"></path>'
+        + '<circle cx="48" cy="48" r="11" fill="#22D3EE"></circle></svg>'
+        + '<div style="font-size:14px; color:#9CC3DF; line-height:1.6; white-space:pre-line;">'
+        + '<span style="color:#C9BCFF; font-weight:600;">המורה AI:</span> <span class="t-live"></span></div>';
+      var slot = el.querySelector('.t-live');
+      // null text = still waiting, show the typing dots
+      if (text === null) slot.innerHTML = '<span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>';
+      else slot.textContent = text;
+      return el;
+    }
+
+    // The tutor is told to answer in plain prose; strip markdown if it slips through.
+    function clean(s) {
+      return (s || '').trim().replace(/\*\*/g, '').replace(/^#+\s*/gm, '').replace(/^[-•]\s*/gm, '').replace(/\n{2,}/g, '\n');
+    }
+
+    function send(text) {
+      text = (text || '').trim();
+      if (!text || busy) return;
+      if (turns >= MAX_MESSAGES) { card.classList.add('limited'); return; }
+      var thread = card.querySelector('.qthread');
+      var mine = gen;
+      turns++; busy = true;
+      card.classList.add('chatted');
+      thread.appendChild(bubble('user', text));
+      var pending = bubble('tutor', null);
+      thread.appendChild(pending);
+      history.push({ role: 'user', content: text });
+
+      fetch('/api/tutor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history, locale: 'he' })
+      })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(function (data) {
+          if (mine !== gen) return;
+          var reply = clean(data && data.reply);
+          pending.querySelector('.t-live').textContent = reply || 'רגע — לא קיבלתי תשובה. נסו שוב.';
+          history.push({ role: 'assistant', content: reply });
+          if (typeof gtag === 'function') gtag('event', 'tutor_reply_shown');
+        })
+        .catch(function () {
+          if (mine !== gen) return;
+          pending.querySelector('.t-live').textContent = 'רגע — החיבור למורה נקטע. נסו לשלוח שוב.';
+          history.pop(); turns--;   // refund the quota, the visitor never got an answer
+        })
+        .then(function () {
+          if (mine !== gen) return;
+          busy = false;
+          if (turns >= MAX_MESSAGES) card.classList.add('limited');
+        });
+    }
+
+    function activate(e) {
+      var toggle = e.target.closest('.qexp-btn');
+      if (toggle) {
+        var open = card.classList.toggle('expanded');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        return;
+      }
+      var chip = e.target.closest('.qreply');
+      if (chip) { send(chip.textContent); return; }
+      if (e.target.closest('.qsend')) {
+        var inp = card.querySelector('.qchat-input');
+        if (inp) { send(inp.value); inp.value = ''; }
+        return;
+      }
+      var opt = e.target.closest('.qopt');
+      if (!opt) return;
+
+      card.querySelectorAll('.qopt').forEach(function (o) {
+        o.classList.remove('sel', 'bad');
+        o.querySelector('.mark').textContent = '';
+      });
+      var right = opt.getAttribute('data-correct') === '1';
+      opt.classList.add(right ? 'sel' : 'bad');
+      opt.querySelector('.mark').textContent = right ? '✓' : '✕';
+      card.classList.add('answered');
+
+      var line = opt.getAttribute('data-tutor') || '';
+      card.querySelector('.t-msg').textContent = line;
+
+      // Start the conversation over, seeded with what the learner just picked.
+      card.querySelector('.qthread').innerHTML = '';
+      card.classList.remove('chatted', 'limited');
+      turns = 0; busy = false; gen++;
+      history = [
+        { role: 'user', content: 'בחרתי בתשובה: "' + opt.querySelector('span').textContent.trim() + '".' },
+        { role: 'assistant', content: line }
+      ];
+      if (typeof gtag === 'function') gtag('event', 'demo_answer_selected', { correct: right });
+    }
+
+    card.addEventListener('click', activate);
+    card.addEventListener('keydown', function (e) {
+      if (e.target.classList.contains('qchat-input')) {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        send(e.target.value);
+        e.target.value = '';
+        return;
+      }
+      // The options and chips are divs, so Enter/Space have to be wired by hand.
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      if (!e.target.closest('.qopt, .qreply, .qsend, .qexp-btn')) return;
+      e.preventDefault();
+      activate(e);
+    });
+  })();
+
+  // Hero background pin. .hero-video is object-fit: cover inside .hero-bg, so
+  // every change to that box's height re-crops the frame — and the card above
+  // grows as it is answered and expanded. Measure the hero once with the card
+  // forced into its fully-open state, pin .hero-bg to that height, and leave it
+  // there; <header>'s own overflow: hidden clips whatever spills past.
+  (function () {
+    var bg = document.querySelector('.hero-bg');
+    var hero = bg && bg.closest('header');
+    if (!bg || !hero) return;
+    var card = hero.querySelector('.qcard');
+
+    // The measured open state still has an empty thread — this covers the one
+    // question-and-reply exchange MAX_MESSAGES allows.
+    var THREAD_ALLOWANCE = 260;
+    var lastWidth = window.innerWidth;
+
+    function pin() {
+      var opened = ['answered', 'chatted', 'expanded'].filter(function (c) {
+        return card && !card.classList.contains(c);
+      });
+      if (opened.length) card.classList.add.apply(card.classList, opened);
+      var h = hero.offsetHeight;   // read before the classes come back off, no paint in between
+      if (opened.length) card.classList.remove.apply(card.classList, opened);
+      bg.style.height = (h + THREAD_ALLOWANCE) + 'px';
+    }
+
+    pin();
+    window.addEventListener('load', pin);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(pin);
+    // Width only: on phones, scrolling collapses the URL bar and fires resize,
+    // and re-measuring there would cause the very jump this is here to prevent.
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
+      pin();
     });
   })();
 </script>

@@ -25,13 +25,16 @@ og-image.png             Open Graph / Twitter card — English (/en)
 og-image-he.png          Open Graph / Twitter card — Hebrew (root)
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
+api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
 
 There is **no build step and no dependencies** — the pages are hand-authored static HTML with
-inline styles and inline scripts. Open `index.html` in a browser, or serve the directory:
+inline styles and inline scripts, and `api/tutor.js` is a single `fetch` against the Anthropic
+Messages API, so there is no root `package.json` for Vercel to install from either. Open
+`index.html` in a browser, or serve the directory:
 
 ```bash
 python3 -m http.server 8000
@@ -100,6 +103,38 @@ since the router would send them to `/en` anyway.
 The signup form posts straight into the product's Supabase `waitlist` table using the **publishable**
 key, insert-only — row-level security blocks reads, so the embedded key exposes nothing. Each row
 records the submitting page's locale (`en` / `he`).
+
+## Hero demo card and the AI tutor
+
+The question card beside the hero copy is interactive. The visitor picks one of the four answers
+and gets the Socratic line written for *that* option (`data-tutor` on each `.qopt`); an expandable
+panel lists the full KDIGO staging criteria. From there they may send **one** message to a live
+tutor — by picking one of the suggested chips or by typing — which posts to `/api/tutor`.
+
+`api/tutor.js` holds the system prompt server-side, so the endpoint cannot be driven as a
+general-purpose chat. It needs `ANTHROPIC_API_KEY` set in **Vercel → Project → Settings →
+Environment Variables** (Production + Preview); without it the endpoint answers `503`
+`not_configured` and the card shows its "connection dropped" message. Spend is bounded on four
+layers:
+
+| Layer | Limit |
+|---|---|
+| Client | 1 message per visitor per answer (`MAX_MESSAGES`) |
+| Endpoint | 3 requests/hour per IP; 600 requests/day global kill-switch |
+| Model | `claude-haiku-4-5`, `max_tokens: 300` |
+| Prompt | System prompt server-side only |
+
+At roughly 1,000 input + 150 output tokens per reply (≈ $0.001), the daily cap bounds spend at
+about **$1/day**. The rate limiter lives in memory, so it is per serverless instance and
+best-effort — move it to Vercel KV / Upstash if the logs ever show abuse.
+
+The endpoint takes a `locale` field (`he` / `en`) and switches the system prompt on it; each page
+sends its own. The pages' copy and the prompt's case notes state the same KDIGO facts, so both
+have to be edited together if the demo question ever changes.
+
+Because the card grows as it is answered, the hero videos live inside a `.hero-bg` wrapper whose
+height is pinned once by script — `object-fit: cover` re-crops on every height change, and without
+the pin the footage visibly jumps the moment a visitor answers.
 
 ## Hero video
 
