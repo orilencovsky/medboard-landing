@@ -34,6 +34,9 @@ export type { HeroProps } from './Hero';
 export { VisionSection } from './VisionSection';
 export type { VisionSectionProps, VisionPill } from './VisionSection';
 
+export { LoopSection } from './LoopSection';
+export type { LoopSectionProps, LoopNode, LoopNodeState, LoopAccent, LoopHeatTone } from './LoopSection';
+
 export { WaitlistForm } from './WaitlistForm';
 export type { WaitlistFormProps } from './WaitlistForm';
 
