@@ -22,14 +22,17 @@
     } catch (e) {}
   })();
 </script>
-<!-- Google Analytics (GA4) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EBPKT4TS21"></script>
+<!-- Vercel Web Analytics. Deliberately not GA4: this measurement sets no cookie
+     and derives no persistent visitor id, so the page carries nothing that needs
+     a consent banner — which matters most here, since the edge router sends
+     every visitor who is neither in Israel nor Hebrew-speaking to this page,
+     EU traffic included. The shim queues events fired before script.js loads.
+     Requires Web Analytics enabled on the Vercel project; /_vercel/insights/*
+     is served by the platform, so it 404s on a local static server. -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-EBPKT4TS21');
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MeduXa.ai — The smarter way to prepare for medical boards</title>
 <link rel="canonical" href="https://meduxa.ai/en" />
@@ -260,6 +263,8 @@
   .nav-link:hover { color:#22D3EE; }
   .m-link { color:#B8D4EA; font-size:17px; font-weight:500; padding:12px 8px; border-radius:8px; transition:color .15s,background .15s; }
   .m-link:hover { color:#22D3EE; background:rgba(34,211,238,.06); }
+  .foot-link { color:#7DA2C4; font-size:14px; transition:color .15s; }
+  .foot-link:hover { color:#22D3EE; }
   /* Indigo violet marks the system acting — commit actions, AI surfaces,
      selected state, focus. Cyan keeps the learner's own data: progress,
      stats, feature dots, step chips. The two never share a control.
@@ -701,6 +706,16 @@
       <form data-mq-form id="waitlistForm" style="display: flex; gap: 12px; width: 100%; max-width: 520px; margin-top: 8px; flex-wrap: wrap; justify-content: center;">
         <input id="waitlistEmail" class="input-action" type="email" required placeholder="Your email" style="flex: 1; min-width: 220px; background: #F0F6FA; border-radius: 12px; padding: 15px 20px; font-size: 16px; color: #0F172A; font-family: 'IBM Plex Sans', sans-serif; outline: none;">
         <button id="waitlistSubmit" class="btn-action" type="submit" style="border: none; border-radius: 12px; padding: 15px 30px; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; white-space: nowrap;">Get early access</button>
+        <!-- Consent, then the Art. 13 notice at the point of collection: what the
+             address is used for, who ends up holding it, and how to get it back
+             out. `required` makes the browser block the submit event itself, so
+             the handler at the bottom of the page never sees an address nobody
+             consented to sending. -->
+        <label for="waitlistConsent" style="flex: 0 0 100%; display: flex; align-items: flex-start; gap: 10px; margin-top: 2px; text-align: start; font-size: 14px; color: #475569; line-height: 1.6; cursor: pointer;">
+          <input id="waitlistConsent" type="checkbox" required style="width: 17px; height: 17px; margin: 3px 0 0; flex-shrink: 0; accent-color: #4A38C9; cursor: pointer;">
+          <span>Email me once when the pilot opens.</span>
+        </label>
+        <p style="flex: 0 0 100%; margin: 0; text-align: start; font-size: 13px; color: #64748B; line-height: 1.6;">Giving us your address is voluntary. It is stored with our database provider (Supabase), used only for MeduXa launch updates, never passed to advertisers, and deleted whenever you ask. Full detail in the <a href="/en/privacy">Privacy Policy</a> and <a href="/en/terms">Terms of Use</a>.</p>
       </form>
       <span id="waitlistMsg" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #94A3B8;">free early access · no spam</span>
     </div>
@@ -710,6 +725,10 @@
   <footer style="background: #04101E; padding: 36px 32px;">
     <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: center;">
+        <a class="foot-link" href="/en/privacy">Privacy Policy</a>
+        <a class="foot-link" href="/en/terms">Terms of Use</a>
+      </span>
       <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · Study smarter for your board exams · All rights reserved</span>
     </div>
   </footer>
@@ -755,7 +774,7 @@
           form.style.display = 'none';
           msg.textContent = "✓ You're on the list — we'll be in touch.";
           msg.style.color = '#0E7490';
-          if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist' });
+          if (typeof va === 'function') va('event', { name: 'sign_up', data: { method: 'waitlist' } });
         } else { throw new Error('status ' + r.status); }
       }).catch(function () {
         btn.disabled = false; btn.textContent = 'Get early access';
@@ -826,7 +845,7 @@
           var reply = clean(data && data.reply);
           pending.querySelector('.t-live').textContent = reply || 'One moment — no answer came back. Try again.';
           history.push({ role: 'assistant', content: reply });
-          if (typeof gtag === 'function') gtag('event', 'tutor_reply_shown');
+          if (typeof va === 'function') va('event', { name: 'tutor_reply_shown' });
         })
         .catch(function () {
           pending.querySelector('.t-live').textContent = 'One moment — the connection to the tutor dropped. Try sending again.';
@@ -891,7 +910,7 @@
         { role: 'user', content: 'I chose the answer: "' + opt.querySelector('span').textContent.trim() + '".' },
         { role: 'assistant', content: line }
       ];
-      if (typeof gtag === 'function') gtag('event', 'demo_answer_selected', { correct: right });
+      if (typeof va === 'function') va('event', { name: 'demo_answer_selected', data: { correct: right } });
     }
 
     card.addEventListener('click', activate);

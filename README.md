@@ -19,6 +19,8 @@ lives in a separate private repo and is served from `app.meduxa.ai`.
 ```
 index.html               Hebrew / RTL landing page — the root (single file: markup + inline CSS + inline JS)
 en/index.html            English landing page — a full translation, not a wrapper
+privacy.html, terms.html          Legal pages, Hebrew (/privacy, /terms)
+en/privacy.html, en/terms.html    Legal pages, English (/en/privacy, /en/terms)
 hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
@@ -57,6 +59,30 @@ Both language versions share the same section order, anchored for in-page nav:
 | `#how` | "From first question to exam day" |
 | `#vision` | "One engine, every board exam" — the subject-agnostic story beyond nephrology |
 | `#pilot` | "Ready to study smarter?" — the nephrology pilot + waitlist signup |
+
+Off that spine sit four standalone legal pages — `/privacy`, `/terms` and their `/en` counterparts
+— reachable from every footer and from the notice under the waitlist form.
+
+## Legal pages
+
+`privacy.html` / `terms.html` and `en/privacy.html` / `en/terms.html` are four independent files in
+the same hand-authored style as the landing pages, sharing a small `.doc` stylesheet rather than a
+template. They exist because the site collects email addresses from EU visitors by design: the edge
+router sends every non-Israeli, non-Hebrew-speaking request to `/en`, which puts the site squarely
+inside the GDPR alongside Israel's Privacy Protection Law (Amendment 13).
+
+What has to stay true as the site changes — each of these is a statement the pages make:
+
+| The pages say | So if you change… |
+|---|---|
+| Waitlist emails are kept 24 months, or until deletion is requested (30-day turnaround) | …you need a way to actually delete on request, and something that prunes at 24 months |
+| The only cookie is `mx_lang`, functional, no tracking cookies at all | …adding any identifier-based script means a consent banner **and** a rewrite of § 3 |
+| Processors are Supabase, Vercel and Anthropic, transferring under their DPAs' SCCs | …a new third-party script or backend is a new named processor in § 4 |
+| `privacy@meduxa.ai` is answered within 30 days | …the address has to keep reaching a human; it is the only contact point in both documents |
+| The controller is "MeduXa" | …on incorporation, name the registered entity here — a trade name alone does not satisfy GDPR Art. 13(1)(a) |
+
+Both documents carry a "last updated" line that should move whenever their substance does. Neither
+has been reviewed by a lawyer.
 
 ## Language routing
 
@@ -122,6 +148,17 @@ roadmap; when one is actually being added, plan for more than a new folder:
 The signup form posts straight into the product's Supabase `waitlist` table using the **publishable**
 key, insert-only — row-level security blocks reads, so the embedded key exposes nothing. Each row
 records the submitting page's locale (`en` / `he`).
+
+The form carries a **required consent checkbox** and, under it, the notice the Privacy Protection
+Law (§ 11) wants at the point of collection: that giving the address is voluntary, what it is used
+for, who holds it, and that deletion can be requested. `required` on the checkbox means the browser
+blocks the `submit` event itself, so the handler never sees an address nobody consented to sending
+— don't drop that attribute, and don't move the consent text out of the `<form>`.
+
+Consent is currently only enforced client-side; nothing is written to the row to evidence it. If
+GDPR Art. 7(1) proof matters, add a `consent_at timestamptz` column to `waitlist` **first**, then
+send it in the insert body — an unknown column makes PostgREST reject the row with a `400` and the
+visitor sees the generic failure message.
 
 ## Hero demo card and the AI tutor
 
@@ -189,8 +226,19 @@ The script strips audio, scales to 1600px (desktop) and 800px (phone), and targe
 
 ## Analytics
 
-GA4 is wired inline on both pages, sharing the property used by the app so landing → signup can be
-followed end to end.
+**Vercel Web Analytics**, wired inline on both pages — the shim plus
+`/_vercel/insights/script.js`. It has to be switched on under **Vercel → Project → Analytics**;
+the path is served by the platform, so it 404s on a local static server and no events are sent
+from `python3 -m http.server`.
+
+Three custom events survive from the GA4 setup this replaced: `sign_up` (waitlist submitted),
+`tutor_reply_shown` and `demo_answer_selected` — all fired through `va('event', { name, data })`.
+
+The swap away from GA4 was a compliance decision, not a preference. GA4 set cookies and derived a
+persistent identifier before any consent, on a site whose edge router deliberately sends every
+non-Israeli, non-Hebrew-speaking visitor — EU traffic included — to `/en`. Cookieless measurement
+removes the thing that would have needed a consent banner. Reintroducing GA4, or any
+identifier-based analytics, means building that banner and re-writing § 3 of both privacy pages.
 
 ## License
 
