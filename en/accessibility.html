@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Accessibility Statement — MeduXa.ai</title>
+<link rel="canonical" href="https://meduxa.ai/en/accessibility" />
+<link rel="alternate" hreflang="he" href="https://meduxa.ai/accessibility" />
+<link rel="alternate" hreflang="en" href="https://meduxa.ai/en/accessibility" />
+<link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/accessibility" />
+<meta name="description" content="The MeduXa.ai accessibility statement — the standard the site is built to, what is accessible, the limitations we know about, and how to report an accessibility problem." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#061225" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='%230B2545'/%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='none' stroke='%2322D3EE' stroke-width='3'/%3E%3Cpath d='M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74' stroke='%231E4A6E' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3Cpath d='M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22' stroke='%2338BDF8' stroke-width='7' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='48' cy='48' r='9' fill='%2322D3EE'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
+  .doc { max-width: 820px; margin: 0 auto; padding: 56px 32px 88px; }
+  .doc h1 { margin: 0 0 8px; font-size: 38px; font-weight: 700; color: #0F172A; line-height: 1.25; }
+  .doc h2 { margin: 44px 0 14px; font-size: 22px; font-weight: 700; color: #0F172A; }
+  .doc h3 { margin: 26px 0 8px; font-size: 17px; font-weight: 600; color: #0F172A; }
+  .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
+  .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
+  .doc li { margin-bottom: 8px; }
+  .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
+  .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }
+  /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
+  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
+  .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
+  .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
+  .doc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .foot-link { color: #7DA2C4; font-size: 14px; transition: color .15s; }
+  .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  .m-link { color: #B8D4EA; font-size: 15px; padding: 10px 4px; }
+  :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
+  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
+          padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
+  .skip:focus { inset-inline-start: 0; text-decoration: none; color: #fff; }
+  @media (max-width: 640px) {
+    .doc { padding: 36px 20px 64px; }
+    .doc h1 { font-size: 30px; }
+    .doc h2 { font-size: 20px; }
+    .doc table, .doc thead, .doc tbody, .doc tr, .doc th, .doc td { display: block; }
+    .doc thead { display: none; }
+    .doc tr { border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 12px; background: #fff; }
+    .doc td { border: none; border-bottom: 1px solid #EEF2F6; }
+    .doc tr td:last-child { border-bottom: none; }
+    .doc td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: #0E7490; margin-bottom: 4px; }
+    footer [data-mq-footer] { flex-direction: column !important; text-align: center !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div style="background: #F0F6FA; min-height: 100vh;">
+
+  <!-- NAV -->
+  <nav style="background: rgba(6,18,37,.96); border-bottom: 1px solid rgba(34,211,238,.15);">
+    <div class="doc-nav" style="max-width: 1200px; margin: 0 auto; padding: 0 32px; min-height: 68px;">
+      <a href="/en" style="display: flex; align-items: center; gap: 12px;">
+        <svg width="34" height="34" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+          <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+          <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+          <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+          <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+        </svg>
+        <span style="display: flex; align-items: baseline;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 18px;">
+        <a href="/en/privacy" style="color: #B8D4EA; font-size: 14px;">Privacy Policy</a>
+        <a href="/en/terms" style="color: #B8D4EA; font-size: 14px;">Terms of Use</a>
+        <a href="/accessibility" lang="he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 6px 13px;">עברית</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="doc" id="main">
+    <h1>Accessibility Statement</h1>
+    <p class="updated">Last updated: September 2, 2026</p>
+
+    <p>We treat the accessibility of this site as part of the service, not an add-on to it. This page sets out the standard meduxa.ai is built to, what is actually accessible on it, the limitations we still know about, and how to report a problem so we can fix it.</p>
+
+    <div class="card">
+      <p><strong>The short version:</strong> the site is built to Israeli Standard IS 5568 at level AA, which adopts the W3C's WCAG 2.0 guidelines. It was last checked on September 2, 2026, and that check was a self-assessment by the development team rather than an audit by a certified accessibility professional. The limitations we know about are listed in section 4 rather than hidden. Found something that does not work? <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>.</p>
+    </div>
+
+    <h2>1. The standard this site is built to</h2>
+    <p>The site follows <strong>Israeli Standard IS 5568</strong>, "Web content accessibility guidelines", at conformance level <strong>AA</strong>. That standard adopts the W3C's WCAG 2.0 guidelines. This statement is written in the spirit of Israel's Equal Rights for Persons with Disabilities Regulations (Service Accessibility Adjustments), 5773-2013.</p>
+    <p>This is a marketing site only: it has no sign-up, no user accounts and no payment flow. The product itself is in pilot and is not served from this site; when it opens to the public, this statement will be re-examined against it.</p>
+
+    <h2>2. What is accessible</h2>
+    <p>These have been checked and work:</p>
+    <ul>
+      <li><strong>Full keyboard operation.</strong> Everything that can be clicked can also be reached with <kbd>Tab</kbd> and activated with <kbd>Enter</kbd> or <kbd>Space</kbd> — including the four answers in the demo card, the reply chips and send control, the expand-explanation button, the nine "science of learning" cards, and the waitlist form.</li>
+      <li><strong>A visible focus indicator</strong> on every interactive element, so it is always clear where the keyboard is.</li>
+      <li><strong>A skip-to-content link</strong> at the top of every page, revealed on the first <kbd>Tab</kbd> press, which jumps past the navigation.</li>
+      <li><strong>Semantic structure.</strong> Landmark regions (<code>nav</code>, <code>main</code>, <code>footer</code>), a hierarchical heading order, and either a text alternative or a decorative marking on every piece of graphics.</li>
+      <li><strong>Colour contrast.</strong> Every text colour on the site has been computed against the background behind it and meets at least 4.5:1 for normal-size text.</li>
+      <li><strong>Reduced-motion preference honoured.</strong> For visitors whose operating system requests <code>prefers-reduced-motion</code>, the background video at the top of the page is not shown at all and animations stop.</li>
+      <li><strong>The background video is completely silent</strong>, carries no information, and is marked decorative so screen readers skip it. Nothing on the site starts playing sound on its own.</li>
+      <li><strong>Right-to-left Hebrew is genuine</strong> — the Hebrew page is authored RTL from the start, not a mirrored Latin layout.</li>
+      <li><strong>Responsive layout and zoom.</strong> The page stays readable and operable at up to 200% text zoom and on narrow phone screens, without horizontal scrolling.</li>
+      <li><strong>Labelled forms.</strong> The email field and the consent checkbox both have associated labels, and success or failure is reported in text rather than by colour alone.</li>
+      <li><strong>No pop-ups</strong>, no banners covering the content, and no time limit on any action.</li>
+    </ul>
+
+    <h2>3. How it was checked</h2>
+    <p>The most recent check was carried out on <strong>September 2, 2026</strong> by the development team. It covered a full keyboard pass over every page, a computed contrast check of every text colour against its background, and a review of the semantic structure and landmark regions.</p>
+    <p><strong>The site has not yet been audited by a certified accessibility professional</strong>, so this statement describes a self-assessment rather than external certification. We intend to complete such an audit, and this page will be updated to reflect what it finds.</p>
+
+    <h2>4. Limitations we know about</h2>
+    <p>These are the gaps we are aware of. They are listed so you know what to expect, not as an excuse — each is on the fix list:</p>
+    <ul>
+      <li><strong>English terms inside Hebrew text are not marked with their language.</strong> On the Hebrew page, terms such as KDIGO or AKI sit inside Hebrew sentences without a separate language marking, so a screen reader may pronounce them with Hebrew phonetics. This is a deviation from the level AA "language of parts" requirement.</li>
+      <li><strong>The "science of learning" cards open on hover as well as on click or keypress.</strong> The content is reachable either way, but that combination may behave unpredictably in some browser and screen-reader pairings.</li>
+      <li><strong>AI tutor replies are generated live</strong>, so their sentence length and reading level are not reviewed in advance. They are capped in length, but they are not edited before being shown.</li>
+      <li><strong>The reference links</strong> at the end of the science section lead to external academic sites. Their accessibility is outside our control and rests with whoever operates them.</li>
+    </ul>
+
+    <h2>5. Accessibility arrangements for the service</h2>
+    <p>The service is delivered entirely online. We have no office or branch that receives the public, so there are no physical accessibility arrangements to declare. Every enquiry is received and handled by email.</p>
+
+    <h2>6. Reporting an accessibility problem</h2>
+    <p>If you have run into a page, control or piece of content you could not use, please tell us — even if it seems small. A report like that is the fastest way we have of learning that something is broken.</p>
+    <p><strong>Write to:</strong> <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a></p>
+    <p>To help us reproduce the problem, it is useful to have the page address, a short description of what did not work, and — if you know them — the browser, operating system and assistive technology you were using. We will get back to you as quickly as we can, and no later than 30 days from receiving your message.</p>
+
+    <h2>7. Updates to this statement</h2>
+    <p>This statement is re-examined on any substantive change to the site, and at least once a year. The date it was last updated appears at the top of the page.</p>
+
+    <p style="margin-top: 40px;"><a href="/en">→ Back to home</a> · <a href="/en/privacy">Privacy Policy</a> · <a href="/en/terms">Terms of Use</a></p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background: #04101E; padding: 36px 32px;">
+    <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+        <a class="foot-link" href="/en/privacy">Privacy Policy</a>
+        <a class="foot-link" href="/en/terms">Terms of Use</a>
+        <a class="foot-link" href="/en/accessibility">Accessibility</a>
+      </span>
+      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · Study smarter for the boards · All rights reserved</span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>

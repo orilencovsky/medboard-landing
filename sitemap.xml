@@ -37,4 +37,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/en/terms"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/terms"/>
   </url>
+  <url>
+    <loc>https://meduxa.ai/accessibility</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://meduxa.ai/accessibility"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/en/accessibility"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/accessibility"/>
+  </url>
+  <url>
+    <loc>https://meduxa.ai/en/accessibility</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://meduxa.ai/accessibility"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/en/accessibility"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/accessibility"/>
+  </url>
 </urlset>

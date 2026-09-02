@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>הצהרת נגישות — MeduXa.ai</title>
+<link rel="canonical" href="https://meduxa.ai/accessibility" />
+<link rel="alternate" hreflang="he" href="https://meduxa.ai/accessibility" />
+<link rel="alternate" hreflang="en" href="https://meduxa.ai/en/accessibility" />
+<link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/accessibility" />
+<meta name="description" content="הצהרת הנגישות של MeduXa.ai — התקן שלפיו נבנה האתר, מה נגיש בו, אילו מגבלות ידועות קיימות, ואיך לדווח על בעיית נגישות." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#061225" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='%230B2545'/%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='none' stroke='%2322D3EE' stroke-width='3'/%3E%3Cpath d='M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74' stroke='%231E4A6E' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3Cpath d='M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22' stroke='%2338BDF8' stroke-width='7' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='48' cy='48' r='9' fill='%2322D3EE'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
+  /* Latin terms and numerals inside Hebrew sentences, kept from reordering. */
+  .ltr-iso { direction: ltr; unicode-bidi: isolate; }
+  .doc { max-width: 820px; margin: 0 auto; padding: 56px 32px 88px; }
+  .doc h1 { margin: 0 0 8px; font-size: 38px; font-weight: 700; color: #0F172A; line-height: 1.25; }
+  .doc h2 { margin: 44px 0 14px; font-size: 22px; font-weight: 700; color: #0F172A; }
+  .doc h3 { margin: 26px 0 8px; font-size: 17px; font-weight: 600; color: #0F172A; }
+  .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
+  .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
+  .doc li { margin-bottom: 8px; }
+  .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
+  .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }
+  /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
+  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
+  .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
+  .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
+  .doc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .foot-link { color: #7DA2C4; font-size: 14px; transition: color .15s; }
+  .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  .m-link { color: #B8D4EA; font-size: 15px; padding: 10px 4px; }
+  :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
+  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
+          padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
+  .skip:focus { inset-inline-start: 0; text-decoration: none; color: #fff; }
+  @media (max-width: 640px) {
+    .doc { padding: 36px 20px 64px; }
+    .doc h1 { font-size: 30px; }
+    .doc h2 { font-size: 20px; }
+    .doc table, .doc thead, .doc tbody, .doc tr, .doc th, .doc td { display: block; }
+    .doc thead { display: none; }
+    .doc tr { border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 12px; background: #fff; }
+    .doc td { border: none; border-bottom: 1px solid #EEF2F6; }
+    .doc tr td:last-child { border-bottom: none; }
+    .doc td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: #0E7490; margin-bottom: 4px; }
+    footer [data-mq-footer] { flex-direction: column !important; text-align: center !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">דילוג לתוכן העמוד</a>
+
+<div dir="rtl" style="background: #F0F6FA; min-height: 100vh;">
+
+  <!-- NAV -->
+  <nav style="background: rgba(6,18,37,.96); border-bottom: 1px solid rgba(34,211,238,.15);">
+    <div class="doc-nav" style="max-width: 1200px; margin: 0 auto; padding: 0 32px; min-height: 68px;">
+      <a href="/" style="display: flex; align-items: center; gap: 12px;">
+        <svg width="34" height="34" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+          <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+          <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+          <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+          <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+        </svg>
+        <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 18px;">
+        <a href="/privacy" style="color: #B8D4EA; font-size: 14px;">מדיניות פרטיות</a>
+        <a href="/terms" style="color: #B8D4EA; font-size: 14px;">תנאי שימוש</a>
+        <a href="/en/accessibility" lang="en" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 6px 13px; direction: ltr;">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="doc" id="main">
+    <h1>הצהרת נגישות</h1>
+    <p class="updated">עודכן לאחרונה: 2 בספטמבר 2026</p>
+
+    <p>אנחנו רואים בנגישות האתר חלק מהשירות עצמו, לא תוספת לו. העמוד הזה מפרט לפי איזה תקן נבנה האתר <span class="ltr-iso">meduxa.ai</span>, מה נגיש בו בפועל, אילו מגבלות ידועות עדיין קיימות, ואיך לדווח על בעיה כדי שנתקן אותה.</p>
+
+    <div class="card">
+      <p><strong>בקצרה:</strong> האתר נבנה לפי תקן ישראלי ת״י 5568 ברמה <span class="ltr-iso">AA</span>, המבוסס על הנחיות <span class="ltr-iso">WCAG 2.0</span>. הבדיקה האחרונה נערכה ב־2 בספטמבר 2026 והיא בדיקה עצמית של צוות הפיתוח, לא ביקורת של מורשה נגישות. המגבלות שידועות לנו מפורטות בסעיף 4 ולא הוסתרו. נתקלת במשהו שלא עובד? <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>.</p>
+    </div>
+
+    <h2>1. התקן שלפיו נבנה האתר</h2>
+    <p>האתר נבנה בהתאם לתקן הישראלי <strong>ת״י 5568</strong>, ״קווים מנחים לנגישות תכנים באינטרנט״, ברמת התאמה <span class="ltr-iso">AA</span>. התקן מאמץ את הנחיות <span class="ltr-iso">WCAG 2.0</span> של ארגון <span class="ltr-iso">W3C</span>. ההצהרה נכתבה ברוח תקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע״ג־2013.</p>
+    <p>האתר הזה הוא אתר שיווקי בלבד: אין בו הרשמה, אין חשבונות משתמש ואין תהליך תשלום. המוצר עצמו נמצא בשלב פיילוט ואינו מוגש מהאתר הזה; כשהוא ייפתח לציבור, ההצהרה הזו תיבדק מחדש מולו.</p>
+
+    <h2>2. מה נגיש באתר</h2>
+    <p>הדברים האלה נבדקו בפועל ועובדים:</p>
+    <ul>
+      <li><strong>הפעלה מלאה במקלדת.</strong> כל רכיב שאפשר ללחוץ עליו אפשר גם להגיע אליו ב־<span class="ltr-iso">Tab</span> ולהפעיל ב־<span class="ltr-iso">Enter</span> או ברווח — כולל ארבע התשובות בכרטיס ההדגמה, הצ׳יפים והשליחה למורה, כפתור הרחבת ההסבר, תשעת כרטיסי ״מדע הלמידה״ וטופס ההרשמה.</li>
+      <li><strong>סימון פוקוס נראה לעין</strong> על כל רכיב אינטראקטיבי, כדי שתמיד יהיה ברור איפה נמצאת המקלדת.</li>
+      <li><strong>קישור דילוג לתוכן</strong> בראש כל עמוד, שנחשף בלחיצת <span class="ltr-iso">Tab</span> ראשונה ומדלג מעל תפריט הניווט.</li>
+      <li><strong>מבנה סמנטי.</strong> אזורי ניווט (<span class="ltr-iso">nav</span>, <span class="ltr-iso">main</span>, <span class="ltr-iso">footer</span>), סדר כותרות היררכי, וטקסט חלופי או סימון דקורטיבי לכל גרפיקה.</li>
+      <li><strong>ניגודיות צבע.</strong> כל צבעי הטקסט בעמודים נבדקו חישובית מול הרקע שמאחוריהם ועומדים ביחס של 4.5:1 לפחות לטקסט רגיל.</li>
+      <li><strong>כיבוד העדפת תנועה מופחתת.</strong> למבקרים שהגדירו <span class="ltr-iso">prefers-reduced-motion</span> בהגדרות מערכת ההפעלה, סרטון הרקע בראש העמוד אינו מוצג כלל והאנימציות נעצרות.</li>
+      <li><strong>סרטון הרקע חסר קול לחלוטין</strong>, אינו נושא מידע ומסומן כדקורטיבי, כך שקוראי מסך מדלגים עליו. אין באתר שום תוכן שמתחיל להשמיע קול מעצמו.</li>
+      <li><strong>עברית מימין לשמאל אמיתית</strong> — העמוד נכתב <span class="ltr-iso">RTL</span> מלכתחילה ולא כהיפוך של פריסה לטינית.</li>
+      <li><strong>עיצוב מותאם והגדלה.</strong> העמוד נשאר קריא וניתן לתפעול בהגדלת טקסט של עד 200% ובמסכי טלפון צרים, בלי גלילה אופקית.</li>
+      <li><strong>טפסים מתויגים.</strong> לשדה המייל ולתיבת ההסכמה יש תוויות משויכות, והודעת שגיאה או הצלחה נמסרת בטקסט ולא בצבע בלבד.</li>
+      <li><strong>אין חלונות קופצים</strong>, אין באנרים שחוסמים את התוכן ואין הגבלת זמן על אף פעולה.</li>
+    </ul>
+
+    <h2>3. איך נבדק</h2>
+    <p>הבדיקה האחרונה נערכה ב־<strong>2 בספטמבר 2026</strong> על ידי צוות הפיתוח, וכללה מעבר מקלדת מלא על כל העמודים, בדיקה חישובית של יחסי הניגודיות של כל צבעי הטקסט מול הרקעים שלהם, ובדיקת המבנה הסמנטי ואזורי הניווט.</p>
+    <p><strong>עד היום לא נערכה באתר ביקורת נגישות על ידי מורשה נגישות מוסמך</strong>, ולכן ההצהרה הזו מתארת בדיקה עצמית ולא אישור חיצוני. אנחנו מתכוונים להשלים ביקורת כזו, והעמוד הזה יעודכן בהתאם לממצאיה.</p>
+
+    <h2>4. מגבלות ידועות</h2>
+    <p>אלה הפערים שאנחנו מודעים להם. הם מפורטים כאן כדי שתדעו למה לצפות, ולא כתירוץ — כולם בתוכנית התיקון:</p>
+    <ul>
+      <li><strong>מונחים באנגלית בתוך טקסט עברי אינם מסומנים בשפתם.</strong> מונחים כמו <span class="ltr-iso">KDIGO</span> או <span class="ltr-iso">AKI</span> משובצים במשפטים בעברית בלי סימון שפה נפרד, כך שקורא מסך עשוי להגות אותם בהגייה עברית. זו סטייה מדרישת ״שפת הקטע״ שברמה <span class="ltr-iso">AA</span>.</li>
+      <li><strong>כרטיסי ״מדע הלמידה״ נפתחים גם במעבר עכבר וגם בלחיצה או במקלדת.</strong> התוכן נגיש בשתי הדרכים, אבל השילוב הזה עלול להתנהג באופן לא צפוי בחלק מצירופי הדפדפן וקורא המסך.</li>
+      <li><strong>תשובות המורה <span class="ltr-iso">AI</span> נוצרות בזמן אמת</strong>, ולכן אורך המשפטים ורמת הניסוח שלהן אינם נבדקים מראש. הן מוגבלות באורך, אבל אינן עוברות עריכה לפני שהן מוצגות.</li>
+      <li><strong>קישורי המקורות</strong> בסוף פרק מדע הלמידה מובילים לאתרים אקדמיים חיצוניים. הנגישות שלהם אינה בשליטתנו והיא באחריות מפעיליהם.</li>
+    </ul>
+
+    <h2>5. הסדרי נגישות בשירות</h2>
+    <p>השירות ניתן במלואו באינטרנט. אין לנו משרד או סניף שמקבל קהל, ולכן אין הסדרי נגישות פיזיים להצהיר עליהם. כל פנייה מתקבלת ומטופלת במייל.</p>
+
+    <h2>6. דיווח על בעיית נגישות</h2>
+    <p>אם נתקלתם בעמוד, ברכיב או בתוכן שלא הצלחתם להשתמש בו — נשמח שתכתבו לנו, גם אם זה נראה קטן. פנייה כזו היא הדרך המהירה ביותר שיש לנו לדעת על בעיה.</p>
+    <p><strong>לפנייה:</strong> <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a></p>
+    <p>כדי שנוכל לשחזר את הבעיה, יעזור לנו לקבל את כתובת העמוד, תיאור קצר של מה שלא עבד, ואם ידוע — הדפדפן, מערכת ההפעלה וטכנולוגיית הסיוע שבה השתמשתם. נחזור אליכם בהקדם האפשרי ולא יאוחר מ־30 יום מקבלת הפנייה.</p>
+
+    <h2>7. עדכון ההצהרה</h2>
+    <p>ההצהרה נבדקת מחדש בכל שינוי מהותי באתר, ולפחות אחת לשנה. תאריך העדכון האחרון מופיע בראש העמוד.</p>
+
+    <p style="margin-top: 40px;"><a href="/">→ חזרה לעמוד הבית</a> · <a href="/privacy">מדיניות פרטיות</a> · <a href="/terms">תנאי שימוש</a></p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background: #04101E; padding: 36px 32px;">
+    <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+        <a class="foot-link" href="/privacy">מדיניות פרטיות</a>
+        <a class="foot-link" href="/terms">תנאי שימוש</a>
+        <a class="foot-link" href="/accessibility">הצהרת נגישות</a>
+      </span>
+      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
