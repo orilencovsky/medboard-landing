@@ -155,10 +155,14 @@ for, who holds it, and that deletion can be requested. `required` on the checkbo
 blocks the `submit` event itself, so the handler never sees an address nobody consented to sending
 — don't drop that attribute, and don't move the consent text out of the `<form>`.
 
-Consent is currently only enforced client-side; nothing is written to the row to evidence it. If
-GDPR Art. 7(1) proof matters, add a `consent_at timestamptz` column to `waitlist` **first**, then
-send it in the insert body — an unknown column makes PostgREST reject the row with a `400` and the
-visitor sees the generic failure message.
+Consent is evidenced server-side: `waitlist.consent_at` (nullable `timestamptz`, added after launch
+planning) records the moment the submit handler read the checkbox as checked, sent as an ISO
+timestamp in the insert body alongside the double-check `if (!val || !consent.checked) return;` —
+belt-and-suspenders against the `required` attribute ever being dropped from the checkbox. Rows
+inserted before this column existed carry `consent_at = null`. Adding any other new column to the
+insert body the same way needs the RLS `INSERT` policy's `with_check` to keep allowing it — an
+unknown column makes PostgREST reject the row with a `400` and the visitor sees the generic failure
+message, but `consent_at` isn't checked there, so it isn't at risk from that policy.
 
 ## Hero demo card and the AI tutor
 
