@@ -730,9 +730,9 @@
           <svg viewBox="0 0 520 480" width="520" height="480" aria-hidden="true" focusable="false">
             <circle cx="260" cy="215" r="175" fill="none" stroke="#14395C" stroke-width="2"></circle>
             <!-- Solid where the loop is shipped (01→03), dashed where it is not (03→04→01). -->
-            <path d="M 260 40 A 175 175 0 0 0 260 390" fill="none" stroke="#22D3EE" stroke-width="2.5"></path>
-            <path d="M 260 390 A 175 175 0 0 0 260 40" fill="none" stroke="#1E4A6E" stroke-width="2" stroke-dasharray="6 9"></path>
-            <path class="loop-comet" d="M 260 40 A 175 175 0 0 0 260 390 A 175 175 0 0 0 260 40" fill="none" stroke="#8CF0FF" stroke-width="3.5" stroke-linecap="round" opacity=".95"></path>
+            <path d="M 260 40 A 175 175 0 0 1 260 390" fill="none" stroke="#22D3EE" stroke-width="2.5"></path>
+            <path d="M 260 390 A 175 175 0 0 1 260 40" fill="none" stroke="#1E4A6E" stroke-width="2" stroke-dasharray="6 9"></path>
+            <path class="loop-comet" d="M 260 40 A 175 175 0 0 1 260 390 A 175 175 0 0 1 260 40" fill="none" stroke="#8CF0FF" stroke-width="3.5" stroke-linecap="round" opacity=".95"></path>
           </svg>
 
           <div class="loop-center">
@@ -746,13 +746,13 @@
             <button type="button" role="tab" class="loop-node" data-loop-tab="0" aria-controls="loop-panel-0" aria-selected="true" style="left: 260px; top: 40px;">
               <span class="loop-dot">01</span><span class="loop-label">Practice</span>
             </button>
-            <button type="button" role="tab" class="loop-node" data-loop-tab="1" data-accent="violet" aria-controls="loop-panel-1" aria-selected="false" tabindex="-1" style="left: 85px; top: 215px;">
+            <button type="button" role="tab" class="loop-node" data-loop-tab="1" data-accent="violet" aria-controls="loop-panel-1" aria-selected="false" tabindex="-1" style="left: 435px; top: 215px;">
               <span class="loop-dot">02</span><span class="loop-label chip">Understand</span>
             </button>
             <button type="button" role="tab" class="loop-node" data-loop-tab="2" aria-controls="loop-panel-2" aria-selected="false" tabindex="-1" style="left: 260px; top: 390px;">
               <span class="loop-dot">03</span><span class="loop-label">Review &amp; Retain</span>
             </button>
-            <button type="button" role="tab" class="loop-node" data-loop-tab="3" data-accent="soon" aria-controls="loop-panel-3" aria-selected="false" tabindex="-1" style="left: 435px; top: 215px;">
+            <button type="button" role="tab" class="loop-node" data-loop-tab="3" data-accent="soon" aria-controls="loop-panel-3" aria-selected="false" tabindex="-1" style="left: 85px; top: 215px;">
               <span class="loop-dot">04</span><span class="loop-label chip">Compete</span><span class="loop-soon">Soon</span>
             </button>
           </div>
