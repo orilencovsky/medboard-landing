@@ -75,7 +75,7 @@ What has to stay true as the site changes — each of these is a statement the p
 
 | The pages say | So if you change… |
 |---|---|
-| Waitlist emails are kept 24 months, or until deletion is requested (30-day turnaround) | …you need a way to actually delete on request, and something that prunes at 24 months |
+| Waitlist emails are kept 24 months, or until deletion is requested (30-day turnaround) | …see [Handling a deletion request](#handling-a-deletion-request) — today that's a manual `DELETE` against Supabase, not an automated flow, so the 30-day and 24-month promises hold only as long as someone is actually doing that by hand |
 | The only cookie is `mx_lang`, functional, no tracking cookies at all | …adding any identifier-based script means a consent banner **and** a rewrite of § 3 |
 | Processors are Supabase, Vercel and Anthropic, transferring under their DPAs' SCCs | …a new third-party script or backend is a new named processor in § 4 |
 | `privacy@meduxa.ai` is answered within 30 days | …the address has to keep reaching a human; it is the only contact point in both documents |
@@ -155,10 +155,35 @@ for, who holds it, and that deletion can be requested. `required` on the checkbo
 blocks the `submit` event itself, so the handler never sees an address nobody consented to sending
 — don't drop that attribute, and don't move the consent text out of the `<form>`.
 
-Consent is currently only enforced client-side; nothing is written to the row to evidence it. If
-GDPR Art. 7(1) proof matters, add a `consent_at timestamptz` column to `waitlist` **first**, then
-send it in the insert body — an unknown column makes PostgREST reject the row with a `400` and the
-visitor sees the generic failure message.
+Consent is evidenced server-side: `waitlist.consent_at` (nullable `timestamptz`, added after launch
+planning) records the moment the submit handler read the checkbox as checked, sent as an ISO
+timestamp in the insert body alongside the double-check `if (!val || !consent.checked) return;` —
+belt-and-suspenders against the `required` attribute ever being dropped from the checkbox. Rows
+inserted before this column existed carry `consent_at = null`. Adding any other new column to the
+insert body the same way needs the RLS `INSERT` policy's `with_check` to keep allowing it — an
+unknown column makes PostgREST reject the row with a `400` and the visitor sees the generic failure
+message, but `consent_at` isn't checked there, so it isn't at risk from that policy.
+
+### Handling a deletion request
+
+There is no self-serve deletion endpoint and no `DELETE` RLS policy on `waitlist` — the table only
+grants `INSERT` to `anon` and `SELECT` (to admins, via `is_question_v2_admin()`), so the publishable
+key used by the form cannot delete a row even if it wanted to. Deletion is a manual, human step:
+
+1. A request arrives at `privacy@meduxa.ai` — the only contact point the privacy pages name for
+   this, in both languages (§ 7).
+2. Whoever holds it opens the Supabase dashboard for the `MeduXa` project (`pappjpdsajkcoqrfqqqx`)
+   → **Table Editor** → `waitlist`, finds the row by the email in the request, and deletes it — or
+   runs the equivalent `delete from waitlist where email = '<address>';` in the SQL editor. Either
+   path needs a Supabase account with access to this project; there is no separate admin tool.
+3. Reply to the requester confirming it's done. The privacy pages promise this inside **30 days**
+   (§ 5, § 7) — that clock is not enforced by anything technical, so it is on whoever is watching
+   the inbox.
+
+24-month retention (§ 5 of the privacy pages) is likewise not auto-pruned — there is no scheduled
+job deleting rows past that age. Until one exists, treat it as a manual housekeeping task: query
+`select email, created_at from waitlist where created_at < now() - interval '24 months';` from time
+to time and delete what comes back the same way as an ad-hoc request.
 
 ## Hero demo card and the AI tutor
 
