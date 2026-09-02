@@ -753,12 +753,13 @@
     var form = document.getElementById('waitlistForm');
     if (!form) return;
     var email = document.getElementById('waitlistEmail');
+    var consent = document.getElementById('waitlistConsent');
     var btn = document.getElementById('waitlistSubmit');
     var msg = document.getElementById('waitlistMsg');
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var val = (email.value || '').trim();
-      if (!val) return;
+      if (!val || !consent.checked) return;
       btn.disabled = true; btn.textContent = '…';
       fetch(SUPA_URL + '/rest/v1/waitlist', {
         method: 'POST',
@@ -768,7 +769,7 @@
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },
-        body: JSON.stringify({ email: val, locale: LOCALE, source: 'landing' })
+        body: JSON.stringify({ email: val, locale: LOCALE, source: 'landing', consent_at: new Date().toISOString() })
       }).then(function (r) {
         if (r.ok || r.status === 409) { // 409 = כבר ברשימה → עדיין הצלחה
           form.style.display = 'none';
