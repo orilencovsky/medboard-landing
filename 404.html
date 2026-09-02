@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>הדף לא נמצא — MeduXa.ai</title>
+<meta name="robots" content="noindex, follow" />
+<meta name="theme-color" content="#061225" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='%230B2545'/%3E%3Crect x='2' y='2' width='92' height='92' rx='22' fill='none' stroke='%2322D3EE' stroke-width='3'/%3E%3Cpath d='M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74' stroke='%231E4A6E' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3Cpath d='M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22' stroke='%2338BDF8' stroke-width='7' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='48' cy='48' r='9' fill='%2322D3EE'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #061225; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  a { color: #7DD3FC; text-decoration: none; }
+  a:hover, a:focus-visible { color: #22D3EE; text-decoration: underline; }
+  :focus-visible { outline: 2px solid #22D3EE; outline-offset: 3px; }
+  .wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+          gap: 20px; text-align: center; padding: 48px 24px;
+          background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); }
+  .code { font-family: 'IBM Plex Mono', monospace; font-size: 15px; letter-spacing: .22em; color: #22D3EE; margin: 0; }
+  h1 { margin: 0; font-size: 40px; font-weight: 700; color: #fff; line-height: 1.2; }
+  p.lead { margin: 0; max-width: 460px; font-size: 17px; color: #B8D4EA; line-height: 1.7; }
+  .home { margin-top: 8px; display: inline-flex; align-items: center; gap: 9px; background: linear-gradient(135deg, #4A38C9, #7C5CFF);
+          color: #fff; border-radius: 12px; padding: 14px 28px; font-size: 16px; font-weight: 700; }
+  .home:hover, .home:focus-visible { color: #fff; text-decoration: none; }
+  .links { margin: 10px 0 0; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap;
+           font-size: 14px; color: #5B87A8; }
+  .links a { color: #9FC3DE; }
+  @media (max-width: 600px) { h1 { font-size: 30px; } p.lead { font-size: 16px; } }
+</style>
+</head>
+<body>
+
+<!-- One file serves every missing path, in both languages.
+     Vercel serves the root 404.html for any not-found path, including under
+     /en, so there is no second copy to keep in sync — the page picks its own
+     language instead, most explicit signal first:
+       1. the path (/en/... was clearly aimed at the English side)
+       2. the mx_lang cookie (a preference the visitor already stated)
+       3. navigator.language
+     The edge router's country check cannot be reproduced here: the redirect
+     rules in vercel.json only cover "/", so a 404 never passes through them
+     and x-vercel-ip-country never reaches the page. An Israeli visitor on an
+     English browser therefore lands on the English 404 while the router would
+     have kept them on Hebrew — the one place the two disagree. -->
+<div class="wrap">
+  <a href="/" id="mark" aria-label="MeduXa.ai">
+    <svg width="60" height="60" viewBox="0 0 96 96" fill="none" role="img" aria-hidden="true">
+      <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+      <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+      <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+      <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+      <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+    </svg>
+  </a>
+
+  <p class="code">404</p>
+
+  <div id="he">
+    <h1>הדף לא נמצא</h1>
+    <p class="lead" style="margin: 16px auto 0;">הקישור שהגעתם דרכו שבור, או שהדף הזה כבר לא קיים. אפשר לחזור לעמוד הבית ולהמשיך משם.</p>
+    <div><a class="home" href="/">→ לעמוד הבית</a></div>
+    <p class="links">
+      <a href="/privacy">מדיניות פרטיות</a>
+      <a href="/terms">תנאי שימוש</a>
+      <a href="/accessibility">הצהרת נגישות</a>
+      <a href="/en" lang="en">English</a>
+    </p>
+  </div>
+
+  <div id="en" hidden lang="en" dir="ltr">
+    <h1>Page not found</h1>
+    <p class="lead" style="margin: 16px auto 0;">The link you followed is broken, or this page no longer exists. Head back to the home page and pick up from there.</p>
+    <div><a class="home" href="/en">← Back to home</a></div>
+    <p class="links">
+      <a href="/en/privacy">Privacy Policy</a>
+      <a href="/en/terms">Terms of Use</a>
+      <a href="/en/accessibility">Accessibility</a>
+      <a href="/" lang="he">עברית</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var english = false;
+    try {
+      var path = location.pathname || '';
+      var cookie = document.cookie || '';
+      if (/^\/en(\/|$)/i.test(path)) english = true;
+      else if (/(^|;\s*)mx_lang=en(\s*;|\s*$)/.test(cookie)) english = true;
+      else if (/(^|;\s*)mx_lang=he(\s*;|\s*$)/.test(cookie)) english = false;
+      else english = !/^he\b/i.test(navigator.language || '');
+    } catch (e) { english = false; }
+
+    if (!english) return;
+
+    document.documentElement.lang = 'en';
+    document.documentElement.dir = 'ltr';
+    document.title = 'Page not found — MeduXa.ai';
+    document.getElementById('he').hidden = true;
+    document.getElementById('en').hidden = false;
+    document.getElementById('en').removeAttribute('lang');
+    document.getElementById('mark').href = '/en';
+  })();
+</script>
+
+</body>
+</html>

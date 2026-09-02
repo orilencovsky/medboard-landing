@@ -285,9 +285,16 @@
   .btn-action-lg { box-shadow:0 10px 34px rgba(74,56,201,.5); }
   .input-action { border:1px solid #CBD5E1; transition:border-color .15s ease, box-shadow .15s ease; }
   .input-action:focus { border-color:#7C5CFF; box-shadow:0 0 0 3px rgba(124,92,255,.22); }
+  /* Off-screen until focused, so the first Tab press offers a way past the nav
+     instead of walking the whole menu. Targets the <main> below. */
+  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
+          padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; text-decoration: none; }
+  .skip:focus { inset-inline-start: 0; color: #fff; }
 </style>
 </head>
 <body>
+
+<a class="skip" href="#main">Skip to content</a>
 
 <div dir="ltr" style="background: #F0F6FA; min-height: 100vh;">
 
@@ -323,6 +330,8 @@
       <a class="m-link" href="#vision" onclick="closeMenu()">Vision</a>
     </div>
   </nav>
+
+  <main id="main">
 
   <!-- HERO -->
   <header data-mq-hero style="background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); padding: 88px 32px 100px; position: relative; overflow: hidden;">
@@ -717,9 +726,13 @@
         </label>
         <p style="flex: 0 0 100%; margin: 0; text-align: start; font-size: 13px; color: #64748B; line-height: 1.6;">Giving us your address is voluntary. It is stored with our database provider (Supabase), used only for MeduXa launch updates, never passed to advertisers, and deleted whenever you ask. Full detail in the <a href="/en/privacy">Privacy Policy</a> and <a href="/en/terms">Terms of Use</a>.</p>
       </form>
-      <span id="waitlistMsg" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #94A3B8;">free early access · no spam</span>
+      <!-- #94A3B8 on white is 2.56:1. This line is 13px normal-weight text, so
+           it needs 4.5:1; #64748B gives 4.76:1. -->
+      <span id="waitlistMsg" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64748B;">free early access · no spam</span>
     </div>
   </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer style="background: #04101E; padding: 36px 32px;">
@@ -728,6 +741,7 @@
       <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: center;">
         <a class="foot-link" href="/en/privacy">Privacy Policy</a>
         <a class="foot-link" href="/en/terms">Terms of Use</a>
+        <a class="foot-link" href="/en/accessibility">Accessibility</a>
       </span>
       <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · Study smarter for your board exams · All rights reserved</span>
     </div>

@@ -19,8 +19,9 @@ lives in a separate private repo and is served from `app.meduxa.ai`.
 ```
 index.html               Hebrew / RTL landing page — the root (single file: markup + inline CSS + inline JS)
 en/index.html            English landing page — a full translation, not a wrapper
-privacy.html, terms.html          Legal pages, Hebrew (/privacy, /terms)
-en/privacy.html, en/terms.html    Legal pages, English (/en/privacy, /en/terms)
+privacy.html, terms.html, accessibility.html          Legal pages, Hebrew (/privacy, /terms, /accessibility)
+en/privacy.html, en/terms.html, en/accessibility.html Legal pages, English (under /en)
+404.html                 Not-found page — one bilingual file for every missing path
 hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
@@ -60,8 +61,9 @@ Both language versions share the same section order, anchored for in-page nav:
 | `#vision` | "One engine, every board exam" — the subject-agnostic story beyond nephrology |
 | `#pilot` | "Ready to study smarter?" — the nephrology pilot + waitlist signup |
 
-Off that spine sit four standalone legal pages — `/privacy`, `/terms` and their `/en` counterparts
-— reachable from every footer and from the notice under the waitlist form.
+Off that spine sit six standalone legal pages — `/privacy`, `/terms`, `/accessibility` and their
+`/en` counterparts — reachable from every footer, and the privacy and terms pages also from the
+notice under the waitlist form.
 
 ## Legal pages
 
@@ -83,6 +85,51 @@ What has to stay true as the site changes — each of these is a statement the p
 
 Both documents carry a "last updated" line that should move whenever their substance does. Neither
 has been reviewed by a lawyer.
+
+## Accessibility
+
+`/accessibility` and `/en/accessibility` are the accessibility statement, in the same hand-authored
+style as the other legal pages. They exist because the site serves the Israeli public, where the
+Equal Rights for Persons with Disabilities Regulations (Service Accessibility Adjustments),
+5773-2013 expect a business website to meet **IS 5568 level AA** (which adopts WCAG 2.0) and to
+publish a statement saying so. Like the privacy and terms pages, it has not been reviewed by a
+lawyer, and no certified accessibility professional (מורשה נגישות) has audited the site — the
+statement says both of those in its own text rather than implying otherwise.
+
+**The statement is a set of claims about the code, so the code has to keep making them true:**
+
+| The statement says | So keep true |
+|---|---|
+| Every interactive element is reachable by `Tab` and fires on `Enter`/`Space` | The demo card's options, chips, send and expand controls are `div`s with `role="button"`; their keyboard handling is wired by hand in the page script. A new `div` control needs the same wiring — see the `keydown` delegation at the bottom of `index.html` |
+| Every page has a skip link, first in the tab order, pointing at `<main id="main">` | All eight pages carry `<a class="skip" href="#main">` right after `<body>` and exactly one `<main id="main">`. A new page needs both |
+| Every text colour meets 4.5:1 against its background | Check any new colour before using it. Two were fixed to make this true: the waitlist status line (`#94A3B8` → `#64748B`, 2.56:1 → 4.76:1) and the legal pages' "last updated" line (`#64748B` → `#5B6B80`, 4.37:1 → 4.99:1 on `#F0F6FA`) |
+| The hero video is silent, decorative and hidden under `prefers-reduced-motion` | It is `muted`, `aria-hidden="true"`, and hidden by the reduced-motion media query. Any new motion follows the same rule |
+| Section 4 lists the known gaps | It names four, honestly — unmarked `lang` on Latin terms inside Hebrew (WCAG 3.1.2), the hover-and-click science cards, unreviewed live tutor wording, and third-party DOI links. **Fixing one means deleting it from the list; adding a gap means adding it** |
+| Reports go to `privacy@meduxa.ai`, answered within 30 days | Same inbox as the privacy pages. If a dedicated `accessibility@` alias is ever created, it changes in both language versions together |
+
+The statement also carries the date it was last checked (currently **2 September 2026**) and states
+that the check was a self-assessment by the development team. That date should move only when
+someone actually re-checks. Note it deliberately does **not** name an accessibility coordinator or a
+phone number: the regulations require appointing one at 25+ employees, so revisit this on hiring.
+
+## The 404 page
+
+`404.html` at the repo root is served by Vercel for **every** missing path, including paths under
+`/en`, so it is one bilingual file rather than two — the page picks its own language on load, most
+explicit signal first:
+
+1. the path (`/en/...` was clearly aimed at the English side),
+2. the `mx_lang` cookie (a preference the visitor already stated),
+3. `navigator.language`.
+
+The edge router's country check cannot be reproduced there. The `redirects` in `vercel.json` only
+match `/`, so a 404 never passes through them and `x-vercel-ip-country` never reaches the page. An
+Israeli visitor on an English-language browser therefore lands on the English 404 while the router
+would have kept them on Hebrew — the single point where the two disagree, and it is not fixable
+client-side.
+
+`python3 -m http.server` returns its own plain 404 and never reaches this file, so exercise it on a
+preview deployment or with a static server that falls back to `404.html`.
 
 ## Language routing
 

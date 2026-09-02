@@ -27,7 +27,8 @@
   .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
   .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
   .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }
-  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64748B; letter-spacing: .04em; }
+  /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
+  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
   .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
   .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
   .doc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -45,9 +46,15 @@
     .doc td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: #0E7490; margin-bottom: 4px; }
     footer [data-mq-footer] { flex-direction: column !important; text-align: center !important; }
   }
+  :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
+  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
+          padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
+  .skip:focus { inset-inline-start: 0; text-decoration: none; color: #fff; }
 </style>
 </head>
 <body>
+
+<a class="skip" href="#main">Skip to content</a>
 
 <div style="background: #F0F6FA; min-height: 100vh;">
 
@@ -71,7 +78,7 @@
     </div>
   </nav>
 
-  <main class="doc">
+  <main class="doc" id="main">
     <h1>Privacy Policy</h1>
     <p class="updated">Last updated: September 1, 2026</p>
 
@@ -181,6 +188,7 @@
       <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
         <a class="foot-link" href="/en/privacy">Privacy Policy</a>
         <a class="foot-link" href="/en/terms">Terms of Use</a>
+        <a class="foot-link" href="/en/accessibility">Accessibility</a>
       </span>
       <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · Study smarter for the boards · All rights reserved</span>
     </div>
