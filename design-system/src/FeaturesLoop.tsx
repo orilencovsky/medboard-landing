@@ -43,11 +43,13 @@ export interface FeaturesLoopProps {
   defaultActiveIndex?: number;
 }
 
+// Clockwise for an LTR reader: step 02 sits on the right, 04 on the left.
+// (The Hebrew page keeps the mirror-image geometry — this DS is LTR-only.)
 const NODE_POSITIONS = [
   { left: 260, top: 40 },
-  { left: 85, top: 215 },
-  { left: 260, top: 390 },
   { left: 435, top: 215 },
+  { left: 260, top: 390 },
+  { left: 85, top: 215 },
 ] as const;
 
 // Illustrative topic-mastery sparkline in the readiness card — mirrors the shipped
@@ -143,12 +145,13 @@ export function FeaturesLoop({
           <div className="ds-loop-ring">
             <svg viewBox="0 0 520 480" width={520} height={480} aria-hidden="true" focusable="false">
               <circle cx={260} cy={215} r={175} fill="none" stroke="#14395C" strokeWidth={2} />
-              {/* Solid where the loop is shipped (01→03), dashed where it is not (03→04→01). */}
-              <path d="M 260 40 A 175 175 0 0 0 260 390" fill="none" stroke="var(--ds-cyan)" strokeWidth={2.5} />
-              <path d="M 260 390 A 175 175 0 0 0 260 40" fill="none" stroke="var(--ds-navy-border)" strokeWidth={2} strokeDasharray="6 9" />
+              {/* Solid where the loop is shipped (01→03), dashed where it is not (03→04→01).
+                  Sweeps clockwise (flag 1) to match LTR reading order — see NODE_POSITIONS. */}
+              <path d="M 260 40 A 175 175 0 0 1 260 390" fill="none" stroke="var(--ds-cyan)" strokeWidth={2.5} />
+              <path d="M 260 390 A 175 175 0 0 1 260 40" fill="none" stroke="var(--ds-navy-border)" strokeWidth={2} strokeDasharray="6 9" />
               <path
                 className="ds-loop-comet"
-                d="M 260 40 A 175 175 0 0 0 260 390 A 175 175 0 0 0 260 40"
+                d="M 260 40 A 175 175 0 0 1 260 390 A 175 175 0 0 1 260 40"
                 fill="none"
                 stroke="#8CF0FF"
                 strokeWidth={3.5}
