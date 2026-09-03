@@ -1,6 +1,6 @@
 # MeduXa Landing DS — conventions
 
-This is the component library behind the **MeduXa.ai marketing site** (not the app product — see the separate "MeduXa Design System" project for that). It ships 14 components covering the whole landing page: nav, hero, content sections, and cards.
+This is the component library behind the **MeduXa.ai marketing site** (not the app product — see the separate "MeduXa Design System" project for that). It ships 15 components covering the whole landing page: nav, hero, content sections, and cards.
 
 ## Setup
 
@@ -23,6 +23,7 @@ This DS has no class-name system (no Tailwind-style utilities). Every color, gra
 | Ink/navy scale | `--ds-ink`, `--ds-deep`, `--ds-navy2`, `--ds-navy-card`, `--ds-navy-border`, `--ds-footer-ink` |
 | Accent — cyan | `--ds-cyan`, `--ds-cyan-soft`, `--ds-cyan-pale`, `--ds-sky`, `--ds-sky-light`, `--ds-teal` |
 | Accent — violet | `--ds-violet-deep`, `--ds-violet`, `--ds-violet-light`, `--ds-violet-pale`, `--ds-violet-tint`, `--ds-violet-tint-border` |
+| Accent — violet, on dark panels only | `--ds-violet-onDark`, `--ds-violet-onDark-soft` — use these instead of `--ds-violet-light` for text/icons on `--ds-navy-card`; `--ds-violet-light` is only 3.5:1 there |
 | Reserved semantics | `--ds-warning` (amber, warnings only), `--ds-danger` (errors only) |
 | Text on dark | `--ds-text-onDark-primary/secondary/muted/faint` |
 | Text on light | `--ds-text-heading`, `--ds-text-body`, `--ds-text-faint`, `--ds-text-cyan-accent` |

@@ -5,7 +5,11 @@ export interface FeatureCardProps {
   description: string;
 }
 
-/** Tinted card used in the Features grid — gradient dot + title + copy. */
+/**
+ * Tinted card — gradient dot + title + copy. No longer used by the landing page: Features
+ * is now `FeaturesLoop`. Kept as a generic small-card primitive (distinct from the white
+ * `StepCard`/`PrincipleCard` chip layouts) for other grids that want this lighter weight.
+ */
 export function FeatureCard({ title, description }: FeatureCardProps) {
   return (
     <div style={{ background: 'var(--ds-bg-app)', border: '1px solid var(--ds-border-light)', borderRadius: 'var(--ds-radius-lg)', padding: 28, display: 'flex', flexDirection: 'column', gap: 12 }}>

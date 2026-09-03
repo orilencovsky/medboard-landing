@@ -32,6 +32,12 @@
   --ds-violet-pale: #C9BCFF;
   --ds-violet-tint: #EEEAFF;
   --ds-violet-tint-border: #CFC4FF;
+  /* On dark navy panels (--ds-navy-card, #0B2545), --ds-violet-light is only
+     3.5:1 — short of AA for body text/icons. These two clear it there (5.7:1
+     and better) and are for that surface only; the ramp above keeps its own
+     values for strokes, borders and tints, which carry no text. */
+  --ds-violet-onDark: #A78BFA;
+  --ds-violet-onDark-soft: #C4B5FD;
 
   /* Reserved semantics — never a CTA, never brand. */
   --ds-warning: #F59E0B;
@@ -139,4 +145,99 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ds-mark path { animation: none; }
+}
+
+/* ===== FeaturesLoop =====
+   Four steps around a ring, a readiness card in the middle, and one detail
+   panel that swaps per step. Ported from the landing page's `.loop-*` block —
+   kept as real CSS (not inline styles, unlike the rest of this DS) because
+   the ring↔ribbon swap, the accent cascade, and the motion/focus rules below
+   all need media queries, attribute selectors and pseudo-classes that inline
+   styles can't express. The component only ever toggles aria-selected/hidden
+   — every visual state lives here. */
+.ds-loop-section { background: var(--ds-ink); }
+.ds-loop-grid { display: grid; grid-template-columns: 520px minmax(0, 1fr); gap: 40px; align-items: center; }
+.ds-loop-node, .ds-loop-pill, .ds-loop-panel { --acc: var(--ds-cyan); --acc-soft: var(--ds-cyan-soft); --acc-fill: var(--ds-gradient-cta); --acc-wash: rgba(34,211,238,.16); --acc-edge: rgba(34,211,238,.5); }
+.ds-loop-section [data-loop-accent="violet"] { --acc: var(--ds-violet-onDark); --acc-soft: var(--ds-violet-onDark-soft); --acc-fill: linear-gradient(135deg, var(--ds-violet-light), var(--ds-violet-onDark)); --acc-wash: rgba(124,92,255,.16); --acc-edge: rgba(124,92,255,.5); }
+.ds-loop-section [data-loop-accent="soon"] { --acc: var(--ds-text-onDark-muted); --acc-soft: var(--ds-text-onDark-faint); --acc-fill: var(--ds-navy-card); --acc-wash: rgba(125,162,196,.14); --acc-edge: var(--ds-navy-border); }
+
+.ds-loop-ring { position: relative; width: 520px; height: 480px; margin: 0 auto; }
+.ds-loop-ring > svg { position: absolute; inset: 0; }
+/* A CSS animation, not SMIL <animate>: SMIL can't be switched off from a
+   media query, and every other motion in this DS already stops for
+   prefers-reduced-motion. */
+@keyframes ds-loop-comet-move { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -1100; } }
+.ds-loop-comet { stroke-dasharray: 46 1054; animation: ds-loop-comet-move 16s linear infinite; }
+.ds-loop-center { position: absolute; left: 260px; top: 215px; transform: translate(-50%, -50%); width: 186px; display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 18px 14px; border-radius: 16px; border: 1px solid var(--ds-navy-border); background: rgba(8,29,58,.92); box-shadow: 0 20px 50px rgba(2,8,20,.55); }
+.ds-loop-center-label { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .16em; color: var(--ds-text-onDark-muted); direction: ltr; }
+.ds-loop-center-value { font-family: var(--ds-font-mono); font-size: 34px; font-weight: 500; color: var(--ds-cyan); line-height: 1; direction: ltr; }
+.ds-loop-center-caption { font-size: 12px; color: var(--ds-text-onDark-muted); text-align: center; }
+.ds-loop-heat { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; width: 100%; }
+.ds-loop-heat i { height: 12px; border-radius: 3px; background: var(--ds-teal); }
+.ds-loop-heat i.ds-loop-heat-warm { background: var(--ds-warning); }
+.ds-loop-nodes { position: absolute; inset: 0; pointer-events: none; }
+
+.ds-loop-node { position: absolute; transform: translate(-50%, -22px); width: 150px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0; background: transparent; border: none; font: inherit; cursor: pointer; pointer-events: auto; }
+.ds-loop-dot { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--ds-font-mono); font-size: 16px; font-weight: 500; direction: ltr; border: 1px solid var(--acc); background: var(--ds-navy-card); color: var(--acc-soft); transition: background .25s, color .25s, border-color .25s, box-shadow .25s; }
+.ds-loop-label { font-size: 15px; font-weight: 600; text-align: center; color: #B9D4E8; transition: color .25s; }
+/* The side nodes sit on the ring line, so their label needs an opaque chip or
+   the circle is drawn straight through the word. */
+.ds-loop-label-chip { background: rgba(6,18,37,.88); border-radius: 8px; padding: 3px 12px; }
+.ds-loop-soon-badge { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .16em; color: var(--ds-text-onDark-muted); border: 1px solid var(--ds-navy-border); border-radius: var(--ds-radius-pill); padding: 4px 11px; background: rgba(6,18,37,.88); }
+.ds-loop-node[aria-selected="true"] .ds-loop-dot { background: var(--acc-fill); color: #062033; box-shadow: 0 0 0 5px var(--acc-wash); }
+.ds-loop-node[aria-selected="true"] .ds-loop-label { color: #F1F7FC; }
+/* The roadmap step never takes the gradient fill, however selected it is. */
+.ds-loop-node[data-loop-accent="soon"] .ds-loop-dot { border-color: var(--ds-navy-border); color: var(--ds-text-onDark-muted); }
+.ds-loop-node[data-loop-accent="soon"] .ds-loop-label { color: var(--ds-text-onDark-muted); }
+.ds-loop-node[data-loop-accent="soon"][aria-selected="true"] .ds-loop-dot { background: var(--ds-navy-card); border-color: var(--ds-text-onDark-muted); color: #B9D4E8; }
+.ds-loop-node[data-loop-accent="soon"][aria-selected="true"] .ds-loop-label { color: #B9D4E8; }
+/* The selected state already owns box-shadow, so focus takes the outline. */
+.ds-loop-node:focus-visible { outline: none; }
+.ds-loop-node:focus-visible .ds-loop-dot { outline: 2px solid var(--ds-violet-light); outline-offset: 4px; }
+
+.ds-loop-ribbon { display: none; gap: 8px; align-items: center; margin-bottom: 4px; }
+.ds-loop-ribbon > i { width: 14px; height: 2px; background: var(--ds-navy-border); flex-shrink: 0; }
+.ds-loop-pill { flex: 1; cursor: pointer; border: 1px solid var(--acc); background: var(--ds-navy-card); color: var(--acc-soft); border-radius: var(--ds-radius-pill); padding: 10px 6px; font-family: var(--ds-font-mono); font-size: 12px; font-weight: 600; text-align: center; transition: background .25s, color .25s, border-color .25s; }
+.ds-loop-pill[aria-selected="true"] { background: var(--acc-fill); color: #062033; }
+.ds-loop-pill[data-loop-accent="soon"] { border-color: var(--ds-navy-border); color: var(--ds-text-onDark-muted); }
+.ds-loop-pill[data-loop-accent="soon"][aria-selected="true"] { background: var(--ds-navy-card); border-color: var(--ds-text-onDark-muted); color: #B9D4E8; }
+.ds-loop-pill:focus-visible { outline: 2px solid var(--ds-violet-light); outline-offset: 3px; }
+
+.ds-loop-panels { display: flex; flex-direction: column; gap: 20px; }
+.ds-loop-panel { box-sizing: border-box; background: var(--ds-navy-card); border: 1px solid var(--acc-edge); border-radius: var(--ds-radius-xl); padding: 28px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 18px; transition: border-color .25s; }
+.ds-loop-panel[hidden] { display: none; }
+.ds-loop-panel:focus-visible { outline: 2px solid var(--ds-violet-light); outline-offset: 3px; }
+.ds-loop-panel-top { display: flex; align-items: center; gap: 12px; }
+.ds-loop-tag { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .04em; color: var(--acc); }
+.ds-loop-rule { flex-grow: 1; height: 1px; background: var(--ds-navy-line); }
+.ds-loop-status { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .16em; border-radius: var(--ds-radius-pill); padding: 5px 12px; color: var(--ds-teal); border: 1px solid rgba(94,234,212,.4); white-space: nowrap; }
+.ds-loop-panel[data-loop-accent="soon"] .ds-loop-status { color: var(--ds-text-onDark-muted); border-color: var(--ds-navy-border); }
+.ds-loop-panel h3 { margin: 0; font-size: 28px; font-weight: 600; color: #F1F7FC; line-height: 1.3; }
+.ds-loop-lead { margin: 0; font-size: 16px; line-height: 1.75; color: #B9D4E8; }
+.ds-loop-points { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ds-loop-points li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.7; color: var(--ds-text-onDark-nav); }
+.ds-loop-points li::before { content: ''; width: 6px; height: 6px; border-radius: 2px; margin-top: 8px; flex-shrink: 0; background: var(--acc); }
+
+/* Only while the panel stands beside the ring: without a floor, the shortest
+   panel collapses the row and the ring jumps. Once the panel is full width
+   the same floor is just an empty half-card. */
+@media (min-width: 981px) { .ds-loop-panel { min-height: 424px; } }
+
+/* 980px, not a round 900: between the two the ring keeps its fixed 520px and
+   squeezes the panel to about 270px of text. */
+@media (max-width: 980px) {
+  .ds-loop-grid { grid-template-columns: 1fr; }
+  .ds-loop-ring { display: none; }
+  .ds-loop-ribbon { display: flex; }
+}
+@media (max-width: 600px) {
+  .ds-loop-ribbon { flex-wrap: wrap; }
+  .ds-loop-ribbon > i { display: none; }
+  .ds-loop-pill { flex: 1 1 calc(50% - 4px); }
+  .ds-loop-panel { padding: 20px; }
+  .ds-loop-panel h3 { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-loop-comet { display: none; }
+  .ds-loop-dot, .ds-loop-label, .ds-loop-pill, .ds-loop-panel { transition: none; }
 }
