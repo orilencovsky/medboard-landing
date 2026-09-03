@@ -19,6 +19,9 @@ export type { PrincipleCardProps } from './PrincipleCard';
 export { FeatureCard } from './FeatureCard';
 export type { FeatureCardProps } from './FeatureCard';
 
+export { FeaturesLoop } from './FeaturesLoop';
+export type { FeaturesLoopProps, FeaturesLoopStep, FeaturesLoopAccent } from './FeaturesLoop';
+
 export { StepCard } from './StepCard';
 export type { StepCardProps } from './StepCard';
 
