@@ -104,8 +104,9 @@
   .qhint-review { display: none; }
   .qcard.answered .qhint-review { display: block; }
 
+  /* Live chat with the AI tutor is off until launch (see CHAT_ENABLED below) —
+     .qchat stays hidden even once answered. */
   .qchat { display: none; }
-  .qcard.answered .qchat { display: flex; }
   .qcard.chatted .qreplies { display: none; }
   .qcard.limited .qinput-row { display: none !important; }
   .qcard.limited .qreplies { display: none !important; }
@@ -988,6 +989,7 @@
     var card = document.querySelector('.qcard');
     if (!card) return;
 
+    var CHAT_ENABLED = false;   // live tutor chat is off until launch — flip to re-enable
     var MAX_MESSAGES = 1;   // per visitor, enforced again server-side
     var turns = 0, busy = false, history = [];
     var picked = null;      // the committed answer; null until the visitor picks
@@ -1018,6 +1020,7 @@
     }
 
     function send(text) {
+      if (!CHAT_ENABLED) return;
       text = (text || '').trim();
       if (!text || busy) return;
       if (turns >= MAX_MESSAGES) { card.classList.add('limited'); return; }
@@ -1136,8 +1139,9 @@
     var card = hero.querySelector('.qcard');
 
     // The measured open state still has an empty thread — this covers the one
-    // question-and-reply exchange MAX_MESSAGES allows.
-    var THREAD_ALLOWANCE = 260;
+    // question-and-reply exchange MAX_MESSAGES allows. Zero while the live
+    // chat is disabled (.qchat never renders, so no allowance is needed).
+    var THREAD_ALLOWANCE = 0;
     var lastWidth = window.innerWidth;
 
     function pin() {
