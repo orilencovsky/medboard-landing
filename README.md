@@ -59,11 +59,10 @@ Both language versions share the same section order, anchored for in-page nav:
 | `#features` | "Everything you need to pass — nothing you don't" |
 | `#how` | "From first question to exam day" |
 | `#vision` | "One engine, every board exam" — the subject-agnostic story beyond nephrology |
-| `#pilot` | "Ready to study smarter?" — the nephrology pilot + waitlist signup |
+| `#pilot` | "Ready to study smarter?" — the nephrology pilot, and the page's one call to action |
 
 Off that spine sit six standalone legal pages — `/privacy`, `/terms`, `/accessibility` and their
-`/en` counterparts — reachable from every footer, and the privacy and terms pages also from the
-notice under the waitlist form.
+`/en` counterparts — reachable from every footer.
 
 ## Legal pages
 
@@ -192,24 +191,29 @@ roadmap; when one is actually being added, plan for more than a new folder:
 
 ## Waitlist
 
-The signup form posts straight into the product's Supabase `waitlist` table using the **publishable**
-key, insert-only — row-level security blocks reads, so the embedded key exposes nothing. Each row
-records the submitting page's locale (`en` / `he`).
+**This page no longer collects addresses.** The signup form in `#pilot` was removed on 2026-09-07,
+when the page collapsed to a single call to action. Someone without an invite code is now offered
+the waitlist on the app's own signup screen (`app.meduxa.ai`), which is also where they would have
+been sent to enter a code — one destination instead of two competing ones.
 
-The form carries a **required consent checkbox** and, under it, the notice the Privacy Protection
-Law (§ 11) wants at the point of collection: that giving the address is voluntary, what it is used
-for, who holds it, and that deletion can be requested. `required` on the checkbox means the browser
-blocks the `submit` event itself, so the handler never sees an address nobody consented to sending
-— don't drop that attribute, and don't move the consent text out of the `<form>`.
+**What the form carried is the part that must not be lost in the move.** It had a **required consent
+checkbox** and, under it, the notice the Privacy Protection Law (§ 11) wants at the point of
+collection: that giving the address is voluntary, what it is used for, who holds it, and that
+deletion can be requested. `required` meant the *browser* blocked the `submit` event, so the handler
+never saw an address nobody had consented to sending — the check was not in JS and could not be
+skipped by a JS error. Consent was then evidenced server-side in `waitlist.consent_at` (nullable
+`timestamptz`), sent as an ISO timestamp in the insert body, backed by the redundant
+`if (!val || !consent.checked) return;`.
 
-Consent is evidenced server-side: `waitlist.consent_at` (nullable `timestamptz`, added after launch
-planning) records the moment the submit handler read the checkbox as checked, sent as an ISO
-timestamp in the insert body alongside the double-check `if (!val || !consent.checked) return;` —
-belt-and-suspenders against the `required` attribute ever being dropped from the checkbox. Rows
-inserted before this column existed carry `consent_at = null`. Adding any other new column to the
-insert body the same way needs the RLS `INSERT` policy's `with_check` to keep allowing it — an
-unknown column makes PostgREST reject the row with a `400` and the visitor sees the generic failure
-message, but `consent_at` isn't checked there, so it isn't at risk from that policy.
+**None of that existed on the app side at the time this page stopped collecting**, which is tracked
+as orilencovsky/Pilot#437 — the app writes `{ email, locale }` and nothing more. Until that is
+closed, every new row carries `consent_at = null`, i.e. no evidence behind it. **This page must not
+be deployed ahead of that fix.**
+
+Rows already in the table are unaffected, and everything below still applies to them. If a form is
+ever added back here, note that adding a new column to the insert body needs the RLS `INSERT`
+policy's `with_check` to keep allowing it — an unknown column makes PostgREST reject the row with a
+`400` and the visitor sees the generic failure message.
 
 ### Handling a deletion request
 

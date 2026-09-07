@@ -225,10 +225,6 @@
   @media (max-width: 600px) {
     [data-mq-nav] { padding: 0 14px !important; }
     [data-mq-navright] { gap: 10px !important; }
-    [data-mq-cta] { padding: 9px 14px !important; font-size: 14px !important; gap: 6px !important; }
-    [data-mq-cta] > svg { display: none !important; }
-    [data-mq-cta-full] { display: none !important; }
-    [data-mq-cta-short] { display: inline !important; }
     [data-mq-lang] { padding: 6px 10px !important; font-size: 13px !important; }
     [data-mq-logo] { gap: 8px !important; }
     [data-mq-logo] > svg { width: 30px !important; height: 30px !important; }
@@ -248,8 +244,6 @@
     [data-mq-section] { padding: 48px 18px !important; }
     [data-mq-h2] { font-size: 26px !important; }
     [data-mq-cards] > div { padding: 20px !important; }
-    [data-mq-form] { flex-direction: column !important; }
-    [data-mq-form] > input, [data-mq-form] > button { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; }
     [data-mq-footer] { flex-direction: column !important; text-align: center !important; gap: 10px !important; }
   }
   /* Smallest phones (iPhone SE class): the wordmark is what stops the nav row fitting. */
@@ -257,7 +251,6 @@
     [data-mq-logo-text] { display: none !important; }
   }
   [data-mq-burger] { display: none; }
-  [data-mq-cta-short] { display: none; }
   html { scroll-behavior: smooth; }
   header[data-mq-hero], section[data-mq-section], .sci-section { scroll-margin-top: 80px; }
   .nav-link { color:#B8D4EA; font-size:15px; font-weight:500; transition:color .15s; }
@@ -284,8 +277,6 @@
   .btn-action:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(124,92,255,.45); }
   .btn-action-md { box-shadow:0 6px 20px rgba(74,56,201,.45); }
   .btn-action-lg { box-shadow:0 10px 34px rgba(74,56,201,.5); }
-  .input-action { border:1px solid #CBD5E1; transition:border-color .15s ease, box-shadow .15s ease; }
-  .input-action:focus { border-color:#7C5CFF; box-shadow:0 0 0 3px rgba(124,92,255,.22); }
 
   /* ===== Features — the loop =====
      Four steps around a ring, a readiness card in the middle, and one detail
@@ -417,7 +408,6 @@
         <a data-mq-hide class="nav-link" href="#how">How it works</a>
         <a data-mq-hide class="nav-link" href="#vision">Vision</a>
         <a data-mq-lang href="/?lang=he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px;">עברית</a>
-        <a data-mq-cta class="btn-action btn-action-md" href="#pilot" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;"><span data-mq-cta-full>Get Early Access</span><span data-mq-cta-short>Join</span><svg width="20" height="16" viewBox="0 0 32 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l6 6-6 6"/><path d="M12 6l6 6-6 6"/></svg></a>
         <button data-mq-burger onclick="toggleMenu()" aria-label="Menu" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5 H 17 M 3 10 H 17 M 3 15 H 17" stroke="#7DD3FC" stroke-width="2" stroke-linecap="round"></path></svg>
         </button>
@@ -462,7 +452,7 @@
         <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">The smarter way to prepare<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">for medical boards</span></h1>
         <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the real sources your exam is written from. Built for medical residents, worldwide.</p>
         <div data-mq-hero-actions style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-          <a class="btn-action btn-action-lg" href="#pilot" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">Start studying free</a>
+          <a class="btn-action btn-action-lg" href="https://app.meduxa.ai/?signup=1" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">Start studying free</a>
           <a href="#how" style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">See how it works</a>
         </div>
         <div data-mq-stats style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 24px; margin-top: 8px;">
@@ -886,23 +876,7 @@
       </svg>
       <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Ready to study smarter?</h2>
       <p style="margin: 0; font-size: 18px; color: #475569; line-height: 1.65;">Join residents preparing for their boards the science-backed way.</p>
-      <form data-mq-form id="waitlistForm" style="display: flex; gap: 12px; width: 100%; max-width: 520px; margin-top: 8px; flex-wrap: wrap; justify-content: center;">
-        <input id="waitlistEmail" class="input-action" type="email" required placeholder="Your email" style="flex: 1; min-width: 220px; background: #F0F6FA; border-radius: 12px; padding: 15px 20px; font-size: 16px; color: #0F172A; font-family: 'IBM Plex Sans', sans-serif; outline: none;">
-        <button id="waitlistSubmit" class="btn-action" type="submit" style="border: none; border-radius: 12px; padding: 15px 30px; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; white-space: nowrap;">Get early access</button>
-        <!-- Consent, then the Art. 13 notice at the point of collection: what the
-             address is used for, who ends up holding it, and how to get it back
-             out. `required` makes the browser block the submit event itself, so
-             the handler at the bottom of the page never sees an address nobody
-             consented to sending. -->
-        <label for="waitlistConsent" style="flex: 0 0 100%; display: flex; align-items: flex-start; gap: 10px; margin-top: 2px; text-align: start; font-size: 14px; color: #475569; line-height: 1.6; cursor: pointer;">
-          <input id="waitlistConsent" type="checkbox" required style="width: 17px; height: 17px; margin: 3px 0 0; flex-shrink: 0; accent-color: #4A38C9; cursor: pointer;">
-          <span>Email me once when the pilot opens.</span>
-        </label>
-        <p style="flex: 0 0 100%; margin: 0; text-align: start; font-size: 13px; color: #64748B; line-height: 1.6;">Giving us your address is voluntary. It is stored with our database provider (Supabase), used only for MeduXa launch updates, never passed to advertisers, and deleted whenever you ask. Full detail in the <a href="/en/privacy">Privacy Policy</a> and <a href="/en/terms">Terms of Use</a>.</p>
-      </form>
-      <!-- #94A3B8 on white is 2.56:1. This line is 13px normal-weight text, so
-           it needs 4.5:1; #64748B gives 4.76:1. -->
-      <span id="waitlistMsg" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64748B;">free early access · no spam</span>
+      <a class="btn-action btn-action-lg" href="https://app.meduxa.ai/?signup=1" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700; margin-top: 8px;">Start studying free</a>
     </div>
   </section>
 
@@ -933,45 +907,6 @@
   function sciKeyDown(e) { if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return; var c = sciCardOf(e.target); if (!c) return; e.preventDefault(); c.classList.toggle('is-flipped'); sciSync(c); }
 </script>
 <script>
-  // Waitlist → Supabase (insert-only via publishable key; RLS blocks reads).
-  (function () {
-    var SUPA_URL = 'https://pappjpdsajkcoqrfqqqx.supabase.co';
-    var SUPA_KEY = 'sb_publishable_tV1q0WG7_bMLfsCIqOU1tA_PH8gZfCU';
-    var LOCALE = 'en';
-    var form = document.getElementById('waitlistForm');
-    if (!form) return;
-    var email = document.getElementById('waitlistEmail');
-    var consent = document.getElementById('waitlistConsent');
-    var btn = document.getElementById('waitlistSubmit');
-    var msg = document.getElementById('waitlistMsg');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var val = (email.value || '').trim();
-      if (!val || !consent.checked) return;
-      btn.disabled = true; btn.textContent = '…';
-      fetch(SUPA_URL + '/rest/v1/waitlist', {
-        method: 'POST',
-        headers: {
-          'apikey': SUPA_KEY,
-          'Authorization': 'Bearer ' + SUPA_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({ email: val, locale: LOCALE, source: 'landing', consent_at: new Date().toISOString() })
-      }).then(function (r) {
-        if (r.ok || r.status === 409) { // 409 = already on the list → still success
-          form.style.display = 'none';
-          msg.textContent = "✓ You're on the list — we'll be in touch.";
-          msg.style.color = '#0E7490';
-          if (typeof va === 'function') va('event', { name: 'sign_up', data: { method: 'waitlist' } });
-        } else { throw new Error('status ' + r.status); }
-      }).catch(function () {
-        btn.disabled = false; btn.textContent = 'Get early access';
-        msg.textContent = 'Something went wrong — please try again.';
-        msg.style.color = '#DC2626';
-      });
-    });
-  })();
 </script>
 <script>
   // Hero demo card. The visitor picks an answer — once, the way they would sit
