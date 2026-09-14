@@ -164,7 +164,27 @@
   .sci-bg-scrim { background: radial-gradient(125% 95% at 50% 0%, rgba(6,18,37,.3), rgba(6,18,37,.58) 60%, rgba(6,18,37,.76) 100%); }
   .sci-hint { display: flex; justify-content: center; margin-top: -18px; margin-bottom: 54px; }
   .sci-hint span { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .18em; color: #5B87A8; border: 1px solid #1E4A6E; border-radius: 100px; padding: 7px 16px; }
+  .sci-hint-mobile { display: none; }
   .sci-grid { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; align-items: start; }
+  /* Mirrors the hero demo's progress row (thin track + mono fraction) so the
+     deck reads as one more instrument readout, not a bolted-on carousel dot
+     strip. Hidden until the 640px deck flattens into a swipe carousel. */
+  .sci-progress { display: none; align-items: center; gap: 12px; margin-top: 22px; }
+  .sci-progress-track { flex: 1; height: 4px; background: #153650; border-radius: 3px; overflow: hidden; }
+  .sci-progress-fill { height: 100%; width: 11%; background: linear-gradient(90deg, #0EA5E9, #22D3EE); transition: width .25s ease; }
+  .sci-progress-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8; direction: ltr; white-space: nowrap; }
+  .sci-deck { position: relative; }
+  /* Floats over the deck itself, not the progress row below. Card copy
+     gets matching extra inline padding at the 640px breakpoint (below) so
+     text has a hard boundary it can't wrap into under the button — title
+     length varies per card, so anything short of that guarantee would
+     eventually clip a word on some card. */
+  .sci-nav-btn { display: none; align-items: center; justify-content: center; flex-shrink: 0; width: 30px; height: 30px; padding: 0; border-radius: 50%; background: #0B2545; border: 1px solid #22D3EE; color: #22D3EE; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); z-index: 4; box-shadow: 0 8px 20px rgba(2,8,20,.5); transition: background .2s, opacity .2s, border-color .2s, color .2s; }
+  .sci-nav-prev { inset-inline-start: 4px; }
+  .sci-nav-next { inset-inline-end: 4px; }
+  .sci-nav-btn:hover:not(:disabled) { background: #123057; }
+  .sci-nav-btn:focus-visible { outline: 2px solid #7C5CFF; outline-offset: 2px; }
+  .sci-nav-btn:disabled { opacity: .35; border-color: #1E4A6E; color: #5B87A8; cursor: default; }
   .sci-card { position: relative; cursor: pointer; border-radius: 20px; outline: none;
     margin-top: calc(var(--flatten, 1) * var(--stagger, 0) * 1px);
     transform: rotate(calc(var(--flatten, 1) * var(--sci-dir, 1) * var(--rot, 0) * 1deg));
@@ -215,8 +235,34 @@
       radial-gradient(92% 26% at calc(50% + var(--sci-dir, 1) * 38%) 26%, rgba(56,189,248,.36), transparent 72%),
       radial-gradient(92% 26% at 50% 104%, rgba(34,211,238,.3), transparent 70%);
     }
-    .sci-grid { grid-template-columns: 1fr; }
-    .sci-card { --flatten: 0; }
+    .sci-hint { margin-bottom: 26px; }
+    .sci-hint-desktop { display: none; }
+    .sci-hint-mobile { display: flex; }
+    /* Nine stacked cards ran ~3000px of scroll. A real deck of flashcards
+       shuffles sideways, not down — swiping fits the metaphor and the
+       viewport: one card visible, the next peeking at the edge. */
+    .sci-grid {
+      display: flex;
+      align-items: stretch;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .sci-grid::-webkit-scrollbar { display: none; }
+    /* align-items: stretch (above, overriding the desktop deck's "start")
+       sizes every card to the tallest one in the row, so the per-card
+       --stagger heights above still work as a floor, not a fixed height. */
+    .sci-card { --flatten: 0; flex: 0 0 82%; scroll-snap-align: start; }
+    /* Clears the floating nav buttons (30px wide, inset 4px = reaching
+       34px from the edge): title and description now hit padding, not a
+       button, before they can reach that zone — true for every card
+       regardless of how long its own text happens to be. */
+    .sci-card-front, .sci-card-back { padding-inline: 36px; }
+    .sci-progress { display: flex; }
+    .sci-nav-btn { display: flex; }
   }
   .sci-cite { color: #22D3EE; text-decoration: none; font-weight: 700; margin-inline-start: 3px; }
   .sci-cite:hover, .sci-cite:focus-visible { text-decoration: underline; }
@@ -573,7 +619,9 @@
         <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">למידה שמבוססת על איך שהמוח באמת עובד</h2>
         <p style="margin: 0; font-size: 18px; color: #B8D4EA; max-width: 640px; line-height: 1.65;">MeduXa בנויה על תשעה עקרונות למידה מבוססי-ראיות — עם שכבת AI שמסתגלת לכל סטודנט.</p>
       </div>
-      <div class="sci-hint"><span style="direction: ltr;">HOVER OR TAP ANY CARD TO REVEAL IT</span></div>
+      <div class="sci-hint sci-hint-desktop"><span style="direction: ltr;">HOVER OR TAP ANY CARD TO REVEAL IT</span></div>
+      <div class="sci-hint sci-hint-mobile"><span style="direction: ltr;">SWIPE TO BROWSE · TAP TO REVEAL</span></div>
+      <div class="sci-deck">
       <div class="sci-grid" onmouseover="sciOver(event)" onmouseout="sciOut(event)" onclick="sciClick(event)" onkeydown="sciKeyDown(event)">
       <div class="sci-card" data-card="1" tabindex="0" role="button" aria-expanded="false" style="min-height:296px; --stagger:0; --rot:-1.1; --tx:8; --ty:11; --twin-rot:1.7; --texture:radial-gradient(circle at center, rgba(56,189,248,0.62) 0 1px, transparent 1.7px) 0 0/17px 17px;">
         <div class="sci-card-texture"></div>
@@ -710,6 +758,17 @@
           </div>
         </div>
       </div>
+      </div>
+      <button type="button" class="sci-nav-btn sci-nav-prev" onclick="sciCarouselNav(-1)" aria-label="העיקרון הקודם">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 4l8 8-8 8" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <button type="button" class="sci-nav-btn sci-nav-next" onclick="sciCarouselNav(1)" aria-label="העיקרון הבא">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 4l-8 8 8 8" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      </div>
+      <div class="sci-progress">
+        <div class="sci-progress-track"><div class="sci-progress-fill"></div></div>
+        <span class="sci-progress-count"><span class="sci-progress-current">01</span> / 09</span>
       </div>
       <div class="sci-refs">
         <p class="sci-refs-title">מקורות</p>
@@ -927,6 +986,86 @@
   function sciOut(e) { var c = sciCardOf(e.target); if (c) sciSync(c); }
   function sciClick(e) { var c = sciCardOf(e.target); if (!c) return; c.classList.toggle('is-flipped'); sciSync(c); }
   function sciKeyDown(e) { if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return; var c = sciCardOf(e.target); if (!c) return; e.preventDefault(); c.classList.toggle('is-flipped'); sciSync(c); }
+  // Mobile deck is a swipe carousel; this drives the "03 / 09" readout and
+  // the prev/next buttons off whichever card is actually centered, instead
+  // of trusting scrollLeft math (which flips sign in RTL across browsers).
+  var sciDeck = { cards: [], index: 0, countEl: null, fillEl: null, track: null, programmatic: false, settleTimer: null, scrollTicking: false };
+  // Single place that both the scroll tracking and the nav buttons feed
+  // through, so a button click doesn't have to wait on anything async to
+  // confirm a scroll before it's willing to compute the next target (that
+  // lag is what made rapid clicks — prev especially — get dropped).
+  function sciCarouselSetIndex(i) {
+    sciDeck.index = i;
+    if (sciDeck.countEl) sciDeck.countEl.textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+    if (sciDeck.fillEl) sciDeck.fillEl.style.width = (((i + 1) / sciDeck.cards.length) * 100) + '%';
+    sciCarouselUpdateNav();
+  }
+  function sciCarouselUpdateNav() {
+    var prev = document.querySelector('.sci-nav-prev');
+    var next = document.querySelector('.sci-nav-next');
+    if (!prev || !next) return;
+    prev.disabled = sciDeck.index <= 0;
+    next.disabled = sciDeck.index >= sciDeck.cards.length - 1;
+  }
+  function sciCarouselNav(delta) {
+    var i = sciDeck.index + delta;
+    var target = sciDeck.cards[i];
+    if (!target) return;
+    // A swipe still settling from an earlier action can otherwise re-fire
+    // and clobber this click's result; while a button drives the scroll,
+    // its optimistic index is authoritative, not the scroll tracker's.
+    sciDeck.programmatic = true;
+    clearTimeout(sciDeck.settleTimer);
+    sciDeck.settleTimer = setTimeout(function () { sciDeck.programmatic = false; }, 700);
+    sciCarouselSetIndex(i);
+    target.scrollIntoView({ inline: 'start', block: 'nearest', behavior: 'smooth' });
+  }
+  // Whichever card overlaps the track's own box the most is "active" —
+  // plain geometry, computed on demand. An IntersectionObserver did this
+  // originally, but its very first callback would sometimes fire against a
+  // transient pre-layout state on load and pin the deck on the last card
+  // before the visitor had touched anything; geometry read on demand has
+  // no "first callback" to get wrong.
+  function sciCarouselActiveIndex() {
+    var trackRect = sciDeck.track.getBoundingClientRect();
+    var best = 0, bestOverlap = -1;
+    for (var i = 0; i < sciDeck.cards.length; i++) {
+      var r = sciDeck.cards[i].getBoundingClientRect();
+      var overlap = Math.min(r.right, trackRect.right) - Math.max(r.left, trackRect.left);
+      if (overlap > bestOverlap) { bestOverlap = overlap; best = i; }
+    }
+    return best;
+  }
+  function sciCarouselOnScroll() {
+    if (sciDeck.scrollTicking || sciDeck.programmatic) return;
+    sciDeck.scrollTicking = true;
+    requestAnimationFrame(function () {
+      sciDeck.scrollTicking = false;
+      if (sciDeck.programmatic) return;
+      var i = sciCarouselActiveIndex();
+      if (i !== sciDeck.index) sciCarouselSetIndex(i);
+    });
+  }
+  function sciCarouselSync() {
+    var track = document.querySelector('.sci-grid');
+    var fill = document.querySelector('.sci-progress-fill');
+    var count = document.querySelector('.sci-progress-current');
+    if (!track || !fill || !count) return;
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.sci-card'));
+    if (!cards.length) return;
+    sciDeck.track = track;
+    sciDeck.cards = cards;
+    sciDeck.countEl = count;
+    sciDeck.fillEl = fill;
+    sciCarouselSetIndex(0);
+    track.addEventListener('scroll', sciCarouselOnScroll, { passive: true });
+    track.addEventListener('scrollend', function () {
+      clearTimeout(sciDeck.settleTimer);
+      sciDeck.programmatic = false;
+      sciCarouselSetIndex(sciCarouselActiveIndex());
+    });
+  }
+  sciCarouselSync();
 </script>
 <script>
 </script>
