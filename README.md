@@ -59,6 +59,7 @@ Both language versions share the same section order, anchored for in-page nav:
 | `#features` | "Everything you need to pass — nothing you don't" |
 | `#how` | "From first question to exam day" |
 | `#vision` | "One engine, every board exam" — the subject-agnostic story beyond nephrology |
+| `#compare` | "Not a question bank. Not a general AI tool." — a table against two generic categories (static banks, general AI tools), deliberately naming no specific product |
 | `#pilot` | "Ready to study smarter?" — the nephrology pilot, and the page's one call to action |
 
 Off that spine sit six standalone legal pages — `/privacy`, `/terms`, `/accessibility` and their

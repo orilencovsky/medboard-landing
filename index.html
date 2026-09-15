@@ -281,6 +281,29 @@
   @keyframes heroDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
   .hero-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: heroDraw 3.5s ease-out both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
+
+  /* ===== Comparison table ===== */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #E2E8F0; border-radius: 16px; }
+  .cmp-scroll:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }
+  .cmp-table { width: 100%; min-width: 680px; border-collapse: collapse; background: #fff; }
+  .cmp-table th, .cmp-table td { padding: 16px 18px; text-align: start; vertical-align: top; border-bottom: 1px solid #E2E8F0; }
+  .cmp-table thead th { font-size: 15px; font-weight: 700; color: #0F172A; background: #F8FAFC; border-bottom: 2px solid #E2E8F0; }
+  .cmp-table tbody th { font-size: 15px; font-weight: 600; color: #0F172A; background: #fff; }
+  .cmp-table td { font-size: 14px; color: #475569; line-height: 1.6; }
+  .cmp-table tbody tr:last-child th, .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-sub { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 500; color: #64748B; }
+  .cmp-yes { color: #0E7490; }
+  .cmp-no { color: #64748B; }
+  .cmp-table thead th:first-child, .cmp-table tbody th { position: sticky; inset-inline-start: 0; z-index: 1; }
+  .cmp-table thead th:first-child { background: #F8FAFC; }
+  .cmp-col-brand { background: #F0F6FA; border-inline-start: 2px solid rgba(34,211,238,.4); }
+  .cmp-table thead th.cmp-col-brand { background: linear-gradient(135deg, rgba(14,165,233,.12), rgba(34,211,238,.12)); }
+  /* #64748B on this light background reads at 4.37:1, under the 4.5:1 floor —
+     same failure and same fix already used for the legal pages' "last updated"
+     line on the identical #F0F6FA tint (see README § Accessibility). */
+  .cmp-col-brand .cmp-sub { color: #5B6B80; }
+
   @media (max-width: 900px) {
     [data-mq-hide] { display: none !important; }
     [data-mq-hero-title] { font-size: 36px !important; }
@@ -315,6 +338,9 @@
     [data-mq-h2] { font-size: 26px !important; }
     [data-mq-cards] > div { padding: 20px !important; }
     [data-mq-footer] { flex-direction: column !important; text-align: center !important; gap: 10px !important; }
+    .cmp-table th, .cmp-table td { padding: 12px 14px !important; font-size: 13px !important; }
+    .cmp-table thead th { font-size: 13.5px !important; }
+    .cmp-sub { font-size: 11.5px !important; }
   }
   /* Smallest phones (iPhone SE class): the wordmark is what stops the nav row fitting. */
   @media (max-width: 350px) {
@@ -481,6 +507,7 @@
         <a data-mq-hide class="nav-link" href="#features">פיצ'רים</a>
         <a data-mq-hide class="nav-link" href="#how">איך זה עובד</a>
         <a data-mq-hide class="nav-link" href="#vision">חזון</a>
+        <a data-mq-hide class="nav-link" href="#compare">השוואה</a>
         <a data-mq-lang href="/en" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px; direction: ltr;">EN</a>
         <a data-mq-cta class="btn-action btn-action-md" href="https://app.meduxa.ai/?signup=1" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700;">התחילו ללמוד</a>
         <button data-mq-burger onclick="toggleMenu()" aria-label="תפריט" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
@@ -493,6 +520,7 @@
       <a class="m-link" href="#features" onclick="closeMenu()">פיצ'רים</a>
       <a class="m-link" href="#how" onclick="closeMenu()">איך זה עובד</a>
       <a class="m-link" href="#vision" onclick="closeMenu()">חזון</a>
+      <a class="m-link" href="#compare" onclick="closeMenu()">השוואה</a>
     </div>
   </nav>
 
@@ -949,6 +977,76 @@
         <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.35); color: #5EEAD4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">✓ נפרולוגיה (שלב א) — חי עכשיו</span>
         <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.06); border: 1px solid #1E4A6E; color: #7DA2C4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">התמחויות נוספות בקרוב</span>
       </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section id="compare" data-mq-section style="background: #fff; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 44px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em; direction: ltr;">COMPARISON</span>
+        <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">לא מאגר שאלות. לא כלי AI כללי.</h2>
+        <p style="margin: 0; font-size: 18px; color: #475569; max-width: 680px; line-height: 1.65;">מאגר שאלות נותן לכם תרגול בלי הכוונה. כלי AI כללי נותן לכם הכוונה — רק אחרי שתאספו לבד את כל המקורות ותבנו לו את ההקשר. MeduXa בנויה כבר סביב בחינת ההתמחות הישראלית, עם שניהם יחד.</p>
+      </div>
+
+      <div class="cmp-scroll" tabindex="0" role="region" aria-label="טבלת השוואה, גוללו לצדדים לצפייה מלאה">
+        <table class="cmp-table">
+          <caption class="sr-only">טבלת השוואה בין MeduXa, מאגר שאלות מסורתי וכלי AI כללי</caption>
+          <colgroup>
+            <col style="width: 32%;">
+            <col style="width: 22%;">
+            <col style="width: 22%;">
+            <col style="width: 24%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">קריטריון</span></th>
+              <th scope="col">מאגר שאלות מסורתי<span class="cmp-sub">בנק שאלות קבוע, בלי AI</span></th>
+              <th scope="col">כלי AI כללי<span class="cmp-sub">העלאת קבצים, צ׳אט חופשי</span></th>
+              <th scope="col" class="cmp-col-brand"><span style="display: inline-flex; align-items: center; gap: 8px;"><span style="width: 9px; height: 9px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>MeduXa</span><span class="cmp-sub">בנויה כבר סביב הבחינה</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">שאלות מוכנות ברמת הבחינה, לתרגול מיידי</th>
+              <td><span aria-hidden="true" class="cmp-yes">✓</span> יש</td>
+              <td><span aria-hidden="true" class="cmp-no">–</span> תלוי במה שתזינו בעצמכם</td>
+              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> אלפי שאלות, עם ביקורת מומחה</td>
+            </tr>
+            <tr>
+              <th scope="row">הסבר מעוגן במקור מצוטט, שאפשר לבדוק</th>
+              <td><span aria-hidden="true" class="cmp-no">–</span> לרוב לא</td>
+              <td><span aria-hidden="true" class="cmp-no">–</span> רק אם העליתם את המקור בעצמכם</td>
+              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> ציטוט מדויק מהמקור, לכל שאלה</td>
+            </tr>
+            <tr>
+              <th scope="row">מורה AI סוקרטי שמכיר בדיוק את השאלה שנתקעתם בה</th>
+              <td><span aria-hidden="true" class="cmp-no">–</span> אין</td>
+              <td><span aria-hidden="true" class="cmp-no">–</span> רק אם תבנו לו את כל ההקשר</td>
+              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> מובנה בכל שאלה, בזמן אמת</td>
+            </tr>
+            <tr>
+              <th scope="row">איתור נקודות חולשה + חזרה מרווחת מותאמת אישית</th>
+              <td><span aria-hidden="true" class="cmp-no">–</span> אין</td>
+              <td><span aria-hidden="true" class="cmp-no">–</span> אין</td>
+              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> מפת חום + אלגוריתם חזרה מבוסס-מדע</td>
+            </tr>
+            <tr>
+              <th scope="row">סימולציית בחינה מלאה, בעברית ובפורמט הבחינה האמיתי</th>
+              <td><span aria-hidden="true" class="cmp-no">–</span> משתנה בין מאגרים</td>
+              <td><span aria-hidden="true" class="cmp-no">–</span> אין</td>
+              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> יש</td>
+            </tr>
+            <tr>
+              <th scope="row">מוכן לשימוש מהרגע הראשון — בלי לאסוף מקורות ולכתוב פרומפטים</th>
+              <td><span aria-hidden="true" class="cmp-yes">✓</span> יש — אך סטטי, בלי AI</td>
+              <td><span aria-hidden="true" class="cmp-no">–</span> העבודה כולה עליכם</td>
+              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> יש</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin: 14px 0 0; font-size: 13px; color: #64748B; text-align: center;">ההשוואה מתייחסת לקטגוריות כלליות של פתרונות נפוצים, לא למוצר מסחרי מסוים.</p>
     </div>
   </section>
 
