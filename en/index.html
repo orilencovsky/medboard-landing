@@ -236,27 +236,42 @@
   .hero-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: heroDraw 3.5s ease-out both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
 
-  /* ===== Comparison table ===== */
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-  .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #E2E8F0; border-radius: 16px; }
-  .cmp-scroll:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }
-  .cmp-table { width: 100%; min-width: 680px; border-collapse: collapse; background: #fff; }
-  .cmp-table th, .cmp-table td { padding: 16px 18px; text-align: start; vertical-align: top; border-bottom: 1px solid #E2E8F0; }
-  .cmp-table thead th { font-size: 15px; font-weight: 700; color: #0F172A; background: #F8FAFC; border-bottom: 2px solid #E2E8F0; }
-  .cmp-table tbody th { font-size: 15px; font-weight: 600; color: #0F172A; background: #fff; }
-  .cmp-table td { font-size: 14px; color: #475569; line-height: 1.6; }
-  .cmp-table tbody tr:last-child th, .cmp-table tbody tr:last-child td { border-bottom: none; }
-  .cmp-sub { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 500; color: #64748B; }
-  .cmp-yes { color: #0E7490; }
-  .cmp-no { color: #64748B; }
-  .cmp-table thead th:first-child, .cmp-table tbody th { position: sticky; inset-inline-start: 0; z-index: 1; }
-  .cmp-table thead th:first-child { background: #F8FAFC; }
-  .cmp-col-brand { background: #F0F6FA; border-inline-start: 2px solid rgba(34,211,238,.4); }
-  .cmp-table thead th.cmp-col-brand { background: linear-gradient(135deg, rgba(14,165,233,.12), rgba(34,211,238,.12)); }
-  /* #64748B on this light background reads at 4.37:1, under the 4.5:1 floor —
-     same failure and same fix already used for the legal pages' "last updated"
-     line on the identical #F0F6FA tint (see README § Accessibility). */
-  .cmp-col-brand .cmp-sub { color: #5B6B80; }
+  /* ===== Comparison cards =====
+     A table forces a horizontal swipe on a phone before you've read a single
+     row — exactly the "uncomfortable on mobile" complaint. Three profile
+     cards read top-to-bottom instead, one column of the old table per card,
+     so the comparison is a normal vertical scroll at every width. The
+     6-segment meter reuses this page's own readiness-bar idiom (the hero
+     quiz's progress bar, the "loop-heat" bars in #how) as an honest rollup
+     of the six rows directly beneath it — nothing it doesn't already say. */
+  .cmp2-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .cmp2-card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid #E2E8F0; border-radius: 18px; padding: 28px 26px; }
+  .cmp2-card--brand { background: #F0F6FA; border-color: rgba(34,211,238,.45); box-shadow: 0 20px 44px rgba(14,116,144,.14); }
+  .cmp2-card--brand::before { content: ''; position: absolute; inset-block-start: -1.5px; inset-inline: 22px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #0EA5E9, #22D3EE); }
+  .cmp2-badge { align-self: flex-start; display: inline-flex; align-items: center; background: #0B2545; color: #7DD3FC; font-size: 12px; font-weight: 700; padding: 5px 13px; border-radius: 100px; margin-block-end: 16px; }
+  .cmp2-head { display: flex; align-items: flex-start; gap: 12px; }
+  .cmp2-head-icon { flex-shrink: 0; display: flex; margin-block-start: 2px; }
+  .cmp2-name { margin: 0; font-size: 18px; font-weight: 700; color: #0F172A; }
+  .cmp2-name-sub { display: block; margin-block-start: 3px; font-size: 13px; font-weight: 500; color: #64748B; }
+  .cmp2-card--brand .cmp2-name-sub { color: #5B6B80; }
+  .cmp2-meter { display: flex; align-items: center; gap: 10px; margin: 18px 0 20px; }
+  .cmp2-meter-track { flex: 1; display: flex; gap: 4px; }
+  .cmp2-meter-track i { flex: 1; height: 5px; border-radius: 3px; background: #E2E8F0; font-style: normal; }
+  .cmp2-meter-track i.is-filled { background: linear-gradient(90deg, #0EA5E9, #22D3EE); }
+  .cmp2-card--brand .cmp2-meter-track i.is-filled { box-shadow: 0 0 8px rgba(34,211,238,.55); }
+  .cmp2-meter-score { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64748B; direction: ltr; }
+  .cmp2-card--brand .cmp2-meter-score { color: #0E7490; font-weight: 600; }
+  .cmp2-list { margin: 0; padding: 0; }
+  .cmp2-list dt { display: flex; align-items: center; gap: 10px; margin: 0; padding-block-start: 14px; font-size: 14.5px; font-weight: 600; color: #0F172A; }
+  .cmp2-list dt:first-of-type { padding-block-start: 0; }
+  .cmp2-list dd { margin: 3px 0 0; padding-block-end: 14px; padding-inline-start: 30px; border-block-end: 1px solid #EEF2F6; font-size: 13px; line-height: 1.55; color: #64748B; }
+  .cmp2-card--brand .cmp2-list dd { color: #5B6B80; border-block-end-color: rgba(34,211,238,.18); }
+  .cmp2-list dd:last-of-type { border-block-end: none; padding-block-end: 0; }
+  .cmp2-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .cmp2-icon--yes { background: #0E7490; }
+  .cmp2-card--brand .cmp2-icon--yes { background: linear-gradient(135deg, #0EA5E9, #22D3EE); box-shadow: 0 0 0 3px rgba(34,211,238,.16); }
+  .cmp2-icon--no { border: 1.5px solid #CBD5E1; color: #94A3B8; font-size: 12px; line-height: 1; }
+  @media (max-width: 900px) { .cmp2-grid { grid-template-columns: 1fr; } }
 
   @media (max-width: 900px) {
     [data-mq-hide] { display: none !important; }
@@ -292,9 +307,8 @@
     [data-mq-h2] { font-size: 26px !important; }
     [data-mq-cards] > div { padding: 20px !important; }
     [data-mq-footer] { flex-direction: column !important; text-align: center !important; gap: 10px !important; }
-    .cmp-table th, .cmp-table td { padding: 12px 14px !important; font-size: 13px !important; }
-    .cmp-table thead th { font-size: 13.5px !important; }
-    .cmp-sub { font-size: 11.5px !important; }
+    .cmp2-card { padding: 22px 20px !important; }
+    .cmp2-name { font-size: 17px !important; }
   }
   /* Smallest phones (iPhone SE class): the wordmark is what stops the nav row fitting. */
   @media (max-width: 350px) {
@@ -926,64 +940,112 @@
         <p style="margin: 0; font-size: 18px; color: #475569; max-width: 680px; line-height: 1.65;">A question bank gives you practice with no guidance. A general AI tool gives you guidance — but only once you've gathered every source yourself and fed it the context. MeduXa comes pre-built around the board exam, with both already in place.</p>
       </div>
 
-      <div class="cmp-scroll" tabindex="0" role="region" aria-label="Comparison table, scroll sideways to see every column">
-        <table class="cmp-table">
-          <caption class="sr-only">Comparison table: MeduXa versus a traditional question bank and a general AI tool</caption>
-          <colgroup>
-            <col style="width: 32%;">
-            <col style="width: 22%;">
-            <col style="width: 22%;">
-            <col style="width: 24%;">
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col"><span class="sr-only">Criterion</span></th>
-              <th scope="col">Traditional question bank<span class="cmp-sub">A fixed bank, no AI</span></th>
-              <th scope="col">General AI tool<span class="cmp-sub">Upload files, open-ended chat</span></th>
-              <th scope="col" class="cmp-col-brand"><span style="display: inline-flex; align-items: center; gap: 8px;"><span style="width: 9px; height: 9px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>MeduXa</span><span class="cmp-sub">Already built around the exam</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Exam-level questions, ready to practice</th>
-              <td><span aria-hidden="true" class="cmp-yes">✓</span> Yes</td>
-              <td><span aria-hidden="true" class="cmp-no">–</span> Depends on what you feed it</td>
-              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> Thousands of questions, expert-reviewed</td>
-            </tr>
-            <tr>
-              <th scope="row">Every explanation grounded in a cited, checkable source</th>
-              <td><span aria-hidden="true" class="cmp-no">–</span> Usually not</td>
-              <td><span aria-hidden="true" class="cmp-no">–</span> Only as good as the source you uploaded</td>
-              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> A verified citation on every question</td>
-            </tr>
-            <tr>
-              <th scope="row">A Socratic AI tutor that knows exactly the question you're stuck on</th>
-              <td><span aria-hidden="true" class="cmp-no">–</span> None</td>
-              <td><span aria-hidden="true" class="cmp-no">–</span> Only if you build it the context</td>
-              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> Built into every question, in real time</td>
-            </tr>
-            <tr>
-              <th scope="row">Weakness detection + personalized spaced repetition</th>
-              <td><span aria-hidden="true" class="cmp-no">–</span> None</td>
-              <td><span aria-hidden="true" class="cmp-no">–</span> None</td>
-              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> Heat map + a science-backed spaced-repetition algorithm</td>
-            </tr>
-            <tr>
-              <th scope="row">A full exam simulation, in the real exam's format</th>
-              <td><span aria-hidden="true" class="cmp-no">–</span> Varies by bank</td>
-              <td><span aria-hidden="true" class="cmp-no">–</span> None</td>
-              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Ready from day one — no gathering sources or writing prompts</th>
-              <td><span aria-hidden="true" class="cmp-yes">✓</span> Yes — but static, no AI</td>
-              <td><span aria-hidden="true" class="cmp-no">–</span> All the work is on you</td>
-              <td class="cmp-col-brand"><span aria-hidden="true" class="cmp-yes">✓</span> Yes</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="cmp2-grid">
+        <div class="cmp2-card">
+          <div class="cmp2-head">
+            <span class="cmp2-head-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="4" stroke="#7DA2C4" stroke-width="1.6"></rect>
+                <line x1="7.5" y1="9" x2="16.5" y2="9" stroke="#7DA2C4" stroke-width="1.6" stroke-linecap="round"></line>
+                <line x1="7.5" y1="13" x2="16.5" y2="13" stroke="#7DA2C4" stroke-width="1.6" stroke-linecap="round"></line>
+                <line x1="7.5" y1="17" x2="13" y2="17" stroke="#7DA2C4" stroke-width="1.6" stroke-linecap="round"></line>
+              </svg>
+            </span>
+            <div>
+              <h3 class="cmp2-name">Traditional question bank</h3>
+              <span class="cmp2-name-sub">A fixed bank, no AI</span>
+            </div>
+          </div>
+          <div class="cmp2-meter">
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp2-meter-score">2/6</span>
+          </div>
+          <dl class="cmp2-list">
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Exam-level questions</dt>
+            <dd>Yes</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Cited, verified source</dt>
+            <dd>Usually not</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Socratic AI tutor</dt>
+            <dd>None</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Weakness detection + spaced repetition</dt>
+            <dd>None</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Full exam simulation</dt>
+            <dd>Varies by bank</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Ready to use immediately</dt>
+            <dd>Yes — but static, no AI</dd>
+          </dl>
+        </div>
+
+        <div class="cmp2-card">
+          <div class="cmp2-head">
+            <span class="cmp2-head-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4.5 5.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9.5l-4 3.5v-3.5h-1.5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z" stroke="#7DA2C4" stroke-width="1.6" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <div>
+              <h3 class="cmp2-name">General AI tool</h3>
+              <span class="cmp2-name-sub">Upload files, open-ended chat</span>
+            </div>
+          </div>
+          <div class="cmp2-meter">
+            <span class="cmp2-meter-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp2-meter-score">0/6</span>
+          </div>
+          <dl class="cmp2-list">
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Exam-level questions</dt>
+            <dd>Depends on what you feed it</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Cited, verified source</dt>
+            <dd>Only as good as the source you uploaded</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Socratic AI tutor</dt>
+            <dd>Only if you build it the context</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Weakness detection + spaced repetition</dt>
+            <dd>None</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Full exam simulation</dt>
+            <dd>None</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>Ready to use immediately</dt>
+            <dd>All the work is on you</dd>
+          </dl>
+        </div>
+
+        <div class="cmp2-card cmp2-card--brand">
+          <span class="cmp2-badge">Recommended</span>
+          <div class="cmp2-head">
+            <span class="cmp2-head-icon">
+              <svg width="28" height="28" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+                <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+                <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+                <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+                <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+              </svg>
+            </span>
+            <div>
+              <h3 class="cmp2-name">MeduXa<span style="font-family: 'IBM Plex Mono', monospace; color: #22D3EE;">.ai</span></h3>
+              <span class="cmp2-name-sub">Already built around the exam</span>
+            </div>
+          </div>
+          <div class="cmp2-meter">
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span>
+            <span class="cmp2-meter-score">6/6</span>
+          </div>
+          <dl class="cmp2-list">
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Exam-level questions</dt>
+            <dd>Thousands of questions, expert-reviewed</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Cited, verified source</dt>
+            <dd>A verified citation on every question</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Socratic AI tutor</dt>
+            <dd>Built into every question, in real time</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Weakness detection + spaced repetition</dt>
+            <dd>Heat map + a science-backed spaced-repetition algorithm</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Full exam simulation</dt>
+            <dd>Yes, in the real exam's format</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>Ready to use immediately</dt>
+            <dd>Yes</dd>
+          </dl>
+        </div>
       </div>
-      <p style="margin: 14px 0 0; font-size: 13px; color: #64748B; text-align: center;">This comparison refers to general categories of common solutions, not to any specific commercial product.</p>
+      <p style="margin: 24px 0 0; font-size: 13px; color: #64748B; text-align: center;">This comparison refers to general categories of common solutions, not to any specific commercial product.</p>
     </div>
   </section>
 
