@@ -281,6 +281,76 @@
   @keyframes heroDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
   .hero-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: heroDraw 3.5s ease-out both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
+
+  /* ===== Comparison cards =====
+     A table forces a horizontal swipe on a phone before you've read a single
+     row — exactly the "uncomfortable on mobile" complaint. Three profile
+     cards read top-to-bottom instead, one column of the old table per card,
+     so the comparison is a normal vertical scroll at every width. The
+     6-segment meter reuses this page's own readiness-bar idiom (the hero
+     quiz's progress bar, the "loop-heat" bars in #how) as an honest rollup
+     of the six rows directly beneath it — nothing it doesn't already say. */
+  .cmp2-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .cmp2-card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid #E2E8F0; border-radius: 18px; padding: 28px 26px; }
+  .cmp2-card--brand { background: #F0F6FA; border-color: rgba(34,211,238,.45); box-shadow: 0 20px 44px rgba(14,116,144,.14); }
+  .cmp2-card--brand::before { content: ''; position: absolute; inset-block-start: -1.5px; inset-inline: 22px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #0EA5E9, #22D3EE); }
+  .cmp2-badge { align-self: flex-start; display: inline-flex; align-items: center; background: linear-gradient(135deg, #4A38C9, #6B4CF0); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 13px; border-radius: 100px; margin-block-end: 16px; box-shadow: 0 6px 16px rgba(74,56,201,.35); }
+  .cmp2-head { display: flex; align-items: flex-start; gap: 12px; }
+  .cmp2-head-icon { flex-shrink: 0; display: flex; margin-block-start: 2px; }
+  .cmp2-name { margin: 0; font-size: 18px; font-weight: 700; color: #0F172A; }
+  .cmp2-name-sub { display: block; margin-block-start: 3px; font-size: 13px; font-weight: 500; color: #64748B; }
+  .cmp2-card--brand .cmp2-name-sub { color: #5B6B80; }
+  .cmp2-meter { display: flex; align-items: center; gap: 10px; margin: 18px 0 20px; }
+  .cmp2-meter-track { flex: 1; display: flex; gap: 4px; }
+  .cmp2-meter-track i { flex: 1; height: 5px; border-radius: 3px; background: #E2E8F0; font-style: normal; }
+  .cmp2-meter-track i.is-filled { background: linear-gradient(90deg, #0EA5E9, #22D3EE); }
+  .cmp2-card--brand .cmp2-meter-track i.is-filled { box-shadow: 0 0 8px rgba(34,211,238,.55); }
+  .cmp2-meter-score { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64748B; direction: ltr; }
+  .cmp2-card--brand .cmp2-meter-score { color: #0E7490; font-weight: 600; }
+  .cmp2-list { margin: 0; padding: 0; }
+  .cmp2-list dt { display: flex; align-items: center; gap: 10px; margin: 0; padding-block-start: 14px; font-size: 14.5px; font-weight: 600; color: #0F172A; }
+  .cmp2-list dt:first-of-type { padding-block-start: 0; }
+  .cmp2-list dd { margin: 3px 0 0; padding-block-end: 14px; padding-inline-start: 30px; border-block-end: 1px solid #EEF2F6; font-size: 13px; line-height: 1.55; color: #64748B; }
+  .cmp2-card--brand .cmp2-list dd { color: #5B6B80; border-block-end-color: rgba(34,211,238,.18); }
+  .cmp2-list dd:last-of-type { border-block-end: none; padding-block-end: 0; }
+  .cmp2-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .cmp2-icon--yes { background: #0E7490; }
+  .cmp2-card--brand .cmp2-icon--yes { background: linear-gradient(135deg, #0EA5E9, #22D3EE); box-shadow: 0 0 0 3px rgba(34,211,238,.16); }
+  .cmp2-icon--no { border: 1.5px solid #CBD5E1; color: #94A3B8; font-size: 12px; line-height: 1; }
+
+  /* ===== Comparison — mobile compact strip =====
+     Stacked cards read as three separate profiles once you can only see one
+     at a time, which is what "doesn't look like it's comparing" was about —
+     the side-by-side is gone. Below 900px, the CRITERION becomes the outer
+     unit instead of the option: one heading per criterion, all three answers
+     in a single narrow row underneath it, so every screenful still shows an
+     actual comparison. This is a second, independent structure swapped in by
+     media query — exactly how #how already keeps .loop-ring (desktop) and
+     .loop-ribbon (mobile) as two different layouts, not a shrunk copy. */
+  .cmp3-panel { display: none; }
+  .cmp3-score { display: flex; gap: 8px; padding: 18px 16px; border-bottom: 1px solid #E2E8F0; background: #F8FAFC; border-radius: 15px 15px 0 0; }
+  .cmp3-score-col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .cmp3-score-label { font-size: 11px; font-weight: 700; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .cmp3-score-col--brand .cmp3-score-label { color: #0E7490; }
+  .cmp3-score-col .cmp2-meter-track { flex: none; width: 100%; }
+  .cmp3-score-value { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64748B; direction: ltr; }
+  .cmp3-score-col--brand .cmp3-score-value { color: #0E7490; font-weight: 600; }
+  .cmp3-row { padding: 16px; border-bottom: 1px solid #E2E8F0; }
+  .cmp3-row:last-child { border-bottom: none; }
+  .cmp3-row-title { margin: 0 0 12px; font-size: 14px; font-weight: 700; color: #0F172A; }
+  .cmp3-row-cells { display: flex; gap: 8px; }
+  .cmp3-cell { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; text-align: start; gap: 5px; padding: 10px 5px; border-radius: 12px; background: #F8FAFC; }
+  .cmp3-cell--brand { background: #F0F6FA; box-shadow: inset 0 0 0 1.5px rgba(34,211,238,.4); }
+  .cmp3-cell-tag { font-size: 10px; font-weight: 700; letter-spacing: .02em; color: #94A3B8; }
+  .cmp3-cell--brand .cmp3-cell-tag { color: #0E7490; }
+  .cmp3-cell-verdict { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #334155; line-height: 1.3; }
+  .cmp3-cell--brand .cmp3-cell-verdict { color: #0F172A; }
+  .cmp3-cell--brand .cmp2-icon--yes { background: linear-gradient(135deg, #0EA5E9, #22D3EE); box-shadow: 0 0 0 3px rgba(34,211,238,.16); }
+  @media (max-width: 900px) {
+    .cmp2-grid { display: none; }
+    .cmp3-panel { display: block; background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; }
+  }
+
   @media (max-width: 900px) {
     [data-mq-hide] { display: none !important; }
     [data-mq-hero-title] { font-size: 36px !important; }
@@ -315,6 +385,8 @@
     [data-mq-h2] { font-size: 26px !important; }
     [data-mq-cards] > div { padding: 20px !important; }
     [data-mq-footer] { flex-direction: column !important; text-align: center !important; gap: 10px !important; }
+    .cmp2-card { padding: 22px 20px !important; }
+    .cmp2-name { font-size: 17px !important; }
   }
   /* Smallest phones (iPhone SE class): the wordmark is what stops the nav row fitting. */
   @media (max-width: 350px) {
@@ -481,6 +553,7 @@
         <a data-mq-hide class="nav-link" href="#features">פיצ'רים</a>
         <a data-mq-hide class="nav-link" href="#how">איך זה עובד</a>
         <a data-mq-hide class="nav-link" href="#vision">חזון</a>
+        <a data-mq-hide class="nav-link" href="#compare">השוואה</a>
         <a data-mq-lang href="/en" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px; direction: ltr;">EN</a>
         <a data-mq-cta class="btn-action btn-action-md" href="https://app.meduxa.ai/?signup=1" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700;">התחילו ללמוד</a>
         <button data-mq-burger onclick="toggleMenu()" aria-label="תפריט" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
@@ -493,6 +566,7 @@
       <a class="m-link" href="#features" onclick="closeMenu()">פיצ'רים</a>
       <a class="m-link" href="#how" onclick="closeMenu()">איך זה עובד</a>
       <a class="m-link" href="#vision" onclick="closeMenu()">חזון</a>
+      <a class="m-link" href="#compare" onclick="closeMenu()">השוואה</a>
     </div>
   </nav>
 
@@ -949,6 +1023,214 @@
         <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.35); color: #5EEAD4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">✓ נפרולוגיה (שלב א) — חי עכשיו</span>
         <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.06); border: 1px solid #1E4A6E; color: #7DA2C4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">התמחויות נוספות בקרוב</span>
       </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section id="compare" data-mq-section style="background: #fff; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 44px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em; direction: ltr;">COMPARISON</span>
+        <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">לא מאגר שאלות. לא כלי AI כללי.</h2>
+        <p style="margin: 0; font-size: 18px; color: #475569; max-width: 680px; line-height: 1.65;">מאגר שאלות נותן לכם תרגול בלי הכוונה. כלי AI כללי נותן לכם הכוונה — רק אחרי שתאספו לבד את כל המקורות ותבנו לו את ההקשר. MeduXa בנויה כבר סביב בחינת ההתמחות הישראלית, עם שניהם יחד.</p>
+      </div>
+
+      <div class="cmp2-grid">
+        <div class="cmp2-card cmp2-card--brand">
+          <span class="cmp2-badge">מומלץ</span>
+          <div class="cmp2-head">
+            <span class="cmp2-head-icon">
+              <svg width="28" height="28" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+                <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+                <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+                <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+                <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+              </svg>
+            </span>
+            <div>
+              <h3 class="cmp2-name">MeduXa<span style="font-family: 'IBM Plex Mono', monospace; color: #22D3EE;">.ai</span></h3>
+              <span class="cmp2-name-sub">בנויה כבר סביב הבחינה</span>
+            </div>
+          </div>
+          <div class="cmp2-meter">
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span>
+            <span class="cmp2-meter-score">7/7</span>
+          </div>
+          <dl class="cmp2-list">
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>שאלות ברמת הבחינה</dt>
+            <dd>אלפי שאלות, עם ביקורת מומחה</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>מקור מצוטט ומאומת</dt>
+            <dd>ציטוט מדויק מהמקור, לכל שאלה</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>ביקורת רפואית</dt>
+            <dd>נבדק על ידי רופאים</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>מורה AI סוקרטי</dt>
+            <dd>מובנה בכל שאלה, בזמן אמת</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>איתור חולשות + חזרה מרווחת</dt>
+            <dd>מפת חום + אלגוריתם חזרה מבוסס-מדע</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>סימולציית בחינה מלאה</dt>
+            <dd>יש, בפורמט הבחינה האמיתי</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>מוכן לשימוש מיידי</dt>
+            <dd>יש</dd>
+          </dl>
+        </div>
+
+        <div class="cmp2-card">
+          <div class="cmp2-head">
+            <span class="cmp2-head-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="4" stroke="#7DA2C4" stroke-width="1.6"></rect>
+                <line x1="7.5" y1="9" x2="16.5" y2="9" stroke="#7DA2C4" stroke-width="1.6" stroke-linecap="round"></line>
+                <line x1="7.5" y1="13" x2="16.5" y2="13" stroke="#7DA2C4" stroke-width="1.6" stroke-linecap="round"></line>
+                <line x1="7.5" y1="17" x2="13" y2="17" stroke="#7DA2C4" stroke-width="1.6" stroke-linecap="round"></line>
+              </svg>
+            </span>
+            <div>
+              <h3 class="cmp2-name">מאגר שאלות מסורתי</h3>
+              <span class="cmp2-name-sub">בנק שאלות קבוע, בלי AI</span>
+            </div>
+          </div>
+          <div class="cmp2-meter">
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp2-meter-score">2/7</span>
+          </div>
+          <dl class="cmp2-list">
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>שאלות ברמת הבחינה</dt>
+            <dd>יש</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>מקור מצוטט ומאומת</dt>
+            <dd>לרוב לא</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>ביקורת רפואית</dt>
+            <dd>משתנה בין מאגרים</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>מורה AI סוקרטי</dt>
+            <dd>אין</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>איתור חולשות + חזרה מרווחת</dt>
+            <dd>אין</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>סימולציית בחינה מלאה</dt>
+            <dd>משתנה בין מאגרים</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>מוכן לשימוש מיידי</dt>
+            <dd>יש — אך סטטי, בלי AI</dd>
+          </dl>
+        </div>
+
+        <div class="cmp2-card">
+          <div class="cmp2-head">
+            <span class="cmp2-head-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4.5 5.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9.5l-4 3.5v-3.5h-1.5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z" stroke="#7DA2C4" stroke-width="1.6" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <div>
+              <h3 class="cmp2-name">כלי AI כללי</h3>
+              <span class="cmp2-name-sub">העלאת קבצים, צ׳אט חופשי</span>
+            </div>
+          </div>
+          <div class="cmp2-meter">
+            <span class="cmp2-meter-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp2-meter-score">0/7</span>
+          </div>
+          <dl class="cmp2-list">
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>שאלות ברמת הבחינה</dt>
+            <dd>תלוי במה שתזינו בעצמכם</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>מקור מצוטט ומאומת</dt>
+            <dd>רק אם העליתם את המקור בעצמכם</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>ביקורת רפואית</dt>
+            <dd>אין</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>מורה AI סוקרטי</dt>
+            <dd>רק אם תבנו לו את כל ההקשר</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>איתור חולשות + חזרה מרווחת</dt>
+            <dd>אין</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>סימולציית בחינה מלאה</dt>
+            <dd>אין</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>מוכן לשימוש מיידי</dt>
+            <dd>העבודה כולה עליכם</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="cmp3-panel">
+        <div class="cmp3-score">
+          <div class="cmp3-score-col cmp3-score-col--brand">
+            <span class="cmp3-score-label">MeduXa</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span>
+            <span class="cmp3-score-value">7/7</span>
+          </div>
+          <div class="cmp3-score-col">
+            <span class="cmp3-score-label">מאגר</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp3-score-value">2/7</span>
+          </div>
+          <div class="cmp3-score-col">
+            <span class="cmp3-score-label">AI כללי</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp3-score-value">0/7</span>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">שאלות ברמת הבחינה</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>אלפי שאלות</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>יש</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>תלוי בכם</span></div>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">מקור מצוטט ומאומת</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>בכל שאלה</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>לרוב לא</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>תלוי בכם</span></div>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">ביקורת רפואית</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>נבדק ע״י רופאים</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>משתנה</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">מורה AI סוקרטי</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>בזמן אמת</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>רק אם תבנו</span></div>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">חולשות + חזרה מרווחת</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>מבוסס-מדע</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">סימולציית בחינה מלאה</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>כן, מלאה</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>משתנה</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">מוכן לשימוש מיידי</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>כן</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>כן, סטטי</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>עליכם</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin: 24px 0 0; font-size: 13px; color: #64748B; text-align: center;">ההשוואה מתייחסת לקטגוריות כלליות של פתרונות נפוצים, לא למוצר מסחרי מסוים.</p>
     </div>
   </section>
 
