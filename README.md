@@ -31,6 +31,7 @@ vercel.json              Vercel config (cleanUrls + the language routing rules)
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
+scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
 
@@ -140,13 +141,40 @@ for `/` is sent on to `/en` only when one of these holds:
 | # | Condition | Why |
 |---|---|---|
 | 1 | Cookie `mx_lang=en` | The visitor has chosen English before |
-| 2 | `Accept-Language` does **not** start with `he`, **and** `x-vercel-ip-country` is **not** `IL` | Neither a Hebrew-language browser nor an Israeli visitor |
+| 2 | `Accept-Language` does **not** start with `he`, **and** `x-vercel-ip-country` is **not** `IL`, **and** the `User-Agent` is not a crawler | Neither a Hebrew-language browser nor an Israeli visitor — and a person rather than a bot |
 
 Rule 2 is skipped once the `mx_lang` cookie exists, so a stated preference always beats a guessed
-one. Note it is a single rule with both conditions: an Israeli visitor on an English-language
-browser stays on Hebrew, which is the same call the previous English-root version made in reverse.
-The redirects are **307 (temporary)**, and both pages carry `hreflang` tags, so each language stays
-independently indexable.
+one. Note it is a single rule with all the conditions at once: an Israeli visitor on an
+English-language browser stays on Hebrew, which is the same call the previous English-root version
+made in reverse.
+
+### Crawlers are exempt from rule 2, and the Hebrew page could not be indexed without it
+
+The redirects are **307 (temporary)** and both pages carry `hreflang` tags, and that was once
+assumed to leave each language independently indexable. **It did not.** Googlebot crawls from US
+addresses and sends no `Accept-Language` header at all, and it carries no cookie and no query
+string — so every one of rule 2's `missing` conditions held for it and `https://meduxa.ai/`
+answered it with a 307 to `/en`. Search Console filed the Hebrew homepage under **"Page with
+redirect"**, which means never indexed; and because `hreflang="he"` pointed at a URL that
+redirected, the pair could not be read as one cluster either. A 307 tells Google the move is
+temporary, but it does not make the redirecting URL indexable in its own right.
+
+The fix is the last `missing` condition on rule 2: a `User-Agent` that looks like a crawler. A
+bot's UA matches the pattern, so that condition is not "missing", so the rule does not fire and `/`
+serves the Hebrew page with a 200.
+
+This is **not cloaking**. Googlebot receives at `/` exactly the bytes an Israeli visitor receives,
+`/en` stays separately crawlable with its own self-referential canonical, and nothing is served to
+a bot that a reader cannot reach. The pattern covers search crawlers and also social unfurlers
+(`facebookexternalhit`, `WhatsApp`, Slack, Telegram, LinkedIn) — without it, a Hebrew link shared
+into an Israeli WhatsApp thread was unfurled by following the redirect, so the preview showed the
+**English** title and `og-image.png` instead of the Hebrew ones.
+
+`node scripts/check-crawler-exemption.mjs` is the guard: 20 real crawler user-agents must reach `/`
+un-redirected and 7 real browser user-agents must stay routed. Run it after any edit to the
+`redirects` block. It exists because this bug is **invisible from Israel** — the owner's own
+browser satisfies rule 2 and sees a 200 — so nothing short of a request from abroad, or this
+check, would notice the condition being dropped again.
 
 The `mx_lang` cookie (one year, `SameSite=Lax`) is written client-side by the pages themselves,
 since only the router reads it:
