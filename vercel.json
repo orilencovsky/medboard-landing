@@ -24,7 +24,12 @@
           "key": "accept-language",
           "value": "^[Hh][Ee]([-;,].*)?$"
         },
-        { "type": "header", "key": "x-vercel-ip-country", "value": "IL" }
+        { "type": "header", "key": "x-vercel-ip-country", "value": "IL" },
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "^.*([Bb][Oo][Tt]|[Ss][Pp][Ii][Dd][Ee][Rr]|[Cc][Rr][Aa][Ww][Ll]|Google-InspectionTool|GoogleOther|Mediapartners-Google|facebookexternalhit|WhatsApp).*$"
+        }
       ],
       "destination": "/en",
       "permanent": false
