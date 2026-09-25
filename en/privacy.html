@@ -1,23 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XGGFVEFFWZ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XGGFVEFFWZ');
-</script>
+<!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
+<script defer src="/consent.js"></script>
 
 <meta charset="UTF-8" />
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "yhjkv4kj7h");
-</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Privacy Policy — MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/en/privacy" />
@@ -100,7 +87,7 @@
 
   <main class="doc" id="main">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: September 1, 2026</p>
+    <p class="updated">Last updated: September 25, 2026</p>
 
     <p>This policy explains what personal data meduxa.ai collects, why, who it is shared with, how long it is kept, and what rights you have over it. It is written to meet both the EU General Data Protection Regulation (GDPR) and Israel's Privacy Protection Law, 5741-1981 (including Amendment 13).</p>
 
@@ -134,7 +121,7 @@
           <td data-label="Legal basis">Legitimate interest — Art. 6(1)(f): protecting the service from abuse.</td>
         </tr>
         <tr>
-          <td data-label="Data"><strong>Aggregate traffic data</strong> — how many visitors reached which page, roughly which country from, and which on-page events occurred (for example, a form submission).</td>
+          <td data-label="Data"><strong>Aggregate traffic data</strong> — how many visitors reached which page, roughly which country from, and which on-page events occurred (for example, a click on the start button).</td>
           <td data-label="Purpose">To understand what works on the page. Measurement runs on Vercel Web Analytics, which sets no cookies and creates no persistent visitor identifier, so it cannot track you across sites or identify you.</td>
           <td data-label="Legal basis">Legitimate interest — Art. 6(1)(f): aggregate, non-identifying measurement.</td>
         </tr>
@@ -143,15 +130,26 @@
           <td data-label="Purpose">Operations, security and debugging. Created and deleted by our hosting provider under its own retention policy.</td>
           <td data-label="Legal basis">Legitimate interest — Art. 6(1)(f).</td>
         </tr>
+        <tr>
+          <td data-label="Data"><strong>Detailed usage data — only if you consent</strong>: which pages you viewed, clicks and scrolling, device and browser type, approximate location, and a random visitor ID in a cookie. With Microsoft Clarity, also a recording of your session on the page (mouse movement, clicks and scrolling), with anything typed into fields masked.</td>
+          <td data-label="Purpose">To understand how the site is used and improve it. Measurement runs on Google Analytics and Microsoft Clarity, which load only after you click "Accept" in the consent notice.</td>
+          <td data-label="Legal basis">Consent — Art. 6(1)(a). You can withdraw it at any time (see section 3).</td>
+        </tr>
       </tbody>
     </table>
 
     <h2>3. Cookies</h2>
-    <p>This site sets no advertising cookies, no social-network cookies and no tracking cookies of any kind. The only cookie is:</p>
+    <p>This site sets no advertising or social-network cookies. Without your consent, only two strictly necessary items are stored:</p>
     <ul>
       <li><strong>mx_lang</strong> — a functional cookie that remembers whether you were served the Hebrew or the English version, so the language routing returns you to the same one. Lifetime: one year. It holds no personal data and is never sent to a third party. You can delete it at any time in your browser settings.</li>
+      <li><strong>mx_analytics_consent</strong> — kept in your browser's local storage (localStorage). It remembers whether you accepted or declined measurement, so we don't ask again on every page. It is never sent anywhere.</li>
     </ul>
-    <p>Because there are no non-essential cookies and no identifier-based measurement, this site has no cookie consent banner — there is nothing to consent to.</p>
+    <p><strong>Only if you consent</strong>, these measurement tools also load and set their own cookies:</p>
+    <ul>
+      <li><strong>Google Analytics</strong> — the <strong>_ga</strong> and <strong>_ga_&lt;id&gt;</strong> cookies, which recognise a returning visitor. Lifetime: up to two years.</li>
+      <li><strong>Microsoft Clarity</strong> — the <strong>_clck</strong> (up to one year) and <strong>_clsk</strong> (one day) cookies, and sometimes other Microsoft cookies such as <strong>MUID</strong>.</li>
+    </ul>
+    <p>If you haven't chosen, or you declined, these tools do not load at all. You can change your choice at any time: <a href="#" onclick="window.mxConsent &amp;&amp; window.mxConsent.open(); return false;">measurement settings</a>. Withdrawing consent stops measurement from that moment; cookies already stored can be deleted in your browser settings.</p>
 
     <h2>4. Who your data is shared with</h2>
     <p>We do not sell your data, rent it, or hand it to advertisers. It is processed only by these service providers (processors):</p>
@@ -159,6 +157,8 @@
       <li><strong>Supabase</strong> — stores the waitlist (the email addresses).</li>
       <li><strong>Vercel</strong> — hosts the site, keeps operational logs and runs the aggregate traffic measurement.</li>
       <li><strong>Anthropic</strong> — processes the messages typed into the tutor demo, solely to generate the reply.</li>
+      <li><strong>Google</strong> (Google Analytics) — usage measurement, only if you consent.</li>
+      <li><strong>Microsoft</strong> (Microsoft Clarity) — usage measurement and session recording, only if you consent.</li>
     </ul>
     <p>Beyond that, we will disclose data if a court order or the law requires it.</p>
 
