@@ -341,6 +341,11 @@ on a local static server. Custom events, all through `va('event', { name, data }
 - `cta_click` — `data.placement` is `nav`, `hero` or `closing`, read from the button's `data-cta`
   attribute. This is the landing→app click-through measure. A new "start" button needs a `data-cta`
   value in **both** languages or it is not counted.
+- The same buttons link to `app.meduxa.ai/?signup=1&src=landing&pl=<placement>`. The app reads
+  `src`/`pl`, carries them through signup, and records one row per NEW account in its
+  `signup_sources` table (Pilot repo, `src/signupSource.js`). That is the other half: clicks here,
+  accounts there. The vocabularies are closed on the app side, so a new placement value needs a
+  migration there before it is recorded.
 - `tutor_reply_shown`, `demo_answer_selected` — the hero demo card.
 
 **Google Analytics 4 + Microsoft Clarity — only after opt-in.** Every page loads `/consent.js`
