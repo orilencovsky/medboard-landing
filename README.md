@@ -79,8 +79,8 @@ What has to stay true as the site changes — each of these is a statement the p
 | The pages say | So if you change… |
 |---|---|
 | Waitlist emails are kept 24 months, or until deletion is requested (30-day turnaround) | …see [Handling a deletion request](#handling-a-deletion-request) — today that's a manual `DELETE` against Supabase, not an automated flow, so the 30-day and 24-month promises hold only as long as someone is actually doing that by hand |
-| The only cookie is `mx_lang`, functional, no tracking cookies at all | …adding any identifier-based script means a consent banner **and** a rewrite of § 3 |
-| Processors are Supabase, Vercel and Anthropic, transferring under their DPAs' SCCs | …a new third-party script or backend is a new named processor in § 4 |
+| Without consent only `mx_lang` (cookie) and `mx_analytics_consent` (localStorage) are stored; GA4 and Clarity cookies are set **only after opt-in** | …any new identifier-based script must load through `consent.js` and be named in § 3 and § 4 of both pages |
+| Processors are Supabase, Vercel and Anthropic, plus Google (GA4) and Microsoft (Clarity) only with consent, transferring under their DPAs' SCCs | …a new third-party script or backend is a new named processor in § 4 |
 | `privacy@meduxa.ai` is answered within 30 days | …the address has to keep reaching a human; it is the only contact point in both documents |
 | The controller is "MeduXa" | …on incorporation, name the registered entity here — a trade name alone does not satisfy GDPR Art. 13(1)(a) |
 
@@ -331,19 +331,33 @@ The script strips audio, scales to 1600px (desktop) and 800px (phone), and targe
 
 ## Analytics
 
-**Vercel Web Analytics**, wired inline on both pages — the shim plus
-`/_vercel/insights/script.js`. It has to be switched on under **Vercel → Project → Analytics**;
-the path is served by the platform, so it 404s on a local static server and no events are sent
-from `python3 -m http.server`.
+Two layers, with different consent rules.
 
-Three custom events survive from the GA4 setup this replaced: `sign_up` (waitlist submitted),
-`tutor_reply_shown` and `demo_answer_selected` — all fired through `va('event', { name, data })`.
+**Vercel Web Analytics — every visitor.** Wired inline on both landing pages (the shim plus
+`/_vercel/insights/script.js`). Cookieless, no visitor id, so it needs no consent. It has to be
+switched on under **Vercel → Project → Analytics**; the path is served by the platform, so it 404s
+on a local static server. Custom events, all through `va('event', { name, data })`:
 
-The swap away from GA4 was a compliance decision, not a preference. GA4 set cookies and derived a
-persistent identifier before any consent, on a site whose edge router deliberately sends every
-non-Israeli, non-Hebrew-speaking visitor — EU traffic included — to `/en`. Cookieless measurement
-removes the thing that would have needed a consent banner. Reintroducing GA4, or any
-identifier-based analytics, means building that banner and re-writing § 3 of both privacy pages.
+- `cta_click` — `data.placement` is `nav`, `hero` or `closing`, read from the button's `data-cta`
+  attribute. This is the landing→app click-through measure. A new "start" button needs a `data-cta`
+  value in **both** languages or it is not counted.
+- The same buttons link to `app.meduxa.ai/?signup=1&src=landing&pl=<placement>`. The app reads
+  `src`/`pl`, carries them through signup, and records one row per NEW account in its
+  `signup_sources` table (Pilot repo, `src/signupSource.js`). That is the other half: clicks here,
+  accounts there. The vocabularies are closed on the app side, so a new placement value needs a
+  migration there before it is recorded.
+- `tutor_reply_shown`, `demo_answer_selected` — the hero demo card.
+
+**Google Analytics 4 + Microsoft Clarity — only after opt-in.** Every page loads `/consent.js`
+instead of the tags themselves. It shows a bilingual banner (accept and decline with equal weight),
+stores the choice in `localStorage.mx_analytics_consent`, and injects GA4 (`G-XGGFVEFFWZ`) and
+Clarity (`yhjkv4kj7h`) only on `granted`. Undecided or `denied` loads nothing. The privacy pages
+link to `window.mxConsent.open()` so a visitor can change their mind; withdrawing a grant reloads
+the page, since a loaded tracker cannot be unloaded. Why a gate: both trackers set cookies and a
+persistent id, and the edge router sends EU traffic to `/en` (GDPR), on top of Israel's Amendment 13.
+GA4/Clarity were first added without a gate on 2026-09-17 (PR #25) while § 3 still said there was no
+tracking; this gate and the § 2–§ 4 rewrite closed that. Neither the gate nor the privacy text has
+been reviewed by a lawyer.
 
 ## License
 
