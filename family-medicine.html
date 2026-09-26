@@ -403,6 +403,18 @@
         body: JSON.stringify({ email: val, locale: 'he', source: 'landing_fm', consent_at: new Date().toISOString() })
       }).then(function (r) {
         if (!(r.ok || r.status === 409)) { var err = new Error('status ' + r.status); err.server = true; throw err; } // 409 = already listed
+        // 409 = this address is already on the waitlist from an earlier form
+        // (the email is unique). Mark the family-medicine interest on that row
+        // so the launch email reaches it. Best effort: a failure here must not
+        // turn a sign-up the person already has into an error on screen.
+        if (r.status === 409) {
+          return fetch(SUPA_URL + '/rest/v1/rpc/waitlist_add_interest', {
+            method: 'POST',
+            headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ p_email: val, p_interest: 'family_medicine' })
+          }).catch(function () {});
+        }
+      }).then(function () {
         form.removeAttribute('aria-busy');
         form.style.display = 'none';
         msg.className = 'ok-box';
