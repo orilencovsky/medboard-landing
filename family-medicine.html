@@ -58,6 +58,7 @@
          font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', sans-serif; }
   button, input { font-family: inherit; }
   a { color: var(--primary); text-decoration: none; } a:hover { text-decoration: underline; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .ltr-iso { direction: ltr; unicode-bidi: isolate; }
   :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
   .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: var(--ink); color: #fff;
@@ -128,6 +129,31 @@
   .feat p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-muted); }
   .later { margin-top: 14px; background: var(--surface); border: 1px dashed var(--border-bright); border-radius: 12px;
            padding: 12px 16px; font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+
+
+  /* Comparison table: MeduXa column tinted like the app's selected state. */
+  .cmp { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface);
+         border: 1px solid var(--border); border-radius: 16px; overflow: hidden; font-size: 15px; }
+  .cmp th, .cmp td { padding: 12px 14px; text-align: start; vertical-align: top; border-bottom: 1px solid var(--border); line-height: 1.5; }
+  .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
+  .cmp thead th { background: var(--surface-high); font-size: 14px; font-weight: 700; color: var(--text-muted); }
+  .cmp thead th.us { color: var(--primary); }
+  .cmp tbody th { font-weight: 700; color: var(--text); width: 26%; }
+  .cmp td { color: var(--text-muted); }
+  .cmp .us { background: #0e74900d; }
+  .cmp td.us { color: var(--text); font-weight: 600; }
+  .yes::before { content: '✓'; color: var(--ok); font-weight: 800; margin-inline-end: 6px; }
+  .no::before { content: '–'; color: var(--text-dim); margin-inline-end: 6px; }
+  .cmp-note { margin: 10px 0 0; font-size: 13px; color: var(--text-muted); }
+  @media (max-width: 700px) {
+    .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: auto !important; }
+    .cmp { border: none; background: transparent; }
+    .cmp thead { display: none; }
+    .cmp tr { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
+    .cmp tbody th { border-bottom: 1px solid var(--border); background: var(--surface-high); }
+    .cmp td::before { display: block; content: attr(data-label); font-size: 12px; font-weight: 700; color: var(--text-dim); margin-bottom: 2px; }
+    .cmp td.yes::before, .cmp td.no::before { content: attr(data-label); color: var(--text-dim); font-weight: 700; margin: 0 0 2px; }
+  }
 
   /* Sign-up */
   #signup { padding-bottom: 8px; }
@@ -247,6 +273,24 @@
       <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 21V4h11l-2 4 2 4H5"/></svg></span><div><h3>דיווח על בעיה בשאלה — ותשובה</h3><p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p></div></div>
     </div>
     <p class="later"><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</p>
+  </section>
+
+  <section aria-labelledby="t-cmp">
+    <h2 id="t-cmp">לא עוד מאגר שאלות. לא עוד צ׳אט <span class="ltr-iso">AI</span> כללי.</h2>
+    <p class="sub">מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה — רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. MeduXa משלבת את שניהם, סביב הבחינה.</p>
+    <table class="cmp">
+      <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="ltr-iso">MeduXa</span></th><th scope="col">מאגר שאלות רגיל</th><th scope="col">צ׳אט <span class="ltr-iso">AI</span> כללי</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us yes" data-label="MeduXa">נבנות עכשיו לרפואת משפחה</td><td class="yes" data-label="מאגר שאלות">יש</td><td class="no" data-label="צ׳אט AI כללי">תלוי במה שתזינו בעצמכם</td></tr>
+        <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us yes" data-label="MeduXa">ציטוט מילה-במילה, שאפשר לבדוק</td><td class="no" data-label="מאגר שאלות">לרוב בלי מקור מצוטט</td><td class="no" data-label="צ׳אט AI כללי">רק אם העליתם את המקור בעצמכם</td></tr>
+        <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us yes" data-label="MeduXa">מובנה בכל שאלה</td><td class="no" data-label="מאגר שאלות">אין</td><td class="no" data-label="צ׳אט AI כללי">רק אם תבנו לו את כל ההקשר</td></tr>
+        <tr><th scope="row">חזרה מרווחת</th><td class="us yes" data-label="MeduXa">חזרה יומית שמתוזמנת לפי השכחה</td><td class="no" data-label="מאגר שאלות">לרוב אין</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
+        <tr><th scope="row">תרגול ממוקד בחולשות</th><td class="us yes" data-label="MeduXa">הדשבורד מזהה ופותח תרגול בלחיצה</td><td class="no" data-label="מאגר שאלות">לרוב אין</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
+        <tr><th scope="row">סימולציית בחינה עם טיימר</th><td class="us yes" data-label="MeduXa">יש</td><td class="no" data-label="מאגר שאלות">משתנה בין מאגרים</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
+        <tr><th scope="row">מפת נושאים ומעקב התקדמות</th><td class="us yes" data-label="MeduXa">יש</td><td class="no" data-label="מאגר שאלות">משתנה בין מאגרים</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
+      </tbody>
+    </table>
+    <p class="cmp-note">ההשוואה מתייחסת לקטגוריות כלליות של פתרונות נפוצים, לא למוצר מסחרי מסוים.</p>
   </section>
 
   <section id="signup" aria-labelledby="t-signup">
