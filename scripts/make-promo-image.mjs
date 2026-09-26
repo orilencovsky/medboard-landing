@@ -14,7 +14,7 @@ import { join } from 'node:path';
 
 const VARIANTS = {
   og:     { out: 'og-family-medicine.png',       w: 1200, h: 630,  mark: 80,  word: 40, pill: 24, h1: 58, sub: 24, url: 24, offer: 28, gap: 0.8, stack: false },
-  square: { out: 'whatsapp-family-medicine.png', w: 1080, h: 1080, mark: 130, word: 56, pill: 32, h1: 84, sub: 34, url: 32, offer: 40, gap: 1.35, stack: true },
+  square: { out: 'whatsapp-family-medicine.png', w: 1080, h: 1080, mark: 130, word: 56, pill: 32, h1: 84, sub: 32, url: 32, offer: 40, gap: 1.35, stack: true },
 };
 
 const V = VARIANTS[process.argv[2]];
@@ -24,7 +24,9 @@ if (!V) {
 }
 // Wide card: one line with dots. Square card: one feature per line, since a
 // dotted line wraps mid-feature at 1080px.
-const FEATURES = ['שאלות בסגנון הבחינה', 'הסבר עם מקור לכל תשובה', 'מורה <span dir="ltr">AI</span> סוקרטי'];
+const FEATURES = V.stack
+  ? ['שאלות בסגנון הבחינה · הסבר עם ציטוט מהמקור', 'חזרה מרווחת · תרגול ממוקד בחולשות', 'מורה <span dir="ltr">AI</span> סוקרטי לכל שאלה']
+  : ['שאלות בסגנון הבחינה', 'הסבר עם ציטוט מהמקור', 'חזרה מרווחת', 'מורה <span dir="ltr">AI</span> סוקרטי'];
 const g = (px) => Math.round(px * V.gap);
 
 const MARK = `<svg width="${V.mark}" height="${V.mark}" viewBox="0 0 96 96" fill="none">
