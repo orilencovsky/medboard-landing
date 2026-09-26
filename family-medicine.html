@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
-<script defer src="/consent.js"></script>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
+<script defer src="/consent.js"></script>
 <title>בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/family-medicine" />
-<meta name="description" content="בקרוב ב-MeduXa: הכנה לבחינת שלב א ברפואת משפחה — שאלות מבחינות עבר, הסברים מעוגנים במקורות, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש — השאירו מייל ונעדכן כשזה נפתח." />
+<meta name="description" content="בקרוב ב-MeduXa: הכנה לשלב א ברפואת משפחה, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
 <meta property="og:title" content="בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai" />
-<meta property="og:description" content="בקרוב ב-MeduXa: הכנה לבחינת שלב א ברפואת משפחה — שאלות מבחינות עבר, הסברים מעוגנים במקורות, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש — השאירו מייל ונעדכן כשזה נפתח." />
+<meta property="og:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
 <meta property="og:url" content="https://meduxa.ai/family-medicine" />
-<meta property="og:image" content="https://meduxa.ai/og-family-medicine.png?v=2" />
+<meta property="og:image" content="https://meduxa.ai/og-family-medicine.png?v=5" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="MeduXa.ai — בקרוב: הכנה לשלב א ברפואת משפחה" />
 <meta property="og:locale" content="he_IL" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai" />
-<meta name="twitter:description" content="בקרוב ב-MeduXa: הכנה לבחינת שלב א ברפואת משפחה — שאלות מבחינות עבר, הסברים מעוגנים במקורות, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש — השאירו מייל ונעדכן כשזה נפתח." />
-<meta name="twitter:image" content="https://meduxa.ai/og-family-medicine.png?v=2" />
+<meta name="twitter:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
+<meta name="twitter:image" content="https://meduxa.ai/og-family-medicine.png?v=5" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#061225" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -33,162 +32,369 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  /* Same visual language as the homepage (index.html): IBM Plex Sans Hebrew +
+     Plex Mono eyebrows, the navy hero gradient, the cyan accent, the science
+     section's blueprint grid, and the purple .btn-action. */
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #F0F6FA; color: #0F172A; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  button, input { font-family: inherit; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
-  /* Latin terms and numerals inside Hebrew sentences, kept from reordering. */
   .ltr-iso { direction: ltr; unicode-bidi: isolate; }
-  .doc { max-width: 820px; margin: 0 auto; padding: 56px 32px 88px; }
-  .doc h1 { margin: 0 0 8px; font-size: 38px; font-weight: 700; color: #0F172A; line-height: 1.25; }
-  .doc h2 { margin: 44px 0 14px; font-size: 22px; font-weight: 700; color: #0F172A; }
-  .doc h3 { margin: 26px 0 8px; font-size: 17px; font-weight: 600; color: #0F172A; }
-  .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
-  .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
-  .doc li { margin-bottom: 8px; }
-  .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-  .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
-  .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }
-  /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
-  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
-  .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
-  .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
-  .doc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  .foot-link { color: #7DA2C4; font-size: 14px; transition: color .15s; }
-  .foot-link:hover { color: #22D3EE; text-decoration: none; }
-  .m-link { color: #B8D4EA; font-size: 15px; padding: 10px 4px; }
-  @media (max-width: 640px) {
-    .doc { padding: 36px 20px 64px; }
-    .doc h1 { font-size: 30px; }
-    .doc h2 { font-size: 20px; }
-    .doc table, .doc thead, .doc tbody, .doc tr, .doc th, .doc td { display: block; }
-    .doc thead { display: none; }
-    .doc tr { border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 12px; background: #fff; }
-    .doc td { border: none; border-bottom: 1px solid #EEF2F6; }
-    .doc tr td:last-child { border-bottom: none; }
-    .doc td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: #0E7490; margin-bottom: 4px; }
-    footer [data-mq-footer] { flex-direction: column !important; text-align: center !important; }
-  }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* #0E7490 on light surfaces (5.4:1), cyan on the dark bands (see below). */
   :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
-  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
+  nav :focus-visible, .hero :focus-visible, .sci :focus-visible, .signup-band > .back :focus-visible, footer :focus-visible { outline-color: #22D3EE; }
+  .skip { position: absolute; top: 0; inset-inline-start: 0; transform: translateY(-120%); z-index: 100; background: #04101E; color: #fff;
           padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
-  .skip:focus { inset-inline-start: 0; text-decoration: none; color: #fff; }
+  .skip:focus { transform: none; color: #fff; }
 
-  /* Coming-soon page. */
-  .hero { background: radial-gradient(90% 70% at 50% 118%, rgba(34,211,238,.13), transparent 62%), linear-gradient(158deg, #04101E 0%, #0A1F3D 58%, #0C2A4E 100%); color: #fff; }
-  .hero-in { max-width: 820px; margin: 0 auto; padding: 64px 32px 72px; text-align: center; }
-  .soon { display: inline-block; font-size: 15px; font-weight: 600; color: #04101E; background: #22D3EE; border-radius: 999px; padding: 6px 18px; letter-spacing: .02em; }
-  .hero h1 { margin: 22px 0 14px; font-size: 44px; font-weight: 700; line-height: 1.2; color: #fff; }
-  .offer { display: inline-block; margin: 0 0 18px; font-size: 18px; font-weight: 700; color: #FDE68A; border: 2px solid #F59E0B; background: rgba(245,158,11,.12); border-radius: 12px; padding: 6px 18px; }
-  .hero p { margin: 0 auto; max-width: 620px; font-size: 18px; line-height: 1.7; color: #B8D4EA; }
-  .points { list-style: none; padding: 0 !important; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
-  .points li { background: #fff; border: 1px solid #E2E8F0; border-radius: 14px; padding: 16px 18px; margin: 0 !important; }
-  .points strong { display: block; color: #0F172A; margin-bottom: 4px; }
-  #notifyForm { display: flex; gap: 12px; flex-wrap: wrap; }
-  #notifyEmail { flex: 1; min-width: 220px; background: #F0F6FA; border: 1px solid #CBD5E1; border-radius: 12px; padding: 14px 18px; font-size: 16px; color: #0F172A; font-family: inherit; }
-  #notifySubmit { border: none; border-radius: 12px; padding: 14px 28px; font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; white-space: nowrap; }
-  .btn-action { position:relative; z-index:0; overflow:hidden; background:linear-gradient(135deg,#4A38C9,#6B4CF0); color:#fff; box-shadow:0 6px 20px rgba(74,56,201,.35); }
-  .btn-action:hover { background:linear-gradient(135deg,#3A2CA8,#4A38C9); }
-  .btn-action:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(124,92,255,.45); }
-  .consent { flex: 0 0 100%; display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #475569; line-height: 1.6; cursor: pointer; }
-  .consent input { width: 17px; height: 17px; margin: 3px 0 0; flex-shrink: 0; accent-color: #4A38C9; }
-  .notice { flex: 0 0 100%; margin: 0 !important; font-size: 13px !important; color: #5B6B80 !important; line-height: 1.6 !important; }
-  #notifyMsg { display: block; margin-top: 12px; font-size: 15px; font-weight: 600; min-height: 1em; }
-  @media (max-width: 640px) {
-    .hero-in { padding: 44px 20px 52px; }
-    .hero h1 { font-size: 32px; }
-    .offer { display: inline-block; margin: 0 0 18px; font-size: 18px; font-weight: 700; color: #FDE68A; border: 2px solid #F59E0B; background: rgba(245,158,11,.12); border-radius: 12px; padding: 6px 18px; }
-  .hero p { font-size: 16px; }
-    .points { grid-template-columns: 1fr; }
+  .btn-action { position: relative; z-index: 0; overflow: hidden; display: inline-block; border: none; cursor: pointer;
+                background: linear-gradient(135deg,#4A38C9,#6B4CF0); color: #fff; font-weight: 700; border-radius: 12px;
+                box-shadow: 0 10px 34px rgba(74,56,201,.45); transition: box-shadow .15s ease; }
+  .btn-action::after { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+                       background: linear-gradient(135deg,#3A2CA8,#4A38C9); opacity: 0; transition: opacity .15s ease; }
+  .btn-action:hover::after { opacity: 1; }
+  .btn-action:hover, .btn-action:focus { color: #fff; text-decoration: none; }
+  /* Two rings: white then solid purple, visible on navy and on white. */
+  .btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px #fff, 0 0 0 6px #4A38C9; }
+  .btn-action:disabled { opacity: .7; cursor: default; }
+
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15); }
+  .nav-in { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .word { display: flex; align-items: baseline; direction: ltr; }
+  .word b { font-family: 'IBM Plex Sans', 'IBM Plex Sans Hebrew', sans-serif; font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .word i { font-style: normal; font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE; }
+  .nav-r { display: flex; align-items: center; gap: 22px; }
+  .nav-link { color: #B8D4EA; font-size: 15px; }
+  .nav-link:hover { color: #22D3EE; text-decoration: none; }
+  .nav-cta { padding: 10px 22px; font-size: 15px; box-shadow: 0 6px 20px rgba(74,56,201,.45); }
+
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .14em; direction: ltr; color: #0E7490; }
+  .dark .eyebrow { color: #22D3EE; }
+  .head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 48px; }
+  .head h2 { margin: 0; font-size: 40px; font-weight: 700; color: #0F172A; line-height: 1.2; }
+  .dark .head h2 { color: #fff; }
+  .head p { margin: 0; font-size: 18px; color: #475569; max-width: 640px; line-height: 1.65; }
+  .dark .head p { color: #B8D4EA; }
+  .in { position: relative; max-width: 1200px; margin: 0 auto; }
+
+  /* HERO */
+  .hero { position: relative; overflow: hidden; padding: 88px 32px 96px;
+          background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); }
+  .hero-mark { position: absolute; left: -260px; top: -160px; opacity: .07; pointer-events: none; }
+  .hero-grid { display: flex; gap: 64px; align-items: center; flex-wrap: wrap; }
+  .hero-copy { flex: 1 1 480px; display: flex; flex-direction: column; gap: 24px; }
+  .chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08);
+          border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600; }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; animation: dotPulse 2s infinite; }
+  @keyframes dotPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
+  h1 { margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em; }
+  h1 .grad { background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .motto { margin: -6px 0 0; font-size: 20px; font-weight: 600; color: #B8D4EA; letter-spacing: .01em; }
+  .motto::before { content: ''; display: inline-block; width: 28px; height: 3px; border-radius: 2px; background: #22D3EE; vertical-align: middle; margin-inline-end: 10px; }
+  .offer { align-self: flex-start; display: flex; align-items: center; gap: 12px; background: rgba(107,76,240,.14);
+           border: 1px solid rgba(155,135,255,.45); border-radius: 14px; padding: 12px 18px; }
+  .offer small { white-space: nowrap; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #C9BCFF; direction: ltr; }
+  .offer strong { font-size: 18px; color: #fff; }
+  .lead { margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px; }
+  .hero-cta { padding: 16px 34px; font-size: 18px; align-self: flex-start; }
+
+  /* Illustrative dashboard tile, in the homepage demo card's glass style. */
+  .mock { flex: 1 1 380px; max-width: 460px; background: rgba(11,37,69,.72); border: 1px solid rgba(34,211,238,.22);
+          border-radius: 20px; padding: 22px; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  .mock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .mock-title { font-size: 16px; font-weight: 600; color: #fff; }
+  .mock-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #7DA2C4; direction: ltr; }
+  .mock-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid #1E4A6E;
+              background: rgba(6,18,37,.45); margin-bottom: 8px; font-size: 15px; color: #DDEBF7; }
+  .mock-row:last-child { margin-bottom: 0; }
+  .mdot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+  .mock-row .go { margin-inline-start: auto; font-size: 13px; font-weight: 600; color: #67E8F9; }
+
+  .honest { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 28px 32px; }
+  .honest p { max-width: 860px; margin: 0 auto; text-align: center; font-size: 17px; color: #334155; line-height: 1.7; }
+
+  /* TECHNIQUES — the homepage science section's blueprint grid. */
+  .sci { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); padding: 96px 32px 104px; }
+  .sci-grid-bg, .sci-glow { position: absolute; inset: 0; pointer-events: none; }
+  .sci-grid-bg { opacity: .45; background:
+      repeating-linear-gradient(90deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px); }
+  .sci-glow { background: radial-gradient(50% 40% at 80% 0%, rgba(34,211,238,.18), transparent 70%),
+                          radial-gradient(60% 42% at 50% 104%, rgba(34,211,238,.16), transparent 70%); }
+  .sci-cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+  .sci-card { background: rgba(11,37,69,.7); border: 1px solid #1E4A6E; border-radius: 16px; padding: 22px 24px; }
+  .sci-card .where { font-family: 'IBM Plex Sans Hebrew', sans-serif; font-size: 12px; font-weight: 600; color: #67E8F9;
+                     border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.08); border-radius: 100px; padding: 2px 10px; }
+  .sci-card h3 { margin: 14px 0 8px; font-size: 19px; font-weight: 700; color: #fff; }
+  .sci-card p { margin: 0; font-size: 15px; color: #B8D4EA; line-height: 1.65; }
+  .opt { font-size: 12px; font-weight: 500; color: #7DA2C4; margin-inline-start: 8px; }
+
+  /* FEATURES — the homepage features cards. */
+  .band { padding: 96px 32px; }
+  .band-white { background: #fff; border-bottom: 1px solid #E2E8F0; }
+  .f-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .f-card { background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px 28px; }
+  .f-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .f-card .sq { width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); flex-shrink: 0; }
+  .f-card p { margin: 0; font-size: 15px; color: #475569; line-height: 1.65; }
+  .later { margin: 20px auto 0; max-width: 1200px; border: 1px dashed #CBD5E1; border-radius: 12px; padding: 12px 18px;
+           font-size: 15px; color: #475569; line-height: 1.6; text-align: center; }
+
+  /* COMPARISON */
+  .cmp { width: 100%; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid #E2E8F0;
+         border-radius: 16px; overflow: hidden; font-size: 15px; }
+  .cmp th, .cmp td { padding: 14px 16px; text-align: center; vertical-align: middle; border-bottom: 1px solid #E2E8F0; line-height: 1.5; }
+  .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
+  .cmp thead th { background: #E7F0F7; font-size: 14px; font-weight: 700; color: #334155; }
+  .cmp thead th.us { background: #0B2545; color: #fff; }
+  .cmp-brand { display: inline-flex; align-items: center; gap: 7px; direction: ltr; white-space: nowrap; }
+  .cmp-brand svg { flex: none; filter: drop-shadow(0 0 8px rgba(34,211,238,.25)); }
+  .cmp .cmp-brand .word b, .cmp .cmp-brand .word i { font-size: 16px; }
+  .cmp tbody th { font-weight: 700; color: #0F172A; width: 24%; }
+  .cmp td { color: #475569; }
+  .cmp td.us { background: rgba(34,211,238,.08); color: #0F172A; font-weight: 600; }
+  .yes::before { content: '✓'; color: #0E7490; font-weight: 800; margin-inline-end: 6px; }
+  .no::before { content: '–'; color: #94A3B8; margin-inline-end: 6px; }
+  .cmp .short { display: none; }
+  .cmp-note { margin: 12px 0 0; font-size: 13px; color: #5B6B80; text-align: center; }
+
+  /* SIGN-UP */
+  .signup-band { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); padding: 88px 32px; }
+  .signup { position: relative; max-width: 640px; margin: 0 auto; background: #fff; border-radius: 20px; padding: 32px;
+            box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  .signup .eyebrow { display: block; margin-bottom: 10px; }
+  .signup h2 { margin: 0 0 10px; font-size: 30px; font-weight: 700; line-height: 1.25; }
+  .signup-for { margin: 0 0 8px; font-size: 16px; color: #334155; line-height: 1.65; }
+  .signup-for strong { color: #0E7490; }
+  .group-note { margin: 0 0 20px; font-size: 14px; color: #5B6B80; line-height: 1.6; }
+  #notifyForm { display: flex; flex-direction: column; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: #475569; }
+  /* Right-aligned; plaintext keeps a typed address in its own LTR order. */
+  #notifyEmail { width: 100%; background: #F0F6FA; border: 1px solid #CBD5E1; border-radius: 12px; padding: 15px 18px;
+                 font-size: 16px; color: #0F172A; direction: rtl; text-align: right; unicode-bidi: plaintext; }
+  #notifyEmail::placeholder { color: #5B6B80; text-align: right; }
+  #notifyEmail:focus { outline: 2px solid #0E7490; outline-offset: 1px; border-color: #0E7490; }
+  .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #334155; line-height: 1.6; cursor: pointer; }
+  .consent input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; accent-color: #4A38C9; }
+  #notifySubmit { width: 100%; padding: 15px 24px; font-size: 17px; box-shadow: 0 6px 20px rgba(74,56,201,.4); }
+  .notice { margin: 0; font-size: 13px; color: #64748B; line-height: 1.6; }
+  #notifyMsg { display: block; margin-top: 12px; font-size: 16px; font-weight: 700; min-height: 1em; }
+  .ok-box { background: #ECFEFF; border: 1px solid #A5F3FC; color: #155E75; border-radius: 12px; padding: 14px 16px; }
+  .back { margin: 22px 0 0; text-align: center; font-size: 16px; color: #B8D4EA; position: relative; }
+  .back a { color: #67E8F9; }
+
+  footer { background: #04101E; padding: 36px 32px; }
+  .foot { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .foot .word b, .foot .word i { font-size: 17px; }
+  .foot .word b { color: #7DA2C4; }
+  .foot-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  .foot-link { color: #7DA2C4; font-size: 14px; }
+  .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  .foot small { font-size: 14px; color: #5B87A8; }
+
+  @media (max-width: 900px) {
+    .sci-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .mock { max-width: none; }
   }
+  @media (max-width: 640px) {
+    .nav-in { padding: 0 16px; height: 60px; }
+    .nav-r .nav-link { display: none; }
+    .nav-cta { padding: 9px 16px; font-size: 14px; }
+    .hero { padding: 48px 16px 60px; }
+    h1 { font-size: 36px; }
+    .motto { font-size: 17px; }
+    .offer { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .lead { font-size: 17px; }
+    .hero-cta { align-self: stretch; text-align: center; font-size: 17px; }
+    .head h2 { font-size: 28px; }
+    .head p { font-size: 16px; }
+    .head { margin-bottom: 32px; }
+    .sci, .band, .signup-band { padding: 60px 16px; }
+    .honest { padding: 22px 16px; }
+    .sci-cards { grid-template-columns: 1fr; }
+    .f-cards { grid-template-columns: 1fr; }
+    .signup { padding: 24px 20px; }
+    .signup h2 { font-size: 25px; }
+    .foot { flex-direction: column; text-align: center; }
+    /* Phones: still a real table, with the short value in each cell. */
+    .cmp { font-size: 13.5px; }
+    .cmp th, .cmp td { padding: 10px 8px; }
+    .cmp tbody th { width: 34%; font-size: 13.5px; }
+    .cmp .full { display: none; }
+    .cmp .short { display: inline; }
+    .cmp .cmp-brand { gap: 4px; }
+    .cmp .cmp-brand svg { width: 16px; height: 16px; }
+    .cmp .cmp-brand .word b { font-size: 13px; }
+    .cmp .cmp-brand .word i { display: none; }
+    /* The short text says it all; keep the marker only in the MeduXa column. */
+    .cmp td.no::before, .cmp td:not(.us).yes::before { content: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .chip .dot { animation: none; } * { transition: none !important; } }
 </style>
 </head>
 <body>
 
 <a class="skip" href="#main">דילוג לתוכן העמוד</a>
 
-<div dir="rtl" style="background: #F0F6FA; min-height: 100vh;">
-
-  <!-- NAV -->
-  <nav style="background: rgba(6,18,37,.96); border-bottom: 1px solid rgba(34,211,238,.15);">
-    <div class="doc-nav" style="max-width: 1200px; margin: 0 auto; padding: 0 32px; min-height: 68px;">
-      <a href="/" style="display: flex; align-items: center; gap: 12px;">
-        <svg width="34" height="34" viewBox="0 0 96 96" fill="none">
+<nav>
+  <div class="nav-in">
+    <a href="/" class="logo" aria-label="MeduXa — לעמוד הבית">
+      <svg width="36" height="36" viewBox="0 0 96 96" fill="none" aria-hidden="true">
           <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
           <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
           <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
           <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
           <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
         </svg>
-        <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
-      </a>
-      <div style="display: flex; align-items: center; gap: 18px;">
-        <a href="/" style="color: #B8D4EA; font-size: 14px;">לעמוד הבית</a>
+      <span class="word"><b>MeduXa</b><i>.ai</i></span>
+    </a>
+    <div class="nav-r">
+      <a class="nav-link" href="/">לעמוד הבית</a>
+      <a class="btn-action nav-cta" href="#signup">הרשמה לעדכון</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+  <header class="hero">
+    <svg class="hero-mark" width="900" height="900" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+      <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
+      <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
+    </svg>
+    <div class="in hero-grid">
+      <div class="hero-copy">
+        <span class="chip"><span class="dot"></span>בקרוב · רפואת משפחה · שלב א</span>
+        <h1>הכנה לשלב א<br><span class="grad">ברפואת משפחה</span></h1>
+        <p class="motto">נעשה על ידי רופאים, עבור רופאים</p>
+        <div class="offer"><small lang="en">LAUNCH PRICE</small><strong>מחיר השקה מיוחד לנרשמים מראש</strong></div>
+        <p class="lead">מנוע למידה שכבר עובד עם מתמחים לקראת שלב א — עכשיו גם לרפואת משפחה. השאירו מייל ונעדכן אתכם ברגע שזה נפתח.</p>
+        <a class="btn-action hero-cta" href="#signup">הרשמה לעדכון על רפואת משפחה</a>
+      </div>
+      <!-- Illustrative: the shape of the app's daily dashboard. Labels only —
+           no counts or scores, because there are no family-medicine users yet. -->
+      <div class="mock" aria-hidden="true">
+        <div class="mock-head"><span class="mock-title">מה לתרגל היום</span><span class="mock-note" lang="en">PREVIEW</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#22D3EE"></span>חזרה יומית — שאלות שמתוזמנות להיום<span class="go">להתחיל</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#F87171"></span>הנושא החלש שלכם — תרגול ממוקד<span class="go">לתרגל</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#FBBF24"></span>בטוחים וטעיתם — שווה לחזור<span class="go">לחזור</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#A78BFA"></span>סימולציית בחינה עם טיימר<span class="go">לפתוח</span></div>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <main id="main">
-    <section class="hero">
-      <div class="hero-in">
-        <span class="soon">בקרוב</span>
-        <h1>הכנה לשלב א ברפואת משפחה</h1>
-        <div class="offer">מחיר השקה מיוחד לנרשמים מראש</div>
-        <p>אותה שיטת לימוד שכבר משמשת מתמחים בנפרולוגיה — עכשיו בדרך לרפואת משפחה. השאירו מייל ונעדכן אתכם ברגע שזה נפתח — כולל מחיר ההשקה.</p>
+  <div class="honest"><p>המנוע קיים ועובד. את התוכן לרפואת משפחה אנחנו בונים עכשיו: שאלות בסגנון שלב א, ולכל תשובה הסבר שמגובה בציטוט מילה-במילה מהמקור שממנו היא נלקחה — כדי שתוכלו לבדוק כל טענה בעצמכם.</p></div>
+
+  <section class="sci dark" aria-labelledby="t-how">
+    <div class="sci-grid-bg"></div><div class="sci-glow"></div>
+    <div class="in">
+      <div class="head">
+        <span class="eyebrow" lang="en">THE SCIENCE</span>
+        <h2 id="t-how">איך לומדים כאן</h2>
+        <p>שיטות למידה מבוססות-ראיות, כפי שהן עובדות באפליקציה היום. התגית מראה איפה באפליקציה פוגשים כל אחת.</p>
       </div>
-    </section>
-
-    <div class="doc" style="padding-top: 40px;">
-      <h2 style="margin-top: 0;">מה יהיה שם</h2>
-      <ul class="points">
-        <li><strong>שאלות בסגנון הבחינה</strong>תרגול על שאלות שבנויות כמו בחינת שלב א.</li>
-        <li><strong>הסבר עם מקור</strong>כל תשובה מוסברת, עם ציטוט מהמקור שממנו היא נלקחה.</li>
-        <li><strong>חזרה מרווחת</strong>המערכת מתזמנת חזרה על מה שעומד להישכח.</li>
-        <li><strong>מורה <span class="ltr-iso">AI</span> סוקרטי</strong>שאלו על כל שאלה — והוא יוביל אתכם לתשובה, לא רק יגיד אותה.</li>
-      </ul>
-
-      <div class="card" style="margin-top: 32px;">
-        <h2 style="margin-top: 0;">רוצים לדעת ראשונים — ולקבל את מחיר ההשקה?</h2>
-        <!-- Consent, then the Privacy Protection Law § 11 notice at the point of
-             collection. `required` inside a real <form> makes the browser block
-             the submit itself, so the handler never sees an unconsented address. -->
-        <form id="notifyForm">
-          <label for="notifyEmail" style="position:absolute; inset-inline-start:-9999px;">כתובת מייל</label>
-          <input id="notifyEmail" type="email" required autocomplete="email" placeholder="המייל שלך" dir="ltr">
-          <button id="notifySubmit" class="btn-action" type="submit">עדכנו אותי</button>
-          <label class="consent" for="notifyConsent">
-            <input id="notifyConsent" type="checkbox" required>
-            <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א ברפואת משפחה תיפתח.</span>
-          </label>
-          <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
-        </form>
-        <span id="notifyMsg" role="status" aria-live="polite"></span>
+      <div class="sci-cards">
+        <div class="sci-card"><span class="where">תרגול</span><h3>היזכרות פעילה</h3><p>לומדים דרך שאלות, לא דרך קריאה חוזרת. כל סשן מתחיל בשאלה שצריך לענות עליה מהזיכרון.</p></div>
+        <div class="sci-card"><span class="where">חזרה יומית</span><h3>חזרה מרווחת</h3><p>שאלות שטעיתם בהן חוזרות אליכם בתזמון שמחושב לפי מתי אתם צפויים לשכוח אותן.</p></div>
+        <div class="sci-card"><span class="where">חזרה יומית</span><h3>למידה מטעויות</h3><p>כל תשובה שגויה נכנסת לתור החזרה מעצמה. לא צריך לזכור מה לחזור עליו.</p></div>
+        <div class="sci-card"><span class="where">דשבורד</span><h3>תרגול ממוקד בחולשות</h3><p>הדשבורד מראה את הנושאים החלשים שלכם, ובלחיצה אחת פותח תרגול רק עליהם.</p></div>
+        <div class="sci-card"><span class="where">אבחנה מבדלת</span><h3>תרגול משולב</h3><p>שאלות על אבחנות שמתבלבלות ביניהן, מעורבבות — כמו בבחינה, לא לפי סדר הפרקים בספר.</p></div>
+        <div class="sci-card"><span class="where">תרגול</span><h3>הסבר עצמי<span class="opt">לבחירה</span></h3><p>לפני שההסבר נפתח כותבים במשפט אחד למה בחרתם מה שבחרתם.</p></div>
+        <div class="sci-card"><span class="where">תרגול · דשבורד</span><h3>כיול ביטחון<span class="opt">לבחירה</span></h3><p>מסמנים כמה אתם בטוחים לפני שעונים. הדשבורד מראה איפה הייתם בטוחים וטעיתם.</p></div>
+        <div class="sci-card"><span class="where">בכל שאלה</span><h3>מורה שמוביל בשאלות</h3><p>נתקעתם? המורה שואל לפני שהוא עונה, ומכוון אתכם לתשובה במקום למסור אותה.</p></div>
+        <div class="sci-card"><span class="where">בכל תשובה</span><h3>אמת מעוגנת במקור</h3><p>ההסבר מגיע עם ציטוט מילה-במילה מהמקור. לא צריך להאמין — אפשר לבדוק.</p></div>
       </div>
-
-      <p style="margin-top: 32px;">מתכוננים לשלב א בנפרולוגיה? <a href="/">ההכנה כבר פתוחה ←</a></p>
     </div>
-  </main>
+  </section>
 
-  <!-- FOOTER -->
-  <footer style="background: #04101E; padding: 36px 32px;">
-    <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-      <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
-      <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
-        <a class="foot-link" href="/privacy">מדיניות פרטיות</a>
-        <a class="foot-link" href="/terms">תנאי שימוש</a>
-        <a class="foot-link" href="/accessibility">הצהרת נגישות</a>
-      </span>
-      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</span>
+  <section class="band band-white" aria-labelledby="t-what">
+    <div class="in">
+      <div class="head">
+        <span class="eyebrow" lang="en">FEATURES</span>
+        <h2 id="t-what">מה תקבלו</h2>
+        <p>כל מה שמתמחים כבר משתמשים בו באפליקציה, מותאם לבחינת שלב א ברפואת משפחה.</p>
+      </div>
+      <div class="f-cards">
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>תרגול לפי מה שחשוב לכם</h3><p>מסננים לפי נושא, רמת קושי ומה שעוד לא פתרתם. ממשיכים מאותו מקום גם בטלפון וגם במחשב.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>סימולציית בחינה</h3><p>בוחרים מספר שאלות, עם טיימר. בסוף — ציון, וכל שאלה נפתחת עם התשובה וההסבר.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>הסבר עם ציטוט מהמקור</h3><p>לכל תשובה: למה היא נכונה, למה המסיחים שגויים, והציטוט המדויק מהספר או מההנחיה.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3><p>מכיר את השאלה, את התשובה ואת המקור, מחפש בספרי המקור כשצריך — ואומר כשאין לו על מה להסתמך. בוחרים סגנון: מנטור, רופא בכיר, חבר ללימודים, בוחן או ענייני וקצר.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מפת שאלות לפי נושאים</h3><p>כל נושא ותת-נושא: מה תרגלתם, מה נכון ומה שגוי. שאלה שרוצים לחזור אליה — מסמנים בסימנייה.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>דשבורד יומי</h3><p>רצף ימים, תגים, המלצה מה לתרגל היום, והנושאים שהכי דורשים טיפול.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>טבלת מובילים</h3><p>רואים איפה אתם מול מתמחים אחרים שמתכוננים באפליקציה.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>דיווח על בעיה בשאלה — ותשובה</h3><p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p></div>
+      </div>
+      <p class="later"><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</p>
     </div>
-  </footer>
-</div>
+  </section>
 
+  <section class="band" aria-labelledby="t-cmp">
+    <div class="in">
+      <div class="head">
+        <span class="eyebrow" lang="en">COMPARISON</span>
+        <h2 id="t-cmp">לא עוד מאגר שאלות. לא עוד צ׳אט <span class="ltr-iso">AI</span> כללי.</h2>
+        <p>מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה — רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. MeduXa משלבת את שניהם, סביב הבחינה.</p>
+      </div>
+      <table class="cmp">
+        <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="cmp-brand" aria-label="MeduXa"><svg width="22" height="22" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect><rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="5"></rect><path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="9" stroke-linecap="round" fill="none"></path><circle cx="48" cy="48" r="11" fill="#22D3EE"></circle></svg><span class="word" aria-hidden="true"><b>MeduXa</b><i>.ai</i></span></span></th><th scope="col"><span class="full">מאגר שאלות רגיל</span><span class="short">מאגר</span></th><th scope="col"><span class="full">צ׳אט <span class="ltr-iso">AI</span> כללי</span><span class="short"><span class="ltr-iso">AI</span> כללי</span></th></tr></thead>
+        <tbody>
+        <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us yes" data-label="MeduXa"><span class="full">שאלות בפורמט שלב א, עם הסבר מלא</span><span class="short">יש</span></td><td class="yes" data-label="מאגר שאלות"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></td></tr>
+        <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us yes" data-label="MeduXa"><span class="full">ציטוט מילה-במילה לכל שאלה, שאפשר לבדוק</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">לרוב בלי מקור מצוטט</span><span class="short">לרוב לא</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">רק אם העליתם את המקור בעצמכם</span><span class="short">אם תעלו</span></td></tr>
+        <tr><th scope="row">ביקורת מומחה</th><td class="us yes" data-label="MeduXa"><span class="full">כל שאלה עוברת ביקורת מומחה</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">משתנה בין מאגרים</span><span class="short">משתנה</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
+        <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us yes" data-label="MeduXa"><span class="full">מובנה בכל שאלה</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">אין</span><span class="short">אין</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">רק אם תבנו לו את כל ההקשר</span><span class="short">אם תבנו</span></td></tr>
+        <tr><th scope="row">חזרה מרווחת</th><td class="us yes" data-label="MeduXa"><span class="full">חזרה יומית שמתוזמנת לפי השכחה</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">לרוב אין</span><span class="short">לרוב אין</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
+        <tr><th scope="row">תרגול ממוקד בחולשות</th><td class="us yes" data-label="MeduXa"><span class="full">הדשבורד מזהה ופותח תרגול בלחיצה</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">לרוב אין</span><span class="short">לרוב אין</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
+        <tr><th scope="row">סימולציית בחינה עם טיימר</th><td class="us yes" data-label="MeduXa"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">משתנה בין מאגרים</span><span class="short">משתנה</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
+        <tr><th scope="row">מפת נושאים ומעקב התקדמות</th><td class="us yes" data-label="MeduXa"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">משתנה בין מאגרים</span><span class="short">משתנה</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
+      </tbody>
+      </table>
+      <p class="cmp-note">ההשוואה מתייחסת לקטגוריות כלליות של פתרונות נפוצים, לא למוצר מסחרי מסוים.</p>
+    </div>
+  </section>
+
+  <section id="signup" class="signup-band" aria-labelledby="t-signup">
+    <div class="signup">
+      <span class="eyebrow" lang="en">EARLY ACCESS</span>
+      <h2 id="t-signup">הרשמה לעדכון: רפואת משפחה</h2>
+      <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א ברפואת משפחה</strong>. נכתוב לכם כשהיא נפתחת, עם מחיר ההשקה לנרשמים מראש.</p>
+      <p class="group-note">מתכוננים כקבוצה, למשל כל המתמחים במחלקה? תהיה גם הנחה קבוצתית — הפרטים במייל הפתיחה.</p>
+      <!-- Consent, then the Privacy Protection Law § 11 notice at the point of
+           collection. `required` inside a real <form> makes the browser block
+           the submit itself, so the handler never sees an unconsented address. -->
+      <form id="notifyForm">
+        <label class="field" for="notifyEmail">כתובת מייל
+          <input id="notifyEmail" dir="auto" type="email" required autocomplete="email" inputmode="email" placeholder="המייל שלכם">
+        </label>
+        <label class="consent" for="notifyConsent">
+          <input id="notifyConsent" type="checkbox" required>
+          <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א ברפואת משפחה תיפתח.</span>
+        </label>
+        <button id="notifySubmit" class="btn-action" type="submit">עדכנו אותי על רפואת משפחה</button>
+        <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
+      </form>
+      <span id="notifyMsg" role="status" aria-live="polite"></span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <span class="word"><b>MeduXa</b><i>.ai</i></span>
+    <span class="foot-links"><a class="foot-link" href="/privacy">מדיניות פרטיות</a><a class="foot-link" href="/terms">תנאי שימוש</a><a class="foot-link" href="/accessibility">הצהרת נגישות</a></span>
+    <small>© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</small>
+  </div>
+</footer>
 
 <script>
   // "Notify me" → Supabase waitlist (insert-only via the publishable key; RLS
-  // blocks reads). source 'landing_fm' tells these rows apart from the old
-  // homepage form ('landing') and the app's doors ('app_door' / 'app_gate').
+  // blocks reads). source 'landing_fm' marks these rows as family-medicine
+  // sign-ups, apart from 'landing' (old homepage form) and 'app_door'/'app_gate'.
   (function () {
     var SUPA_URL = 'https://pappjpdsajkcoqrfqqqx.supabase.co';
     var SUPA_KEY = 'sb_publishable_tV1q0WG7_bMLfsCIqOU1tA_PH8gZfCU';
+    var LABEL = 'עדכנו אותי על רפואת משפחה';
     var form = document.getElementById('notifyForm');
     var email = document.getElementById('notifyEmail');
     var consent = document.getElementById('notifyConsent');
@@ -198,22 +404,40 @@
       e.preventDefault();
       var val = (email.value || '').trim();
       if (!val || !consent.checked) return;
-      btn.disabled = true; btn.textContent = '…';
+      btn.disabled = true; btn.textContent = '…'; form.setAttribute('aria-busy', 'true');
+      msg.textContent = ''; msg.style.color = ''; msg.className = '';
       fetch(SUPA_URL + '/rest/v1/waitlist', {
         method: 'POST',
         headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
                    'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
         body: JSON.stringify({ email: val, locale: 'he', source: 'landing_fm', consent_at: new Date().toISOString() })
       }).then(function (r) {
-        if (!(r.ok || r.status === 409)) throw new Error('status ' + r.status); // 409 = already listed
+        if (!(r.ok || r.status === 409)) { var err = new Error('status ' + r.status); err.server = true; throw err; } // 409 = already listed
+        // Every bundle's early signup is a mark in waitlist.interests, so this
+        // page's list is simply interests ? 'family_medicine'. Set it on a new
+        // row and on a 409 (the address is already listed from an earlier form;
+        // the email is unique). Best effort: a failure here must not turn a
+        // sign-up the person already has into an error on screen — the row's
+        // source 'landing_fm' still identifies a new sign-up.
+        return fetch(SUPA_URL + '/rest/v1/rpc/waitlist_add_interest', {
+          method: 'POST',
+          headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ p_email: val, p_interest: 'family_medicine' })
+        }).catch(function () {});
+      }).then(function () {
+        form.removeAttribute('aria-busy');
         form.style.display = 'none';
-        msg.textContent = '✓ נרשמת — נעדכן אותך כשזה נפתח.';
-        msg.style.color = '#0E7490';
+        msg.className = 'ok-box';
+        msg.textContent = '✓ נרשמתם לעדכונים על רפואת משפחה — נכתוב לכם כשההכנה לשלב א נפתחת, עם מחיר ההשקה.';
         if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist_family_medicine' });
-      }).catch(function () {
-        btn.disabled = false; btn.textContent = 'עדכנו אותי';
-        msg.textContent = 'משהו השתבש — נסו שוב.';
-        msg.style.color = '#B91C1C';
+      }).catch(function (err) {
+        form.removeAttribute('aria-busy');
+        btn.disabled = false; btn.textContent = LABEL;
+        // A thrown fetch (offline, blocked) is not the address's fault.
+        msg.textContent = err && err.server
+          ? 'ההרשמה לא נשמרה. בדקו את כתובת המייל ונסו שוב.'
+          : 'לא הצלחנו להתחבר. בדקו את החיבור לאינטרנט ונסו שוב בעוד רגע.';
+        msg.style.color = '#9c2f30';
       });
     });
   })();
