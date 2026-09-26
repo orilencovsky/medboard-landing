@@ -13,8 +13,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const VARIANTS = {
-  og:     { out: 'og-family-medicine.png',       w: 1200, h: 630,  mark: 96,  word: 44, pill: 26, h1: 64, sub: 28, url: 26, gap: 1, stack: false },
-  square: { out: 'whatsapp-family-medicine.png', w: 1080, h: 1080, mark: 150, word: 60, pill: 34, h1: 88, sub: 36, url: 34, gap: 1.6, stack: true },
+  og:     { out: 'og-family-medicine.png',       w: 1200, h: 630,  mark: 80,  word: 40, pill: 24, h1: 58, sub: 24, url: 24, offer: 28, gap: 0.8, stack: false },
+  square: { out: 'whatsapp-family-medicine.png', w: 1080, h: 1080, mark: 130, word: 56, pill: 32, h1: 84, sub: 34, url: 32, offer: 40, gap: 1.35, stack: true },
 };
 
 const V = VARIANTS[process.argv[2]];
@@ -54,6 +54,7 @@ const html = `<!doctype html><html lang="he"><head><meta charset="utf-8"><style>
   .tld { font-family: 'IBM Plex Mono', monospace; font-size: ${V.word}px; color: #22D3EE; }
   .pill { margin-top: ${g(34)}px; font-size: ${V.pill}px; font-weight: 700; color: #04101E; background: #22D3EE; border-radius: 999px; padding: ${g(6)}px ${g(26)}px; }
   h1 { margin: ${g(22)}px 0 0; font-size: ${V.h1}px; font-weight: 700; line-height: 1.18; color: #fff; }
+  .offer { margin-top: ${g(22)}px; font-size: ${V.offer}px; font-weight: 700; color: #FDE68A; border: 2px solid #F59E0B; background: rgba(245,158,11,.12); border-radius: 14px; padding: ${g(8)}px ${g(24)}px; }
   .sub { margin-top: ${g(18)}px; font-size: ${V.sub}px; line-height: 1.4; color: #B8D4EA; max-width: 900px; }
   .bar { margin-top: ${g(30)}px; width: 180px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, #0EA5E9, #22D3EE); }
   .url { margin-top: ${g(22)}px; font-family: 'IBM Plex Mono', monospace; font-size: ${V.url}px; color: #7DD3FC; direction: ltr; }
@@ -66,6 +67,7 @@ const html = `<!doctype html><html lang="he"><head><meta charset="utf-8"><style>
     <div class="brand">${MARK}<span><span class="name">MeduXa</span><span class="tld">.ai</span></span></div>
     <div class="pill">בקרוב</div>
     <h1>הכנה לשלב א<br>ברפואת משפחה</h1>
+    <div class="offer">מחיר השקה מיוחד לנרשמים מראש</div>
     <div class="sub">${FEATURES.join(V.stack ? '<br>' : ' · ')}</div>
     <div class="bar"></div>
     <div class="url">meduxa.ai/family-medicine</div>
