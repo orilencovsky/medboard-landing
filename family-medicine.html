@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
-<script defer src="/consent.js"></script>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
+<script defer src="/consent.js"></script>
 <title>בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/family-medicine" />
-<meta name="description" content="בקרוב ב-MeduXa: הכנה לבחינת שלב א ברפואת משפחה. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת, תרגול ממוקד בחולשות ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש — השאירו מייל ונעדכן כשזה נפתח." />
+<meta name="description" content="בקרוב ב-MeduXa: הכנה לשלב א ברפואת משפחה, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
 <meta property="og:title" content="בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai" />
 <meta property="og:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
 <meta property="og:url" content="https://meduxa.ai/family-medicine" />
-<meta property="og:image" content="https://meduxa.ai/og-family-medicine.png?v=3" />
+<meta property="og:image" content="https://meduxa.ai/og-family-medicine.png?v=4" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="MeduXa.ai — בקרוב: הכנה לשלב א ברפואת משפחה" />
@@ -22,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai" />
 <meta name="twitter:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
-<meta name="twitter:image" content="https://meduxa.ai/og-family-medicine.png?v=3" />
+<meta name="twitter:image" content="https://meduxa.ai/og-family-medicine.png?v=4" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#061225" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -42,7 +41,9 @@
   a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
   .ltr-iso { direction: ltr; unicode-bidi: isolate; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  :focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }
+  /* #0E7490 on light surfaces (5.4:1), cyan on the dark bands (see below). */
+  :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
+  nav :focus-visible, .hero :focus-visible, .sci :focus-visible, .signup-band > .back :focus-visible, footer :focus-visible { outline-color: #22D3EE; }
   .skip { position: absolute; top: 0; inset-inline-start: 0; transform: translateY(-120%); z-index: 100; background: #04101E; color: #fff;
           padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
   .skip:focus { transform: none; color: #fff; }
@@ -54,7 +55,8 @@
                        background: linear-gradient(135deg,#3A2CA8,#4A38C9); opacity: 0; transition: opacity .15s ease; }
   .btn-action:hover::after { opacity: 1; }
   .btn-action:hover, .btn-action:focus { color: #fff; text-decoration: none; }
-  .btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(124,92,255,.45); }
+  /* Two rings: white then solid purple, visible on navy and on white. */
+  .btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px #fff, 0 0 0 6px #4A38C9; }
   .btn-action:disabled { opacity: .7; cursor: default; }
 
   nav { position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15); }
@@ -149,6 +151,7 @@
   .cmp td { color: #475569; }
   .cmp td.us { background: rgba(34,211,238,.08); color: #0F172A; font-weight: 600; }
   .yes::before { content: '✓'; color: #0E7490; font-weight: 800; margin-inline-end: 6px; }
+  .soon::before { content: '◔'; color: #0E7490; margin-inline-end: 6px; }
   .no::before { content: '–'; color: #94A3B8; margin-inline-end: 6px; }
   .cmp-note { margin: 12px 0 0; font-size: 13px; color: #5B6B80; text-align: center; }
 
@@ -166,8 +169,8 @@
   /* Right-aligned; plaintext keeps a typed address in its own LTR order. */
   #notifyEmail { width: 100%; background: #F0F6FA; border: 1px solid #CBD5E1; border-radius: 12px; padding: 15px 18px;
                  font-size: 16px; color: #0F172A; direction: rtl; text-align: right; unicode-bidi: plaintext; }
-  #notifyEmail::placeholder { color: #64748B; text-align: right; }
-  #notifyEmail:focus { outline: none; border-color: #0E7490; box-shadow: 0 0 0 3px rgba(14,116,144,.2); }
+  #notifyEmail::placeholder { color: #5B6B80; text-align: right; }
+  #notifyEmail:focus { outline: 2px solid #0E7490; outline-offset: 1px; border-color: #0E7490; }
   .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #334155; line-height: 1.6; cursor: pointer; }
   .consent input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; accent-color: #4A38C9; }
   #notifySubmit { width: 100%; padding: 15px 24px; font-size: 17px; box-shadow: 0 6px 20px rgba(74,56,201,.4); }
@@ -211,11 +214,14 @@
     .foot { flex-direction: column; text-align: center; }
     .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: auto !important; }
     .cmp { border: none; background: transparent; }
-    .cmp thead { display: none; }
+    .cmp thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     .cmp tr { background: #fff; border: 1px solid #E2E8F0; border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
     .cmp tbody th { background: #E7F0F7; }
     .cmp td { padding: 10px 16px; }
-    .cmp td::before, .cmp td.yes::before, .cmp td.no::before { display: block; content: attr(data-label); font-size: 12px; font-weight: 600; color: #64748B; margin: 0 0 2px; }
+    .cmp td::before { display: block; content: attr(data-label); font-size: 12px; font-weight: 600; color: #64748B; margin: 0 0 2px; }
+    .cmp td.yes::before { content: attr(data-label) ' ✓'; }
+    .cmp td.no::before { content: attr(data-label); }
+    .cmp td.soon::before { content: attr(data-label) ' ◔'; }
   }
   @media (prefers-reduced-motion: reduce) { .chip .dot { animation: none; } * { transition: none !important; } }
 </style>
@@ -254,14 +260,14 @@
       <div class="hero-copy">
         <span class="chip"><span class="dot"></span>בקרוב · רפואת משפחה · שלב א</span>
         <h1>הכנה לשלב א<br><span class="grad">ברפואת משפחה</span></h1>
-        <div class="offer"><small>LAUNCH PRICE</small><strong>מחיר השקה מיוחד לנרשמים מראש</strong></div>
+        <div class="offer"><small lang="en">LAUNCH PRICE</small><strong>מחיר השקה מיוחד לנרשמים מראש</strong></div>
         <p class="lead">מנוע למידה שכבר עובד עם מתמחים לקראת שלב א — עכשיו גם לרפואת משפחה. השאירו מייל ונעדכן אתכם ברגע שזה נפתח.</p>
         <a class="btn-action hero-cta" href="#signup">הרשמה לעדכון על רפואת משפחה</a>
       </div>
       <!-- Illustrative: the shape of the app's daily dashboard. Labels only —
            no counts or scores, because there are no family-medicine users yet. -->
       <div class="mock" aria-hidden="true">
-        <div class="mock-head"><span class="mock-title">מה לתרגל היום</span><span class="mock-note">PREVIEW</span></div>
+        <div class="mock-head"><span class="mock-title">מה לתרגל היום</span><span class="mock-note" lang="en">PREVIEW</span></div>
         <div class="mock-row"><span class="mdot" style="background:#22D3EE"></span>חזרה יומית — שאלות שמתוזמנות להיום<span class="go">להתחיל</span></div>
         <div class="mock-row"><span class="mdot" style="background:#F87171"></span>הנושא החלש שלכם — תרגול ממוקד<span class="go">לתרגל</span></div>
         <div class="mock-row"><span class="mdot" style="background:#FBBF24"></span>בטוחים וטעיתם — שווה לחזור<span class="go">לחזור</span></div>
@@ -276,7 +282,7 @@
     <div class="sci-grid-bg"></div><div class="sci-glow"></div>
     <div class="in">
       <div class="head">
-        <span class="eyebrow">THE SCIENCE</span>
+        <span class="eyebrow" lang="en">THE SCIENCE</span>
         <h2 id="t-how">איך לומדים כאן</h2>
         <p>שיטות למידה מבוססות-ראיות, כפי שהן עובדות באפליקציה היום. התגית מראה איפה באפליקציה פוגשים כל אחת.</p>
       </div>
@@ -297,13 +303,13 @@
   <section class="band band-white" aria-labelledby="t-what">
     <div class="in">
       <div class="head">
-        <span class="eyebrow">FEATURES</span>
+        <span class="eyebrow" lang="en">FEATURES</span>
         <h2 id="t-what">מה תקבלו</h2>
         <p>כל מה שמתמחים כבר משתמשים בו באפליקציה, מותאם לבחינת שלב א ברפואת משפחה.</p>
       </div>
       <div class="f-cards">
         <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>תרגול לפי מה שחשוב לכם</h3><p>מסננים לפי נושא, רמת קושי ומה שעוד לא פתרתם. ממשיכים מאותו מקום גם בטלפון וגם במחשב.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>סימולציית בחינה</h3><p>בוחרים מספר שאלות, עם טיימר. בסוף — ציון ומה כדאי לחזור עליו.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>סימולציית בחינה</h3><p>בוחרים מספר שאלות, עם טיימר. בסוף — ציון, וכל שאלה נפתחת עם התשובה וההסבר.</p></div>
         <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>הסבר עם ציטוט מהמקור</h3><p>לכל תשובה: למה היא נכונה, למה המסיחים שגויים, והציטוט המדויק מהספר או מההנחיה.</p></div>
         <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3><p>מכיר את השאלה, את התשובה ואת המקור, מחפש בספרי המקור כשצריך — ואומר כשאין לו על מה להסתמך. בוחרים סגנון: מנטור, רופא בכיר, חבר ללימודים, בוחן או ענייני וקצר.</p></div>
         <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מפת שאלות לפי נושאים</h3><p>כל נושא ותת-נושא: מה תרגלתם, מה נכון ומה שגוי. שאלה שרוצים לחזור אליה — מסמנים בסימנייה.</p></div>
@@ -318,14 +324,14 @@
   <section class="band" aria-labelledby="t-cmp">
     <div class="in">
       <div class="head">
-        <span class="eyebrow">COMPARISON</span>
+        <span class="eyebrow" lang="en">COMPARISON</span>
         <h2 id="t-cmp">לא עוד מאגר שאלות. לא עוד צ׳אט <span class="ltr-iso">AI</span> כללי.</h2>
         <p>מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה — רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. MeduXa משלבת את שניהם, סביב הבחינה.</p>
       </div>
       <table class="cmp">
         <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="ltr-iso">MeduXa</span></th><th scope="col">מאגר שאלות רגיל</th><th scope="col">צ׳אט <span class="ltr-iso">AI</span> כללי</th></tr></thead>
         <tbody>
-        <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us yes" data-label="MeduXa">נבנות עכשיו לרפואת משפחה</td><td class="yes" data-label="מאגר שאלות">יש</td><td class="no" data-label="צ׳אט AI כללי">תלוי במה שתזינו בעצמכם</td></tr>
+        <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us soon" data-label="MeduXa">נבנות עכשיו לרפואת משפחה</td><td class="yes" data-label="מאגר שאלות">יש</td><td class="no" data-label="צ׳אט AI כללי">תלוי במה שתזינו בעצמכם</td></tr>
         <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us yes" data-label="MeduXa">ציטוט מילה-במילה לכל שאלה, שאפשר לבדוק</td><td class="no" data-label="מאגר שאלות">לרוב בלי מקור מצוטט</td><td class="no" data-label="צ׳אט AI כללי">רק אם העליתם את המקור בעצמכם</td></tr>
         <tr><th scope="row">ביקורת מומחה</th><td class="us yes" data-label="MeduXa">כל שאלה עוברת ביקורת מומחה</td><td class="no" data-label="מאגר שאלות">משתנה בין מאגרים</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
         <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us yes" data-label="MeduXa">מובנה בכל שאלה</td><td class="no" data-label="מאגר שאלות">אין</td><td class="no" data-label="צ׳אט AI כללי">רק אם תבנו לו את כל ההקשר</td></tr>
@@ -341,7 +347,7 @@
 
   <section id="signup" class="signup-band" aria-labelledby="t-signup">
     <div class="signup">
-      <span class="eyebrow">EARLY ACCESS</span>
+      <span class="eyebrow" lang="en">EARLY ACCESS</span>
       <h2 id="t-signup">הרשמה לעדכון: רפואת משפחה</h2>
       <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א ברפואת משפחה</strong>. נכתוב לכם כשהיא נפתחת, עם מחיר ההשקה לנרשמים מראש.</p>
       <p class="group-note">מתכוננים כקבוצה, למשל כל המתמחים במחלקה? תהיה גם הנחה קבוצתית — הפרטים במייל הפתיחה.</p>
@@ -350,7 +356,7 @@
            the submit itself, so the handler never sees an unconsented address. -->
       <form id="notifyForm">
         <label class="field" for="notifyEmail">כתובת מייל
-          <input id="notifyEmail" type="email" required autocomplete="email" inputmode="email" placeholder="המייל שלכם">
+          <input id="notifyEmail" dir="auto" type="email" required autocomplete="email" inputmode="email" placeholder="המייל שלכם">
         </label>
         <label class="consent" for="notifyConsent">
           <input id="notifyConsent" type="checkbox" required>
@@ -389,21 +395,27 @@
       e.preventDefault();
       var val = (email.value || '').trim();
       if (!val || !consent.checked) return;
-      btn.disabled = true; btn.textContent = '…';
+      btn.disabled = true; btn.textContent = '…'; form.setAttribute('aria-busy', 'true');
+      msg.textContent = ''; msg.style.color = ''; msg.className = '';
       fetch(SUPA_URL + '/rest/v1/waitlist', {
         method: 'POST',
         headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
                    'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
         body: JSON.stringify({ email: val, locale: 'he', source: 'landing_fm', consent_at: new Date().toISOString() })
       }).then(function (r) {
-        if (!(r.ok || r.status === 409)) throw new Error('status ' + r.status); // 409 = already listed
+        if (!(r.ok || r.status === 409)) { var err = new Error('status ' + r.status); err.server = true; throw err; } // 409 = already listed
+        form.removeAttribute('aria-busy');
         form.style.display = 'none';
         msg.className = 'ok-box';
         msg.textContent = '✓ נרשמתם לעדכונים על רפואת משפחה — נכתוב לכם כשההכנה לשלב א נפתחת, עם מחיר ההשקה.';
         if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist_family_medicine' });
-      }).catch(function () {
+      }).catch(function (err) {
+        form.removeAttribute('aria-busy');
         btn.disabled = false; btn.textContent = LABEL;
-        msg.textContent = 'ההרשמה לא נשמרה. בדקו את כתובת המייל ונסו שוב.';
+        // A thrown fetch (offline, blocked) is not the address's fault.
+        msg.textContent = err && err.server
+          ? 'ההרשמה לא נשמרה. בדקו את כתובת המייל ונסו שוב.'
+          : 'לא הצלחנו להתחבר. בדקו את החיבור לאינטרנט ונסו שוב בעוד רגע.';
         msg.style.color = '#9c2f30';
       });
     });
