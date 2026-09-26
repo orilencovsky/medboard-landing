@@ -49,4 +49,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://meduxa.ai/en/accessibility"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/accessibility"/>
   </url>
+  <url>
+    <loc>https://meduxa.ai/family-medicine</loc>
+  </url>
 </urlset>

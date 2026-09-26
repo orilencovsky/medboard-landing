@@ -26,11 +26,16 @@ hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
 og-image-he.png          Open Graph / Twitter card — Hebrew (root)
+family-medicine.html     /family-medicine — "coming soon" page for family medicine Stage A, with a consented
+                         email sign-up (waitlist, source 'landing_fm'); linked from the homepage's top banner
+og-family-medicine.png   its link-preview card (what WhatsApp shows for the link)
+whatsapp-family-medicine.png  1080x1080 version of the same ad, to send as an image
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
+scripts/make-promo-image.mjs renders the family-medicine promo (`og` | `square`); pngquant after, as above
 scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```

@@ -410,6 +410,7 @@
      without this the label would flip back to cyan mid-hover. Inline colour
      used to shield it; the class does not. */
   .btn-action:hover, .btn-action:focus { color:#fff; }
+  .announce:hover { color:#fff; text-decoration:none; filter:brightness(1.08); }
   .btn-action:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(124,92,255,.45); }
   .btn-action-md { box-shadow:0 6px 20px rgba(74,56,201,.45); }
   .btn-action-lg { box-shadow:0 10px 34px rgba(74,56,201,.5); }
@@ -528,6 +529,11 @@
 <a class="skip" href="#main">דילוג לתוכן העמוד</a>
 
 <div dir="rtl" style="background: #F0F6FA; min-height: 100vh;">
+
+  <!-- ANNOUNCEMENT: family medicine coming soon. Scrolls away above the sticky nav. -->
+  <a href="/family-medicine" class="announce" style="display: block; background: linear-gradient(90deg, #0E7490, #4A38C9); color: #fff; text-align: center; font-size: 15px; font-weight: 600; line-height: 1.5; padding: 10px 20px;">
+    <span style="display: inline-block; background: #22D3EE; color: #04101E; border-radius: 999px; padding: 1px 12px; font-size: 13px; font-weight: 700; margin-inline-end: 8px;">בקרוב</span>הכנה לשלב א ברפואת משפחה — <span style="text-decoration: underline;">לפרטים ולהרשמה לעדכונים</span>
+  </a>
 
   <!-- NAV -->
   <nav style="position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15);">
