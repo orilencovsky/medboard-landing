@@ -162,6 +162,7 @@
                 border-radius: 12px; padding: 10px 14px; margin: 14px 0 18px; font-size: 15px; }
   .signup-for strong { color: var(--primary); }
   #notifyForm { display: flex; flex-direction: column; gap: 12px; }
+  .group-note { margin: -8px 0 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
   .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-muted); }
   /* Right-aligned like every other field in the app; plaintext keeps the
      typed address in its own (LTR) order inside the RTL box. */
@@ -297,6 +298,7 @@
     <div class="signup card-elev">
       <h2 id="t-signup">הרשמה לעדכון: רפואת משפחה</h2>
       <div class="signup-for"><span>ההרשמה היא ל<strong>הכנה לשלב א ברפואת משפחה</strong>. נכתוב לכם כשהיא נפתחת, עם מחיר ההשקה לנרשמים מראש.</span></div>
+      <p class="group-note">מתכוננים כקבוצה, למשל כל המתמחים במחלקה? תהיה גם הנחה קבוצתית — הפרטים במייל הפתיחה.</p>
       <!-- Consent, then the Privacy Protection Law § 11 notice at the point of
            collection. `required` inside a real <form> makes the browser block
            the submit itself, so the handler never sees an unconsented address. -->
