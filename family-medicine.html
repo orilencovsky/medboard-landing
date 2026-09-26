@@ -31,257 +31,300 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* This page wears the APP's design language, not the marketing site's:
-     the tokens below are copied from Pilot's src/styles.js (LIGHT palette,
-     S.card, S.btn('primary'), S.badge, the sidebar gradient, Heebo). A visitor
-     who signs up later should recognise the product they were promised. */
-  :root {
-    --primary: #0e7490;      /* BRAND.primary (Cyan-800) */
-    --accent: #22d3ee;       /* BRAND.accent */
-    --bg: #f0f6fa;           /* BRAND.bg (Mist) */
-    --surface: #ffffff;
-    --surface-high: #f8fafc;
-    --border: #e2e8f0;
-    --border-bright: #cbd5e1;
-    --text: #0f172a;
-    --text-muted: #475569;
-    --text-dim: #64748b;     /* on white only: 4.76:1 (4.37:1 on --bg) */
-    --ok: #43795b; --ok-bg: #ebf7ef;
-    --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #92400e;
-    --info-bg: #ecfeff; --info-border: #a5f3fc;
-    --navy: #0b2545; --ink: #061225;
-  }
+  /* Same visual language as the homepage (index.html): IBM Plex Sans Hebrew +
+     Plex Mono eyebrows, the navy hero gradient, the cyan accent, the science
+     section's blueprint grid, and the purple .btn-action. */
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text);
-         font-family: 'Heebo', 'Noto Sans Hebrew', 'Segoe UI', sans-serif; }
+  body { margin: 0; background: #F0F6FA; color: #0F172A; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
   button, input { font-family: inherit; }
-  a { color: var(--primary); text-decoration: none; } a:hover { text-decoration: underline; }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
   .ltr-iso { direction: ltr; unicode-bidi: isolate; }
-  :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: var(--ink); color: #fff;
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  :focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }
+  .skip { position: absolute; top: 0; inset-inline-start: 0; transform: translateY(-120%); z-index: 100; background: #04101E; color: #fff;
           padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
-  .skip:focus { inset-inline-start: 0; color: #fff; }
+  .skip:focus { transform: none; color: #fff; }
 
-  /* Top bar = the app's sidebar gradient, laid sideways. */
-  .topbar { background: linear-gradient(90deg, var(--navy), var(--ink)); }
-  .topbar-in { max-width: 1040px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
-  .logo { display: flex; align-items: center; gap: 10px; }
+  .btn-action { position: relative; z-index: 0; overflow: hidden; display: inline-block; border: none; cursor: pointer;
+                background: linear-gradient(135deg,#4A38C9,#6B4CF0); color: #fff; font-weight: 700; border-radius: 12px;
+                box-shadow: 0 10px 34px rgba(74,56,201,.45); transition: box-shadow .15s ease; }
+  .btn-action::after { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+                       background: linear-gradient(135deg,#3A2CA8,#4A38C9); opacity: 0; transition: opacity .15s ease; }
+  .btn-action:hover::after { opacity: 1; }
+  .btn-action:hover, .btn-action:focus { color: #fff; text-decoration: none; }
+  .btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(124,92,255,.45); }
+  .btn-action:disabled { opacity: .7; cursor: default; }
+
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15); }
+  .nav-in { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
   .word { display: flex; align-items: baseline; direction: ltr; }
-  .word b { font-size: 19px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
-  .word i { font-style: normal; font-family: 'IBM Plex Mono', monospace; font-size: 19px; color: var(--accent); }
-  .topbar a.home { color: rgba(255,255,255,.72); font-size: 14px; }
+  .word b { font-family: 'IBM Plex Sans', 'IBM Plex Sans Hebrew', sans-serif; font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .word i { font-style: normal; font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE; }
+  .nav-r { display: flex; align-items: center; gap: 22px; }
+  .nav-link { color: #B8D4EA; font-size: 15px; }
+  .nav-link:hover { color: #22D3EE; text-decoration: none; }
+  .nav-cta { padding: 10px 22px; font-size: 15px; box-shadow: 0 6px 20px rgba(74,56,201,.45); }
 
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .14em; direction: ltr; color: #0E7490; }
+  .dark .eyebrow { color: #22D3EE; }
+  .head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 48px; }
+  .head h2 { margin: 0; font-size: 40px; font-weight: 700; color: #0F172A; line-height: 1.2; }
+  .dark .head h2 { color: #fff; }
+  .head p { margin: 0; font-size: 18px; color: #475569; max-width: 640px; line-height: 1.65; }
+  .dark .head p { color: #B8D4EA; }
+  .in { position: relative; max-width: 1200px; margin: 0 auto; }
 
-  /* HERO — the signature: a mock of the app's own dashboard tile. */
-  .hero { padding: 44px 0 8px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 32px; align-items: center; }
-  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
-  .badge { display: inline-flex; align-items: center; border-radius: 8px; padding: 3px 10px; font-size: 13px; font-weight: 700; }
-  .badge-info { background: #0e749018; color: var(--primary); border: 1px solid #0e749030; }
-  .badge-soon { background: var(--accent); color: var(--ink); }
-  h1 { margin: 16px 0 12px; font-size: 44px; font-weight: 800; line-height: 1.15; letter-spacing: -0.8px; }
-  h1 span { color: var(--primary); }
-  .offer { display: inline-flex; align-items: center; gap: 8px; background: var(--warn-bg); border: 1px solid var(--warn-border);
-           color: var(--warn-text); border-radius: 12px; padding: 8px 14px; font-size: 16px; font-weight: 700; }
-  .lead { margin: 16px 0 22px; font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 540px; }
-  .btn { display: inline-block; background: var(--primary); color: #fff; border: none; border-radius: 12px;
-         padding: 13px 26px; font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: -0.1px;
-         box-shadow: 0 2px 8px #0e749047, 0 1px 2px #0e749026; transition: background .15s; }
-  .btn:hover { background: #0b5f76; color: #fff; text-decoration: none; }
-  .btn:disabled { opacity: .7; cursor: default; }
+  /* HERO */
+  .hero { position: relative; overflow: hidden; padding: 88px 32px 96px;
+          background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); }
+  .hero-mark { position: absolute; left: -260px; top: -160px; opacity: .07; pointer-events: none; }
+  .hero-grid { display: flex; gap: 64px; align-items: center; flex-wrap: wrap; }
+  .hero-copy { flex: 1 1 480px; display: flex; flex-direction: column; gap: 24px; }
+  .chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08);
+          border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600; }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; animation: dotPulse 2s infinite; }
+  @keyframes dotPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
+  h1 { margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em; }
+  h1 .grad { background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .offer { align-self: flex-start; display: flex; align-items: center; gap: 12px; background: rgba(107,76,240,.14);
+           border: 1px solid rgba(155,135,255,.45); border-radius: 14px; padding: 12px 18px; }
+  .offer small { white-space: nowrap; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #C9BCFF; direction: ltr; }
+  .offer strong { font-size: 18px; color: #fff; }
+  .lead { margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px; }
+  .hero-cta { padding: 16px 34px; font-size: 18px; align-self: flex-start; }
 
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
-          box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 1px 6px rgba(0,0,0,.04); }
-  .card-elev { background: var(--surface-high); border: 1px solid var(--border-bright); border-radius: 16px; padding: 24px;
-               box-shadow: 0 2px 8px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05); }
-
-  /* Illustrative dashboard tile: labels only, no numbers, no fake data. */
-  .mock { padding: 18px; }
-  .mock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .mock-title { font-size: 15px; font-weight: 700; }
-  .mock-note { font-size: 12px; color: var(--text-dim); }
-  .mock-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 8px; font-size: 14px; }
+  /* Illustrative dashboard tile, in the homepage demo card's glass style. */
+  .mock { flex: 1 1 380px; max-width: 460px; background: rgba(11,37,69,.72); border: 1px solid rgba(34,211,238,.22);
+          border-radius: 20px; padding: 22px; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  .mock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .mock-title { font-size: 16px; font-weight: 600; color: #fff; }
+  .mock-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #7DA2C4; direction: ltr; }
+  .mock-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid #1E4A6E;
+              background: rgba(6,18,37,.45); margin-bottom: 8px; font-size: 15px; color: #DDEBF7; }
   .mock-row:last-child { margin-bottom: 0; }
-  .dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-  .mock-row .go { margin-inline-start: auto; font-size: 13px; font-weight: 700; color: var(--primary); }
+  .mdot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+  .mock-row .go { margin-inline-start: auto; font-size: 13px; font-weight: 600; color: #67E8F9; }
 
-  section { padding: 44px 0 0; }
-  h2 { margin: 0 0 6px; font-size: 26px; font-weight: 800; letter-spacing: -0.4px; }
-  .sub { margin: 0 0 20px; font-size: 16px; color: var(--text-muted); line-height: 1.6; }
-  .honest { margin-top: 32px; background: var(--info-bg); border: 1px solid var(--info-border); border-radius: 16px;
-            padding: 16px 20px; font-size: 16px; line-height: 1.7; color: #164e63; }
+  .honest { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 28px 32px; }
+  .honest p { max-width: 860px; margin: 0 auto; text-align: center; font-size: 17px; color: #334155; line-height: 1.7; }
 
-  .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
-  .grid .card h3 { margin: 10px 0 6px; font-size: 17px; font-weight: 700; }
-  .grid .card p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--text-muted); }
-  /* Where in the app each technique lives — the badge is a real screen name. */
-  .where { font-size: 12px; }
-  .opt { font-size: 12px; font-weight: 600; color: var(--text-dim); margin-inline-start: 6px; }
+  /* TECHNIQUES — the homepage science section's blueprint grid. */
+  .sci { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); padding: 96px 32px 104px; }
+  .sci-grid-bg, .sci-glow { position: absolute; inset: 0; pointer-events: none; }
+  .sci-grid-bg { opacity: .45; background:
+      repeating-linear-gradient(90deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px); }
+  .sci-glow { background: radial-gradient(50% 40% at 80% 0%, rgba(34,211,238,.18), transparent 70%),
+                          radial-gradient(60% 42% at 50% 104%, rgba(34,211,238,.16), transparent 70%); }
+  .sci-cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+  .sci-card { background: rgba(11,37,69,.7); border: 1px solid #1E4A6E; border-radius: 16px; padding: 22px 24px; }
+  .sci-card .where { font-family: 'IBM Plex Sans Hebrew', sans-serif; font-size: 12px; font-weight: 600; color: #67E8F9;
+                     border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.08); border-radius: 100px; padding: 2px 10px; }
+  .sci-card h3 { margin: 14px 0 8px; font-size: 19px; font-weight: 700; color: #fff; }
+  .sci-card p { margin: 0; font-size: 15px; color: #B8D4EA; line-height: 1.65; }
+  .opt { font-size: 12px; font-weight: 500; color: #7DA2C4; margin-inline-start: 8px; }
 
-  .feat { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
-  .feat .card { display: flex; gap: 12px; align-items: flex-start; }
-  .feat .ic { width: 36px; height: 36px; border-radius: 10px; background: #0e749014; color: var(--primary);
-              display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .feat h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
-  .feat p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-muted); }
-  .later { margin-top: 14px; background: var(--surface); border: 1px dashed var(--border-bright); border-radius: 12px;
-           padding: 12px 16px; font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+  /* FEATURES — the homepage features cards. */
+  .band { padding: 96px 32px; }
+  .band-white { background: #fff; border-bottom: 1px solid #E2E8F0; }
+  .f-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .f-card { background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px 28px; }
+  .f-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .f-card .sq { width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); flex-shrink: 0; }
+  .f-card p { margin: 0; font-size: 15px; color: #475569; line-height: 1.65; }
+  .later { margin: 20px auto 0; max-width: 1200px; border: 1px dashed #CBD5E1; border-radius: 12px; padding: 12px 18px;
+           font-size: 15px; color: #475569; line-height: 1.6; text-align: center; }
 
-
-  /* Comparison table: MeduXa column tinted like the app's selected state. */
-  .cmp { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface);
-         border: 1px solid var(--border); border-radius: 16px; overflow: hidden; font-size: 15px; }
-  .cmp th, .cmp td { padding: 12px 14px; text-align: start; vertical-align: top; border-bottom: 1px solid var(--border); line-height: 1.5; }
+  /* COMPARISON */
+  .cmp { width: 100%; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid #E2E8F0;
+         border-radius: 16px; overflow: hidden; font-size: 15px; }
+  .cmp th, .cmp td { padding: 14px 16px; text-align: start; vertical-align: top; border-bottom: 1px solid #E2E8F0; line-height: 1.5; }
   .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
-  .cmp thead th { background: var(--surface-high); font-size: 14px; font-weight: 700; color: var(--text-muted); }
-  .cmp thead th.us { color: var(--primary); }
-  .cmp tbody th { font-weight: 700; color: var(--text); width: 26%; }
-  .cmp td { color: var(--text-muted); }
-  .cmp .us { background: #0e74900d; }
-  .cmp td.us { color: var(--text); font-weight: 600; }
-  .yes::before { content: '✓'; color: var(--ok); font-weight: 800; margin-inline-end: 6px; }
-  .no::before { content: '–'; color: var(--text-dim); margin-inline-end: 6px; }
-  .cmp-note { margin: 10px 0 0; font-size: 13px; color: var(--text-muted); }
-  @media (max-width: 700px) {
+  .cmp thead th { background: #E7F0F7; font-size: 14px; font-weight: 700; color: #334155; }
+  .cmp thead th.us { background: #0B2545; color: #fff; }
+  .cmp tbody th { font-weight: 700; color: #0F172A; width: 24%; }
+  .cmp td { color: #475569; }
+  .cmp td.us { background: rgba(34,211,238,.08); color: #0F172A; font-weight: 600; }
+  .yes::before { content: '✓'; color: #0E7490; font-weight: 800; margin-inline-end: 6px; }
+  .no::before { content: '–'; color: #94A3B8; margin-inline-end: 6px; }
+  .cmp-note { margin: 12px 0 0; font-size: 13px; color: #5B6B80; text-align: center; }
+
+  /* SIGN-UP */
+  .signup-band { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); padding: 88px 32px; }
+  .signup { position: relative; max-width: 640px; margin: 0 auto; background: #fff; border-radius: 20px; padding: 32px;
+            box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  .signup .eyebrow { display: block; margin-bottom: 10px; }
+  .signup h2 { margin: 0 0 10px; font-size: 30px; font-weight: 700; line-height: 1.25; }
+  .signup-for { margin: 0 0 8px; font-size: 16px; color: #334155; line-height: 1.65; }
+  .signup-for strong { color: #0E7490; }
+  .group-note { margin: 0 0 20px; font-size: 14px; color: #5B6B80; line-height: 1.6; }
+  #notifyForm { display: flex; flex-direction: column; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: #475569; }
+  /* Right-aligned; plaintext keeps a typed address in its own LTR order. */
+  #notifyEmail { width: 100%; background: #F0F6FA; border: 1px solid #CBD5E1; border-radius: 12px; padding: 15px 18px;
+                 font-size: 16px; color: #0F172A; direction: rtl; text-align: right; unicode-bidi: plaintext; }
+  #notifyEmail::placeholder { color: #64748B; text-align: right; }
+  #notifyEmail:focus { outline: none; border-color: #0E7490; box-shadow: 0 0 0 3px rgba(14,116,144,.2); }
+  .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #334155; line-height: 1.6; cursor: pointer; }
+  .consent input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; accent-color: #4A38C9; }
+  #notifySubmit { width: 100%; padding: 15px 24px; font-size: 17px; box-shadow: 0 6px 20px rgba(74,56,201,.4); }
+  .notice { margin: 0; font-size: 13px; color: #64748B; line-height: 1.6; }
+  #notifyMsg { display: block; margin-top: 12px; font-size: 16px; font-weight: 700; min-height: 1em; }
+  .ok-box { background: #ECFEFF; border: 1px solid #A5F3FC; color: #155E75; border-radius: 12px; padding: 14px 16px; }
+  .back { margin: 22px 0 0; text-align: center; font-size: 16px; color: #B8D4EA; position: relative; }
+  .back a { color: #67E8F9; }
+
+  footer { background: #04101E; padding: 36px 32px; }
+  .foot { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .foot .word b, .foot .word i { font-size: 17px; }
+  .foot .word b { color: #7DA2C4; }
+  .foot-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  .foot-link { color: #7DA2C4; font-size: 14px; }
+  .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  .foot small { font-size: 14px; color: #5B87A8; }
+
+  @media (max-width: 900px) {
+    .sci-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .mock { max-width: none; }
+  }
+  @media (max-width: 640px) {
+    .nav-in { padding: 0 16px; height: 60px; }
+    .nav-r .nav-link { display: none; }
+    .nav-cta { padding: 9px 16px; font-size: 14px; }
+    .hero { padding: 48px 16px 60px; }
+    h1 { font-size: 36px; }
+    .offer { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .lead { font-size: 17px; }
+    .hero-cta { align-self: stretch; text-align: center; font-size: 17px; }
+    .head h2 { font-size: 28px; }
+    .head p { font-size: 16px; }
+    .head { margin-bottom: 32px; }
+    .sci, .band, .signup-band { padding: 60px 16px; }
+    .honest { padding: 22px 16px; }
+    .sci-cards { grid-template-columns: 1fr; }
+    .f-cards { grid-template-columns: 1fr; }
+    .signup { padding: 24px 20px; }
+    .signup h2 { font-size: 25px; }
+    .foot { flex-direction: column; text-align: center; }
     .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: auto !important; }
     .cmp { border: none; background: transparent; }
     .cmp thead { display: none; }
-    .cmp tr { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
-    .cmp tbody th { border-bottom: 1px solid var(--border); background: var(--surface-high); }
-    .cmp td::before { display: block; content: attr(data-label); font-size: 12px; font-weight: 700; color: var(--text-dim); margin-bottom: 2px; }
-    .cmp td.yes::before, .cmp td.no::before { content: attr(data-label); color: var(--text-dim); font-weight: 700; margin: 0 0 2px; }
+    .cmp tr { background: #fff; border: 1px solid #E2E8F0; border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
+    .cmp tbody th { background: #E7F0F7; }
+    .cmp td { padding: 10px 16px; }
+    .cmp td::before, .cmp td.yes::before, .cmp td.no::before { display: block; content: attr(data-label); font-size: 12px; font-weight: 600; color: #64748B; margin: 0 0 2px; }
   }
-
-  /* Sign-up */
-  #signup { padding-bottom: 8px; }
-  .signup { max-width: 640px; margin: 0 auto; }
-  .signup-for { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border);
-                border-radius: 12px; padding: 10px 14px; margin: 14px 0 18px; font-size: 15px; }
-  .signup-for strong { color: var(--primary); }
-  #notifyForm { display: flex; flex-direction: column; gap: 12px; }
-  .group-note { margin: -8px 0 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-  .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-muted); }
-  /* Right-aligned like every other field in the app; plaintext keeps the
-     typed address in its own (LTR) order inside the RTL box. */
-  #notifyEmail { width: 100%; background: var(--surface); border: 1px solid var(--border-bright); border-radius: 12px;
-                 padding: 13px 14px; font-size: 16px; color: var(--text); direction: rtl; text-align: right;
-                 unicode-bidi: plaintext; }
-  #notifyEmail:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px #0e749033; }
-  #notifyEmail::placeholder { color: var(--text-dim); text-align: right; }
-  .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text); line-height: 1.6; cursor: pointer; }
-  .consent input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; accent-color: var(--primary); }
-  .notice { margin: 0; font-size: 13px; color: var(--text-dim); line-height: 1.6; }
-  #notifySubmit { width: 100%; }
-  #notifyMsg { display: block; margin-top: 12px; font-size: 16px; font-weight: 700; min-height: 1em; }
-  .ok-box { background: var(--ok-bg); border: 1px solid #9dc2ab; color: #2e5740; border-radius: 12px; padding: 14px 16px; }
-
-  .back { padding: 36px 0 56px; text-align: center; font-size: 16px; color: var(--text-muted); }
-
-  footer { background: var(--ink); padding: 28px 24px; }
-  .foot { max-width: 1040px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
-  .foot a { color: #7DA2C4; font-size: 14px; margin-inline-end: 16px; }
-  .foot small { color: #7DA2C4; font-size: 13px; }
-
-  @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; padding-top: 32px; }
-    .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-  }
-  @media (max-width: 600px) {
-    .wrap { padding: 0 16px; }
-    h1 { font-size: 34px; }
-    .lead { font-size: 16px; }
-    .grid, .feat { grid-template-columns: 1fr; }
-    h2 { font-size: 23px; }
-    .foot { flex-direction: column; text-align: center; }
-  }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .chip .dot { animation: none; } * { transition: none !important; } }
 </style>
 </head>
 <body>
 
 <a class="skip" href="#main">דילוג לתוכן העמוד</a>
 
-<header class="topbar">
-  <div class="topbar-in">
+<nav>
+  <div class="nav-in">
     <a href="/" class="logo" aria-label="MeduXa — לעמוד הבית">
-      <svg width="30" height="30" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-        <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
-        <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
-        <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
-        <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
-        <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
-      </svg>
+      <svg width="36" height="36" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+          <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+          <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+          <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+          <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+        </svg>
       <span class="word"><b>MeduXa</b><i>.ai</i></span>
     </a>
-    <a class="home" href="/">לעמוד הבית</a>
-  </div>
-</header>
-
-<main id="main" class="wrap">
-
-  <div class="hero">
-    <div>
-      <div class="tags"><span class="badge badge-soon">בקרוב</span><span class="badge badge-info">רפואת משפחה · שלב א</span></div>
-      <h1>הכנה לשלב א<br><span>ברפואת משפחה</span></h1>
-      <div class="offer">מחיר השקה מיוחד לנרשמים מראש</div>
-      <p class="lead">מנוע הלמידה שכבר משמש מתמחי נפרולוגיה לקראת שלב א — בדרך לרפואת משפחה. השאירו מייל ונעדכן אתכם ברגע שזה נפתח.</p>
-      <a class="btn" href="#signup">הרשמה לעדכון על רפואת משפחה</a>
-    </div>
-
-    <!-- Illustrative: the shape of the app's daily dashboard. Labels only —
-         no counts or scores, because there are no family-medicine users yet. -->
-    <div class="card mock" aria-hidden="true">
-      <div class="mock-head"><span class="mock-title">מה לתרגל היום</span><span class="mock-note">להמחשה</span></div>
-      <div class="mock-row"><span class="dot" style="background:#0e7490"></span>חזרה יומית — שאלות שמתוזמנות להיום<span class="go">להתחיל</span></div>
-      <div class="mock-row"><span class="dot" style="background:#9c2f30"></span>הנושא החלש שלכם — תרגול ממוקד<span class="go">לתרגל</span></div>
-      <div class="mock-row"><span class="dot" style="background:#d97706"></span>בטוחים וטעיתם — שווה לחזור<span class="go">לחזור</span></div>
-      <div class="mock-row"><span class="dot" style="background:#43795b"></span>סימולציית בחינה עם טיימר<span class="go">לפתוח</span></div>
+    <div class="nav-r">
+      <a class="nav-link" href="/">לעמוד הבית</a>
+      <a class="btn-action nav-cta" href="#signup">הרשמה לעדכון</a>
     </div>
   </div>
+</nav>
 
-  <p class="honest">המנוע קיים ועובד. את התוכן לרפואת משפחה אנחנו בונים עכשיו: שאלות בסגנון שלב א, ולכל תשובה הסבר שמגובה בציטוט מילה-במילה מהמקור שממנו היא נלקחה — כדי שתוכלו לבדוק כל טענה בעצמכם.</p>
+<main id="main">
 
-  <section aria-labelledby="t-how">
-    <h2 id="t-how">איך לומדים כאן</h2>
-    <p class="sub">שיטות למידה מבוססות-ראיות, כפי שהן עובדות באפליקציה היום. התגית מראה איפה באפליקציה פוגשים כל אחת.</p>
-    <div class="grid">
-      <div class="card"><span class="badge badge-info where">תרגול</span><h3>היזכרות פעילה</h3><p>לומדים דרך שאלות, לא דרך קריאה חוזרת. כל סשן מתחיל בשאלה שצריך לענות עליה מהזיכרון.</p></div>
-      <div class="card"><span class="badge badge-info where">חזרה יומית</span><h3>חזרה מרווחת</h3><p>שאלות שטעיתם בהן חוזרות אליכם בתזמון שמחושב לפי מתי אתם צפויים לשכוח אותן.</p></div>
-      <div class="card"><span class="badge badge-info where">חזרה יומית</span><h3>למידה מטעויות</h3><p>כל תשובה שגויה נכנסת לתור החזרה מעצמה. לא צריך לזכור מה לחזור עליו.</p></div>
-      <div class="card"><span class="badge badge-info where">דשבורד</span><h3>תרגול ממוקד בחולשות</h3><p>הדשבורד מראה את הנושאים החלשים שלכם, ובלחיצה אחת פותח תרגול רק עליהם.</p></div>
-      <div class="card"><span class="badge badge-info where">אבחנה מבדלת</span><h3>תרגול משולב</h3><p>שאלות על אבחנות שמתבלבלות ביניהן, מעורבבות — כמו בבחינה, לא לפי סדר הפרקים בספר.</p></div>
-      <div class="card"><span class="badge badge-info where">תרגול</span><h3>הסבר עצמי<span class="opt">לבחירה</span></h3><p>לפני שההסבר נפתח כותבים במשפט אחד למה בחרתם מה שבחרתם.</p></div>
-      <div class="card"><span class="badge badge-info where">תרגול · דשבורד</span><h3>כיול ביטחון<span class="opt">לבחירה</span></h3><p>מסמנים כמה אתם בטוחים לפני שעונים. הדשבורד מראה איפה הייתם בטוחים וטעיתם.</p></div>
-      <div class="card"><span class="badge badge-info where">בכל שאלה</span><h3>מורה שמוביל בשאלות</h3><p>נתקעתם? המורה שואל לפני שהוא עונה, ומכוון אתכם לתשובה במקום למסור אותה.</p></div>
-      <div class="card"><span class="badge badge-info where">בכל תשובה</span><h3>אמת מעוגנת במקור</h3><p>ההסבר מגיע עם ציטוט מילה-במילה מהמקור. לא צריך להאמין — אפשר לבדוק.</p></div>
+  <header class="hero">
+    <svg class="hero-mark" width="900" height="900" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+      <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
+      <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
+    </svg>
+    <div class="in hero-grid">
+      <div class="hero-copy">
+        <span class="chip"><span class="dot"></span>בקרוב · רפואת משפחה · שלב א</span>
+        <h1>הכנה לשלב א<br><span class="grad">ברפואת משפחה</span></h1>
+        <div class="offer"><small>LAUNCH PRICE</small><strong>מחיר השקה מיוחד לנרשמים מראש</strong></div>
+        <p class="lead">מנוע הלמידה שכבר משמש מתמחי נפרולוגיה לקראת שלב א — בדרך לרפואת משפחה. השאירו מייל ונעדכן אתכם ברגע שזה נפתח.</p>
+        <a class="btn-action hero-cta" href="#signup">הרשמה לעדכון על רפואת משפחה</a>
+      </div>
+      <!-- Illustrative: the shape of the app's daily dashboard. Labels only —
+           no counts or scores, because there are no family-medicine users yet. -->
+      <div class="mock" aria-hidden="true">
+        <div class="mock-head"><span class="mock-title">מה לתרגל היום</span><span class="mock-note">PREVIEW</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#22D3EE"></span>חזרה יומית — שאלות שמתוזמנות להיום<span class="go">להתחיל</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#F87171"></span>הנושא החלש שלכם — תרגול ממוקד<span class="go">לתרגל</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#FBBF24"></span>בטוחים וטעיתם — שווה לחזור<span class="go">לחזור</span></div>
+        <div class="mock-row"><span class="mdot" style="background:#A78BFA"></span>סימולציית בחינה עם טיימר<span class="go">לפתוח</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="honest"><p>המנוע קיים ועובד. את התוכן לרפואת משפחה אנחנו בונים עכשיו: שאלות בסגנון שלב א, ולכל תשובה הסבר שמגובה בציטוט מילה-במילה מהמקור שממנו היא נלקחה — כדי שתוכלו לבדוק כל טענה בעצמכם.</p></div>
+
+  <section class="sci dark" aria-labelledby="t-how">
+    <div class="sci-grid-bg"></div><div class="sci-glow"></div>
+    <div class="in">
+      <div class="head">
+        <span class="eyebrow">THE SCIENCE</span>
+        <h2 id="t-how">איך לומדים כאן</h2>
+        <p>שיטות למידה מבוססות-ראיות, כפי שהן עובדות באפליקציה היום. התגית מראה איפה באפליקציה פוגשים כל אחת.</p>
+      </div>
+      <div class="sci-cards">
+        <div class="sci-card"><span class="where">תרגול</span><h3>היזכרות פעילה</h3><p>לומדים דרך שאלות, לא דרך קריאה חוזרת. כל סשן מתחיל בשאלה שצריך לענות עליה מהזיכרון.</p></div>
+        <div class="sci-card"><span class="where">חזרה יומית</span><h3>חזרה מרווחת</h3><p>שאלות שטעיתם בהן חוזרות אליכם בתזמון שמחושב לפי מתי אתם צפויים לשכוח אותן.</p></div>
+        <div class="sci-card"><span class="where">חזרה יומית</span><h3>למידה מטעויות</h3><p>כל תשובה שגויה נכנסת לתור החזרה מעצמה. לא צריך לזכור מה לחזור עליו.</p></div>
+        <div class="sci-card"><span class="where">דשבורד</span><h3>תרגול ממוקד בחולשות</h3><p>הדשבורד מראה את הנושאים החלשים שלכם, ובלחיצה אחת פותח תרגול רק עליהם.</p></div>
+        <div class="sci-card"><span class="where">אבחנה מבדלת</span><h3>תרגול משולב</h3><p>שאלות על אבחנות שמתבלבלות ביניהן, מעורבבות — כמו בבחינה, לא לפי סדר הפרקים בספר.</p></div>
+        <div class="sci-card"><span class="where">תרגול</span><h3>הסבר עצמי<span class="opt">לבחירה</span></h3><p>לפני שההסבר נפתח כותבים במשפט אחד למה בחרתם מה שבחרתם.</p></div>
+        <div class="sci-card"><span class="where">תרגול · דשבורד</span><h3>כיול ביטחון<span class="opt">לבחירה</span></h3><p>מסמנים כמה אתם בטוחים לפני שעונים. הדשבורד מראה איפה הייתם בטוחים וטעיתם.</p></div>
+        <div class="sci-card"><span class="where">בכל שאלה</span><h3>מורה שמוביל בשאלות</h3><p>נתקעתם? המורה שואל לפני שהוא עונה, ומכוון אתכם לתשובה במקום למסור אותה.</p></div>
+        <div class="sci-card"><span class="where">בכל תשובה</span><h3>אמת מעוגנת במקור</h3><p>ההסבר מגיע עם ציטוט מילה-במילה מהמקור. לא צריך להאמין — אפשר לבדוק.</p></div>
+      </div>
     </div>
   </section>
 
-  <section aria-labelledby="t-what">
-    <h2 id="t-what">מה תקבלו</h2>
-    <p class="sub">כל מה שמתמחי נפרולוגיה משתמשים בו היום, בהתאמה לבחינת שלב א ברפואת משפחה.</p>
-    <div class="feat">
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg></span><div><h3>תרגול לפי מה שחשוב לכם</h3><p>מסננים לפי נושא, רמת קושי ומה שעוד לא פתרתם. ממשיכים מאותו מקום גם בטלפון וגם במחשב.</p></div></div>
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></span><div><h3>סימולציית בחינה</h3><p>בוחרים מספר שאלות, עם טיימר. בסוף — ציון ומה כדאי לחזור עליו.</p></div></div>
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h9a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zM20 5h-4"/></svg></span><div><h3>הסבר עם ציטוט מהמקור</h3><p>לכל תשובה: למה היא נכונה, למה המסיחים שגויים, והציטוט המדויק מהספר או מההנחיה.</p></div></div>
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span><div><h3>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3><p>מכיר את השאלה, את התשובה ואת המקור, מחפש בספרי המקור כשצריך — ואומר כשאין לו על מה להסתמך. בוחרים סגנון: מנטור, רופא בכיר, חבר ללימודים, בוחן או ענייני וקצר.</p></div></div>
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span><div><h3>מפת שאלות לפי נושאים</h3><p>כל נושא ותת-נושא: מה תרגלתם, מה נכון ומה שגוי. שאלה שרוצים לחזור אליה — מסמנים בסימנייה.</p></div></div>
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-8z"/></svg></span><div><h3>דשבורד יומי</h3><p>רצף ימים, תגים, המלצה מה לתרגל היום, והנושאים שהכי דורשים טיפול.</p></div></div>
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 20V10M12 20V4M18 20v-7"/></svg></span><div><h3>טבלת מובילים</h3><p>רואים איפה אתם מול מתמחים אחרים שמתכוננים באפליקציה.</p></div></div>
-      <div class="card"><span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 21V4h11l-2 4 2 4H5"/></svg></span><div><h3>דיווח על בעיה בשאלה — ותשובה</h3><p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p></div></div>
+  <section class="band band-white" aria-labelledby="t-what">
+    <div class="in">
+      <div class="head">
+        <span class="eyebrow">FEATURES</span>
+        <h2 id="t-what">מה תקבלו</h2>
+        <p>כל מה שמתמחי נפרולוגיה משתמשים בו היום, בהתאמה לבחינת שלב א ברפואת משפחה.</p>
+      </div>
+      <div class="f-cards">
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>תרגול לפי מה שחשוב לכם</h3><p>מסננים לפי נושא, רמת קושי ומה שעוד לא פתרתם. ממשיכים מאותו מקום גם בטלפון וגם במחשב.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>סימולציית בחינה</h3><p>בוחרים מספר שאלות, עם טיימר. בסוף — ציון ומה כדאי לחזור עליו.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>הסבר עם ציטוט מהמקור</h3><p>לכל תשובה: למה היא נכונה, למה המסיחים שגויים, והציטוט המדויק מהספר או מההנחיה.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3><p>מכיר את השאלה, את התשובה ואת המקור, מחפש בספרי המקור כשצריך — ואומר כשאין לו על מה להסתמך. בוחרים סגנון: מנטור, רופא בכיר, חבר ללימודים, בוחן או ענייני וקצר.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מפת שאלות לפי נושאים</h3><p>כל נושא ותת-נושא: מה תרגלתם, מה נכון ומה שגוי. שאלה שרוצים לחזור אליה — מסמנים בסימנייה.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>דשבורד יומי</h3><p>רצף ימים, תגים, המלצה מה לתרגל היום, והנושאים שהכי דורשים טיפול.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>טבלת מובילים</h3><p>רואים איפה אתם מול מתמחים אחרים שמתכוננים באפליקציה.</p></div>
+        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>דיווח על בעיה בשאלה — ותשובה</h3><p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p></div>
+      </div>
+      <p class="later"><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</p>
     </div>
-    <p class="later"><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</p>
   </section>
 
-  <section aria-labelledby="t-cmp">
-    <h2 id="t-cmp">לא עוד מאגר שאלות. לא עוד צ׳אט <span class="ltr-iso">AI</span> כללי.</h2>
-    <p class="sub">מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה — רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. MeduXa משלבת את שניהם, סביב הבחינה.</p>
-    <table class="cmp">
-      <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="ltr-iso">MeduXa</span></th><th scope="col">מאגר שאלות רגיל</th><th scope="col">צ׳אט <span class="ltr-iso">AI</span> כללי</th></tr></thead>
-      <tbody>
+  <section class="band" aria-labelledby="t-cmp">
+    <div class="in">
+      <div class="head">
+        <span class="eyebrow">COMPARISON</span>
+        <h2 id="t-cmp">לא עוד מאגר שאלות. לא עוד צ׳אט <span class="ltr-iso">AI</span> כללי.</h2>
+        <p>מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה — רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. MeduXa משלבת את שניהם, סביב הבחינה.</p>
+      </div>
+      <table class="cmp">
+        <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="ltr-iso">MeduXa</span></th><th scope="col">מאגר שאלות רגיל</th><th scope="col">צ׳אט <span class="ltr-iso">AI</span> כללי</th></tr></thead>
+        <tbody>
         <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us yes" data-label="MeduXa">נבנות עכשיו לרפואת משפחה</td><td class="yes" data-label="מאגר שאלות">יש</td><td class="no" data-label="צ׳אט AI כללי">תלוי במה שתזינו בעצמכם</td></tr>
         <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us yes" data-label="MeduXa">ציטוט מילה-במילה לכל שאלה, שאפשר לבדוק</td><td class="no" data-label="מאגר שאלות">לרוב בלי מקור מצוטט</td><td class="no" data-label="צ׳אט AI כללי">רק אם העליתם את המקור בעצמכם</td></tr>
         <tr><th scope="row">ביקורת מומחה</th><td class="us yes" data-label="MeduXa">כל שאלה עוברת ביקורת מומחה</td><td class="no" data-label="מאגר שאלות">משתנה בין מאגרים</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
@@ -291,14 +334,16 @@
         <tr><th scope="row">סימולציית בחינה עם טיימר</th><td class="us yes" data-label="MeduXa">יש</td><td class="no" data-label="מאגר שאלות">משתנה בין מאגרים</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
         <tr><th scope="row">מפת נושאים ומעקב התקדמות</th><td class="us yes" data-label="MeduXa">יש</td><td class="no" data-label="מאגר שאלות">משתנה בין מאגרים</td><td class="no" data-label="צ׳אט AI כללי">אין</td></tr>
       </tbody>
-    </table>
-    <p class="cmp-note">ההשוואה מתייחסת לקטגוריות כלליות של פתרונות נפוצים, לא למוצר מסחרי מסוים.</p>
+      </table>
+      <p class="cmp-note">ההשוואה מתייחסת לקטגוריות כלליות של פתרונות נפוצים, לא למוצר מסחרי מסוים.</p>
+    </div>
   </section>
 
-  <section id="signup" aria-labelledby="t-signup">
-    <div class="signup card-elev">
+  <section id="signup" class="signup-band" aria-labelledby="t-signup">
+    <div class="signup">
+      <span class="eyebrow">EARLY ACCESS</span>
       <h2 id="t-signup">הרשמה לעדכון: רפואת משפחה</h2>
-      <div class="signup-for"><span>ההרשמה היא ל<strong>הכנה לשלב א ברפואת משפחה</strong>. נכתוב לכם כשהיא נפתחת, עם מחיר ההשקה לנרשמים מראש.</span></div>
+      <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א ברפואת משפחה</strong>. נכתוב לכם כשהיא נפתחת, עם מחיר ההשקה לנרשמים מראש.</p>
       <p class="group-note">מתכוננים כקבוצה, למשל כל המתמחים במחלקה? תהיה גם הנחה קבוצתית — הפרטים במייל הפתיחה.</p>
       <!-- Consent, then the Privacy Protection Law § 11 notice at the point of
            collection. `required` inside a real <form> makes the browser block
@@ -311,21 +356,20 @@
           <input id="notifyConsent" type="checkbox" required>
           <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א ברפואת משפחה תיפתח.</span>
         </label>
-        <button id="notifySubmit" class="btn" type="submit">עדכנו אותי על רפואת משפחה</button>
+        <button id="notifySubmit" class="btn-action" type="submit">עדכנו אותי על רפואת משפחה</button>
         <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
       </form>
       <span id="notifyMsg" role="status" aria-live="polite"></span>
     </div>
+    <p class="back">מתכוננים לשלב א בנפרולוגיה? <a href="/">ההכנה כבר פתוחה ←</a></p>
   </section>
-
-  <p class="back">מתכוננים לשלב א בנפרולוגיה? <a href="/">ההכנה כבר פתוחה ←</a></p>
 </main>
 
 <footer>
   <div class="foot">
-    <span class="word"><b style="font-size:16px;color:#7DA2C4">MeduXa</b><i style="font-size:16px">.ai</i></span>
-    <span><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a><a href="/accessibility">הצהרת נגישות</a></span>
-    <small>© 2026 MeduXa · כל הזכויות שמורות</small>
+    <span class="word"><b>MeduXa</b><i>.ai</i></span>
+    <span class="foot-links"><a class="foot-link" href="/privacy">מדיניות פרטיות</a><a class="foot-link" href="/terms">תנאי שימוש</a><a class="foot-link" href="/accessibility">הצהרת נגישות</a></span>
+    <small>© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</small>
   </div>
 </footer>
 
