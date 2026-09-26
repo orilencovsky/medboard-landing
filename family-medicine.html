@@ -147,11 +147,13 @@
   .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
   .cmp thead th { background: #E7F0F7; font-size: 14px; font-weight: 700; color: #334155; }
   .cmp thead th.us { background: #0B2545; color: #fff; }
+  .cmp-brand { display: inline-flex; align-items: center; gap: 7px; direction: ltr; white-space: nowrap; }
+  .cmp-brand svg { flex: none; filter: drop-shadow(0 0 8px rgba(34,211,238,.25)); }
+  .cmp .cmp-brand .word b, .cmp .cmp-brand .word i { font-size: 16px; }
   .cmp tbody th { font-weight: 700; color: #0F172A; width: 24%; }
   .cmp td { color: #475569; }
   .cmp td.us { background: rgba(34,211,238,.08); color: #0F172A; font-weight: 600; }
   .yes::before { content: '✓'; color: #0E7490; font-weight: 800; margin-inline-end: 6px; }
-  .soon::before { content: '○'; color: #0E7490; font-weight: 700; margin-inline-end: 6px; }
   .no::before { content: '–'; color: #94A3B8; margin-inline-end: 6px; }
   .cmp .short { display: none; }
   .cmp-note { margin: 12px 0 0; font-size: 13px; color: #5B6B80; text-align: center; }
@@ -219,6 +221,10 @@
     .cmp tbody th { width: 34%; font-size: 13.5px; }
     .cmp .full { display: none; }
     .cmp .short { display: inline; }
+    .cmp .cmp-brand { gap: 4px; }
+    .cmp .cmp-brand svg { width: 16px; height: 16px; }
+    .cmp .cmp-brand .word b { font-size: 13px; }
+    .cmp .cmp-brand .word i { display: none; }
     /* The short text says it all; keep the marker only in the MeduXa column. */
     .cmp td.no::before, .cmp td:not(.us).yes::before { content: none; }
   }
@@ -328,9 +334,9 @@
         <p>מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה — רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. MeduXa משלבת את שניהם, סביב הבחינה.</p>
       </div>
       <table class="cmp">
-        <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="ltr-iso">MeduXa</span></th><th scope="col"><span class="full">מאגר שאלות רגיל</span><span class="short">מאגר</span></th><th scope="col"><span class="full">צ׳אט <span class="ltr-iso">AI</span> כללי</span><span class="short"><span class="ltr-iso">AI</span> כללי</span></th></tr></thead>
+        <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="cmp-brand" aria-label="MeduXa"><svg width="22" height="22" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect><rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="5"></rect><path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="9" stroke-linecap="round" fill="none"></path><circle cx="48" cy="48" r="11" fill="#22D3EE"></circle></svg><span class="word" aria-hidden="true"><b>MeduXa</b><i>.ai</i></span></span></th><th scope="col"><span class="full">מאגר שאלות רגיל</span><span class="short">מאגר</span></th><th scope="col"><span class="full">צ׳אט <span class="ltr-iso">AI</span> כללי</span><span class="short"><span class="ltr-iso">AI</span> כללי</span></th></tr></thead>
         <tbody>
-        <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us soon" data-label="MeduXa"><span class="full">נבנות עכשיו לרפואת משפחה</span><span class="short">בבנייה</span></td><td class="yes" data-label="מאגר שאלות"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></td></tr>
+        <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us yes" data-label="MeduXa"><span class="full">שאלות בפורמט שלב א, עם הסבר מלא</span><span class="short">יש</span></td><td class="yes" data-label="מאגר שאלות"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></td></tr>
         <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us yes" data-label="MeduXa"><span class="full">ציטוט מילה-במילה לכל שאלה, שאפשר לבדוק</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">לרוב בלי מקור מצוטט</span><span class="short">לרוב לא</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">רק אם העליתם את המקור בעצמכם</span><span class="short">אם תעלו</span></td></tr>
         <tr><th scope="row">ביקורת מומחה</th><td class="us yes" data-label="MeduXa"><span class="full">כל שאלה עוברת ביקורת מומחה</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">משתנה בין מאגרים</span><span class="short">משתנה</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
         <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us yes" data-label="MeduXa"><span class="full">מובנה בכל שאלה</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">אין</span><span class="short">אין</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">רק אם תבנו לו את כל ההקשר</span><span class="short">אם תבנו</span></td></tr>
@@ -403,17 +409,17 @@
         body: JSON.stringify({ email: val, locale: 'he', source: 'landing_fm', consent_at: new Date().toISOString() })
       }).then(function (r) {
         if (!(r.ok || r.status === 409)) { var err = new Error('status ' + r.status); err.server = true; throw err; } // 409 = already listed
-        // 409 = this address is already on the waitlist from an earlier form
-        // (the email is unique). Mark the family-medicine interest on that row
-        // so the launch email reaches it. Best effort: a failure here must not
-        // turn a sign-up the person already has into an error on screen.
-        if (r.status === 409) {
-          return fetch(SUPA_URL + '/rest/v1/rpc/waitlist_add_interest', {
-            method: 'POST',
-            headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ p_email: val, p_interest: 'family_medicine' })
-          }).catch(function () {});
-        }
+        // Every bundle's early signup is a mark in waitlist.interests, so this
+        // page's list is simply interests ? 'family_medicine'. Set it on a new
+        // row and on a 409 (the address is already listed from an earlier form;
+        // the email is unique). Best effort: a failure here must not turn a
+        // sign-up the person already has into an error on screen — the row's
+        // source 'landing_fm' still identifies a new sign-up.
+        return fetch(SUPA_URL + '/rest/v1/rpc/waitlist_add_interest', {
+          method: 'POST',
+          headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ p_email: val, p_interest: 'family_medicine' })
+        }).catch(function () {});
       }).then(function () {
         form.removeAttribute('aria-busy');
         form.style.display = 'none';
