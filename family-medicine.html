@@ -84,7 +84,7 @@
     .btn:hover .ph-arrow-left { transform: translateX(-3px); }
   }
   /* Sending: a fast spinner reads as a fast send. */
-  .spin { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff;
+  .spin { width: 18px; height: 18px; margin-block: 2px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff;
           animation: spin .6s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -165,6 +165,7 @@
   .q-opt.is-wrong .ph-x-circle { opacity: 1; color: var(--bad); }
   /* The margin sits on the child, so an empty box is 0 tall and the height
      tween (script below) starts from nothing. */
+  .q-out { display: flow-root; } /* keeps the child's margin inside, tween or not */
   .q-out > * { margin-top: 14px; }
   .q-explain { display: grid; gap: 12px; animation: swap-in .3s var(--ease) both; }
   .q-explain p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--t2); }
@@ -349,7 +350,7 @@
     .js .statement.read .w.lit { opacity: 1; }
 
     /* The sample question tilts up into place, like a card laid on the desk. */
-    .js .q.enter { transform-origin: 50% 0; animation: card-in 1.2s var(--ease) .45s both; }
+    .js .q.enter { transform-origin: 50% 0; animation: card-in 1.2s var(--ease) .45s backwards; }
     @keyframes card-in { from { opacity: 0; transform: perspective(1400px) rotateX(18deg) translateY(56px) scale(.96); filter: blur(6px); }
                          to { opacity: 1; transform: none; filter: none; } }
 
@@ -708,9 +709,10 @@
     var running = new WeakMap();
     return function (box, change) {
       var from = box.offsetHeight;
+      var prev = running.get(box);
+      if (prev) { prev.cancel(); running.delete(box); box.style.overflow = ''; }
       change();
       if (still || document.hidden || !box.animate) return; // a hidden tab's clock is paused
-      var prev = running.get(box); if (prev) prev.cancel();
       var to = box.offsetHeight;
       if (from === to) return;
       box.style.overflow = 'hidden';
@@ -748,7 +750,7 @@
       // Screen readers get the heading whole, not word by word.
       // innerText turns the <br> into a break, so the words either side of
       // it stay two words.
-      el.setAttribute('aria-label', el.innerText.replace(/\s+/g, ' ').trim());
+      if (/^H[1-6]$/.test(el.tagName)) el.setAttribute('aria-label', el.innerText.replace(/\s+/g, ' ').trim());
       el.classList.add('split');
       return n;
     }
@@ -826,26 +828,28 @@
       o.setAttribute('aria-pressed', 'false');
       o.addEventListener('click', function () {
         var right = o.hasAttribute('data-right');
-        if (o.getAttribute('aria-pressed') === 'true') return; // same answer again: nothing new to show
-        opts.forEach(function (x) { x.classList.remove('is-right', 'is-wrong'); x.setAttribute('aria-pressed', 'false'); });
-        o.classList.add(right ? 'is-right' : 'is-wrong');
-        o.setAttribute('aria-pressed', 'true');
-        swapHeight(out, function () {
-          if (right) {
-            out.innerHTML =
-              '<div class="q-explain">' +
-                '<p><strong>נכון.</strong> <strong>למה לא להתחיל טיפול:</strong> הפער בין <span class="ltr-iso">148/94</span> במרפאה לבין <span class="ltr-iso">115/70</span> בבית מעלה חשד ליתר לחץ דם של חלוק לבן, וטיפול לפי מדידות המרפאה בלבד עלול להיות מיותר.</p>' +
-                '<p><strong>ולמה לא להסתפק במדידות שלו:</strong> הן לא נעשו לפי פרוטוקול. מאשרים במדידות ביתיות מובנות (מכשיר זרוע מאושר, בוקר וערב) או בניטור אמבולטורי של 24 שעות, ורק אז מחליטים.</p>' +
-                '<p><strong>ומה הלאה:</strong> אם יתר לחץ הדם מאושר, מתחילים ניהול שמטרתו להפחית תחלואה ותמותה קרדיווסקולרית. אם המדידות תקינות, זה יתר לחץ דם של חלוק לבן: הסיכון הקרדיווסקולרי נמוך מיתר לחץ דם מתמשך אך גבוה מלחץ דם תקין, והמצב עלול להתקדם, ולכן ממשיכים בשינוי אורחות חיים ובמעקב שנתי.</p>' +
-                '<figure class="q-src"><blockquote>״בהתאם לעדכון 2026, מומלץ בחוזקה אישור האבחנה באמצעות מדידות מחוץ למרפאה. מדובר במרכיב מהותי של תהליך האבחנה.״</blockquote>' +
-                '<figcaption>יתר לחץ דם בישראל: אבחנה, טיפול ואיזון, 2026. ההסתדרות הרפואית בישראל, עמ׳&nbsp;6</figcaption></figure>' +
-              '</div>';
-          } else {
-            out.innerHTML =
-              '<div class="q-tutor"><i class="ph ph-chats-circle" aria-hidden="true"></i>' +
-                '<p><b>המורה:</b> ' + o.getAttribute('data-tutor') + '</p></div>';
-          }
-        });
+        var again = o.getAttribute('aria-pressed') === 'true'; // same answer again: nothing new to show
+        if (!again) {
+          opts.forEach(function (x) { x.classList.remove('is-right', 'is-wrong'); x.setAttribute('aria-pressed', 'false'); });
+          o.classList.add(right ? 'is-right' : 'is-wrong');
+          o.setAttribute('aria-pressed', 'true');
+          swapHeight(out, function () {
+            if (right) {
+              out.innerHTML =
+                '<div class="q-explain">' +
+                  '<p><strong>נכון.</strong> <strong>למה לא להתחיל טיפול:</strong> הפער בין <span class="ltr-iso">148/94</span> במרפאה לבין <span class="ltr-iso">115/70</span> בבית מעלה חשד ליתר לחץ דם של חלוק לבן, וטיפול לפי מדידות המרפאה בלבד עלול להיות מיותר.</p>' +
+                  '<p><strong>ולמה לא להסתפק במדידות שלו:</strong> הן לא נעשו לפי פרוטוקול. מאשרים במדידות ביתיות מובנות (מכשיר זרוע מאושר, בוקר וערב) או בניטור אמבולטורי של 24 שעות, ורק אז מחליטים.</p>' +
+                  '<p><strong>ומה הלאה:</strong> אם יתר לחץ הדם מאושר, מתחילים ניהול שמטרתו להפחית תחלואה ותמותה קרדיווסקולרית. אם המדידות תקינות, זה יתר לחץ דם של חלוק לבן: הסיכון הקרדיווסקולרי נמוך מיתר לחץ דם מתמשך אך גבוה מלחץ דם תקין, והמצב עלול להתקדם, ולכן ממשיכים בשינוי אורחות חיים ובמעקב שנתי.</p>' +
+                  '<figure class="q-src"><blockquote>״בהתאם לעדכון 2026, מומלץ בחוזקה אישור האבחנה באמצעות מדידות מחוץ למרפאה. מדובר במרכיב מהותי של תהליך האבחנה.״</blockquote>' +
+                  '<figcaption>יתר לחץ דם בישראל: אבחנה, טיפול ואיזון, 2026. ההסתדרות הרפואית בישראל, עמ׳&nbsp;6</figcaption></figure>' +
+                '</div>';
+            } else {
+              out.innerHTML =
+                '<div class="q-tutor"><i class="ph ph-chats-circle" aria-hidden="true"></i>' +
+                  '<p><b>המורה:</b> ' + o.getAttribute('data-tutor') + '</p></div>';
+            }
+          });
+        }
         if (typeof gtag === 'function') gtag('event', 'fm_sample_question', { result: right ? 'right' : 'wrong', answer: o.getAttribute('data-k') });
       });
     });
