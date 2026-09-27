@@ -1,11 +1,12 @@
 // POST /api/tutor — the live Socratic tutor behind the hero demo card.
 //
 // The system prompt lives here and never in the page, so the endpoint cannot be
-// driven as a general-purpose chat. Requires ANTHROPIC_API_KEY in the Vercel
-// project's environment variables (Production + Preview).
+// driven as a general-purpose chat. Requires OPENROUTER_API_KEY in the Vercel
+// project's environment variables (Production + Preview) — a key used only by
+// this site, with its own credit limit set on openrouter.ai.
 //
 // Deliberately dependency-free, like the rest of the repo: this is one call to
-// the Messages API over the Node runtime's global fetch, so there is no
+// OpenRouter's chat completions API over the Node runtime's global fetch, so there is no
 // package.json and no install step for Vercel to run.
 
 const CASE_HE = [
@@ -56,31 +57,40 @@ const SYSTEM_EN = [
   CASE_EN
 ].join('\n');
 
-// Best-effort limits. Serverless instances are short-lived and there may be
-// several at once, so treat these as a speed bump rather than a guarantee —
-// move them to Vercel KV / Upstash Redis if abuse shows up in the logs.
-const HITS = new Map();   // ip -> [timestamps]
-const IP_LIMIT = 3;       // per hour
-const HOUR = 3600e3;
+// Per-IP limiting now lives in the Vercel Firewall (see docs/firewall-rules.json),
+// not here — it sees every request before it reaches this function, so it works
+// even across the several warm instances a Fluid deployment can keep around.
+// This is just the per-instance daily kill-switch; the real global bound is the
+// credit limit set on this site's own OpenRouter key.
 let dayStamp = new Date().toDateString();
 let dayCount = 0;
-const DAY_LIMIT = 600;    // global kill-switch, roughly $1/day on Haiku
+const DAY_LIMIT = 300;    // per-instance daily kill-switch
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
-  if (!process.env.ANTHROPIC_API_KEY) return res.status(503).json({ error: 'not_configured' });
+  // ANTHROPIC_API_KEY is the variable's old name — it already held an
+  // OpenRouter key. Drop the fallback once OPENROUTER_API_KEY is set in Vercel.
+  const apiKey = process.env.OPENROUTER_API_KEY || process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return res.status(503).json({ error: 'not_configured' });
+
+  // Same-origin check: reject cross-site POSTs before any work. Compared
+  // against the request's own `host` header (not a hard-coded domain) so
+  // preview deployments keep working. A missing header is allowed through —
+  // both are absent for some legitimate direct/older clients.
+  const origin = req.headers['origin'];
+  const host = req.headers['host'];
+  if (origin) {
+    let originHost;
+    try { originHost = new URL(origin).host; } catch (e) { originHost = null; }
+    if (originHost !== host) return res.status(403).json({ error: 'forbidden' });
+  }
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (secFetchSite && secFetchSite !== 'same-origin') return res.status(403).json({ error: 'forbidden' });
 
   const today = new Date().toDateString();
   if (today !== dayStamp) { dayStamp = today; dayCount = 0; }
   if (dayCount >= DAY_LIMIT) return res.status(429).json({ error: 'daily_cap' });
-
-  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
-  const now = Date.now();
-  const hits = (HITS.get(ip) || []).filter((t) => now - t < HOUR);
-  if (hits.length >= IP_LIMIT) return res.status(429).json({ error: 'rate_limited' });
-  hits.push(now);
-  HITS.set(ip, hits);
 
   let body;
   try {
@@ -96,39 +106,45 @@ module.exports = async function handler(req, res) {
     content: String(m.content || '').slice(0, 600)
   }));
 
-  const headers = {
-    'content-type': 'application/json',
-    'x-api-key': process.env.ANTHROPIC_API_KEY,
-    'anthropic-version': '2023-06-01'
-  };
-  // Required only for a key that isn't scoped to a single workspace; omit
-  // ANTHROPIC_WORKSPACE_ID entirely for a key that already is.
-  if (process.env.ANTHROPIC_WORKSPACE_ID) headers['anthropic-workspace-id'] = process.env.ANTHROPIC_WORKSPACE_ID;
-
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
+    const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers,
+      headers: {
+        'content-type': 'application/json',
+        authorization: 'Bearer ' + apiKey,
+        'HTTP-Referer': 'https://meduxa.ai',
+        'X-Title': 'MeduXa landing tutor'
+      },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5',
+        model: 'anthropic/claude-haiku-4.5',
         // The prompt caps the reply at 55 words; this is headroom, not a target.
         max_tokens: 300,
+        // Only route to providers that don't keep prompts for training.
+        provider: { data_collection: 'deny' },
         // Binary today (README § Adding a third language). A new locale needs its
         // own SYSTEM_* prompt written in that language, not a translated one.
-        system: body.locale === 'en' ? SYSTEM_EN : SYSTEM_HE,
-        messages
+        messages: [{ role: 'system', content: body.locale === 'en' ? SYSTEM_EN : SYSTEM_HE }].concat(messages)
       })
     });
     if (!r.ok) {
-      // Anthropic's error body is safe to relay as-is: a standard type/message
-      // pair, never the key itself. Worth the visibility on a misconfigured
-      // deployment — the alternative is debugging a bare status code blind.
+      // Never relay the upstream error detail to the browser — log it
+      // server-side instead, where it's still there to debug a misconfigured
+      // deployment.
       let detail;
       try { detail = (await r.json()).error; } catch (e) {}
-      return res.status(r.status === 429 ? 429 : 502).json({ error: 'upstream', status: r.status, detail });
+      console.error('tutor upstream error', r.status, detail);
+      if (r.status === 429) return res.status(429).json({ error: 'busy' });
+      // 402: out of credits. 403 with "limit": this key's own credit limit is
+      // spent. Either way the demo is paused until someone tops it up.
+      if (r.status === 402 || (r.status === 403 && /limit|credit/i.test((detail && detail.message) || ''))) {
+        return res.status(503).json({ error: 'paused' });
+      }
+      return res.status(502).json({ error: 'upstream' });
     }
     const data = await r.json();
-    const reply = (data.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
+    const msg = data.choices && data.choices[0] && data.choices[0].message;
+    const reply = String((msg && msg.content) || '').trim();
+    if (!reply) return res.status(502).json({ error: 'upstream' });
     dayCount++;
     return res.status(200).json({ reply });
   } catch (e) {

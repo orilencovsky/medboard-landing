@@ -1,0 +1,27 @@
+{
+  "_comment": "Per-IP limiting for /api/tutor, in the exact shape of one entry of `rules` in the Vercel Firewall API (PUT/PATCH /v1/security/firewall/config). Vercel does not read this file — rate-limit rules can't live in vercel.json — so apply it via the API or re-create it by hand under Project -> Firewall. Pro caps rate-limit windows at 10 minutes, hence 600 s. No persistent block (actionDuration null): a timed ban would black out a whole hospital behind one NAT.",
+  "name": "tutor-per-ip",
+  "description": "AI tutor demo: 10 POSTs per 10 min per IP (hospital NAT-safe). See docs/firewall-rules.json in the repo.",
+  "active": true,
+  "conditionGroup": [
+    {
+      "conditions": [
+        { "type": "path", "op": "eq", "value": "/api/tutor" },
+        { "type": "method", "op": "eq", "value": "POST" }
+      ]
+    }
+  ],
+  "action": {
+    "mitigate": {
+      "action": "rate_limit",
+      "rateLimit": {
+        "algo": "fixed_window",
+        "window": 600,
+        "limit": 10,
+        "keys": ["ip"],
+        "action": "rate_limit"
+      },
+      "actionDuration": null
+    }
+  }
+}

@@ -688,7 +688,7 @@
             </div>
 
             <div class="qchat" style="flex-direction: column; gap: 10px;">
-              <div class="qthread" style="display: flex; flex-direction: column; gap: 10px;"></div>
+              <div class="qthread" aria-live="polite" style="display: flex; flex-direction: column; gap: 10px;"></div>
               <div class="qreplies" style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
                 <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B95B5;">Your answer:</span>
                 <div class="qreply" role="button" tabindex="0">Urine output</div>
@@ -1371,9 +1371,17 @@
           history.push({ role: 'assistant', content: reply });
           if (typeof va === 'function') va('event', { name: 'tutor_reply_shown' });
         })
-        .catch(function () {
-          pending.querySelector('.t-live').textContent = 'One moment — the connection to the tutor dropped. Try sending again.';
-          history.pop(); turns--;   // refund the quota, the visitor never got an answer
+        .catch(function (status) {
+          // 429/503 cover our own daily cap, the WAF's rate limit (whose body
+          // isn't JSON), and the endpoint being unconfigured or paused — all
+          // "try later", not "it broke", so the quota isn't refunded and the
+          // input stays disabled as it would after a used message.
+          if (status === 429 || status === 503) {
+            pending.querySelector('.t-live').textContent = 'The tutor is taking a short break — please try again later.';
+          } else {
+            pending.querySelector('.t-live').textContent = 'One moment — the connection to the tutor dropped. Try sending again.';
+            history.pop(); turns--;   // refund the quota, the visitor never got an answer
+          }
         })
         .then(function () {
           busy = false;

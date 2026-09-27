@@ -41,8 +41,8 @@ docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
 
 There is **no build step and no dependencies** — the pages are hand-authored static HTML with
-inline styles and inline scripts, and `api/tutor.js` is a single `fetch` against the Anthropic
-Messages API, so there is no root `package.json` for Vercel to install from either. Open
+inline styles and inline scripts, and `api/tutor.js` is a single `fetch` against OpenRouter's
+chat completions API, so there is no root `package.json` for Vercel to install from either. Open
 `index.html` in a browser, or serve the directory:
 
 ```bash
@@ -85,7 +85,7 @@ What has to stay true as the site changes — each of these is a statement the p
 |---|---|
 | Waitlist emails are kept 24 months, or until deletion is requested (30-day turnaround) | …see [Handling a deletion request](#handling-a-deletion-request) — today that's a manual `DELETE` against Supabase, not an automated flow, so the 30-day and 24-month promises hold only as long as someone is actually doing that by hand |
 | Without consent only `mx_lang` (cookie) and `mx_analytics_consent` (localStorage) are stored; GA4 and Clarity cookies are set **only after opt-in** | …any new identifier-based script must load through `consent.js` and be named in § 3 and § 4 of both pages |
-| Processors are Supabase, Vercel and Anthropic, plus Google (GA4) and Microsoft (Clarity) only with consent, transferring under their DPAs' SCCs | …a new third-party script or backend is a new named processor in § 4 |
+| Processors are Supabase, Vercel, OpenRouter and Anthropic, plus Google (GA4) and Microsoft (Clarity) only with consent, transferring under their DPAs' SCCs | …a new third-party script or backend is a new named processor in § 4 |
 | `privacy@meduxa.ai` is answered within 30 days | …the address has to keep reaching a human; it is the only contact point in both documents |
 | The controller is "MeduXa" | …on incorporation, name the registered entity here — a trade name alone does not satisfy GDPR Art. 13(1)(a) |
 
@@ -288,23 +288,32 @@ message quota never reset. Re-picking used to reset all three, which let a visit
 their way to the ✓ and refill the client-side quota at will.
 
 `api/tutor.js` holds the system prompt server-side, so the endpoint cannot be driven as a
-general-purpose chat. It needs `ANTHROPIC_API_KEY` set in **Vercel → Project → Settings →
-Environment Variables** (Production + Preview); without it the endpoint answers `503`
-`not_configured` and the card shows its "connection dropped" message. If that key is not scoped to
-a single workspace, the Anthropic API also requires an `anthropic-workspace-id` header, or every
-request 400s — set `ANTHROPIC_WORKSPACE_ID` (Console → Settings → Workspaces) alongside it; the
-header is only sent when that variable is present. Spend is bounded on four layers:
+general-purpose chat. It calls **OpenRouter** (`anthropic/claude-haiku-4.5`, with
+`provider.data_collection: 'deny'` so prompts only go to providers that don't train on them), not
+the Anthropic API directly, since the project's keys are OpenRouter keys. **The live chat is
+switched off on purpose for now**: `CHAT_ENABLED = false` in both `index.html` and `en/index.html`
+hides `.qchat` and makes `send()` a no-op, so the endpoint is never called (the scripted per-option
+explanations still work). To turn it back on, flip that flag in both pages and set a working key as
+below. It needs
+`OPENROUTER_API_KEY` set in **Vercel → Project → Settings → Environment Variables** (Production +
+Preview); the old name `ANTHROPIC_API_KEY` is still read as a fallback and can be deleted once the
+new one is set. Without either, the endpoint answers `503` `not_configured` and the card shows its
+"the tutor is taking a short break" message. Spend is bounded on five layers:
 
 | Layer | Limit |
 |---|---|
 | Client | 1 message per visitor (`MAX_MESSAGES`), not refilled by re-picking |
-| Endpoint | 3 requests/hour per IP; 600 requests/day global kill-switch |
-| Model | `claude-haiku-4-5`, `max_tokens: 300` |
-| Prompt | System prompt server-side only |
+| Vercel Firewall | 10 POSTs/10 min per IP on `/api/tutor`, counted per region; the rule itself lives outside this repo — see `docs/firewall-rules.json` for a re-appliable record of it |
+| Endpoint | Same-origin check (rejects cross-site POSTs); 300 requests/day per-instance kill-switch |
+| OpenRouter key | A key used only by this site, with its own credit limit (e.g. $20) set on openrouter.ai → Keys, so the demo can never spend the app's budget |
+| Model | `anthropic/claude-haiku-4.5`, `max_tokens: 300` |
 
-At roughly 1,000 input + 150 output tokens per reply (≈ $0.001), the daily cap bounds spend at
-about **$1/day**. The rate limiter lives in memory, so it is per serverless instance and
-best-effort — move it to Vercel KV / Upstash if the logs ever show abuse.
+At roughly 1–1.5k input + 150 output tokens per reply on Haiku 4.5 ($1/MTok in, $5/MTok out, plus
+OpenRouter's fee on credit purchases), each reply costs about **$0.002**. The hard backstop isn't
+the per-instance daily counter — it's the key's credit limit: once it's spent (or the account runs
+out of credits) OpenRouter answers `402`/`403`, and the endpoint maps that to `503 paused`, which
+the card shows as the same "taking a short break" line. Upstream error detail is logged, never sent
+to the browser.
 
 The endpoint takes a `locale` field (`he` / `en`) and switches the system prompt on it; each page
 sends its own. The pages' copy and the prompt's case notes state the same KDIGO facts, so both
@@ -324,7 +333,8 @@ each tier. To regenerate them from a raw clip:
 ```
 
 The script strips audio, scales to 1600px (desktop) and 800px (phone), and targets roughly
-"desktop pair under 5 MB, mobile pair under 1 MB". It needs `ffmpeg` (`brew install ffmpeg`).
+"desktop pair under 5 MB, mobile pair under 1 MB"; the desktop mp4 is capped at 1200 kbps (~1 MB),
+since it used to come out at 4.5 MB against a 0.3 MB webm. It needs `ffmpeg` (`brew install ffmpeg`).
 
 ## Editing conventions
 
