@@ -486,6 +486,14 @@
   #mobileMenu { transition: opacity .2s ease, transform .25s var(--ease); }
   @starting-style { #mobileMenu { opacity: 0; transform: translateY(-8px); } }
 
+  /* Until the script has marked the page: the hero waits hidden (so it is
+     never painted and then hidden again), and every marked element takes
+     its hidden state instantly. Without this, adding the hidden state to an
+     already visible element would itself transition, from shown to hidden. */
+  .motion.prep header[data-mq-hero] div:has(> h1) > *, .motion.prep header[data-mq-hero] .qcard { opacity: 0; }
+  .motion.prep .rv, .motion.prep .rv-card, .motion.prep .rv-deal, .motion.prep .rv-pop, .motion.prep .w,
+  .motion.prep .rv-draw { transition: none !important; }
+
   /* Generic reveal: .rv elements rise into place when their group is seen.
      The script writes each one's delay into --d. */
   .motion .rv { opacity: 0; transform: translateY(18px);
@@ -520,12 +528,20 @@
 
   /* Loop: the travelled arc draws itself, then the stages light in order. */
   .motion .rv-draw { transition: stroke-dashoffset 1.4s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .rv-pop { opacity: 0; scale: .85; transition: opacity .5s ease, scale .7s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .in .rv-pop { opacity: 1; scale: 1; }
+  .motion .rv-pop { opacity: 0; translate: 0 14px; transition: opacity .5s ease, translate .7s var(--ease); transition-delay: var(--d, 0ms); }
+  .motion .in .rv-pop { opacity: 1; translate: 0 0; }
+  /* (translate, not scale: these elements centre themselves with their own
+     transform, and a scale would scale that offset too.) */
 
   /* Once an entrance has played, drop its delay so later interactions
      (hover, focus, the loop's tabs) answer immediately. */
   .motion .settled { transition-delay: 0s !important; }
+
+  /* Phones: half the blur, for the smaller GPU. */
+  @media (max-width: 600px) {
+    .motion .rv-card { filter: blur(3px); }
+    .motion .split .w { filter: blur(4px); }
+  }
 
   /* Reading progress under the nav, driven by the scroll itself. */
   @supports (animation-timeline: scroll()) {
@@ -541,7 +557,16 @@
     @starting-style { #mobileMenu { transform: none; } }
   }
 </style>
-<script>if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.classList.add('motion');</script>
+<script>
+  // html.motion: motion is welcome. html.prep: the motion script has not
+  // taken over yet; the hero waits hidden, and marked elements take their
+  // hidden state without a transition. The script clears it; if the script
+  // never runs, DOMContentLoaded does, so the page can never stay hidden.
+  if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    document.documentElement.classList.add('motion', 'prep');
+    document.addEventListener('DOMContentLoaded', function () { document.documentElement.classList.remove('prep'); });
+  }
+</script>
 <noscript><style>.loop-panel[hidden] { display: flex; }</style></noscript>
 </head>
 <body>
@@ -1595,8 +1620,11 @@
     function head(block, start) {
       var t = start || 0;
       Array.prototype.slice.call(block.children).forEach(function (c) {
-        if (c.matches('h1, h2')) { var n = split(c, t); t += n * W + 120; }
-        else { mark(c, 'rv', t); t += 110; }
+        if (c.matches('h1, h2')) { var n = split(c, t); t += n * W + 120; return; }
+        // A button keeps its own transitions (press, hover): the wrapper
+        // moves, the button doesn't.
+        if (c.matches('.btn-action')) { var wrap = document.createElement('div'); c.parentNode.insertBefore(wrap, c); wrap.appendChild(c); c = wrap; }
+        mark(c, 'rv', t); t += 110;
       });
       block.classList.add('rv-group');
       return t;
@@ -1682,7 +1710,7 @@
       ring.classList.add('rv-group');
     }
     var ribbon = document.querySelector('#how .loop-ribbon');
-    if (ribbon) cards(ribbon, 'rv', 60);
+    if (ribbon) mark(ribbon, 'rv', 150); // as one: its tabs keep their own transitions
     var panels = document.querySelector('#how .loop-panels');
     if (panels) { mark(panels, 'rv', 300); panels.parentNode.classList.add('rv-group'); }
 
@@ -1694,6 +1722,11 @@
       mark(p, 'rv-draw', 150 + i * 250);
       p._play = function () { p.style.strokeDashoffset = 0; };
     });
+
+    // Hidden states are in place; one layout commits them, then transitions
+    // come back for the entrances.
+    void document.body.offsetWidth;
+    root.classList.remove('prep');
 
     // ── Play each group once, when it scrolls into view. ──
     function play(g) {
@@ -1713,7 +1746,8 @@
     // Once an element's entrance ends, it drops the delay (see .settled).
     document.addEventListener('transitionend', function (e) {
       var el = e.target;
-      if (el.style && el.style.getPropertyValue('--d') && !el.classList.contains('settled')) el.classList.add('settled');
+      // Only once it has entered: its group (or itself) is .in.
+      if (el.style && el.style.getPropertyValue('--d') && !el.classList.contains('settled') && el.closest('.in')) el.classList.add('settled');
     });
   })();
 </script>
