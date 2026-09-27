@@ -350,7 +350,9 @@
     .js .statement.read .w.lit { opacity: 1; }
 
     /* The sample question tilts up into place, like a card laid on the desk. */
-    .js .q.enter { transform-origin: 50% 0; animation: card-in 1.2s var(--ease) .45s backwards; }
+    /* Its resting state is fully visible (overriding .enter's hidden start),
+       so the animation only fills backwards and leaves no filter behind. */
+    .js .q.enter { opacity: 1; transform: none; transform-origin: 50% 0; animation: card-in 1.2s var(--ease) .45s backwards; }
     @keyframes card-in { from { opacity: 0; transform: perspective(1400px) rotateX(18deg) translateY(56px) scale(.96); filter: blur(6px); }
                          to { opacity: 1; transform: none; filter: none; } }
 
