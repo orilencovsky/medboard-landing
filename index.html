@@ -83,7 +83,6 @@
 <style>
   body { margin: 0; background: #061225; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #22D3EE; }
-  @keyframes dotPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
   /* The video sits in .hero-bg rather than in <header> directly: object-fit
      re-crops on every height change, and the demo card below grows as it is
      answered. The pin script at the bottom of the page freezes this box's
@@ -172,7 +171,7 @@
      strip. Hidden until the 640px deck flattens into a swipe carousel. */
   .sci-progress { display: none; align-items: center; gap: 12px; margin-top: 22px; }
   .sci-progress-track { flex: 1; height: 4px; background: #153650; border-radius: 3px; overflow: hidden; }
-  .sci-progress-fill { height: 100%; width: 11%; background: linear-gradient(90deg, #0EA5E9, #22D3EE); transition: width .25s ease; }
+  .sci-progress-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #0EA5E9, #22D3EE); transform: scaleX(.111); transform-origin: 100% 50%; transition: transform .25s cubic-bezier(.16, 1, .3, 1); } /* scaleX, not width: no layout per step; fills from the start (right) side */
   .sci-progress-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B95B5; direction: ltr; white-space: nowrap; }
   .sci-deck { position: relative; }
   /* Floats over the deck itself, not the progress row below. Card copy
@@ -521,7 +520,105 @@
   .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
           padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; text-decoration: none; }
   .skip:focus { inset-inline-start: 0; color: #fff; }
+
+  /* ── Motion ──────────────────────────────────────────────────────────────
+     One curve for the whole site (the family medicine page uses the same).
+     Everything below is gated on html.motion, which the head script sets
+     only when the visitor has not asked for reduced motion, so without JS
+     or with reduced motion every element simply sits in place. */
+  :root { --ease: cubic-bezier(.16, 1, .3, 1); }
+
+  /* Press feedback on the violet buttons. */
+  .btn-action { transition: box-shadow .15s ease, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .btn-action:active { transform: scale(.97); }
+
+  /* The mobile menu eases in when it opens (display: none -> flex) and
+     closes instantly: the system answering, not the visitor deciding. */
+  #mobileMenu { transition: opacity .2s ease, transform .25s var(--ease); }
+  @starting-style { #mobileMenu { opacity: 0; transform: translateY(-8px); } }
+
+  /* Until the script has marked the page: the hero waits hidden (so it is
+     never painted and then hidden again), and every marked element takes
+     its hidden state instantly. Without this, adding the hidden state to an
+     already visible element would itself transition, from shown to hidden. */
+  .motion.prep header[data-mq-hero] .qcard { opacity: 0; }
+  .motion.prep header[data-mq-hero] div:has(> h1) > * { opacity: 0; } /* own rule: a browser without :has drops only this one */
+  .motion.prep .rv, .motion.prep .rv-card, .motion.prep .rv-deal, .motion.prep .rv-pop, .motion.prep .w,
+  .motion.prep .rv-draw { transition: none !important; }
+
+  /* Generic reveal: .rv elements rise into place when their group is seen.
+     The script writes each one's delay into --d. */
+  .motion .rv { opacity: 0; transform: translateY(18px);
+                transition: opacity .8s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0ms); }
+  .motion .in .rv, .motion .rv.in { opacity: 1; transform: none; }
+
+  /* Cards: a larger rise, a slight scale and a blur that clears. */
+  .motion .rv-card { opacity: 0; transform: translateY(48px) scale(.95); filter: blur(6px);
+                     transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease); transition-delay: var(--d, 0ms); }
+  .motion .in .rv-card { opacity: 1; transform: none; filter: none; }
+
+  /* Headings word by word, out of a blur. The script splits the heading
+     into .w spans, each with its own --d. */
+  .motion .split .w { display: inline-block; opacity: 0; transform: translateY(.45em); filter: blur(8px);
+                      transition: opacity .7s var(--ease), transform .9s var(--ease), filter .7s var(--ease); transition-delay: var(--d, 0ms); }
+  .motion .in .split .w { opacity: 1; transform: none; filter: none; }
+  /* A gradient phrase: each word carries the gradient itself, since a
+     clipped background on the parent does not follow words that move. */
+  .motion .split [data-grad] .w { background: inherit; -webkit-background-clip: text; background-clip: text; }
+
+  /* Hero demo card tilts up into place, like a card laid on a desk. */
+  .motion .rv-tilt { transform-origin: 50% 0; animation: hp-tilt 1.2s var(--ease) var(--d, 0ms) backwards; }
+  @keyframes hp-tilt { from { opacity: 0; transform: perspective(1400px) rotateX(18deg) translateY(56px) scale(.96); filter: blur(6px); } }
+
+  /* Science deck: the nine cards are dealt onto the table. The individual
+     translate/rotate/scale properties stack on top of each card's own tilt
+     (its transform), so the deck's layout is untouched. */
+  .motion .rv-deal { opacity: 0; translate: 0 64px; rotate: calc(var(--rot, 0) * 5deg); scale: .94;
+                     transition: opacity .7s var(--ease), translate 1s var(--ease), rotate 1.1s var(--ease), scale 1s var(--ease);
+                     transition-delay: var(--d, 0ms); }
+  .motion .in .rv-deal { opacity: 1; translate: 0 0; rotate: 0deg; scale: 1; }
+
+  /* Loop: the travelled arc draws itself, then the stages light in order. */
+  .motion .rv-draw { transition: stroke-dashoffset 1.4s var(--ease); transition-delay: var(--d, 0ms); }
+  .motion .rv-pop { opacity: 0; translate: 0 14px; transition: opacity .5s ease, translate .7s var(--ease); transition-delay: var(--d, 0ms); }
+  .motion .in .rv-pop { opacity: 1; translate: 0 0; }
+  /* (translate, not scale: these elements centre themselves with their own
+     transform, and a scale would scale that offset too.) */
+
+  /* Once an entrance has played, drop its delay so later interactions
+     (hover, focus, the loop's tabs) answer immediately. */
+  .motion .settled { transition-delay: 0s !important; }
+
+  /* Phones: half the blur, for the smaller GPU. */
+  @media (max-width: 600px) {
+    .motion .rv-card { filter: blur(3px); }
+    .motion .split .w { filter: blur(4px); }
+  }
+
+  /* Reading progress under the nav, driven by the scroll itself. */
+  @supports (animation-timeline: scroll()) {
+    .motion nav::after { content: ''; position: absolute; inset-inline: 0; bottom: -1px; height: 2px; pointer-events: none;
+                         background: linear-gradient(270deg, #38BDF8, #22D3EE); transform-origin: 100% 50%; transform: scaleX(0);
+                         animation: hp-progress linear both; animation-timeline: scroll(root); }
+    .motion:not([dir="rtl"]) nav::after { transform-origin: 0 50%; background: linear-gradient(90deg, #38BDF8, #22D3EE); }
+    @keyframes hp-progress { to { transform: scaleX(1); } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-action:active { transform: none; }
+    #mobileMenu { transition: opacity .2s ease; }
+    @starting-style { #mobileMenu { transform: none; } }
+  }
 </style>
+<script>
+  // html.motion: motion is welcome. html.prep: the motion script has not
+  // taken over yet; the hero waits hidden, and marked elements take their
+  // hidden state without a transition. The script clears it; if the script
+  // never runs, DOMContentLoaded does, so the page can never stay hidden.
+  if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    document.documentElement.classList.add('motion', 'prep');
+    document.addEventListener('DOMContentLoaded', function () { document.documentElement.classList.remove('prep'); });
+  }
+</script>
 <noscript><style>.loop-panel[hidden] { display: flex; }</style></noscript>
 </head>
 <body>
@@ -597,7 +694,7 @@
          centred row would push the headline down with it. -->
     <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; gap: 64px; align-items: flex-start; flex-wrap: wrap;">
       <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 26px;">
-        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block; animation: dotPulse 2s infinite;"></span> למידה מבוססת-מדע · מונעת AI</span>
+        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block;"></span> למידה מבוססת-מדע · מונעת AI</span>
         <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">הדרך החכמה להתכונן<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">לבחינות ההתמחות</span></h1>
         <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — הכול מעוגן במקורות האמיתיים שמהם נכתבת הבחינה. נבנה עבור מתמחים.</p>
         <div data-mq-hero-actions style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
@@ -1281,7 +1378,7 @@
   function sciCarouselSetIndex(i) {
     sciDeck.index = i;
     if (sciDeck.countEl) sciDeck.countEl.textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
-    if (sciDeck.fillEl) sciDeck.fillEl.style.width = (((i + 1) / sciDeck.cards.length) * 100) + '%';
+    if (sciDeck.fillEl) sciDeck.fillEl.style.transform = 'scaleX(' + ((i + 1) / sciDeck.cards.length) + ')';
     sciCarouselUpdateNav();
   }
   function sciCarouselUpdateNav() {
@@ -1623,5 +1720,200 @@
     });
   })();
 </script>
+<script>
+  // Motion. Runs only when the head script set html.motion (motion is
+  // welcome). It marks elements with reveal classes and per-element delays,
+  // then one IntersectionObserver plays each group once, the first time it
+  // scrolls into view. Nothing is hidden by the stylesheet unless this
+  // script has marked it, so a script failure leaves the page as it was.
+  (function () {
+    var root = document.documentElement;
+    if (!root.classList.contains('motion')) return;
+    var finals = []; // [element, printed value] for every counter
+    try {
+    var W = 55;   // ms between heading words
+    var S = 70;   // ms between items in a group
+
+    function mark(el, cls, d) { if (!el) return; el.classList.add(cls); el.style.setProperty('--d', Math.round(d) + 'ms'); }
+
+    // Wrap each word in a .w span (recursing into inline elements, which keep
+    // wrapping their words) and give each its delay. Returns the word count.
+    function split(el, start) {
+      var n = 0;
+      (function walk(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+          if (c.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            c.nodeValue.split(/(\s+)/).forEach(function (part) {
+              if (!part) return;
+              if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+              var w = document.createElement('span');
+              w.className = 'w'; w.textContent = part;
+              w.style.setProperty('--d', Math.round(start + n++ * W) + 'ms');
+              frag.appendChild(w);
+            });
+            node.replaceChild(frag, c);
+          } else if (c.nodeType === 1 && c.tagName !== 'BR') {
+            var cs = getComputedStyle(c);
+            if ((cs.webkitBackgroundClip || cs.backgroundClip) === 'text') c.setAttribute('data-grad', '');
+            walk(c);
+          }
+        });
+      })(el);
+      // Screen readers get the heading whole, not word by word; innerText
+      // keeps a <br> as a break between the words either side of it.
+      el.setAttribute('aria-label', el.innerText.replace(/\s+/g, ' ').trim());
+      el.classList.add('split');
+      return n;
+    }
+
+    // A heading block: its children play in order, the heading word by word,
+    // and whatever follows the heading waits for its last word.
+    function head(block, start) {
+      var t = start || 0;
+      Array.prototype.slice.call(block.children).forEach(function (c) {
+        if (c.matches('h1, h2')) { var n = split(c, t); t += n * W + 120; return; }
+        // A button keeps its own transitions (press, hover): the wrapper
+        // moves, the button doesn't.
+        if (c.matches('.btn-action')) { var wrap = document.createElement('div'); c.parentNode.insertBefore(wrap, c); wrap.appendChild(c); c = wrap; }
+        mark(c, 'rv', t); t += 110;
+      });
+      block.classList.add('rv-group');
+      return t;
+    }
+
+    // Count a stat up to its printed value ("1,000+", "100%", "92%").
+    function countUp(el, delay) {
+      var m = /^([\d,]+)(\D*)$/.exec(el.textContent.trim());
+      if (!m) return;
+      var target = parseInt(m[1].replace(/,/g, ''), 10), suffix = m[2], comma = m[1].indexOf(',') > -1;
+      var fmt = function (v) { var s = String(v); return comma ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : s; };
+      // Screen readers get the final figure from a hidden copy; the counting
+      // one is hidden from them.
+      var sr = document.createElement('span');
+      sr.textContent = el.textContent.trim();
+      sr.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;';
+      el.parentNode.insertBefore(sr, el);
+      el.setAttribute('aria-hidden', 'true');
+      finals.push([el, sr.textContent]);
+      el.style.fontVariantNumeric = 'tabular-nums';
+      el.textContent = fmt(0) + suffix;
+      el._play = function () {
+        setTimeout(function () {
+          var t0 = performance.now(), dur = 1400;
+          (function step(now) {
+            var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4); // quartic ease-out
+            el.textContent = fmt(Math.round(target * e)) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+          })(t0);
+        }, delay);
+      };
+    }
+
+    // ── Hero: plays on load. ──
+    var hero = document.querySelector('header[data-mq-hero]');
+    var heroCopy = hero && hero.querySelector('h1').parentNode;
+    if (heroCopy) {
+      var t = head(heroCopy, 120);
+      var stats = heroCopy.querySelector('[data-mq-stats]'), counters = [];
+      if (stats) Array.prototype.slice.call(stats.children).forEach(function (s, i) {
+        s.classList.remove('rv'); mark(s, 'rv', t - 110 + i * S);
+        var fig = s.firstElementChild;
+        countUp(fig, t - 110 + i * S + 150);
+        if (fig._play) counters.push(fig);
+      });
+      if (stats) stats.classList.remove('rv');
+      var demo = hero.querySelector('.qcard');
+      if (demo) mark(demo.parentNode, 'rv-tilt', 450);
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        heroCopy.classList.add('in');
+        counters.forEach(function (n) { n._play(); });
+      }); });
+    }
+
+    // ── Section heading blocks (every h2 outside the hero). ──
+    document.querySelectorAll('main section h2[data-mq-h2]').forEach(function (h) { head(h.parentNode, 0); });
+
+    // ── Card grids: a stagger, row by row as the grid lays them out. ──
+    function cards(grid, cls, step, start) {
+      if (!grid) return;
+      Array.prototype.slice.call(grid.children).forEach(function (c, i) { mark(c, cls, (start || 0) + i * step); });
+      grid.classList.add('rv-group');
+    }
+    cards(document.querySelector('#features [data-mq-cards]'), 'rv-card', S);
+    cards(document.querySelector('#compare .cmp2-grid'), 'rv-card', 110);
+    cards(document.querySelector('#science .sci-grid'), 'rv-deal', 60);
+
+    // ── Loop: the travelled arc draws, then stages 01 to 04 light in order,
+    //    then the readiness figure counts up. ──
+    var ring = document.querySelector('#how .loop-ring');
+    if (ring) {
+      var arc = ring.querySelector('svg path:not(.loop-comet)');
+      if (arc && arc.getTotalLength) {
+        var len = arc.getTotalLength();
+        arc.style.strokeDasharray = len; arc.style.strokeDashoffset = len;
+        mark(arc, 'rv-draw', 100);
+        arc._play = function () { arc.style.strokeDashoffset = 0; };
+      }
+      ring.querySelectorAll('.loop-node').forEach(function (n, i) { mark(n, 'rv-pop', 350 + i * 160); });
+      var center = ring.querySelector('.loop-center');
+      if (center) mark(center, 'rv-pop', 250); // its transform centres it, so scale, not translate
+      var ready = ring.querySelector('.loop-center-value');
+      if (ready) countUp(ready, 500);
+      ring.classList.add('rv-group');
+    }
+    var ribbon = document.querySelector('#how .loop-ribbon');
+    if (ribbon) mark(ribbon, 'rv', 150); // as one: its tabs keep their own transitions
+    var panels = document.querySelector('#how .loop-panels');
+    if (panels) { mark(panels, 'rv', 300); panels.parentNode.classList.add('rv-group'); }
+
+    // ── Pilot: the X mark draws itself above the closing call. ──
+    var mk = document.querySelector('#pilot svg');
+    if (mk) mk.querySelectorAll('path').forEach(function (p, i) {
+      var l = p.getTotalLength();
+      p.style.strokeDasharray = l; p.style.strokeDashoffset = l;
+      mark(p, 'rv-draw', 150 + i * 250);
+      p._play = function () { p.style.strokeDashoffset = 0; };
+    });
+
+    // Hidden states are in place; one layout commits them, then transitions
+    // come back for the entrances.
+    void document.body.offsetWidth;
+    root.classList.remove('prep');
+
+    // ── Play each group once, when it scrolls into view. ──
+    function play(g) {
+      g.classList.add('in');
+      g.querySelectorAll('.rv-draw').forEach(function (p) { if (p._play) p._play(); });
+      g.querySelectorAll('.loop-center-value').forEach(function (n) { if (n._play) n._play(); });
+    }
+    var groups = document.querySelectorAll('.rv-group');
+    if (!('IntersectionObserver' in window)) { groups.forEach(play); }
+    else {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { play(e.target); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
+      groups.forEach(function (g) { if (g !== heroCopy) io.observe(g); });
+    }
+
+    // Once an element's entrance ends, it drops the delay (see .settled).
+    document.addEventListener('transitionend', function (e) {
+      var el = e.target;
+      // Only once it has entered: its group (or itself) is .in.
+      if (el.style && el.style.getPropertyValue('--d') && !el.classList.contains('settled') && el.closest('.in')) el.classList.add('settled');
+    });
+    } catch (err) {
+      // Whatever broke, show everything as it would be at rest: a page that
+      // doesn't animate beats a page that stays hidden.
+      root.classList.remove('prep');
+      document.querySelectorAll('.rv-group').forEach(function (g) { g.classList.add('in'); });
+      document.querySelectorAll('.rv-draw').forEach(function (p) { p.style.strokeDashoffset = 0; });
+      finals.forEach(function (f) { f[0].textContent = f[1]; });
+      document.querySelectorAll('.rv, .rv-card, .rv-deal, .rv-pop').forEach(function (e) { if (!e.closest('.in')) e.classList.add('in'); });
+      if (window.console) console.error(err);
+    }
+  })();
+</script>
+
 </body>
 </html>
