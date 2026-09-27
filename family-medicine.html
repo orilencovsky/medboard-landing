@@ -5,222 +5,341 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
-<title>בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai</title>
+<title>בקרוב: הכנה לשלב א ברפואת משפחה | MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/family-medicine" />
 <meta name="description" content="בקרוב ב-MeduXa: הכנה לשלב א ברפואת משפחה, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
-<meta property="og:title" content="בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai" />
+<meta property="og:title" content="בקרוב: הכנה לשלב א ברפואת משפחה | MeduXa.ai" />
 <meta property="og:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
 <meta property="og:url" content="https://meduxa.ai/family-medicine" />
 <meta property="og:image" content="https://meduxa.ai/og-family-medicine.png?v=5" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="MeduXa.ai — בקרוב: הכנה לשלב א ברפואת משפחה" />
+<meta property="og:image:alt" content="MeduXa.ai: בקרוב, הכנה לשלב א ברפואת משפחה" />
 <meta property="og:locale" content="he_IL" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="בקרוב: הכנה לשלב א ברפואת משפחה — MeduXa.ai" />
+<meta name="twitter:title" content="בקרוב: הכנה לשלב א ברפואת משפחה | MeduXa.ai" />
 <meta name="twitter:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
 <meta name="twitter:image" content="https://meduxa.ai/og-family-medicine.png?v=5" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#061225" />
+<meta name="color-scheme" content="dark" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <style>
-  /* Same visual language as the homepage (index.html): IBM Plex Sans Hebrew +
-     Plex Mono eyebrows, the navy hero gradient, the cyan accent, the science
-     section's blueprint grid, and the purple .btn-action. */
+  /* MeduXa landing tokens (design-system/src/styles.css). One theme for the
+     whole page: the brand's navy. Cyan owns the learner's data, violet owns
+     the system acting (sign-up, the AI tutor, focus rings). */
+  :root {
+    --ink: #061225; --deep: #0A1F3D; --navy2: #0C2A4E; --card: #0B2545; --tint: #081D3A;
+    --line: #153650; --border: #1E4A6E; --foot: #04101E;
+    --cyan: #22D3EE; --cyan-soft: #67E8F9; --sky: #0EA5E9; --sky-light: #38BDF8; --teal: #5EEAD4;
+    --violet: #4A38C9; --violet-deep: #3A2CA8; --violet-light: #7C5CFF; --violet-on: #A78BFA; --violet-on-soft: #C4B5FD;
+    --t1: #F1F7FC; --t2: #B8D4EA; --t3: #9CC3DF; --t4: #7DA2C4;
+    --bad: #F87171;
+    --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px; --pill: 100px;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --sans: 'IBM Plex Sans Hebrew', 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #F0F6FA; color: #0F172A; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ink); color: var(--t1); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
   button, input { font-family: inherit; }
-  a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
+  a { color: var(--cyan-soft); text-decoration: none; } a:hover { text-decoration: underline; }
   .ltr-iso { direction: ltr; unicode-bidi: isolate; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  /* #0E7490 on light surfaces (5.4:1), cyan on the dark bands (see below). */
-  :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
-  nav :focus-visible, .hero :focus-visible, .sci :focus-visible, .signup-band > .back :focus-visible, footer :focus-visible { outline-color: #22D3EE; }
-  .skip { position: absolute; top: 0; inset-inline-start: 0; transform: translateY(-120%); z-index: 100; background: #04101E; color: #fff;
+  :focus-visible { outline: 2px solid var(--violet-on); outline-offset: 3px; }
+  .skip { position: absolute; top: 0; inset-inline-start: 0; transform: translateY(-120%); z-index: 100; background: var(--foot); color: #fff;
           padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
   .skip:focus { transform: none; color: #fff; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  i.ph { line-height: 1; }
 
-  .btn-action { position: relative; z-index: 0; overflow: hidden; display: inline-block; border: none; cursor: pointer;
-                background: linear-gradient(135deg,#4A38C9,#6B4CF0); color: #fff; font-weight: 700; border-radius: 12px;
-                box-shadow: 0 10px 34px rgba(74,56,201,.45); transition: box-shadow .15s ease; }
-  .btn-action::after { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
-                       background: linear-gradient(135deg,#3A2CA8,#4A38C9); opacity: 0; transition: opacity .15s ease; }
-  .btn-action:hover::after { opacity: 1; }
-  .btn-action:hover, .btn-action:focus { color: #fff; text-decoration: none; }
-  /* Two rings: white then solid purple, visible on navy and on white. */
-  .btn-action:focus-visible { outline: none; box-shadow: 0 0 0 3px #fff, 0 0 0 6px #4A38C9; }
-  .btn-action:disabled { opacity: .7; cursor: default; }
+  /* Violet commit button: the hover gradient cross-fades on a pseudo-element,
+     since CSS cannot interpolate between two gradients. */
+  .btn { position: relative; z-index: 0; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+         border: none; cursor: pointer; background: linear-gradient(135deg, var(--violet), #6B4CF0); color: #fff; font-weight: 700;
+         border-radius: var(--r-md); white-space: nowrap; box-shadow: 0 10px 30px rgba(74,56,201,.4);
+         transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+  .btn::after { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+                background: linear-gradient(135deg, var(--violet-deep), var(--violet)); opacity: 0; transition: opacity .15s ease; }
+  .btn:hover::after { opacity: 1; }
+  .btn:hover, .btn:focus { color: #fff; text-decoration: none; }
+  .btn:active { transform: translateY(1px) scale(.985); }
+  .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ink), 0 0 0 5px var(--violet-on); }
+  .btn:disabled { opacity: .7; cursor: default; }
+  .btn .ph { font-size: 18px; transition: transform .2s var(--ease); }
+  .btn:hover .ph-arrow-left { transform: translateX(-3px); }
 
-  nav { position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15); }
-  .nav-in { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(34,211,238,.12); }
+  .nav-in { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .logo { display: flex; align-items: center; gap: 12px; }
+  .logo:hover { text-decoration: none; }
   .word { display: flex; align-items: baseline; direction: ltr; }
-  .word b { font-family: 'IBM Plex Sans', 'IBM Plex Sans Hebrew', sans-serif; font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
-  .word i { font-style: normal; font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE; }
-  .nav-r { display: flex; align-items: center; gap: 22px; }
-  .nav-link { color: #B8D4EA; font-size: 15px; }
-  .nav-link:hover { color: #22D3EE; text-decoration: none; }
-  .nav-cta { padding: 10px 22px; font-size: 15px; box-shadow: 0 6px 20px rgba(74,56,201,.45); }
+  .word b { font-family: 'IBM Plex Sans', var(--sans); font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .word i { font-style: normal; font-family: var(--mono); font-size: 21px; color: var(--cyan); }
+  .nav-r { display: flex; align-items: center; gap: 24px; }
+  .nav-link { color: var(--t2); font-size: 15px; font-weight: 500; transition: color .15s; }
+  .nav-link:hover { color: var(--cyan); text-decoration: none; }
+  .nav-cta { padding: 10px 20px; font-size: 15px; box-shadow: 0 6px 18px rgba(74,56,201,.4); }
 
-  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .14em; direction: ltr; color: #0E7490; }
-  .dark .eyebrow { color: #22D3EE; }
-  .head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 48px; }
-  .head h2 { margin: 0; font-size: 40px; font-weight: 700; color: #0F172A; line-height: 1.2; }
-  .dark .head h2 { color: #fff; }
-  .head p { margin: 0; font-size: 18px; color: #475569; max-width: 640px; line-height: 1.65; }
-  .dark .head p { color: #B8D4EA; }
-  .in { position: relative; max-width: 1200px; margin: 0 auto; }
+  /* HERO: copy on the start side, a working sample question on the end side. */
+  .hero { position: relative; overflow: hidden; background: linear-gradient(165deg, var(--ink) 0%, var(--deep) 82%, var(--navy2) 100%);
+          min-height: calc(100dvh - 68px); display: flex; align-items: flex-start; padding: 88px 0 96px; }
+  /* The homepage's X clip. The box is pinned to the hero's first height by a
+     script below, so the card growing as it is answered never re-crops the
+     frame; the mask fades it into the header's own gradient. */
+  .hero-bg { position: absolute; left: 0; right: 0; top: 0; height: 100%; overflow: hidden; z-index: 0; pointer-events: none;
+             -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%); mask-image: linear-gradient(to bottom, #000 78%, transparent 100%); }
+  .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 1s linear; }
+  .hero-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+                  background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
+  .hero-mark { position: absolute; z-index: 1; inset-inline-end: -220px; top: -180px; width: 880px; height: 880px; opacity: .08; pointer-events: none; }
+  .hero-mark path { stroke-dasharray: 200; animation: draw 3.5s var(--ease) both; }
+  .hero-mark path:nth-child(2) { animation-delay: .4s; }
+  @keyframes draw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+  /* start, not center: the card grows as it is answered, and a centred row
+     would move the headline with it. */
+  .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 64px; align-items: start; }
+  .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 26px; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3);
+          color: var(--cyan-soft); border-radius: var(--pill); padding: 7px 16px; font-size: 14px; font-weight: 600; }
+  /* The one status dot on the page: the program is not open yet. */
+  .chip .live { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+  h1 { margin: 0; font-size: clamp(40px, 5.2vw, 66px); font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; color: #fff; }
+  h1 .grad { background: linear-gradient(90deg, var(--sky-light), var(--cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .lead { margin: 0; font-size: 20px; line-height: 1.65; color: var(--t2); max-width: 30ch; }
+  .lead strong { color: #fff; font-weight: 600; }
+  .hero-cta { padding: 17px 30px; font-size: 18px; }
 
-  /* HERO */
-  .hero { position: relative; overflow: hidden; padding: 88px 32px 96px;
-          background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); }
-  .hero-mark { position: absolute; left: -260px; top: -160px; opacity: .07; pointer-events: none; }
-  .hero-grid { display: flex; gap: 64px; align-items: center; flex-wrap: wrap; }
-  .hero-copy { flex: 1 1 480px; display: flex; flex-direction: column; gap: 24px; }
-  .chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08);
-          border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600; }
-  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; animation: dotPulse 2s infinite; }
-  @keyframes dotPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
-  h1 { margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em; }
-  h1 .grad { background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .motto { margin: -6px 0 0; font-size: 20px; font-weight: 600; color: #B8D4EA; letter-spacing: .01em; }
-  .motto::before { content: ''; display: inline-block; width: 28px; height: 3px; border-radius: 2px; background: #22D3EE; vertical-align: middle; margin-inline-end: 10px; }
-  .offer { align-self: flex-start; display: flex; align-items: center; gap: 12px; background: rgba(107,76,240,.14);
-           border: 1px solid rgba(155,135,255,.45); border-radius: 14px; padding: 12px 18px; }
-  .offer small { white-space: nowrap; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #C9BCFF; direction: ltr; }
-  .offer strong { font-size: 18px; color: #fff; }
-  .lead { margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px; }
-  .hero-cta { padding: 16px 34px; font-size: 18px; align-self: flex-start; }
+  /* SAMPLE QUESTION: a real, working component, not a picture of one. */
+  .q { background: rgba(11,37,69,.78); border: 1px solid rgba(34,211,238,.22); border-radius: var(--r-xl); padding: 24px;
+       box-shadow: 0 30px 80px rgba(2,8,20,.55), inset 0 1px 0 rgba(255,255,255,.04); }
+  .q-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .q-title { font-size: 14px; font-weight: 600; color: var(--t4); }
+  .q-topic { font-size: 13px; font-weight: 600; color: var(--cyan-soft); border: 1px solid rgba(34,211,238,.3); border-radius: var(--pill); padding: 3px 12px; }
+  .q-stem { margin: 0 0 18px; font-size: 17px; line-height: 1.7; color: var(--t1); }
+  .q-opts { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; }
+  .q-opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: start; padding: 12px 14px; border-radius: var(--r-md);
+           border: 1px solid var(--border); background: rgba(6,18,37,.5); color: #DDEBF7; font-size: 15.5px; cursor: pointer;
+           transition: border-color .2s, background .2s, transform .2s var(--ease); }
+  .q-opt:hover:not(.is-right):not(.is-wrong) { border-color: rgba(34,211,238,.55); background: rgba(34,211,238,.06); }
+  .q-opt:active { transform: scale(.99); }
+  .q-key { flex: none; width: 26px; height: 26px; border-radius: var(--r-sm); display: grid; place-items: center; font-size: 13px; font-weight: 700;
+           border: 1px solid var(--border); color: var(--t3); }
+  .q-opt .ph { margin-inline-start: auto; font-size: 20px; opacity: 0; }
+  .q-opt.is-right { border-color: var(--teal); background: rgba(94,234,212,.08); color: #fff; }
+  .q-opt.is-right .q-key { background: var(--teal); border-color: var(--teal); color: #062033; }
+  .q-opt.is-right .ph-check-circle { opacity: 1; color: var(--teal); }
+  .q-opt.is-wrong { border-color: rgba(248,113,113,.7); background: rgba(248,113,113,.07); }
+  .q-opt.is-wrong .ph-x-circle { opacity: 1; color: var(--bad); }
+  .q-out { margin-top: 14px; }
+  .q-out:empty { display: none; }
+  .q-explain { display: grid; gap: 12px; animation: rise .45s var(--ease) both; }
+  .q-explain p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--t2); }
+  .q-explain p strong { color: #fff; }
+  .q-src { margin: 0; border-inline-start: 3px solid var(--cyan); background: rgba(34,211,238,.06); border-radius: var(--r-sm); padding: 12px 14px; }
+  .q-src blockquote { margin: 0; font-size: 15px; line-height: 1.65; color: #DDEBF7; }
+  .q-src figcaption { margin-top: 8px; font-size: 12.5px; line-height: 1.5; color: var(--t4); }
+  .q-tutor { display: flex; gap: 12px; align-items: flex-start; background: rgba(124,92,255,.1); border: 1px solid rgba(124,92,255,.4);
+             border-radius: var(--r-md); padding: 12px 14px; animation: rise .45s var(--ease) both; }
+  .q-tutor .ph { font-size: 20px; color: var(--violet-on); margin-top: 2px; }
+  .q-tutor p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--violet-on-soft); }
+  .q-tutor b { color: #fff; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-  /* Illustrative dashboard tile, in the homepage demo card's glass style. */
-  .mock { flex: 1 1 380px; max-width: 460px; background: rgba(11,37,69,.72); border: 1px solid rgba(34,211,238,.22);
-          border-radius: 20px; padding: 22px; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
-  .mock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-  .mock-title { font-size: 16px; font-weight: 600; color: #fff; }
-  .mock-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #7DA2C4; direction: ltr; }
-  .mock-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid #1E4A6E;
-              background: rgba(6,18,37,.45); margin-bottom: 8px; font-size: 15px; color: #DDEBF7; }
-  .mock-row:last-child { margin-bottom: 0; }
-  .mdot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
-  .mock-row .go { margin-inline-start: auto; font-size: 13px; font-weight: 600; color: #67E8F9; }
+  /* STATUS: one editorial statement, what exists and what is being built. */
+  .status { background: var(--ink); padding: 104px 0; border-top: 1px solid var(--line); }
+  .status-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 72px; align-items: start; }
+  .status-state { display: grid; gap: 22px; }
+  .state { display: flex; gap: 14px; align-items: flex-start; }
+  .state .ph { flex: none; font-size: 24px; margin-top: 2px; }
+  .state.done .ph { color: var(--teal); }
+  .state.build .ph { color: var(--t4); }
+  .state h3 { margin: 0 0 4px; font-size: 18px; font-weight: 700; }
+  .state p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--t3); }
+  .statement { margin: 0; font-size: clamp(24px, 2.6vw, 34px); font-weight: 500; line-height: 1.5; color: var(--t2); letter-spacing: -0.005em; }
+  .statement em { font-style: normal; color: #fff; font-weight: 700; }
 
-  .honest { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 28px 32px; }
-  .honest p { max-width: 860px; margin: 0 auto; text-align: center; font-size: 17px; color: #334155; line-height: 1.7; }
+  /* SECTION HEADS: headline over body, stacked. */
+  .sec { padding: 112px 0; }
+  .sec-head { max-width: 720px; margin-bottom: 56px; }
+  .sec-head h2 { margin: 0 0 14px; font-size: clamp(30px, 3.4vw, 42px); font-weight: 700; line-height: 1.2; color: #fff; letter-spacing: -0.01em; }
+  .sec-head p { margin: 0; font-size: 18px; line-height: 1.7; color: var(--t2); max-width: 62ch; }
 
-  /* TECHNIQUES — the homepage science section's blueprint grid. */
-  .sci { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); padding: 96px 32px 104px; }
-  .sci-grid-bg, .sci-glow { position: absolute; inset: 0; pointer-events: none; }
-  .sci-grid-bg { opacity: .45; background:
-      repeating-linear-gradient(90deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px),
-      repeating-linear-gradient(180deg, rgba(56,189,248,.16) 0 1px, transparent 1px 72px); }
-  .sci-glow { background: radial-gradient(50% 40% at 80% 0%, rgba(34,211,238,.18), transparent 70%),
-                          radial-gradient(60% 42% at 50% 104%, rgba(34,211,238,.16), transparent 70%); }
-  .sci-cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
-  .sci-card { background: rgba(11,37,69,.7); border: 1px solid #1E4A6E; border-radius: 16px; padding: 22px 24px; }
-  .sci-card .where { font-family: 'IBM Plex Sans Hebrew', sans-serif; font-size: 12px; font-weight: 600; color: #67E8F9;
-                     border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.08); border-radius: 100px; padding: 2px 10px; }
-  .sci-card h3 { margin: 14px 0 8px; font-size: 19px; font-weight: 700; color: #fff; }
-  .sci-card p { margin: 0; font-size: 15px; color: #B8D4EA; line-height: 1.65; }
-  .opt { font-size: 12px; font-weight: 500; color: #7DA2C4; margin-inline-start: 8px; }
+  /* METHOD: a sticky title beside three groups, placed by where you meet them. */
+  .method { position: relative; overflow: hidden; background: linear-gradient(180deg, var(--ink), var(--deep)); }
+  .method-grid-bg { position: absolute; inset: 0; pointer-events: none; opacity: .35; background:
+      repeating-linear-gradient(90deg, rgba(56,189,248,.14) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(180deg, rgba(56,189,248,.14) 0 1px, transparent 1px 72px);
+      -webkit-mask-image: radial-gradient(70% 60% at 20% 30%, #000, transparent); mask-image: radial-gradient(70% 60% at 20% 30%, #000, transparent); }
+  .method-layout { position: relative; display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 64px; align-items: start; }
+  .method-layout .sec-head { position: sticky; top: 108px; margin: 0; }
+  .groups { display: grid; gap: 20px; }
+  .group { background: rgba(11,37,69,.62); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 28px; }
+  .group-h { display: flex; align-items: center; gap: 12px; margin: 0 0 22px; font-size: 20px; font-weight: 700; color: #fff; }
+  .group-h .ph { font-size: 22px; color: var(--cyan); background: rgba(34,211,238,.1); border-radius: var(--r-sm); padding: 7px; }
+  .techs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; margin: 0; padding: 0; list-style: none; }
+  .techs h4 { margin: 0 0 6px; font-size: 16.5px; font-weight: 700; color: var(--t1); display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .techs p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--t3); }
+  .opt { font-size: 12px; font-weight: 600; color: var(--t4); border: 1px solid var(--border); border-radius: var(--pill); padding: 1px 8px; }
 
-  /* FEATURES — the homepage features cards. */
-  .band { padding: 96px 32px; }
-  .band-white { background: #fff; border-bottom: 1px solid #E2E8F0; }
-  .f-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-  .f-card { background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 26px 28px; }
-  .f-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-  .f-card .sq { width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); flex-shrink: 0; }
-  .f-card p { margin: 0; font-size: 15px; color: #475569; line-height: 1.65; }
-  .later { margin: 20px auto 0; max-width: 1200px; border: 1px dashed #CBD5E1; border-radius: 12px; padding: 12px 18px;
-           font-size: 15px; color: #475569; line-height: 1.6; text-align: center; }
+  /* FEATURES: bento, eight items in eight cells. */
+  .features { background: var(--deep); }
+  .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
+           grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report"; }
+  .tile { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 26px;
+          display: flex; flex-direction: column; gap: 10px; transition: border-color .25s, transform .35s var(--ease); }
+  .tile:hover { border-color: rgba(34,211,238,.4); transform: translateY(-2px); }
+  .tile .ph { font-size: 26px; color: var(--cyan); }
+  .tile h3 { margin: 0; font-size: 18.5px; font-weight: 700; color: #fff; line-height: 1.35; }
+  .tile p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--t3); }
+  .t-tutor { grid-area: tutor; padding: 34px; justify-content: flex-end; min-height: 380px; border-color: rgba(124,92,255,.45);
+             background: radial-gradient(120% 90% at 85% 0%, rgba(124,92,255,.34), transparent 60%), linear-gradient(160deg, #10204A, var(--card)); }
+  .t-tutor:hover { border-color: rgba(167,139,250,.7); }
+  .t-tutor .ph { color: var(--violet-on); font-size: 34px; }
+  .t-tutor h3 { font-size: 26px; }
+  .t-tutor p { font-size: 16px; color: var(--t2); max-width: 46ch; }
+  .styles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; padding: 0; list-style: none; }
+  .styles li { font-size: 13.5px; font-weight: 600; color: var(--violet-on-soft); border: 1px solid rgba(167,139,250,.4); border-radius: var(--pill); padding: 5px 12px; }
+  .t-quote { grid-area: quote; background: radial-gradient(90% 120% at 0% 100%, rgba(34,211,238,.18), transparent 60%), var(--card); }
+  .t-exam { grid-area: exam; } .t-filter { grid-area: filter; } .t-map { grid-area: map; }
+  .t-dash { grid-area: dash; } .t-board { grid-area: board; } .t-report { grid-area: report; }
+  .later { margin: 20px 0 0; display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--t3); line-height: 1.6; }
+  .later .ph { font-size: 18px; color: var(--t4); flex: none; }
+  .later strong { color: var(--t1); }
 
   /* COMPARISON */
-  .cmp { width: 100%; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid #E2E8F0;
-         border-radius: 16px; overflow: hidden; font-size: 15px; }
-  .cmp th, .cmp td { padding: 14px 16px; text-align: center; vertical-align: middle; border-bottom: 1px solid #E2E8F0; line-height: 1.5; }
-  .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
-  .cmp thead th { background: #E7F0F7; font-size: 14px; font-weight: 700; color: #334155; }
-  .cmp thead th.us { background: #0B2545; color: #fff; }
-  .cmp-brand { display: inline-flex; align-items: center; gap: 7px; direction: ltr; white-space: nowrap; }
-  .cmp-brand svg { flex: none; filter: drop-shadow(0 0 8px rgba(34,211,238,.25)); }
+  .compare { background: var(--ink); }
+  .compare .sec-head { max-width: 900px; }
+  .compare .sec-head h2 { text-wrap: balance; }
+  .cmp-wrap { border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+  .cmp { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .cmp th, .cmp td { padding: 16px 18px; text-align: center; vertical-align: middle; line-height: 1.5; }
+  .cmp tbody tr + tr > * { border-top: 1px solid var(--line); }
+  .cmp thead th { background: var(--tint); font-size: 14px; font-weight: 700; color: var(--t3); border-bottom: 1px solid var(--border); }
+  .cmp thead th.us { background: var(--card); color: #fff; box-shadow: inset 0 3px 0 var(--cyan); }
+  .cmp-brand { display: inline-flex; align-items: center; gap: 8px; direction: ltr; white-space: nowrap; }
+  .cmp-brand svg { flex: none; }
   .cmp .cmp-brand .word b, .cmp .cmp-brand .word i { font-size: 16px; }
-  .cmp tbody th { font-weight: 700; color: #0F172A; width: 24%; }
-  .cmp td { color: #475569; }
-  .cmp td.us { background: rgba(34,211,238,.08); color: #0F172A; font-weight: 600; }
-  .yes::before { content: '✓'; color: #0E7490; font-weight: 800; margin-inline-end: 6px; }
-  .no::before { content: '–'; color: #94A3B8; margin-inline-end: 6px; }
+  .cmp tbody th { font-weight: 700; color: var(--t1); width: 24%; text-align: start; background: rgba(8,29,58,.5); }
+  .cmp td { color: var(--t4); }
+  .cmp td.us { background: rgba(34,211,238,.07); color: #fff; font-weight: 600; }
+  .mk { display: inline-flex; align-items: center; gap: 8px; }
+  .mk .ph { font-size: 18px; flex: none; }
+  .us .mk .ph { color: var(--cyan); }
+  .yes .mk .ph { color: var(--t3); }
+  .no .mk .ph { color: #4E6F8E; }
   .cmp .short { display: none; }
-  .cmp-note { margin: 12px 0 0; font-size: 13px; color: #5B6B80; text-align: center; }
+  .cmp-note { margin: 14px 0 0; font-size: 13.5px; color: var(--t4); }
 
-  /* SIGN-UP */
-  .signup-band { position: relative; overflow: hidden; background: linear-gradient(165deg, #061225 0%, #0A1F3D 85%, #0C2A4E 100%); padding: 88px 32px; }
-  .signup { position: relative; max-width: 640px; margin: 0 auto; background: #fff; border-radius: 20px; padding: 32px;
-            box-shadow: 0 24px 60px rgba(0,0,0,.35); }
-  .signup .eyebrow { display: block; margin-bottom: 10px; }
-  .signup h2 { margin: 0 0 10px; font-size: 30px; font-weight: 700; line-height: 1.25; }
-  .signup-for { margin: 0 0 8px; font-size: 16px; color: #334155; line-height: 1.65; }
-  .signup-for strong { color: #0E7490; }
-  .group-note { margin: 0 0 20px; font-size: 14px; color: #5B6B80; line-height: 1.6; }
-  #notifyForm { display: flex; flex-direction: column; gap: 14px; }
-  .field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: #475569; }
+  /* SIGN-UP: offer on the start side, the form on the end side. */
+  .signup-band { position: relative; overflow: hidden; background: linear-gradient(165deg, var(--deep) 0%, var(--navy2) 100%); border-top: 1px solid var(--line); }
+  .signup-band::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+                         background: radial-gradient(50% 60% at 15% 50%, rgba(124,92,255,.18), transparent 70%); }
+  .signup-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+  .eyebrow { display: inline-block; font-family: var(--mono); font-size: 13px; letter-spacing: .14em; direction: ltr; color: var(--cyan); margin-bottom: 16px; }
+  .signup-copy h2 { margin: 0 0 16px; font-size: clamp(30px, 3.4vw, 42px); font-weight: 700; line-height: 1.2; color: #fff; }
+  .signup-for { margin: 0 0 28px; font-size: 18px; color: var(--t2); line-height: 1.7; max-width: 46ch; }
+  .signup-for strong { color: #fff; }
+  .perks { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .perks li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; line-height: 1.6; color: var(--t2); }
+  .perks .ph { flex: none; font-size: 20px; color: var(--violet-on); margin-top: 2px; }
+  .perks strong { color: #fff; }
+  .signup { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px;
+            box-shadow: 0 30px 80px rgba(2,8,20,.55), inset 0 1px 0 rgba(255,255,255,.04); }
+  /* Consent, then the Privacy Protection Law § 11 notice at the point of collection. */
+  #notifyForm { display: flex; flex-direction: column; gap: 18px; }
+  .field { display: flex; flex-direction: column; gap: 8px; font-size: 15px; font-weight: 600; color: var(--t1); }
   /* Right-aligned; plaintext keeps a typed address in its own LTR order. */
-  #notifyEmail { width: 100%; background: #F0F6FA; border: 1px solid #CBD5E1; border-radius: 12px; padding: 15px 18px;
-                 font-size: 16px; color: #0F172A; direction: rtl; text-align: right; unicode-bidi: plaintext; }
-  #notifyEmail::placeholder { color: #5B6B80; text-align: right; }
-  #notifyEmail:focus { outline: 2px solid #0E7490; outline-offset: 1px; border-color: #0E7490; }
-  .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #334155; line-height: 1.6; cursor: pointer; }
-  .consent input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; accent-color: #4A38C9; }
-  #notifySubmit { width: 100%; padding: 15px 24px; font-size: 17px; box-shadow: 0 6px 20px rgba(74,56,201,.4); }
-  .notice { margin: 0; font-size: 13px; color: #64748B; line-height: 1.6; }
-  #notifyMsg { display: block; margin-top: 12px; font-size: 16px; font-weight: 700; min-height: 1em; }
-  .ok-box { background: #ECFEFF; border: 1px solid #A5F3FC; color: #155E75; border-radius: 12px; padding: 14px 16px; }
-  .back { margin: 22px 0 0; text-align: center; font-size: 16px; color: #B8D4EA; position: relative; }
-  .back a { color: #67E8F9; }
+  #notifyEmail { width: 100%; background: var(--tint); border: 1px solid #4E6F8E; border-radius: var(--r-md); padding: 15px 18px;
+                 font-size: 16px; color: #fff; direction: rtl; text-align: right; unicode-bidi: plaintext; transition: border-color .15s, box-shadow .15s; }
+  #notifyEmail::placeholder { color: var(--t4); text-align: right; }
+  #notifyEmail:focus { outline: none; border-color: var(--violet-on); box-shadow: 0 0 0 3px rgba(124,92,255,.3); }
+  .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--t2); line-height: 1.6; cursor: pointer; }
+  .consent input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; accent-color: var(--violet-light); }
+  #notifySubmit { width: 100%; padding: 16px 24px; font-size: 17px; }
+  .notice { margin: 0; font-size: 13px; color: var(--t4); line-height: 1.65; }
+  .notice a { color: var(--t2); text-decoration: underline; text-underline-offset: 2px; }
+  #notifyMsg { display: block; font-size: 16px; font-weight: 600; line-height: 1.6; }
+  #notifyMsg:not(:empty) { margin-top: 14px; }
+  .ok-box { display: flex !important; gap: 10px; align-items: flex-start; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.45);
+            color: #CCFBF1; border-radius: var(--r-md); padding: 16px 18px; margin-top: 0 !important; }
+  .ok-box .ph { color: var(--teal); font-size: 22px; flex: none; }
+  .err { color: var(--bad); }
+  .back { margin: 20px 0 0; font-size: 15px; color: var(--t3); }
 
-  footer { background: #04101E; padding: 36px 32px; }
-  .foot { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer { background: var(--foot); padding: 36px 0; }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
   .foot .word b, .foot .word i { font-size: 17px; }
-  .foot .word b { color: #7DA2C4; }
-  .foot-links { display: flex; gap: 18px; flex-wrap: wrap; }
-  .foot-link { color: #7DA2C4; font-size: 14px; }
-  .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  .foot .word b { color: var(--t4); }
+  .foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .foot-link { color: var(--t4); font-size: 14px; }
+  .foot-link:hover { color: var(--cyan); text-decoration: none; }
   .foot small { font-size: 14px; color: #5B87A8; }
 
-  @media (max-width: 900px) {
-    .sci-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .mock { max-width: none; }
+  /* Entry + scroll reveal. Only when JS is on and motion is welcome, so the
+     page is fully visible without either. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .enter { opacity: 0; transform: translateY(14px); animation: rise .8s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
+    .js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
+    .js [data-reveal].seen { opacity: 1; transform: none; }
   }
-  @media (max-width: 640px) {
-    .nav-in { padding: 0 16px; height: 60px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .chip .live, .hero-mark path { animation: none; }
+    .hero-video { display: none; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero { min-height: 0; }
+    .lead { max-width: 40ch; }
+    .q { max-width: 560px; }
+    .status-grid, .signup-grid { grid-template-columns: 1fr; gap: 40px; }
+    .method-layout { grid-template-columns: 1fr; gap: 40px; }
+    .method-layout .sec-head { position: static; }
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr));
+             grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report"; }
+    .t-tutor { min-height: 320px; }
+  }
+  @media (max-width: 767px) {
+    .wrap { padding: 0 16px; }
+    .nav-in { height: 60px; }
     .nav-r .nav-link { display: none; }
     .nav-cta { padding: 9px 16px; font-size: 14px; }
-    .hero { padding: 48px 16px 60px; }
-    h1 { font-size: 36px; }
-    .motto { font-size: 17px; }
-    .offer { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .hero { padding: 44px 0 64px; }
+    .hero-copy { gap: 20px; }
     .lead { font-size: 17px; }
-    .hero-cta { align-self: stretch; text-align: center; font-size: 17px; }
-    .head h2 { font-size: 28px; }
-    .head p { font-size: 16px; }
-    .head { margin-bottom: 32px; }
-    .sci, .band, .signup-band { padding: 60px 16px; }
-    .honest { padding: 22px 16px; }
-    .sci-cards { grid-template-columns: 1fr; }
-    .f-cards { grid-template-columns: 1fr; }
-    .signup { padding: 24px 20px; }
-    .signup h2 { font-size: 25px; }
+    .hero-cta { align-self: stretch; font-size: 17px; }
+    .q { padding: 18px; }
+    .q-stem { font-size: 16px; }
+    .status, .sec { padding: 72px 0; }
+    .sec-head { margin-bottom: 36px; }
+    .sec-head p, .signup-for { font-size: 16px; }
+    .group { padding: 22px 18px; }
+    .techs { grid-template-columns: 1fr; gap: 18px; }
+    .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report"; }
+    .t-tutor { min-height: 0; padding: 26px; }
+    .t-tutor h3 { font-size: 22px; }
+    .tile { padding: 22px; }
+    .signup { padding: 24px 18px; }
     .foot { flex-direction: column; text-align: center; }
     /* Phones: still a real table, with the short value in each cell. */
     .cmp { font-size: 13.5px; }
-    .cmp th, .cmp td { padding: 10px 8px; }
+    .cmp th, .cmp td { padding: 11px 8px; }
     .cmp tbody th { width: 34%; font-size: 13.5px; }
     .cmp .full { display: none; }
     .cmp .short { display: inline; }
@@ -228,31 +347,30 @@
     .cmp .cmp-brand svg { width: 16px; height: 16px; }
     .cmp .cmp-brand .word b { font-size: 13px; }
     .cmp .cmp-brand .word i { display: none; }
-    /* The short text says it all; keep the marker only in the MeduXa column. */
-    .cmp td.no::before, .cmp td:not(.us).yes::before { content: none; }
+    .cmp td:not(.us) .mk .ph { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .chip .dot { animation: none; } * { transition: none !important; } }
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
 <a class="skip" href="#main">דילוג לתוכן העמוד</a>
 
 <nav>
-  <div class="nav-in">
-    <a href="/" class="logo" aria-label="MeduXa — לעמוד הבית">
+  <div class="wrap nav-in">
+    <a href="/" class="logo" aria-label="MeduXa, לעמוד הבית">
       <svg width="36" height="36" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-          <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
-          <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
-          <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
-          <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
-          <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
-        </svg>
+        <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+        <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+        <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+        <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+        <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+      </svg>
       <span class="word"><b>MeduXa</b><i>.ai</i></span>
     </a>
     <div class="nav-r">
       <a class="nav-link" href="/">לעמוד הבית</a>
-      <a class="btn-action nav-cta" href="#signup">הרשמה לעדכון</a>
+      <a class="btn nav-cta" href="#signup">הרשמה לעדכון</a>
     </div>
   </div>
 </nav>
@@ -260,141 +378,317 @@
 <main id="main">
 
   <header class="hero">
-    <svg class="hero-mark" width="900" height="900" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+    <div class="hero-bg">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
+        <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
+        <source src="/hero.webm" type="video/webm">
+        <source src="/hero.mp4" type="video/mp4">
+      </video>
+      <video class="hero-video" muted loop playsinline preload="auto" aria-hidden="true" style="opacity: 0;">
+        <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
+        <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
+        <source src="/hero.webm" type="video/webm">
+        <source src="/hero.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <svg class="hero-mark" viewBox="0 0 96 96" fill="none" aria-hidden="true">
       <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
       <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
     </svg>
-    <div class="in hero-grid">
+    <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="chip"><span class="dot"></span>בקרוב · רפואת משפחה · שלב א</span>
-        <h1>הכנה לשלב א<br><span class="grad">ברפואת משפחה</span></h1>
-        <p class="motto">נעשה על ידי רופאים, עבור רופאים</p>
-        <div class="offer"><small lang="en">LAUNCH PRICE</small><strong>מחיר השקה מיוחד לנרשמים מראש</strong></div>
-        <p class="lead">מנוע למידה שכבר עובד עם מתמחים לקראת שלב א — עכשיו גם לרפואת משפחה. השאירו מייל ונעדכן אתכם ברגע שזה נפתח.</p>
-        <a class="btn-action hero-cta" href="#signup">הרשמה לעדכון על רפואת משפחה</a>
+        <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>בקרוב: רפואת משפחה, שלב א</span>
+        <h1 class="enter" style="--i:1">הכנה לשלב א<br><span class="grad">ברפואת משפחה</span></h1>
+        <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.</p>
+        <a class="btn hero-cta enter" style="--i:3" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
       </div>
-      <!-- Illustrative: the shape of the app's daily dashboard. Labels only —
-           no counts or scores, because there are no family-medicine users yet. -->
-      <div class="mock" aria-hidden="true">
-        <div class="mock-head"><span class="mock-title">מה לתרגל היום</span><span class="mock-note" lang="en">PREVIEW</span></div>
-        <div class="mock-row"><span class="mdot" style="background:#22D3EE"></span>חזרה יומית — שאלות שמתוזמנות להיום<span class="go">להתחיל</span></div>
-        <div class="mock-row"><span class="mdot" style="background:#F87171"></span>הנושא החלש שלכם — תרגול ממוקד<span class="go">לתרגל</span></div>
-        <div class="mock-row"><span class="mdot" style="background:#FBBF24"></span>בטוחים וטעיתם — שווה לחזור<span class="go">לחזור</span></div>
-        <div class="mock-row"><span class="mdot" style="background:#A78BFA"></span>סימולציית בחינה עם טיימר<span class="go">לפתוח</span></div>
-      </div>
+
+      <!-- A working sample question, in the app's own shape: answer it and the
+           explanation opens with its source, or the tutor asks a question back. -->
+      <section class="q enter" style="--i:2" aria-labelledby="q-title">
+        <div class="q-head">
+          <h2 class="q-title" id="q-title">שאלה לדוגמה, נסו לענות</h2>
+          <span class="q-topic">יתר לחץ דם</span>
+        </div>
+        <p class="q-stem" id="q-stem">בן 52 מגיע לביקורת. לחץ הדם במרפאה <span class="ltr-iso">148/94</span> ממ״כ בשתי ביקורות, בלי סימנים לפגיעה באיברי מטרה. לדבריו, במכשיר שלו בבית הוא מודד בסביבות <span class="ltr-iso">115/70</span>. מה הצעד הבא?</p>
+        <div class="q-opts" role="group" aria-labelledby="q-stem">
+          <button type="button" class="q-opt" data-k="a" data-tutor="בבית <span class=&quot;ltr-iso&quot;>115/70</span>, אצלך <span class=&quot;ltr-iso&quot;>148/94</span>. איזה מהמספרים משקף את לחץ הדם שלו ביומיום, ומה יקרה אם תטפל לפי הלא נכון?"><span class="q-key">א</span>להתחיל טיפול תרופתי כבר היום<i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="b" data-right><span class="q-key">ב</span>לאשר במדידות מחוץ למרפאה לפי פרוטוקול<i class="ph ph-check-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="c" data-tutor="יש כאן פער גדול בין המרפאה לבית. למה לחכות שנה, אם אפשר להכריע כבר עכשיו? ואיך?"><span class="q-key">ג</span>מדידה חוזרת בביקורת בעוד שנה<i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="d" data-tutor="<span class=&quot;ltr-iso&quot;>115/70</span> נשמע מרגיע. אבל באיזה מכשיר ובאיזו שיטה הוא מדד? מה צריך כדי לסמוך על המספר הזה?"><span class="q-key">ד</span>לקבוע יתר לחץ דם של חלוק לבן, בלי בירור נוסף<i class="ph ph-x-circle" aria-hidden="true"></i></button>
+        </div>
+        <div class="q-out" id="q-out" aria-live="polite"></div>
+      </section>
     </div>
   </header>
 
-  <div class="honest"><p>המנוע קיים ועובד. את התוכן לרפואת משפחה אנחנו בונים עכשיו: שאלות בסגנון שלב א, ולכל תשובה הסבר שמגובה בציטוט מילה-במילה מהמקור שממנו היא נלקחה — כדי שתוכלו לבדוק כל טענה בעצמכם.</p></div>
-
-  <section class="sci dark" aria-labelledby="t-how">
-    <div class="sci-grid-bg"></div><div class="sci-glow"></div>
-    <div class="in">
-      <div class="head">
-        <span class="eyebrow" lang="en">THE SCIENCE</span>
-        <h2 id="t-how">איך לומדים כאן</h2>
-        <p>שיטות למידה מבוססות-ראיות, כפי שהן עובדות באפליקציה היום. התגית מראה איפה באפליקציה פוגשים כל אחת.</p>
+  <section class="status" aria-labelledby="t-status">
+    <h2 id="t-status" class="sr">מה כבר קיים ומה נבנה עכשיו</h2>
+    <div class="wrap status-grid">
+      <div class="status-state" data-reveal>
+        <div class="state done"><i class="ph ph-check-circle" aria-hidden="true"></i><div><h3>המנוע קיים ועובד</h3><p>מתמחים כבר מתכוננים איתו לשלב א.</p></div></div>
+        <div class="state build"><i class="ph ph-hammer" aria-hidden="true"></i><div><h3>התוכן לרפואת משפחה נבנה עכשיו</h3><p>השאירו מייל ונעדכן ברגע שזה נפתח.</p></div></div>
       </div>
-      <div class="sci-cards">
-        <div class="sci-card"><span class="where">תרגול</span><h3>היזכרות פעילה</h3><p>לומדים דרך שאלות, לא דרך קריאה חוזרת. כל סשן מתחיל בשאלה שצריך לענות עליה מהזיכרון.</p></div>
-        <div class="sci-card"><span class="where">חזרה יומית</span><h3>חזרה מרווחת</h3><p>שאלות שטעיתם בהן חוזרות אליכם בתזמון שמחושב לפי מתי אתם צפויים לשכוח אותן.</p></div>
-        <div class="sci-card"><span class="where">חזרה יומית</span><h3>למידה מטעויות</h3><p>כל תשובה שגויה נכנסת לתור החזרה מעצמה. לא צריך לזכור מה לחזור עליו.</p></div>
-        <div class="sci-card"><span class="where">דשבורד</span><h3>תרגול ממוקד בחולשות</h3><p>הדשבורד מראה את הנושאים החלשים שלכם, ובלחיצה אחת פותח תרגול רק עליהם.</p></div>
-        <div class="sci-card"><span class="where">אבחנה מבדלת</span><h3>תרגול משולב</h3><p>שאלות על אבחנות שמתבלבלות ביניהן, מעורבבות — כמו בבחינה, לא לפי סדר הפרקים בספר.</p></div>
-        <div class="sci-card"><span class="where">תרגול</span><h3>הסבר עצמי<span class="opt">לבחירה</span></h3><p>לפני שההסבר נפתח כותבים במשפט אחד למה בחרתם מה שבחרתם.</p></div>
-        <div class="sci-card"><span class="where">תרגול · דשבורד</span><h3>כיול ביטחון<span class="opt">לבחירה</span></h3><p>מסמנים כמה אתם בטוחים לפני שעונים. הדשבורד מראה איפה הייתם בטוחים וטעיתם.</p></div>
-        <div class="sci-card"><span class="where">בכל שאלה</span><h3>מורה שמוביל בשאלות</h3><p>נתקעתם? המורה שואל לפני שהוא עונה, ומכוון אתכם לתשובה במקום למסור אותה.</p></div>
-        <div class="sci-card"><span class="where">בכל תשובה</span><h3>אמת מעוגנת במקור</h3><p>ההסבר מגיע עם ציטוט מילה-במילה מהמקור. לא צריך להאמין — אפשר לבדוק.</p></div>
+      <p class="statement" data-reveal style="--i:1">שאלות בסגנון שלב א, ולכל תשובה <em>הסבר שמגובה בציטוט מילה במילה מהמקור</em> שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם.</p>
+    </div>
+  </section>
+
+  <section class="sec method" aria-labelledby="t-how">
+    <div class="method-grid-bg" aria-hidden="true"></div>
+    <div class="wrap method-layout">
+      <div class="sec-head" data-reveal>
+        <h2 id="t-how">איך לומדים כאן</h2>
+        <p>שיטות למידה מבוססות ראיות, כפי שהן עובדות באפליקציה היום, לפי המקום שבו פוגשים כל אחת.</p>
+      </div>
+      <div class="groups">
+        <div class="group" data-reveal>
+          <h3 class="group-h"><i class="ph ph-question" aria-hidden="true"></i>בתוך כל שאלה</h3>
+          <ul class="techs">
+            <li><h4>היזכרות פעילה</h4><p>לומדים דרך שאלות, לא דרך קריאה חוזרת. כל סשן מתחיל בשאלה שעונים עליה מהזיכרון.</p></li>
+            <li><h4>אמת מעוגנת במקור</h4><p>ההסבר מגיע עם ציטוט מילה במילה מהמקור. לא צריך להאמין, אפשר לבדוק.</p></li>
+            <li><h4>מורה שמוביל בשאלות</h4><p>נתקעתם? המורה שואל לפני שהוא עונה, ומכוון אתכם לתשובה במקום למסור אותה.</p></li>
+            <li><h4>הסבר עצמי <span class="opt">לבחירה</span></h4><p>לפני שההסבר נפתח, כותבים במשפט אחד למה בחרתם מה שבחרתם.</p></li>
+            <li><h4>כיול ביטחון <span class="opt">לבחירה</span></h4><p>מסמנים כמה אתם בטוחים לפני שעונים. הדשבורד מראה איפה הייתם בטוחים וטעיתם.</p></li>
+          </ul>
+        </div>
+        <div class="group" data-reveal>
+          <h3 class="group-h"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i>בחזרה היומית</h3>
+          <ul class="techs">
+            <li><h4>חזרה מרווחת</h4><p>שאלות שטעיתם בהן חוזרות אליכם בתזמון שמחושב לפי מתי אתם צפויים לשכוח אותן.</p></li>
+            <li><h4>למידה מטעויות</h4><p>כל תשובה שגויה נכנסת לתור החזרה מעצמה. לא צריך לזכור על מה לחזור.</p></li>
+          </ul>
+        </div>
+        <div class="group" data-reveal>
+          <h3 class="group-h"><i class="ph ph-crosshair" aria-hidden="true"></i>בדשבורד ובתרגול הממוקד</h3>
+          <ul class="techs">
+            <li><h4>תרגול ממוקד בחולשות</h4><p>הדשבורד מראה את הנושאים החלשים שלכם, ובלחיצה אחת פותח תרגול רק עליהם.</p></li>
+            <li><h4>תרגול משולב</h4><p>שאלות על אבחנות שמתבלבלות ביניהן, מעורבבות כמו בבחינה ולא לפי סדר הפרקים בספר.</p></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="band band-white" aria-labelledby="t-what">
-    <div class="in">
-      <div class="head">
-        <span class="eyebrow" lang="en">FEATURES</span>
+  <section class="sec features" aria-labelledby="t-what">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
         <h2 id="t-what">מה תקבלו</h2>
         <p>כל מה שמתמחים כבר משתמשים בו באפליקציה, מותאם לבחינת שלב א ברפואת משפחה.</p>
       </div>
-      <div class="f-cards">
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>תרגול לפי מה שחשוב לכם</h3><p>מסננים לפי נושא, רמת קושי ומה שעוד לא פתרתם. ממשיכים מאותו מקום גם בטלפון וגם במחשב.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>סימולציית בחינה</h3><p>בוחרים מספר שאלות, עם טיימר. בסוף — ציון, וכל שאלה נפתחת עם התשובה וההסבר.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>הסבר עם ציטוט מהמקור</h3><p>לכל תשובה: למה היא נכונה, למה המסיחים שגויים, והציטוט המדויק מהספר או מההנחיה.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3><p>מכיר את השאלה, את התשובה ואת המקור, מחפש בספרי המקור כשצריך — ואומר כשאין לו על מה להסתמך. בוחרים סגנון: מנטור, רופא בכיר, חבר ללימודים, בוחן או ענייני וקצר.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>מפת שאלות לפי נושאים</h3><p>כל נושא ותת-נושא: מה תרגלתם, מה נכון ומה שגוי. שאלה שרוצים לחזור אליה — מסמנים בסימנייה.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>דשבורד יומי</h3><p>רצף ימים, תגים, המלצה מה לתרגל היום, והנושאים שהכי דורשים טיפול.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>טבלת מובילים</h3><p>רואים איפה אתם מול מתמחים אחרים שמתכוננים באפליקציה.</p></div>
-        <div class="f-card"><h3><span class="sq" aria-hidden="true"></span>דיווח על בעיה בשאלה — ותשובה</h3><p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p></div>
+      <div class="bento">
+        <article class="tile t-tutor" data-reveal>
+          <i class="ph ph-chats-circle" aria-hidden="true"></i>
+          <h3>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3>
+          <p>מכיר את השאלה, את התשובה ואת המקור, מחפש בספרי המקור כשצריך, ואומר כשאין לו על מה להסתמך.</p>
+          <ul class="styles" aria-label="סגנונות המורה">
+            <li>מנטור</li><li>רופא בכיר</li><li>חבר ללימודים</li><li>בוחן</li><li>ענייני וקצר</li>
+          </ul>
+        </article>
+        <article class="tile t-quote" data-reveal style="--i:1">
+          <i class="ph ph-quotes" aria-hidden="true"></i>
+          <h3>הסבר עם ציטוט מהמקור</h3>
+          <p>לכל תשובה: למה היא נכונה, למה המסיחים שגויים, והציטוט המדויק מהספר או מההנחיה.</p>
+        </article>
+        <article class="tile t-exam" data-reveal style="--i:2">
+          <i class="ph ph-timer" aria-hidden="true"></i>
+          <h3>סימולציית בחינה</h3>
+          <p>בוחרים מספר שאלות, עם טיימר. בסוף מקבלים ציון, וכל שאלה נפתחת עם התשובה וההסבר.</p>
+        </article>
+        <article class="tile t-filter" data-reveal style="--i:3">
+          <i class="ph ph-funnel" aria-hidden="true"></i>
+          <h3>תרגול לפי מה שחשוב לכם</h3>
+          <p>מסננים לפי נושא, רמת קושי ומה שעוד לא פתרתם. ממשיכים מאותו מקום בטלפון ובמחשב.</p>
+        </article>
+        <article class="tile t-map" data-reveal>
+          <i class="ph ph-tree-structure" aria-hidden="true"></i>
+          <h3>מפת שאלות לפי נושאים</h3>
+          <p>כל נושא ותת נושא: מה תרגלתם, מה נכון ומה שגוי. שאלה שרוצים לחזור אליה מסמנים בסימנייה.</p>
+        </article>
+        <article class="tile t-dash" data-reveal style="--i:1">
+          <i class="ph ph-squares-four" aria-hidden="true"></i>
+          <h3>דשבורד יומי</h3>
+          <p>רצף ימים, תגים, המלצה מה לתרגל היום, והנושאים שהכי דורשים טיפול.</p>
+        </article>
+        <article class="tile t-board" data-reveal style="--i:2">
+          <i class="ph ph-ranking" aria-hidden="true"></i>
+          <h3>טבלת מובילים</h3>
+          <p>רואים איפה אתם מול מתמחים אחרים שמתכוננים באפליקציה.</p>
+        </article>
+        <article class="tile t-report" data-reveal style="--i:3">
+          <i class="ph ph-flag" aria-hidden="true"></i>
+          <h3>דיווח על בעיה בשאלה</h3>
+          <p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p>
+        </article>
       </div>
-      <p class="later"><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</p>
+      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו קרבות בין מתמחים.</span></p>
     </div>
   </section>
 
-  <section class="band" aria-labelledby="t-cmp">
-    <div class="in">
-      <div class="head">
-        <span class="eyebrow" lang="en">COMPARISON</span>
+  <section class="sec compare" aria-labelledby="t-cmp">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
         <h2 id="t-cmp">לא עוד מאגר שאלות. לא עוד צ׳אט <span class="ltr-iso">AI</span> כללי.</h2>
-        <p>מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה — רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. MeduXa משלבת את שניהם, סביב הבחינה.</p>
+        <p>מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה, רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. <span class="ltr-iso">MeduXa</span> משלבת את שניהם, סביב הבחינה.</p>
       </div>
-      <table class="cmp">
-        <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="cmp-brand" aria-label="MeduXa"><svg width="22" height="22" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect><rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="5"></rect><path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="9" stroke-linecap="round" fill="none"></path><circle cx="48" cy="48" r="11" fill="#22D3EE"></circle></svg><span class="word" aria-hidden="true"><b>MeduXa</b><i>.ai</i></span></span></th><th scope="col"><span class="full">מאגר שאלות רגיל</span><span class="short">מאגר</span></th><th scope="col"><span class="full">צ׳אט <span class="ltr-iso">AI</span> כללי</span><span class="short"><span class="ltr-iso">AI</span> כללי</span></th></tr></thead>
-        <tbody>
-        <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us yes" data-label="MeduXa"><span class="full">שאלות בפורמט שלב א, עם הסבר מלא</span><span class="short">יש</span></td><td class="yes" data-label="מאגר שאלות"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></td></tr>
-        <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us yes" data-label="MeduXa"><span class="full">ציטוט מילה-במילה לכל שאלה, שאפשר לבדוק</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">לרוב בלי מקור מצוטט</span><span class="short">לרוב לא</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">רק אם העליתם את המקור בעצמכם</span><span class="short">אם תעלו</span></td></tr>
-        <tr><th scope="row">ביקורת מומחה</th><td class="us yes" data-label="MeduXa"><span class="full">כל שאלה עוברת ביקורת מומחה</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">משתנה בין מאגרים</span><span class="short">משתנה</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
-        <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us yes" data-label="MeduXa"><span class="full">מובנה בכל שאלה</span><span class="short">בכל שאלה</span></td><td class="no" data-label="מאגר שאלות"><span class="full">אין</span><span class="short">אין</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">רק אם תבנו לו את כל ההקשר</span><span class="short">אם תבנו</span></td></tr>
-        <tr><th scope="row">חזרה מרווחת</th><td class="us yes" data-label="MeduXa"><span class="full">חזרה יומית שמתוזמנת לפי השכחה</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">לרוב אין</span><span class="short">לרוב אין</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
-        <tr><th scope="row">תרגול ממוקד בחולשות</th><td class="us yes" data-label="MeduXa"><span class="full">הדשבורד מזהה ופותח תרגול בלחיצה</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">לרוב אין</span><span class="short">לרוב אין</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
-        <tr><th scope="row">סימולציית בחינה עם טיימר</th><td class="us yes" data-label="MeduXa"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">משתנה בין מאגרים</span><span class="short">משתנה</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
-        <tr><th scope="row">מפת נושאים ומעקב התקדמות</th><td class="us yes" data-label="MeduXa"><span class="full">יש</span><span class="short">יש</span></td><td class="no" data-label="מאגר שאלות"><span class="full">משתנה בין מאגרים</span><span class="short">משתנה</span></td><td class="no" data-label="צ׳אט AI כללי"><span class="full">אין</span><span class="short">אין</span></td></tr>
-      </tbody>
-      </table>
+      <div class="cmp-wrap" data-reveal>
+        <table class="cmp">
+          <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="cmp-brand" aria-label="MeduXa"><svg width="22" height="22" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect><rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="5"></rect><path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="9" stroke-linecap="round" fill="none"></path><circle cx="48" cy="48" r="11" fill="#22D3EE"></circle></svg><span class="word" aria-hidden="true"><b>MeduXa</b><i>.ai</i></span></span></th><th scope="col"><span class="full">מאגר שאלות רגיל</span><span class="short">מאגר</span></th><th scope="col"><span class="full">צ׳אט <span class="ltr-iso">AI</span> כללי</span><span class="short"><span class="ltr-iso">AI</span> כללי</span></th></tr></thead>
+          <tbody>
+          <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">שאלות בפורמט שלב א, עם הסבר מלא</span><span class="short">יש</span></span></td><td class="yes"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></span></td></tr>
+          <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">ציטוט מילה במילה לכל שאלה, שאפשר לבדוק</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">לרוב בלי מקור מצוטט</span><span class="short">לרוב לא</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">רק אם העליתם את המקור בעצמכם</span><span class="short">אם תעלו</span></span></td></tr>
+          <tr><th scope="row">ביקורת מומחה</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">כל שאלה עוברת ביקורת מומחה</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>משתנה<span class="full">&nbsp;בין מאגרים</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
+          <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">מובנה בכל שאלה</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">רק אם תבנו לו את כל ההקשר</span><span class="short">אם תבנו</span></span></td></tr>
+          <tr><th scope="row">חזרה מרווחת</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">חזרה יומית שמתוזמנת לפי השכחה</span><span class="short">יש</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>לרוב אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
+          <tr><th scope="row">תרגול ממוקד בחולשות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">הדשבורד מזהה ופותח תרגול בלחיצה</span><span class="short">יש</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>לרוב אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
+          <tr><th scope="row">סימולציית בחינה עם טיימר</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>משתנה<span class="full">&nbsp;בין מאגרים</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
+          <tr><th scope="row">מפת נושאים ומעקב התקדמות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>משתנה<span class="full">&nbsp;בין מאגרים</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
+          </tbody>
+        </table>
+      </div>
       <p class="cmp-note">ההשוואה מתייחסת לקטגוריות כלליות של פתרונות נפוצים, לא למוצר מסחרי מסוים.</p>
     </div>
   </section>
 
-  <section id="signup" class="signup-band" aria-labelledby="t-signup">
-    <div class="signup">
-      <span class="eyebrow" lang="en">EARLY ACCESS</span>
-      <h2 id="t-signup">הרשמה לעדכון: רפואת משפחה</h2>
-      <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א ברפואת משפחה</strong>. נכתוב לכם כשהיא נפתחת, עם מחיר ההשקה לנרשמים מראש.</p>
-      <p class="group-note">מתכוננים כקבוצה, למשל כל המתמחים במחלקה? תהיה גם הנחה קבוצתית — הפרטים במייל הפתיחה.</p>
-      <!-- Consent, then the Privacy Protection Law § 11 notice at the point of
-           collection. `required` inside a real <form> makes the browser block
-           the submit itself, so the handler never sees an unconsented address. -->
-      <form id="notifyForm">
-        <label class="field" for="notifyEmail">כתובת מייל
-          <input id="notifyEmail" dir="auto" type="email" required autocomplete="email" inputmode="email" placeholder="המייל שלכם">
-        </label>
-        <label class="consent" for="notifyConsent">
-          <input id="notifyConsent" type="checkbox" required>
-          <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א ברפואת משפחה תיפתח.</span>
-        </label>
-        <button id="notifySubmit" class="btn-action" type="submit">עדכנו אותי על רפואת משפחה</button>
-        <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
-      </form>
-      <span id="notifyMsg" role="status" aria-live="polite"></span>
+  <section id="signup" class="sec signup-band" aria-labelledby="t-signup">
+    <div class="wrap signup-grid">
+      <div class="signup-copy" data-reveal>
+        <span class="eyebrow" lang="en">EARLY ACCESS</span>
+        <h2 id="t-signup">הרשמה לעדכון: רפואת משפחה</h2>
+        <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א ברפואת משפחה</strong>. נכתוב לכם כשהיא נפתחת.</p>
+        <ul class="perks">
+          <li><i class="ph ph-tag" aria-hidden="true"></i><span><strong>מחיר השקה מיוחד</strong> לנרשמים מראש.</span></li>
+          <li><i class="ph ph-users-three" aria-hidden="true"></i><span>מתכוננים כקבוצה, למשל כל המתמחים במחלקה? <strong>תהיה גם הנחה קבוצתית</strong>, הפרטים במייל הפתיחה.</span></li>
+        </ul>
+      </div>
+      <div class="signup" data-reveal style="--i:1">
+        <!-- `required` inside a real <form> makes the browser block the submit
+             itself, so the handler never sees an unconsented address. -->
+        <form id="notifyForm">
+          <label class="field" for="notifyEmail">כתובת מייל
+            <input id="notifyEmail" dir="auto" type="email" required autocomplete="email" inputmode="email" placeholder="name@example.com">
+          </label>
+          <label class="consent" for="notifyConsent">
+            <input id="notifyConsent" type="checkbox" required>
+            <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א ברפואת משפחה תיפתח.</span>
+          </label>
+          <button id="notifySubmit" class="btn" type="submit">עדכנו אותי</button>
+          <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
+        </form>
+        <span id="notifyMsg" role="status" aria-live="polite"></span>
+      </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="foot">
+  <div class="wrap foot">
     <span class="word"><b>MeduXa</b><i>.ai</i></span>
     <span class="foot-links"><a class="foot-link" href="/privacy">מדיניות פרטיות</a><a class="foot-link" href="/terms">תנאי שימוש</a><a class="foot-link" href="/accessibility">הצהרת נגישות</a></span>
-    <small>© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</small>
+    <small>© 2026 MeduXa. ללמוד חכם יותר לבחינות ההתמחות. כל הזכויות שמורות.</small>
   </div>
 </footer>
 
 <script>
+  // Scroll reveal: one IntersectionObserver, each element revealed once.
+  (function () {
+    var els = document.querySelectorAll('[data-reveal]');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('seen'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  // Sample question. One answer is marked at a time: picking another clears
+  // the last. A right answer opens the explanation and its source; a wrong
+  // one gets its own question back from the tutor, the way the app does it.
+  (function () {
+    var opts = Array.prototype.slice.call(document.querySelectorAll('.q-opt'));
+    var out = document.getElementById('q-out');
+    opts.forEach(function (o) {
+      o.setAttribute('aria-pressed', 'false');
+      o.addEventListener('click', function () {
+        var right = o.hasAttribute('data-right');
+        opts.forEach(function (x) { x.classList.remove('is-right', 'is-wrong'); x.setAttribute('aria-pressed', 'false'); });
+        o.classList.add(right ? 'is-right' : 'is-wrong');
+        o.setAttribute('aria-pressed', 'true');
+        if (right) {
+          out.innerHTML =
+            '<div class="q-explain">' +
+              '<p><strong>נכון.</strong> <strong>למה לא להתחיל טיפול:</strong> הפער בין <span class="ltr-iso">148/94</span> במרפאה לבין <span class="ltr-iso">115/70</span> בבית מעלה חשד ליתר לחץ דם של חלוק לבן, וטיפול לפי מדידות המרפאה בלבד עלול להיות מיותר.</p>' +
+              '<p><strong>ולמה לא להסתפק במדידות שלו:</strong> הן לא נעשו לפי פרוטוקול. מאשרים במדידות ביתיות מובנות (מכשיר זרוע מאושר, בוקר וערב) או בניטור אמבולטורי של 24 שעות, ורק אז מחליטים.</p>' +
+              '<p><strong>ומה הלאה:</strong> אם יתר לחץ הדם מאושר, מתחילים ניהול שמטרתו להפחית תחלואה ותמותה קרדיווסקולרית. אם המדידות תקינות, זה יתר לחץ דם של חלוק לבן: הסיכון הקרדיווסקולרי נמוך מיתר לחץ דם מתמשך אך גבוה מלחץ דם תקין, והמצב עלול להתקדם, ולכן ממשיכים בשינוי אורחות חיים ובמעקב שנתי.</p>' +
+              '<figure class="q-src"><blockquote>״בהתאם לעדכון 2026, מומלץ בחוזקה אישור האבחנה באמצעות מדידות מחוץ למרפאה. מדובר במרכיב מהותי של תהליך האבחנה.״</blockquote>' +
+              '<figcaption>יתר לחץ דם בישראל: אבחנה, טיפול ואיזון, 2026. ההסתדרות הרפואית בישראל, עמ׳&nbsp;6</figcaption></figure>' +
+            '</div>';
+        } else {
+          out.innerHTML =
+            '<div class="q-tutor"><i class="ph ph-chats-circle" aria-hidden="true"></i>' +
+              '<p><b>המורה:</b> ' + o.getAttribute('data-tutor') + '</p></div>';
+        }
+        if (typeof gtag === 'function') gtag('event', 'fm_sample_question', { result: right ? 'right' : 'wrong', answer: o.getAttribute('data-k') });
+      });
+    });
+  })();
+
+  // Hero background pin: .hero-video is object-fit: cover, so every change to
+  // its box's height re-crops the frame. Pin the box to the hero's height with
+  // the card unanswered; the card's growth then spills into the mask's fade.
+  // Width changes only, since phone URL bars fire resize while scrolling.
+  (function () {
+    var bg = document.querySelector('.hero-bg');
+    if (!bg) return;
+    var hero = bg.parentNode, lastWidth = window.innerWidth;
+    function pin() { bg.style.height = hero.offsetHeight + 'px'; }
+    pin();
+    window.addEventListener('load', pin);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(pin);
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth; bg.style.height = ''; pin();
+    });
+  })();
+
+  // Seamless hero loop, as on the homepage: crossfade between two copies of
+  // the clip so the restart cut never shows. The file is cached, so no extra
+  // download. If autoplay is blocked (iOS Low Power Mode, data savers), hide
+  // the video and let the header's gradient show instead of a play button.
+  (function () {
+    var vids = document.querySelectorAll('.hero-video');
+    if (vids.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      vids.forEach(function (v) { v.pause(); });
+      return;
+    }
+    function hideVideos() { vids.forEach(function (v) { v.style.display = 'none'; }); }
+    var frontPlay = vids[0].play();
+    if (frontPlay && frontPlay.catch) frontPlay.catch(hideVideos);
+    setTimeout(function () { if (vids[0].paused) hideVideos(); }, 1500);
+    var FADE = 1.0, front = 0;
+    function swap() {
+      var a = vids[front], b = vids[1 - front];
+      try { b.currentTime = 0; } catch (e) {}
+      var p = b.play(); if (p && p.catch) p.catch(function () {});
+      b.style.opacity = '1';
+      a.style.opacity = '0';
+      setTimeout(function () { a.pause(); }, 1200);
+      front = 1 - front;
+    }
+    setInterval(function () {
+      var a = vids[front];
+      if (a.duration && !a.paused && a.currentTime > a.duration - FADE) swap();
+    }, 250);
+  })();
+
   // "Notify me" → Supabase waitlist (insert-only via the publishable key; RLS
   // blocks reads). source 'landing_fm' marks these rows as family-medicine
   // sign-ups, apart from 'landing' (old homepage form) and 'app_door'/'app_gate'.
   (function () {
     var SUPA_URL = 'https://pappjpdsajkcoqrfqqqx.supabase.co';
     var SUPA_KEY = 'sb_publishable_tV1q0WG7_bMLfsCIqOU1tA_PH8gZfCU';
-    var LABEL = 'עדכנו אותי על רפואת משפחה';
+    var LABEL = 'עדכנו אותי';
     var form = document.getElementById('notifyForm');
     var email = document.getElementById('notifyEmail');
     var consent = document.getElementById('notifyConsent');
@@ -405,7 +699,7 @@
       var val = (email.value || '').trim();
       if (!val || !consent.checked) return;
       btn.disabled = true; btn.textContent = '…'; form.setAttribute('aria-busy', 'true');
-      msg.textContent = ''; msg.style.color = ''; msg.className = '';
+      msg.textContent = ''; msg.className = '';
       fetch(SUPA_URL + '/rest/v1/waitlist', {
         method: 'POST',
         headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
@@ -417,7 +711,7 @@
         // page's list is simply interests ? 'family_medicine'. Set it on a new
         // row and on a 409 (the address is already listed from an earlier form;
         // the email is unique). Best effort: a failure here must not turn a
-        // sign-up the person already has into an error on screen — the row's
+        // sign-up the person already has into an error on screen; the row's
         // source 'landing_fm' still identifies a new sign-up.
         return fetch(SUPA_URL + '/rest/v1/rpc/waitlist_add_interest', {
           method: 'POST',
@@ -428,16 +722,17 @@
         form.removeAttribute('aria-busy');
         form.style.display = 'none';
         msg.className = 'ok-box';
-        msg.textContent = '✓ נרשמתם לעדכונים על רפואת משפחה — נכתוב לכם כשההכנה לשלב א נפתחת, עם מחיר ההשקה.';
+        msg.innerHTML = '<i class="ph ph-check-circle" aria-hidden="true"></i><span></span>';
+        msg.lastChild.textContent = 'נרשמתם לעדכונים על רפואת משפחה. נכתוב לכם כשההכנה לשלב א נפתחת, עם מחיר ההשקה.';
         if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist_family_medicine' });
       }).catch(function (err) {
         form.removeAttribute('aria-busy');
         btn.disabled = false; btn.textContent = LABEL;
         // A thrown fetch (offline, blocked) is not the address's fault.
+        msg.className = 'err';
         msg.textContent = err && err.server
           ? 'ההרשמה לא נשמרה. בדקו את כתובת המייל ונסו שוב.'
           : 'לא הצלחנו להתחבר. בדקו את החיבור לאינטרנט ונסו שוב בעוד רגע.';
-        msg.style.color = '#9c2f30';
       });
     });
   })();
