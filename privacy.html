@@ -33,6 +33,9 @@
   .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
   .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
   .doc li { margin-bottom: 8px; }
+  /* In running text a link must not be told apart by colour alone (#0E7490 vs the
+     body #334155 is 1.9:1, under WCAG 1.4.1's 3:1) — so it keeps its underline. */
+  .doc p a, .doc li a, .doc td a { text-decoration: underline; text-underline-offset: 2px; }
   .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
   .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
   .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }

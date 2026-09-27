@@ -87,8 +87,10 @@
     b.textContent = label;
     // Accept and reject carry equal visual weight: same size, same shape.
     b.style.cssText = 'font:inherit;font-size:14px;font-weight:700;padding:10px 18px;' +
-      'border-radius:10px;cursor:pointer;min-width:110px;border:1px solid #0EA5E9;' +
-      (value === 'granted' ? 'background:#0EA5E9;color:#fff;' : 'background:#fff;color:#0F172A;');
+      'border-radius:10px;cursor:pointer;min-width:110px;border:1px solid #0E7490;' +
+      // #0E7490, not the brand sky #0EA5E9: white on sky is 2.77:1, under the 4.5:1
+      // the accessibility statement promises; white on #0E7490 is 5.36:1.
+      (value === 'granted' ? 'background:#0E7490;color:#fff;' : 'background:#fff;color:#0F172A;');
     b.addEventListener('click', function () { choose(value); });
     return b;
   }

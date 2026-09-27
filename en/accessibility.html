@@ -11,7 +11,7 @@
 <link rel="alternate" hreflang="he" href="https://meduxa.ai/accessibility" />
 <link rel="alternate" hreflang="en" href="https://meduxa.ai/en/accessibility" />
 <link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/accessibility" />
-<meta name="description" content="The MeduXa.ai accessibility statement — the standard the site is built to, what is accessible, the limitations we know about, and how to report an accessibility problem." />
+<meta name="description" content="The MeduXa.ai accessibility statement — the standard the site and the learning app are built to, what is accessible, the limitations we know about, and how to report an accessibility problem." />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#061225" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -31,6 +31,9 @@
   .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
   .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
   .doc li { margin-bottom: 8px; }
+  /* In running text a link must not be told apart by colour alone (#0E7490 vs the
+     body #334155 is 1.9:1, under WCAG 1.4.1's 3:1) — so it keeps its underline. */
+  .doc p a, .doc li a, .doc td a { text-decoration: underline; text-underline-offset: 2px; }
   .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
   .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
   .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }
@@ -89,57 +92,67 @@
 
   <main class="doc" id="main">
     <h1>Accessibility Statement</h1>
-    <p class="updated">Last updated: September 2, 2026</p>
+    <p class="updated">Last updated: September 27, 2026</p>
 
-    <p>We treat the accessibility of this site as part of the service, not an add-on to it. This page sets out the standard meduxa.ai is built to, what is actually accessible on it, the limitations we still know about, and how to report a problem so we can fix it.</p>
+    <p>We treat accessibility as part of the service, not an add-on to it. This page sets out the standard the information site meduxa.ai and the learning app app.meduxa.ai are built to, what is actually accessible in them, the limitations we still know about, and how to report a problem so we can fix it.</p>
 
     <div class="card">
-      <p><strong>The short version:</strong> the site is built to Israeli Standard IS 5568 at level AA, which adopts the W3C's WCAG 2.0 guidelines. It was last checked on September 2, 2026, and that check was a self-assessment by the development team rather than an audit by a certified accessibility professional. The limitations we know about are listed in section 4 rather than hidden. Found something that does not work? <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>.</p>
+      <p><strong>The short version:</strong> the site and the app are built to Israeli Standard IS 5568 at level AA, which adopts the W3C's WCAG 2.0 guidelines. They were last checked on September 27, 2026, and that check was a self-assessment by the development team rather than an audit by a certified accessibility professional. The limitations we know about are listed in section 4 rather than hidden. Found something that does not work? <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>.</p>
     </div>
 
-    <h2>1. The standard this site is built to</h2>
-    <p>The site follows <strong>Israeli Standard IS 5568</strong>, "Web content accessibility guidelines", at conformance level <strong>AA</strong>. That standard adopts the W3C's WCAG 2.0 guidelines. This statement is written in the spirit of Israel's Equal Rights for Persons with Disabilities Regulations (Service Accessibility Adjustments), 5773-2013.</p>
-    <p>This is a marketing site only: it has no sign-up, no user accounts and no payment flow. The product itself is in pilot and is not served from this site; when it opens to the public, this statement will be re-examined against it.</p>
+    <h2>1. The standard, and what this statement covers</h2>
+    <p>The service is built to Israeli Standard <strong>IS 5568</strong>, "Web Content Accessibility Guidelines", at conformance level AA. The standard adopts the W3C's WCAG 2.0 guidelines. This statement is written in the spirit of the Israeli Equal Rights for Persons with Disabilities (Service Accessibility Adjustments) Regulations, 5773-2013.</p>
+    <p>It covers both parts of the service: the <strong>information site</strong> meduxa.ai, and the <strong>learning app</strong> app.meduxa.ai — sign-up and sign-in, practice, mock exams, daily review, the question map, the AI tutor, and buying a subscription.</p>
 
     <h2>2. What is accessible</h2>
-    <p>These have been checked and work:</p>
+    <p>These have been checked and work.</p>
+    <h3>In the learning app</h3>
     <ul>
-      <li><strong>Full keyboard operation.</strong> Everything that can be clicked can also be reached with <kbd>Tab</kbd> and activated with <kbd>Enter</kbd> or <kbd>Space</kbd> — including the four answers in the demo card, the reply chips and send control, the expand-explanation button, and the nine "science of learning" cards.</li>
-      <li><strong>A visible focus indicator</strong> on every interactive element, so it is always clear where the keyboard is.</li>
-      <li><strong>A skip-to-content link</strong> at the top of every page, revealed on the first <kbd>Tab</kbd> press, which jumps past the navigation.</li>
-      <li><strong>Semantic structure.</strong> Landmark regions (<code>nav</code>, <code>main</code>, <code>footer</code>), a hierarchical heading order, and either a text alternative or a decorative marking on every piece of graphics.</li>
-      <li><strong>Colour contrast.</strong> Every text colour on the site has been computed against the background behind it and meets at least 4.5:1 for normal-size text.</li>
+      <li><strong>Full keyboard operation.</strong> Every button, field, drop-down and answer option can be operated with <kbd>Tab</kbd>, <kbd>Enter</kbd> and <kbd>Space</kbd>. The first <kbd>Tab</kbd> reveals a "Skip to main content" link that jumps past the navigation menu.</li>
+      <li><strong>A visible focus indicator</strong> on every button, field and drop-down.</li>
+      <li><strong>Screen-reader support.</strong> Navigation and content regions are marked, every field and drop-down has a label, and pop-up windows are marked as titled dialogs.</li>
+      <li><strong>Answer results are not conveyed by colour alone.</strong> After you answer a question, the screen reader announces whether you were right and which answer is correct, and each option is labelled in text as "correct answer" or "your answer — incorrect".</li>
+      <li><strong>No mandatory time limit.</strong> Every mock exam can also be taken in "untimed" mode.</li>
+      <li><strong>Five interface languages</strong> (Hebrew, English, Arabic, Russian and French), each with its correct writing direction — right-to-left or left-to-right — and the page language declared to the browser and screen reader.</li>
+      <li><strong>Dark and light modes</strong>, switchable at any time.</li>
+      <li><strong>Zoom and small screens.</strong> The interface can be zoomed and adapts to phones, and on a phone the side menu, when closed, is removed from the keyboard order entirely.</li>
+    </ul>
+    <h3>On the information site</h3>
+    <ul>
+      <li><strong>Full keyboard operation.</strong> Everything that can be clicked can also be reached with <kbd>Tab</kbd> and activated with <kbd>Enter</kbd> or <kbd>Space</kbd> — including the four answers in the demo card, the chips and send button for the tutor, the expand-explanation button and the nine "science of learning" cards.</li>
+      <li><strong>A visible focus indicator</strong> on every interactive element, and a skip-to-content link at the top of every page.</li>
+      <li><strong>Semantic structure.</strong> Landmark regions (<code>nav</code>, <code>main</code>, <code>footer</code>), a hierarchical heading order, and either a text alternative or a decorative marking for every graphic.</li>
+      <li><strong>Colour contrast.</strong> Text and button colours meet at least 4.5:1 for normal-size text, and links inside running text are underlined rather than distinguished by colour alone.</li>
       <li><strong>Reduced-motion preference honoured.</strong> For visitors whose operating system requests <code>prefers-reduced-motion</code>, the background video at the top of the page is not shown at all and animations stop.</li>
       <li><strong>The background video is completely silent</strong>, carries no information, and is marked decorative so screen readers skip it. Nothing on the site starts playing sound on its own.</li>
-      <li><strong>Right-to-left Hebrew is genuine</strong> — the Hebrew page is authored RTL from the start, not a mirrored Latin layout.</li>
-      <li><strong>Responsive layout and zoom.</strong> The page stays readable and operable at up to 200% text zoom and on narrow phone screens, without horizontal scrolling.</li>
-      <li><strong>Labelled forms.</strong> The email field and the consent checkbox both have associated labels, and success or failure is reported in text rather than by colour alone.</li>
-      <li><strong>No pop-ups</strong>, no banners covering the content, and no time limit on any action.</li>
+      <li><strong>Responsive layout and zoom.</strong> Pages stay readable and operable at up to 200% text zoom and on narrow phone screens, without horizontal scrolling.</li>
+      <li><strong>Labelled forms</strong>, with success or failure reported in text rather than by colour alone. No pop-ups cover the content, and no action has a time limit.</li>
     </ul>
 
     <h2>3. How it was checked</h2>
-    <p>The most recent check was carried out on <strong>September 2, 2026</strong> by the development team. It covered a full keyboard pass over every page, a computed contrast check of every text colour against its background, and a review of the semantic structure and landmark regions.</p>
-    <p><strong>The site has not yet been audited by a certified accessibility professional</strong>, so this statement describes a self-assessment rather than external certification. We intend to complete such an audit, and this page will be updated to reflect what it finds.</p>
+    <p>The most recent check was carried out on <strong>September 27, 2026</strong> by the development team. It covered an automated scan of every site page and of the app's screens against the WCAG level A and AA rules, at desktop and phone widths; a full keyboard walk-through; and a check of what a screen reader receives while answering a question.</p>
+    <p><strong>No audit by a certified accessibility professional has been carried out yet</strong>, and no full test by a screen-reader user has been done. This statement therefore describes a self-assessment, not external certification. We intend to commission such an audit and will update this page with its findings.</p>
 
     <h2>4. Limitations we know about</h2>
-    <p>These are the gaps we are aware of. They are listed so you know what to expect, not as an excuse — each is on the fix list:</p>
+    <p>These are the gaps we are aware of. They are listed so you know what to expect, not as an excuse:</p>
     <ul>
-      <li><strong>English terms inside Hebrew text are not marked with their language.</strong> On the Hebrew page, terms such as KDIGO or AKI sit inside Hebrew sentences without a separate language marking, so a screen reader may pronounce them with Hebrew phonetics. This is a deviation from the level AA "language of parts" requirement.</li>
-      <li><strong>The "science of learning" cards open on hover as well as on click or keypress.</strong> The content is reachable either way, but that combination may behave unpredictably in some browser and screen-reader pairings.</li>
-      <li><strong>AI tutor replies are generated live</strong>, so their sentence length and reading level are not reviewed in advance. They are capped in length, but they are not edited before being shown.</li>
-      <li><strong>The reference links</strong> at the end of the science section lead to external academic sites. Their accessibility is outside our control and rests with whoever operates them.</li>
+      <li><strong>Image-based questions</strong> (renal pathology, urine sediment). The image is the question itself, so its text alternative identifies it as the question image without describing the findings — a description would give the answer away. Someone who cannot see the image will not be able to answer these questions; they are grouped in separate topics and on the "image exams" screen, and you can practise without them.</li>
+      <li><strong>English terms inside Hebrew text are not marked with their language.</strong> Terms such as KDIGO or AKI appear inside Hebrew sentences — on the site and in the questions themselves — without a separate language marking, so a screen reader may pronounce them with Hebrew phonetics. This departs from the AA "language of parts" requirement.</li>
+      <li><strong>The AI tutor's replies are generated in real time.</strong> Screen readers do not read them out automatically while they are being written; you need to navigate to them. Their sentence length and wording are not reviewed in advance; they are length-limited, but not edited before being shown.</li>
+      <li><strong>The "science of learning" cards on the site open both on mouse hover and on click or keyboard.</strong> The content is reachable either way, but the combination may behave unexpectedly with some browser and screen-reader pairings. The reference numbers inside the cards are visual pointers only; the sources themselves are ordinary links in the list below the cards.</li>
+      <li><strong>External services.</strong> The payment provider's checkout page, sign-in with Google and the academic source links lead to sites we do not control, and their accessibility is the responsibility of their operators.</li>
     </ul>
 
     <h2>5. Accessibility arrangements for the service</h2>
-    <p>The service is delivered entirely online. We have no office or branch that receives the public, so there are no physical accessibility arrangements to declare. Every enquiry is received and handled by email.</p>
+    <p>The service is provided entirely online. We have no office or branch that receives the public, so there are no physical accessibility arrangements to declare. Every enquiry is received and handled by email.</p>
 
     <h2>6. Reporting an accessibility problem</h2>
-    <p>If you have run into a page, control or piece of content you could not use, please tell us — even if it seems small. A report like that is the fastest way we have of learning that something is broken.</p>
-    <p><strong>Write to:</strong> <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a></p>
-    <p>To help us reproduce the problem, it is useful to have the page address, a short description of what did not work, and — if you know them — the browser, operating system and assistive technology you were using. We will get back to you as quickly as we can, and no later than 30 days from receiving your message.</p>
+    <p>If you came across a page, screen, component or piece of content you could not use, please write to us — even if it seems minor. That is the fastest way for us to learn about a problem.</p>
+    <p><strong>Contact:</strong> <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a></p>
+    <p>To help us reproduce the problem, please include the page address or screen name, a short description of what did not work, and if you know them, the browser, operating system and assistive technology you were using. We will get back to you as soon as possible, and no later than 30 days after receiving your message.</p>
 
     <h2>7. Updates to this statement</h2>
-    <p>This statement is re-examined on any substantive change to the site, and at least once a year. The date it was last updated appears at the top of the page.</p>
+    <p>This statement is reviewed after every significant change to the site or the app, and at least once a year. The date of the last update appears at the top of the page.</p>
 
     <p style="margin-top: 40px;"><a href="/en">→ Back to home</a> · <a href="/en/privacy">Privacy Policy</a> · <a href="/en/terms">Terms of Use</a></p>
   </main>

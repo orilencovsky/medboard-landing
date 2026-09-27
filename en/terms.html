@@ -30,6 +30,9 @@
   .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
   .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
   .doc li { margin-bottom: 8px; }
+  /* In running text a link must not be told apart by colour alone (#0E7490 vs the
+     body #334155 is 1.9:1, under WCAG 1.4.1's 3:1) — so it keeps its underline. */
+  .doc p a, .doc li a, .doc td a { text-decoration: underline; text-underline-offset: 2px; }
   /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
   .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
   .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
