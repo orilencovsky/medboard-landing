@@ -239,10 +239,10 @@ skipped by a JS error. Consent was then evidenced server-side in `waitlist.conse
 `timestamptz`), sent as an ISO timestamp in the insert body, backed by the redundant
 `if (!val || !consent.checked) return;`.
 
-**None of that existed on the app side at the time this page stopped collecting**, which is tracked
-as orilencovsky/Pilot#437 — the app writes `{ email, locale }` and nothing more. Until that is
-closed, every new row carries `consent_at = null`, i.e. no evidence behind it. **This page must not
-be deployed ahead of that fix.**
+**None of that existed on the app side at the time this page stopped collecting**, which was tracked
+as orilencovsky/Pilot#437 — the app wrote `{ email, locale }` and nothing more, so every new row
+carried `consent_at = null`, i.e. no evidence behind it. That issue was closed on 2026-09-07: the
+app's own signup screen now carries the consent checkbox, the § 11 notice, and `consent_at`.
 
 Rows already in the table are unaffected, and everything below still applies to them. If a form is
 ever added back here, note that adding a new column to the insert body needs the RLS `INSERT`
@@ -334,14 +334,49 @@ The script strips audio, scales to 1600px (desktop) and 800px (phone), and targe
   re-check the nav row and the waitlist input at that width after any change.
 - Keep the site **dependency-free**. No bundler, no framework, no CDN scripts.
 
+## Security headers
+
+`vercel.json`'s `headers` block applies to every path (`/(.*)`): `X-Content-Type-Options: nosniff`,
+`X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, a `Permissions-Policy`
+turning off camera/microphone/geolocation/payment/usb/interest-cohort (none of which this site uses),
+`Strict-Transport-Security: max-age=63072000` (two years, no `includeSubDomains` — `app.meduxa.ai` is
+a separate Vercel project, so forcing HTTPS on every subdomain of `meduxa.ai` from here was judged
+out of scope for this repo), and an enforced `Content-Security-Policy`.
+
+The CSP is built from every external origin the pages actually load or contact, since the site has
+no bundler and its inline `<script>`/`<style>` blocks mean `script-src`/`style-src` need
+`'unsafe-inline'` (no nonces are possible on hand-authored static HTML — a tradeoff, not an
+oversight):
+
+- `https://fonts.googleapis.com` (stylesheet) and `https://fonts.gstatic.com` (the font files it
+  references) — Google Fonts, every page.
+- `https://cdn.jsdelivr.net` — the Phosphor Icons stylesheet and the icon font files it references,
+  `family-medicine.html` only.
+- `https://www.googletagmanager.com` and `https://www.clarity.ms` / `https://*.clarity.ms` — GA4 and
+  Microsoft Clarity, loaded by `consent.js` only after opt-in. Clarity's tag itself loads from a
+  `scripts.clarity.ms` subdomain, hence the wildcard rather than just `www`.
+- `https://www.google-analytics.com`, `https://*.google-analytics.com`, `https://*.analytics.google.com`
+  — GA4's regional collection endpoints (`img-src` and `connect-src`).
+- `https://*.clarity.ms` and `https://c.bing.com` — Clarity's own data collection (`connect-src`).
+- `https://pappjpdsajkcoqrfqqqx.supabase.co` — the family-medicine waitlist insert (`connect-src`).
+
+**Any new third-party origin has to be added to this policy or it is silently blocked** — a script,
+stylesheet, font, image, or fetch/XHR target that isn't listed simply fails to load, with only a
+browser-console CSP violation to explain why. If the new origin is also a tracker, it belongs
+alongside `consent.js` and privacy pages § 4 too, the same rule the Legal pages table above already
+states. `/_vercel/insights/script.js` and `/api/tutor` are same-origin and covered by `'self'`.
+Links to `app.meduxa.ai` are plain navigation (`<a href>`), which CSP does not restrict, so they need
+no entry.
+
 ## Analytics
 
 Two layers, with different consent rules.
 
-**Vercel Web Analytics — every visitor.** Wired inline on both landing pages (the shim plus
-`/_vercel/insights/script.js`). Cookieless, no visitor id, so it needs no consent. It has to be
-switched on under **Vercel → Project → Analytics**; the path is served by the platform, so it 404s
-on a local static server. Custom events, all through `va('event', { name, data })`:
+**Vercel Web Analytics — every visitor.** Wired inline on both landing pages and on
+`/family-medicine` (the shim plus `/_vercel/insights/script.js`). Cookieless, no visitor id, so it
+needs no consent. It has to be switched on under **Vercel → Project → Analytics**; the path is
+served by the platform, so it 404s on a local static server. Custom events, all through
+`va('event', { name, data })`:
 
 - `cta_click` — `data.placement` is `nav`, `hero` or `closing`, read from the button's `data-cta`
   attribute. This is the landing→app click-through measure. A new "start" button needs a `data-cta`
@@ -352,6 +387,11 @@ on a local static server. Custom events, all through `va('event', { name, data }
   accounts there. The vocabularies are closed on the app side, so a new placement value needs a
   migration there before it is recorded.
 - `tutor_reply_shown`, `demo_answer_selected` — the hero demo card.
+- `fm_signup` — a successful (or already-listed, HTTP 409) waitlist insert on `/family-medicine`.
+- `fm_home_click` — `data.placement` is `logo` or `nav`, read from the link's `data-fm-cta`
+  attribute: which route back to the homepage a `/family-medicine` visitor used. Kept separate from
+  `cta_click` since these links go to `/`, not to the app, so they are not part of that
+  landing→app click-through measure.
 
 **Google Analytics 4 + Microsoft Clarity — only after opt-in.** Every page loads `/consent.js`
 instead of the tags themselves. It shows a bilingual banner (accept and decline with equal weight),
