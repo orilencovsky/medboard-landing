@@ -290,9 +290,11 @@ their way to the ✓ and refill the client-side quota at will.
 `api/tutor.js` holds the system prompt server-side, so the endpoint cannot be driven as a
 general-purpose chat. It calls **OpenRouter** (`anthropic/claude-haiku-4.5`, with
 `provider.data_collection: 'deny'` so prompts only go to providers that don't train on them), not
-the Anthropic API directly, since the project's keys are OpenRouter keys. **The live tutor is
-switched off on purpose for now** (as of 2026-09-28 the Vercel variable holds no working key); to
-turn it back on, set a working key as below. It needs
+the Anthropic API directly, since the project's keys are OpenRouter keys. **The live chat is
+switched off on purpose for now**: `CHAT_ENABLED = false` in both `index.html` and `en/index.html`
+hides `.qchat` and makes `send()` a no-op, so the endpoint is never called (the scripted per-option
+explanations still work). To turn it back on, flip that flag in both pages and set a working key as
+below. It needs
 `OPENROUTER_API_KEY` set in **Vercel → Project → Settings → Environment Variables** (Production +
 Preview); the old name `ANTHROPIC_API_KEY` is still read as a fallback and can be deleted once the
 new one is set. Without either, the endpoint answers `503` `not_configured` and the card shows its
