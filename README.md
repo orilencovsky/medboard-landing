@@ -241,8 +241,10 @@ skipped by a JS error. Consent was then evidenced server-side in `waitlist.conse
 
 **None of that existed on the app side at the time this page stopped collecting**, which was tracked
 as orilencovsky/Pilot#437 — the app wrote `{ email, locale }` and nothing more, so every new row
-carried `consent_at = null`, i.e. no evidence behind it. That issue was closed on 2026-09-07: the
-app's own signup screen now carries the consent checkbox, the § 11 notice, and `consent_at`.
+carried `consent_at = null`, i.e. no evidence behind it. That issue was closed on 2026-09-07 by
+orilencovsky/Pilot#443, which moved the consent checkbox, the § 11 notice and `consent_at` onto the
+app's signup screen. Rows inserted between the landing form's removal and that merge may still carry
+`consent_at = null`.
 
 Rows already in the table are unaffected, and everything below still applies to them. If a form is
 ever added back here, note that adding a new column to the insert body needs the RLS `INSERT`
@@ -336,12 +338,16 @@ The script strips audio, scales to 1600px (desktop) and 800px (phone), and targe
 
 ## Security headers
 
-`vercel.json`'s `headers` block applies to every path (`/(.*)`): `X-Content-Type-Options: nosniff`,
+`vercel.json`'s first `headers` rule applies to every path (`/(.*)`): `X-Content-Type-Options: nosniff`,
 `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, a `Permissions-Policy`
-turning off camera/microphone/geolocation/payment/usb/interest-cohort (none of which this site uses),
+turning off camera/microphone/geolocation/payment/usb (none of which this site uses),
 `Strict-Transport-Security: max-age=63072000` (two years, no `includeSubDomains` — `app.meduxa.ai` is
 a separate Vercel project, so forcing HTTPS on every subdomain of `meduxa.ai` from here was judged
-out of scope for this repo), and an enforced `Content-Security-Policy`.
+out of scope for this repo). A second rule adds an enforced `Content-Security-Policy`, but only when
+the host is `meduxa.ai` / `www.meduxa.ai`: preview deployments (`*.vercel.app`) get no CSP, because
+the Vercel Toolbar injects `vercel.live` scripts and a websocket there that the policy would block.
+So **a CSP violation only shows up in production** — after adding an origin, check the console on
+the live site too.
 
 The CSP is built from every external origin the pages actually load or contact, since the site has
 no bundler and its inline `<script>`/`<style>` blocks mean `script-src`/`style-src` need
@@ -356,7 +362,9 @@ oversight):
   Microsoft Clarity, loaded by `consent.js` only after opt-in. Clarity's tag itself loads from a
   `scripts.clarity.ms` subdomain, hence the wildcard rather than just `www`.
 - `https://www.google-analytics.com`, `https://*.google-analytics.com`, `https://*.analytics.google.com`
-  — GA4's regional collection endpoints (`img-src` and `connect-src`).
+  — GA4's regional collection endpoints (`img-src` and `connect-src`). `https://*.googletagmanager.com`
+  is in both too, per Google's gtag.js CSP guide (gtag contacts it once the property has linked
+  destinations). If Google Signals is ever turned on, add `https://stats.g.doubleclick.net`.
 - `https://*.clarity.ms` and `https://c.bing.com` — Clarity's own data collection (`connect-src`).
 - `https://pappjpdsajkcoqrfqqqx.supabase.co` — the family-medicine waitlist insert (`connect-src`).
 
