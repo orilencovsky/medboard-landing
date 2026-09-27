@@ -324,7 +324,8 @@ each tier. To regenerate them from a raw clip:
 ```
 
 The script strips audio, scales to 1600px (desktop) and 800px (phone), and targets roughly
-"desktop pair under 5 MB, mobile pair under 1 MB". It needs `ffmpeg` (`brew install ffmpeg`).
+"desktop pair under 5 MB, mobile pair under 1 MB"; the desktop mp4 is capped at 1200 kbps (~1 MB),
+since it used to come out at 4.5 MB against a 0.3 MB webm. It needs `ffmpeg` (`brew install ffmpeg`).
 
 ## Editing conventions
 

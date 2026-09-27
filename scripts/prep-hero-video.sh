@@ -16,7 +16,9 @@ DIR="$(cd "$(dirname "$0")/.." && pwd)"
 # phone viewport (~2x DPR at 375-430 CSS px) and the abstract, low-detail
 # footage compresses so well at that size that quality can stay high
 # while the file stays tiny (a few hundred KB, not the desktop file's MBs).
-ffmpeg -y -i "$RAW" -an -vf "scale=1600:-2" -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart "$DIR/hero.mp4"
+# The desktop mp4 is capped at 1200 kbps: without the cap it came out at ~6 Mbps
+# (4.5 MB), 15x the webm, for footage that sits under a dark overlay anyway.
+ffmpeg -y -i "$RAW" -an -vf "scale=1600:-2" -c:v libx264 -crf 28 -maxrate 1200k -bufsize 2400k -preset slow -pix_fmt yuv420p -movflags +faststart "$DIR/hero.mp4"
 ffmpeg -y -i "$RAW" -an -vf "scale=1600:-2" -c:v libvpx-vp9 -crf 40 -b:v 0 -row-mt 1 "$DIR/hero.webm"
 ffmpeg -y -i "$RAW" -an -vf "scale=800:-2" -c:v libx264 -crf 26 -preset slow -pix_fmt yuv420p -movflags +faststart "$DIR/hero-mobile.mp4"
 ffmpeg -y -i "$RAW" -an -vf "scale=800:-2" -c:v libvpx-vp9 -crf 34 -b:v 0 -row-mt 1 "$DIR/hero-mobile.webm"
