@@ -105,6 +105,10 @@
   .hero-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none;
                   background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
   .hero-mark { position: absolute; z-index: 1; inset-inline-end: -220px; top: -180px; width: 880px; height: 880px; opacity: .08; pointer-events: none; }
+  /* The static X is the video's fallback, never both at once: with JS on it
+     stays hidden unless the loop script marks the hero .no-video. */
+  .js .hero-mark { display: none; }
+  .js .hero.no-video .hero-mark { display: block; }
   .hero-mark path { stroke-dasharray: 200; animation: draw 3.5s var(--ease) both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
   @keyframes draw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
@@ -657,12 +661,17 @@
   // the video and let the header's gradient show instead of a play button.
   (function () {
     var vids = document.querySelectorAll('.hero-video');
-    if (vids.length < 2) return;
+    var hero = document.querySelector('.hero');
+    function hideVideos() {
+      vids.forEach(function (v) { v.style.display = 'none'; });
+      if (hero) hero.classList.add('no-video');
+    }
+    if (vids.length < 2) { hideVideos(); return; }
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       vids.forEach(function (v) { v.pause(); });
+      hideVideos();
       return;
     }
-    function hideVideos() { vids.forEach(function (v) { v.style.display = 'none'; }); }
     var frontPlay = vids[0].play();
     if (frontPlay && frontPlay.catch) frontPlay.catch(hideVideos);
     setTimeout(function () { if (vids[0].paused) hideVideos(); }, 1500);
