@@ -541,7 +541,8 @@
      never painted and then hidden again), and every marked element takes
      its hidden state instantly. Without this, adding the hidden state to an
      already visible element would itself transition, from shown to hidden. */
-  .motion.prep header[data-mq-hero] div:has(> h1) > *, .motion.prep header[data-mq-hero] .qcard { opacity: 0; }
+  .motion.prep header[data-mq-hero] .qcard { opacity: 0; }
+  .motion.prep header[data-mq-hero] div:has(> h1) > * { opacity: 0; } /* own rule: a browser without :has drops only this one */
   .motion.prep .rv, .motion.prep .rv-card, .motion.prep .rv-deal, .motion.prep .rv-pop, .motion.prep .w,
   .motion.prep .rv-draw { transition: none !important; }
 
@@ -1728,6 +1729,8 @@
   (function () {
     var root = document.documentElement;
     if (!root.classList.contains('motion')) return;
+    var finals = []; // [element, printed value] for every counter
+    try {
     var W = 55;   // ms between heading words
     var S = 70;   // ms between items in a group
 
@@ -1792,6 +1795,7 @@
       sr.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;';
       el.parentNode.insertBefore(sr, el);
       el.setAttribute('aria-hidden', 'true');
+      finals.push([el, sr.textContent]);
       el.style.fontVariantNumeric = 'tabular-nums';
       el.textContent = fmt(0) + suffix;
       el._play = function () {
@@ -1898,6 +1902,16 @@
       // Only once it has entered: its group (or itself) is .in.
       if (el.style && el.style.getPropertyValue('--d') && !el.classList.contains('settled') && el.closest('.in')) el.classList.add('settled');
     });
+    } catch (err) {
+      // Whatever broke, show everything as it would be at rest: a page that
+      // doesn't animate beats a page that stays hidden.
+      root.classList.remove('prep');
+      document.querySelectorAll('.rv-group').forEach(function (g) { g.classList.add('in'); });
+      document.querySelectorAll('.rv-draw').forEach(function (p) { p.style.strokeDashoffset = 0; });
+      finals.forEach(function (f) { f[0].textContent = f[1]; });
+      document.querySelectorAll('.rv, .rv-card, .rv-deal, .rv-pop').forEach(function (e) { if (!e.closest('.in')) e.classList.add('in'); });
+      if (window.console) console.error(err);
+    }
   })();
 </script>
 
