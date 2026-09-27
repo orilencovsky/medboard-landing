@@ -290,21 +290,25 @@ their way to the ✓ and refill the client-side quota at will.
 `api/tutor.js` holds the system prompt server-side, so the endpoint cannot be driven as a
 general-purpose chat. It needs `ANTHROPIC_API_KEY` set in **Vercel → Project → Settings →
 Environment Variables** (Production + Preview); without it the endpoint answers `503`
-`not_configured` and the card shows its "connection dropped" message. If that key is not scoped to
-a single workspace, the Anthropic API also requires an `anthropic-workspace-id` header, or every
-request 400s — set `ANTHROPIC_WORKSPACE_ID` (Console → Settings → Workspaces) alongside it; the
-header is only sent when that variable is present. Spend is bounded on four layers:
+`not_configured` and the card shows its "the tutor is taking a short break" message. The key is
+expected to be scoped to a dedicated Anthropic workspace (see below); `ANTHROPIC_WORKSPACE_ID`
+(Console → Settings → Workspaces) is only needed for a key that *isn't* workspace-scoped, and
+should be left unset once it is — the header is only sent when that variable is present. Spend is
+bounded on four layers:
 
 | Layer | Limit |
 |---|---|
 | Client | 1 message per visitor (`MAX_MESSAGES`), not refilled by re-picking |
-| Endpoint | 3 requests/hour per IP; 600 requests/day global kill-switch |
-| Model | `claude-haiku-4-5`, `max_tokens: 300` |
-| Prompt | System prompt server-side only |
+| Vercel Firewall | 10 POSTs/10 min per IP on `/api/tutor`, counted per region; the rule itself lives outside this repo — see `docs/firewall-rules.json` for a re-appliable record of it |
+| Endpoint | Same-origin check (rejects cross-site POSTs); 300 requests/day per-instance kill-switch |
+| Anthropic workspace | Dedicated workspace, $20/month spend limit with alerts at $10/$16 |
+| Model | `claude-haiku-4-5`, `max_tokens: 300` (unchanged) |
 
-At roughly 1,000 input + 150 output tokens per reply (≈ $0.001), the daily cap bounds spend at
-about **$1/day**. The rate limiter lives in memory, so it is per serverless instance and
-best-effort — move it to Vercel KV / Upstash if the logs ever show abuse.
+At roughly 1–1.5k input + 150 output tokens per reply on Haiku 4.5 ($1/MTok in, $5/MTok out), each
+reply costs about **$0.002**. The hard backstop isn't the per-instance daily counter — it's the
+workspace's own spend limit: past it, Anthropic returns `400 invalid_request_error` with "usage
+limits" in the message, and the endpoint maps that to `503 paused`, which the card shows as the
+same "taking a short break" line.
 
 The endpoint takes a `locale` field (`he` / `en`) and switches the system prompt on it; each page
 sends its own. The pages' copy and the prompt's case notes state the same KDIGO facts, so both

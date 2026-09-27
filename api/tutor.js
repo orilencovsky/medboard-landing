@@ -56,31 +56,37 @@ const SYSTEM_EN = [
   CASE_EN
 ].join('\n');
 
-// Best-effort limits. Serverless instances are short-lived and there may be
-// several at once, so treat these as a speed bump rather than a guarantee —
-// move them to Vercel KV / Upstash Redis if abuse shows up in the logs.
-const HITS = new Map();   // ip -> [timestamps]
-const IP_LIMIT = 3;       // per hour
-const HOUR = 3600e3;
+// Per-IP limiting now lives in the Vercel Firewall (see docs/firewall-rules.json),
+// not here — it sees every request before it reaches this function, so it works
+// even across the several warm instances a Fluid deployment can keep around.
+// This is just the per-instance daily kill-switch; the real global bound is the
+// Anthropic workspace's monthly spend limit.
 let dayStamp = new Date().toDateString();
 let dayCount = 0;
-const DAY_LIMIT = 600;    // global kill-switch, roughly $1/day on Haiku
+const DAY_LIMIT = 300;    // per-instance daily kill-switch
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
   if (!process.env.ANTHROPIC_API_KEY) return res.status(503).json({ error: 'not_configured' });
 
+  // Same-origin check: reject cross-site POSTs before any work. Compared
+  // against the request's own `host` header (not a hard-coded domain) so
+  // preview deployments keep working. A missing header is allowed through —
+  // both are absent for some legitimate direct/older clients.
+  const origin = req.headers['origin'];
+  const host = req.headers['host'];
+  if (origin) {
+    let originHost;
+    try { originHost = new URL(origin).host; } catch (e) { originHost = null; }
+    if (originHost !== host) return res.status(403).json({ error: 'forbidden' });
+  }
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (secFetchSite && secFetchSite !== 'same-origin') return res.status(403).json({ error: 'forbidden' });
+
   const today = new Date().toDateString();
   if (today !== dayStamp) { dayStamp = today; dayCount = 0; }
   if (dayCount >= DAY_LIMIT) return res.status(429).json({ error: 'daily_cap' });
-
-  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
-  const now = Date.now();
-  const hits = (HITS.get(ip) || []).filter((t) => now - t < HOUR);
-  if (hits.length >= IP_LIMIT) return res.status(429).json({ error: 'rate_limited' });
-  hits.push(now);
-  HITS.set(ip, hits);
 
   let body;
   try {
@@ -120,12 +126,17 @@ module.exports = async function handler(req, res) {
       })
     });
     if (!r.ok) {
-      // Anthropic's error body is safe to relay as-is: a standard type/message
-      // pair, never the key itself. Worth the visibility on a misconfigured
-      // deployment — the alternative is debugging a bare status code blind.
+      // Never relay Anthropic's error detail to the browser — log it
+      // server-side instead, where it's still there to debug a misconfigured
+      // deployment.
       let detail;
       try { detail = (await r.json()).error; } catch (e) {}
-      return res.status(r.status === 429 ? 429 : 502).json({ error: 'upstream', status: r.status, detail });
+      console.error('tutor upstream error', r.status, detail);
+      if (r.status === 429) return res.status(429).json({ error: 'busy' });
+      if (r.status === 400 && /usage limits/i.test((detail && detail.message) || '')) {
+        return res.status(503).json({ error: 'paused' });
+      }
+      return res.status(502).json({ error: 'upstream' });
     }
     const data = await r.json();
     const reply = (data.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
