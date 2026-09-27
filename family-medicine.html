@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
+<!-- Vercel Web Analytics. Deliberately not GA4: this measurement sets no cookie
+     and derives no persistent visitor id, so the page carries nothing that needs
+     a consent banner. The shim queues events fired before script.js loads.
+     Requires Web Analytics enabled on the Vercel project; /_vercel/insights/*
+     is served by the platform, so it 404s on a local static server. -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  // fm_home_click: which link sent a visitor from this "coming soon" page back
+  // to the homepage (logo / nav). Cookieless like the rest of Vercel Analytics,
+  // so it counts regardless of the GA4/Clarity consent choice.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-fm-cta]') : null;
+    if (a) window.va('event', { name: 'fm_home_click', data: { placement: a.getAttribute('data-fm-cta') } });
+  }, true);
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <title>בקרוב: הכנה לשלב א ברפואת משפחה | MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/family-medicine" />
 <meta name="description" content="בקרוב ב-MeduXa: הכנה לשלב א ברפואת משפחה, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי." />
@@ -469,7 +485,7 @@
 
 <nav>
   <div class="wrap nav-in">
-    <a href="/" class="logo" aria-label="MeduXa, לעמוד הבית">
+    <a href="/" class="logo" aria-label="MeduXa, לעמוד הבית" data-fm-cta="logo">
       <svg width="36" height="36" viewBox="0 0 96 96" fill="none" aria-hidden="true">
         <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
         <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
@@ -480,7 +496,7 @@
       <span class="word"><b>MeduXa</b><i>.ai</i></span>
     </a>
     <div class="nav-r">
-      <a class="nav-link" href="/">לעמוד הבית</a>
+      <a class="nav-link" href="/" data-fm-cta="nav">לעמוד הבית</a>
       <a class="btn nav-cta" href="#signup">הרשמה לעדכון</a>
     </div>
   </div>
@@ -957,6 +973,7 @@
           msg.lastChild.textContent = 'נרשמתם לעדכונים על רפואת משפחה. נכתוב לכם כשההכנה לשלב א נפתחת, עם מחיר ההשקה.';
         });
         if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist_family_medicine' });
+        if (typeof window.va === 'function') window.va('event', { name: 'fm_signup' });
       }).catch(function (err) {
         form.removeAttribute('aria-busy');
         btn.disabled = false; btn.textContent = LABEL;
