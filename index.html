@@ -164,7 +164,7 @@
   }
   .sci-bg-scrim { background: radial-gradient(125% 95% at 50% 0%, rgba(6,18,37,.3), rgba(6,18,37,.58) 60%, rgba(6,18,37,.76) 100%); }
   .sci-hint { display: flex; justify-content: center; margin-top: -18px; margin-bottom: 54px; }
-  .sci-hint span { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .18em; color: #5B87A8; border: 1px solid #1E4A6E; border-radius: 100px; padding: 7px 16px; }
+  .sci-hint span { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #6B95B5; border: 1px solid #1E4A6E; border-radius: 100px; padding: 7px 16px; }
   .sci-hint-mobile { display: none; }
   .sci-grid { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; align-items: start; }
   /* Mirrors the hero demo's progress row (thin track + mono fraction) so the
@@ -173,7 +173,7 @@
   .sci-progress { display: none; align-items: center; gap: 12px; margin-top: 22px; }
   .sci-progress-track { flex: 1; height: 4px; background: #153650; border-radius: 3px; overflow: hidden; }
   .sci-progress-fill { height: 100%; width: 11%; background: linear-gradient(90deg, #0EA5E9, #22D3EE); transition: width .25s ease; }
-  .sci-progress-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8; direction: ltr; white-space: nowrap; }
+  .sci-progress-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B95B5; direction: ltr; white-space: nowrap; }
   .sci-deck { position: relative; }
   /* Floats over the deck itself, not the progress row below. Card copy
      gets matching extra inline padding at the 640px breakpoint (below) so
@@ -185,7 +185,7 @@
   .sci-nav-next { inset-inline-end: 4px; }
   .sci-nav-btn:hover:not(:disabled) { background: #123057; }
   .sci-nav-btn:focus-visible { outline: 2px solid #7C5CFF; outline-offset: 2px; }
-  .sci-nav-btn:disabled { opacity: .35; border-color: #1E4A6E; color: #5B87A8; cursor: default; }
+  .sci-nav-btn:disabled { opacity: .35; border-color: #1E4A6E; color: #6B95B5; cursor: default; }
   .sci-card { position: relative; cursor: pointer; border-radius: 20px; outline: none;
     margin-top: calc(var(--flatten, 1) * var(--stagger, 0) * 1px);
     transform: rotate(calc(var(--flatten, 1) * var(--sci-dir, 1) * var(--rot, 0) * 1deg));
@@ -203,12 +203,12 @@
   .sci-card-back { gap: 16px; background: linear-gradient(180deg, rgba(10,26,48,.9), rgba(8,20,40,.84)); border: 1px solid #22D3EE; opacity: 0; transform: translateY(12px); transition: opacity .34s ease, transform .34s cubic-bezier(.22,.8,.25,1); }
   .sci-card:hover:not(.is-flipped) .sci-card-front, .sci-card.is-flipped:not(:hover) .sci-card-front { opacity: 0; }
   .sci-card:hover:not(.is-flipped) .sci-card-back, .sci-card.is-flipped:not(:hover) .sci-card-back { opacity: 1; transform: translateY(0); }
-  .sci-eyebrow { position: relative; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .2em; color: #5B87A8; }
+  .sci-eyebrow { position: relative; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .2em; color: #6B95B5; }
   .sci-card-front h3 { position: relative; margin: 0; font-size: 26px; font-weight: 600; line-height: 1.28; color: #E2F4FD; }
   .sci-reveal { position: relative; display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #22D3EE; }
   .sci-reveal span { display: inline-block; transform: scaleX(var(--sci-dir, 1)); }
   .sci-back-bar { width: 40px; height: 2px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); border-radius: 100px; }
-  .sci-back-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #7DD3FC; }
+  .sci-back-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: #7DD3FC; }
   .sci-back-desc { margin: 0; font-size: 15px; line-height: 1.7; color: #B8D4EA; }
   @media (prefers-reduced-motion: reduce) {
     .sci-card-front, .sci-card-back { transition: none; }
@@ -268,7 +268,7 @@
   .sci-cite { color: #22D3EE; text-decoration: none; font-weight: 700; margin-inline-start: 3px; }
   .sci-cite:hover, .sci-cite:focus-visible { text-decoration: underline; }
   .sci-refs { position: relative; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(125,162,196,.18); }
-  .sci-refs-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; color: #5B87A8; margin: 0 0 12px; }
+  .sci-refs-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: #6B95B5; margin: 0 0 12px; }
   .sci-refs ol { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 8px; }
   .sci-refs li { font-size: 13px; line-height: 1.6; color: #7DA2C4; }
   .sci-refs a { color: #7DD3FC; text-decoration: underline; text-underline-offset: 2px; }
@@ -335,7 +335,7 @@
   .cmp3-row-cells { display: flex; gap: 8px; }
   .cmp3-cell { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; text-align: start; gap: 5px; padding: 10px 5px; border-radius: 12px; background: #F8FAFC; }
   .cmp3-cell--brand { background: #F0F6FA; box-shadow: inset 0 0 0 1.5px rgba(34,211,238,.4); }
-  .cmp3-cell-tag { font-size: 10px; font-weight: 700; letter-spacing: .02em; color: #94A3B8; }
+  .cmp3-cell-tag { font-size: 11px; font-weight: 700; letter-spacing: .02em; color: #94A3B8; }
   .cmp3-cell--brand .cmp3-cell-tag { color: #0E7490; }
   .cmp3-cell-verdict { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #334155; line-height: 1.3; }
   .cmp3-cell--brand .cmp3-cell-verdict { color: #0F172A; }
@@ -438,7 +438,7 @@
   @keyframes loopComet { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -1100; } }
   .loop-comet { stroke-dasharray: 46 1054; animation: loopComet 16s linear infinite; }
   .loop-center { position: absolute; left: 260px; top: 215px; transform: translate(-50%, -50%); width: 186px; display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 18px 14px; border-radius: 16px; border: 1px solid #1E4A6E; background: rgba(8,29,58,.92); box-shadow: 0 20px 50px rgba(2,8,20,.55); }
-  .loop-center-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .16em; color: #7DA2C4; direction: ltr; }
+  .loop-center-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; color: #7DA2C4; direction: ltr; }
   .loop-center-value { font-family: 'IBM Plex Mono', monospace; font-size: 34px; font-weight: 500; color: #22D3EE; line-height: 1; direction: ltr; }
   .loop-center-caption { font-size: 12px; color: #7DA2C4; text-align: center; }
   .loop-heat { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; width: 100%; }
@@ -452,7 +452,7 @@
   /* The side nodes sit on the ring line, so their label needs an opaque chip or
      the circle is drawn straight through the word. */
   .loop-label.chip { background: rgba(6,18,37,.88); border-radius: 8px; padding: 3px 12px; }
-  .loop-soon { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .16em; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 4px 11px; background: rgba(6,18,37,.88); }
+  .loop-soon { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 4px 11px; background: rgba(6,18,37,.88); }
   .loop-node[aria-selected="true"] .loop-dot { background: var(--acc-fill); color: #062033; box-shadow: 0 0 0 5px var(--acc-wash); }
   .loop-node[aria-selected="true"] .loop-label { color: #F1F7FC; }
   /* Step 04 is roadmap, not shipped: it never takes the gradient fill, however
@@ -480,7 +480,7 @@
   .loop-panel-top { display: flex; align-items: center; gap: 12px; }
   .loop-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: var(--acc); }
   .loop-rule { flex-grow: 1; height: 1px; background: #153650; }
-  .loop-status { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .16em; border-radius: 100px; padding: 5px 12px; color: #5EEAD4; border: 1px solid rgba(94,234,212,.4); white-space: nowrap; }
+  .loop-status { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; border-radius: 100px; padding: 5px 12px; color: #5EEAD4; border: 1px solid rgba(94,234,212,.4); white-space: nowrap; }
   .loop-panel[data-accent="soon"] .loop-status { color: #7DA2C4; border-color: #1E4A6E; }
   .loop-panel h3 { margin: 0; font-size: 28px; font-weight: 600; color: #F1F7FC; line-height: 1.3; }
   .loop-lead { margin: 0; font-size: 16px; line-height: 1.75; color: #B9D4E8; }
@@ -618,7 +618,7 @@
       <div style="flex: 1 1 420px; max-width: 520px;">
         <div class="qcard" data-mq-demo style="background: #0B2545; border: 1px solid #1E4A6E; border-radius: 20px; padding: 26px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 16px;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B87A8; direction: ltr;">Q-1838 · AKI</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6B95B5; direction: ltr;">Q-1838 · AKI</span>
             <span style="font-size: 13px; font-weight: 600; color: #5EEAD4;">חזרה מתוזמנת · יום 6</span>
           </div>
 
@@ -632,11 +632,11 @@
           </div>
 
           <div class="qreveal" style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="qhint" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #5B87A8;">בחרו תשובה ←</div>
+            <div class="qhint" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #6B95B5;">בחרו תשובה ←</div>
             <!-- Replaces the hint once the verdict is in, so that options which
                  no longer move the ✓ do not read as broken. Kept short enough to
                  hold one line down to a 320px phone. -->
-            <div class="qhint-review" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #5B87A8;">תשובתכם ננעלה · לחצו על אפשרות כדי לקרוא</div>
+            <div class="qhint-review" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #6B95B5;">תשובתכם ננעלה · לחצו על אפשרות כדי לקרוא</div>
 
             <div class="qtutor" aria-live="polite" style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; gap: 12px; align-items: flex-start;">
               <svg width="22" height="22" viewBox="0 0 96 96" fill="none" style="flex-shrink: 0; margin-top: 2px;">
@@ -649,7 +649,7 @@
             <div class="qchat" style="flex-direction: column; gap: 10px;">
               <div class="qthread" style="display: flex; flex-direction: column; gap: 10px;"></div>
               <div class="qreplies" style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
-                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8;">תשובתכם:</span>
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B95B5;">תשובתכם:</span>
                 <div class="qreply" role="button" tabindex="0">תפוקת שתן</div>
                 <div class="qreply" role="button" tabindex="0">רמת אוריאה בדם</div>
                 <div class="qreply" role="button" tabindex="0">eGFR מחושב</div>
@@ -677,12 +677,12 @@
               <div><span style="color: #67E8F9; font-weight: 600;">דרגה 3:</span> ≥<span class="ltr-iso">3.0</span>× מהבסיס, או קראטינין ≥<span class="ltr-iso">4.0</span> מ״ג/ד״ל, או התחלת דיאליזה, <span style="color:#5EEAD4;">או</span> תפוקת שתן &lt;<span class="ltr-iso">0.3</span> מל/ק״ג/שעה למשך ≥<span class="ltr-iso">24</span> שעות, או אנוריה ≥<span class="ltr-iso">12</span> שעות.</div>
             </div>
             <div style="border-top: 1px solid rgba(34,211,238,.18); padding-top: 10px; font-size: 13.5px; color: #B8D4EA; line-height: 1.55;"><span style="color: #5EEAD4; font-weight: 600;">במקרה הזה:</span> הפרש של <span class="ltr-iso">0.27</span> מ״ג/ד״ל (מתחת ל-<span class="ltr-iso">0.3</span>) ויחס של <span class="ltr-iso">1.18</span>× (מתחת ל-<span class="ltr-iso">1.5</span>) — שני ספי הקראטינין לא נחצו. תפוקת השתן לא נמסרה, ובלעדיה אי אפשר לשלול AKI בביטחון.</div>
-            <div class="ltr-iso" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8;">KDIGO CPG for AKI · Section 2.1</div>
+            <div class="ltr-iso" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B95B5;">KDIGO CPG for AKI · Section 2.1</div>
           </div>
 
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="flex: 1; height: 6px; background: #153650; border-radius: 3px; overflow: hidden;"><div style="width: 68%; height: 100%; background: linear-gradient(90deg, #0EA5E9, #22D3EE);"></div></div>
-            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5B87A8; direction: ltr;">17/25</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B95B5; direction: ltr;">17/25</span>
           </div>
         </div>
       </div>
@@ -1256,7 +1256,7 @@
         <a class="foot-link" href="/terms">תנאי שימוש</a>
         <a class="foot-link" href="/accessibility">הצהרת נגישות</a>
       </span>
-      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</span>
+      <span style="font-size: 14px; color: #6B95B5;">© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</span>
     </div>
   </footer>
 </div>
