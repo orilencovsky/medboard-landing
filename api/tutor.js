@@ -133,7 +133,7 @@ module.exports = async function handler(req, res) {
       try { detail = (await r.json()).error; } catch (e) {}
       console.error('tutor upstream error', r.status, detail);
       if (r.status === 429) return res.status(429).json({ error: 'busy' });
-      if (r.status === 400 && /usage limits/i.test((detail && detail.message) || '')) {
+      if (r.status === 400 && /usage limit|spend limit|credit balance/i.test((detail && detail.message) || '')) {
         return res.status(503).json({ error: 'paused' });
       }
       return res.status(502).json({ error: 'upstream' });

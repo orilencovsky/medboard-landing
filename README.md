@@ -294,7 +294,7 @@ Environment Variables** (Production + Preview); without it the endpoint answers 
 expected to be scoped to a dedicated Anthropic workspace (see below); `ANTHROPIC_WORKSPACE_ID`
 (Console → Settings → Workspaces) is only needed for a key that *isn't* workspace-scoped, and
 should be left unset once it is — the header is only sent when that variable is present. Spend is
-bounded on four layers:
+bounded on five layers:
 
 | Layer | Limit |
 |---|---|
