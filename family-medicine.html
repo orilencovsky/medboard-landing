@@ -137,7 +137,8 @@
   .q-opts { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; }
   .q-opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: start; padding: 12px 14px; border-radius: var(--r-md);
            border: 1px solid var(--border); background: rgba(6,18,37,.5); color: #DDEBF7; font-size: 15.5px; cursor: pointer;
-           transition: border-color .2s, background .2s, transform .2s var(--ease); }
+           transition: border-color .2s, background .2s, transform .2s var(--ease);
+           -webkit-tap-highlight-color: transparent; } /* the answer's own marking is the tap feedback */
   .q-opt:hover:not(.is-right):not(.is-wrong) { border-color: rgba(34,211,238,.55); background: rgba(34,211,238,.06); }
   .q-opt:active { transform: scale(.99); }
   .q-key { flex: none; width: 26px; height: 26px; border-radius: var(--r-sm); display: grid; place-items: center; font-size: 13px; font-weight: 700;
