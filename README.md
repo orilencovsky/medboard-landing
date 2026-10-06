@@ -30,12 +30,15 @@ family-medicine.html     /family-medicine — "coming soon" page for family medi
                          email sign-up (waitlist, source 'landing_fm'); linked from the homepage's top banner
 og-family-medicine.png   its link-preview card (what WhatsApp shows for the link)
 whatsapp-family-medicine.png  1080x1080 version of the same ad, to send as an image
+pediatrics.html          /pediatrics — the same "coming soon" page for pediatrics Stage A (waitlist source
+                         'landing_peds', interest 'pediatrics'); not linked from the homepage yet
+og-pediatrics.png, whatsapp-pediatrics.png  its promo cards (`make-promo-image.mjs og|square peds`)
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
-scripts/make-promo-image.mjs renders the family-medicine promo (`og` | `square`); pngquant after, as above
+scripts/make-promo-image.mjs renders a coming-soon promo (`og` | `square`, then `fm` (default) | `peds`); pngquant after, as above
 scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
@@ -367,7 +370,7 @@ oversight):
 - `https://fonts.googleapis.com` (stylesheet) and `https://fonts.gstatic.com` (the font files it
   references) — Google Fonts, every page.
 - `https://cdn.jsdelivr.net` — the Phosphor Icons stylesheet and the icon font files it references,
-  `family-medicine.html` only.
+  `family-medicine.html` and `pediatrics.html` only.
 - `https://www.googletagmanager.com` and `https://www.clarity.ms` / `https://*.clarity.ms` — GA4 and
   Microsoft Clarity, loaded by `consent.js` only after opt-in. Clarity's tag itself loads from a
   `scripts.clarity.ms` subdomain, hence the wildcard rather than just `www`.
@@ -376,7 +379,7 @@ oversight):
   is in both too, per Google's gtag.js CSP guide (gtag contacts it once the property has linked
   destinations). If Google Signals is ever turned on, add `https://stats.g.doubleclick.net`.
 - `https://*.clarity.ms` and `https://c.bing.com` — Clarity's own data collection (`connect-src`).
-- `https://pappjpdsajkcoqrfqqqx.supabase.co` — the family-medicine waitlist insert (`connect-src`).
+- `https://pappjpdsajkcoqrfqqqx.supabase.co` — the family-medicine and pediatrics waitlist inserts (`connect-src`).
 
 **Any new third-party origin has to be added to this policy or it is silently blocked** — a script,
 stylesheet, font, image, or fetch/XHR target that isn't listed simply fails to load, with only a
@@ -391,7 +394,7 @@ no entry.
 Two layers, with different consent rules.
 
 **Vercel Web Analytics — every visitor.** Wired inline on both landing pages and on
-`/family-medicine` (the shim plus `/_vercel/insights/script.js`). Cookieless, no visitor id, so it
+`/family-medicine` and `/pediatrics` (the shim plus `/_vercel/insights/script.js`). Cookieless, no visitor id, so it
 needs no consent. It has to be switched on under **Vercel → Project → Analytics**; the path is
 served by the platform, so it 404s on a local static server. Custom events, all through
 `va('event', { name, data })`:
@@ -406,6 +409,7 @@ served by the platform, so it 404s on a local static server. Custom events, all 
   migration there before it is recorded.
 - `tutor_reply_shown`, `demo_answer_selected` — the hero demo card.
 - `fm_signup` — a successful (or already-listed, HTTP 409) waitlist insert on `/family-medicine`.
+- `peds_signup`, `peds_home_click` — the same two events on `/pediatrics` (`data-peds-cta`).
 - `fm_home_click` — `data.placement` is `logo` or `nav`, read from the link's `data-fm-cta`
   attribute: which route back to the homepage a `/family-medicine` visitor used. Kept separate from
   `cta_click` since these links go to `/`, not to the app, so they are not part of that
