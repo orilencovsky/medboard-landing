@@ -129,14 +129,6 @@
   .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 1s linear; }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none;
                   background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
-  .hero-mark { position: absolute; z-index: 1; inset-inline-end: -220px; top: -180px; width: 880px; height: 880px; opacity: .08; pointer-events: none; }
-  /* The static X is the video's fallback, never both at once: with JS on it
-     stays hidden unless the loop script marks the hero .no-video. */
-  .js .hero-mark { display: none; }
-  .js .hero.no-video .hero-mark { display: block; }
-  .hero-mark path { stroke-dasharray: 200; animation: draw 3.5s var(--ease) both; }
-  .hero-mark path:nth-child(2) { animation-delay: .4s; }
-  @keyframes draw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
   /* start, not center: the card grows as it is answered, and a centred row
      would move the headline with it. */
   .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 64px; align-items: start; }
@@ -426,8 +418,7 @@
      fade helps the eye follow what changed. */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .hero-mark path { animation: none; }
-    .hero-video { display: none; }
+      .hero-video { display: none; }
     .q-explain, .q-tutor, .ok-box, .err { animation: fade-in .2s ease both; }
     .spin { animation-duration: 1.2s; }
     .btn, .btn .ph, .q-opt, .q-opt .ph, .tile { transition-property: opacity, background-color, border-color, color, box-shadow; }
@@ -524,10 +515,6 @@
       </video>
     </div>
     <div class="hero-overlay"></div>
-    <svg class="hero-mark" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-      <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
-      <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
-    </svg>
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>בקרוב: רפואת משפחה, שלב א</span>
