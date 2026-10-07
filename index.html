@@ -373,7 +373,7 @@
     [data-mq-hero-sub] { font-size: 17px !important; }
     [data-mq-hero-actions] { flex-direction: column !important; align-items: stretch !important; }
     [data-mq-hero-actions] > a { text-align: center !important; }
-    [data-mq-stats] { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    [data-mq-stats] { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 12px !important; }
     [data-mq-demo] { padding: 18px !important; }
     [data-mq-demo-q] { font-size: 16px !important; }
     [data-mq-demo-opts] > div { font-size: 14px !important; }
@@ -391,6 +391,9 @@
   @media (max-width: 350px) {
     [data-mq-logo-text] { display: none !important; }
   }
+  /* Stat figures are forced LTR (direction: ltr) so "100%" reads right; in a
+     Hebrew cell that would push them to the far left, away from their label. */
+  [data-mq-stats] > div > div:first-child { text-align: right; }
   [data-mq-burger] { display: none; }
   html { scroll-behavior: smooth; }
   header[data-mq-hero], section[data-mq-section], .sci-section { scroll-margin-top: 80px; }
@@ -620,20 +623,6 @@
     .track-link:active .btn-action, .track-link:active .track-soon-btn { transform: none; }
   }
 
-  /* "The exam hasn't changed" lead above #how (the campaign line): one editorial statement, then the
-     section's own heading. It names no product (site rule, see README):
-     whoever studies from past exams and an answer key recognises the routine. */
-  .how-lead { max-width: 760px; margin: 0 auto 72px; text-align: center; }
-  .how-lead-title { margin: 0; font-size: 32px; font-weight: 600; line-height: 1.3; color: #F1F7FC; letter-spacing: -0.01em; text-wrap: balance; }
-  .how-lead-text { margin: 14px auto 0; max-width: 600px; font-size: 18px; line-height: 1.7; color: #B9D4E8; text-wrap: pretty; }
-  .how-lead::after { content: ''; display: block; width: 96px; height: 1px; margin: 40px auto 0; background: linear-gradient(90deg, transparent, #1E4A6E, transparent); }
-  @media (max-width: 600px) {
-    .how-lead { margin-bottom: 48px; }
-    .how-lead-title { font-size: 24px; }
-    .how-lead-text { font-size: 16px; }
-    .how-lead::after { margin-top: 28px; }
-  }
-
   /* Off-screen until focused, so the first Tab press offers a way past the nav
      instead of walking the whole menu. Targets the <main> below. */
   .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
@@ -817,8 +806,8 @@
     <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; gap: 64px; align-items: flex-start; flex-wrap: wrap;">
       <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 26px;">
         <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block;"></span> למידה מבוססת-מדע · מונעת AI</span>
-        <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">הדרך החכמה להתכונן<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">לבחינות ההתמחות</span></h1>
-        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">היזכרות פעילה, חזרה מרווחת ומורה AI סוקרטי — הכול מעוגן במקורות האמיתיים שמהם נכתבת הבחינה. נבנה עבור מתמחים.</p>
+        <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">הבחינה לא השתנתה.<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">הדרך להתכונן אליה, כן.</span></h1>
+        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">פתרון בחינות עבר מראה מה נכון. כאן גם מבינים למה: כל הסבר מגובה בציטוט מהמקור, מורה AI סוקרטי מכוון אתכם, ומה שפספסתם חוזר לשינון ממוקד.</p>
         <div data-mq-hero-actions style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
           <a class="btn-action btn-action-lg" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=hero" data-cta="hero" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">התחילו ללמוד — חינם</a>
           <a href="#how" style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">איך זה עובד</a>
@@ -832,8 +821,7 @@
           <a class="hero-track hero-track--soon" href="#track-pediatrics" data-track="pediatrics" data-track-via="chip">רפואת ילדים<span class="hero-track-soon">· בקרוב</span></a>
           <!-- /tracks:chips -->
         </div>
-        <div data-mq-stats style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 24px; margin-top: 8px;">
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">1,000+</div><div style="font-size: 14px; color: #7DA2C4;">שאלות ברמת הבחינה</div></div>
+        <div data-mq-stats style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 24px; margin-top: 8px;">
           <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">9</div><div style="font-size: 14px; color: #7DA2C4;">עקרונות מבוססי-ראיות</div></div>
           <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">100%</div><div style="font-size: 14px; color: #7DA2C4;">תשובות עם ציטוט מקור</div></div>
           <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE; direction: ltr;">AI</div><div style="font-size: 14px; color: #7DA2C4;">מורה סוקרטי לכל שאלה</div></div>
@@ -1169,10 +1157,6 @@
   <!-- HOW IT WORKS — the loop -->
   <section id="how" data-mq-section class="loop-section" style="padding: 96px 32px;">
     <div style="max-width: 1200px; margin: 0 auto;">
-      <div class="how-lead">
-        <p class="how-lead-title">הבחינה לא השתנתה. הדרך להתכונן אליה, כן.</p>
-        <p class="how-lead-text">פתרון בחינות עבר מראה מה נכון. כאן מה שפספסתם חוזר אליכם, מוסבר מהמקור, לשינון ממוקד.</p>
-      </div>
       <div style="text-align: center; margin-bottom: 48px;">
         <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .14em; color: #22D3EE; direction: ltr;">HOW IT WORKS</span>
         <h2 data-mq-h2 style="margin: 12px 0 0; font-size: 42px; font-weight: 700; color: #F1F7FC; line-height: 1.25;">לולאה אחת — מקסימום זיכרון</h2>
@@ -2034,9 +2018,6 @@
       if (ready) countUp(ready, 500);
       ring.classList.add('rv-group');
     }
-    // The "answer key" lead above #how rises in as one block, before the heading.
-    var lead = document.querySelector('#how .how-lead');
-    if (lead) { mark(lead, 'rv', 0); lead.classList.add('rv-group'); }
     var ribbon = document.querySelector('#how .loop-ribbon');
     if (ribbon) mark(ribbon, 'rv', 150); // as one: its tabs keep their own transitions
     var panels = document.querySelector('#how .loop-panels');

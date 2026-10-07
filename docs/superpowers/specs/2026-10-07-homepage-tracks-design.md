@@ -203,3 +203,18 @@ A lead statement above "How it works", in the campaign's words (handoff 2026-10-
 חוזר אליכם, מוסבר מהמקור, לשינון ממוקד." (EN mirrored). No named product, no deficiency claim
 about others; every capability it mentions is already claimed on the page. Per the positioning
 (don't compete on count), the nephrology card no longer opens with "1,000+".
+
+## Campaign line moved into the hero (owner, 2026-10-07, later)
+
+- The hero H1 is now the campaign line "הבחינה לא השתנתה. / הדרך להתכונן אליה, כן." (EN: "The exam
+  hasn't changed. / The way to prepare for it has."), with a sub-line contrasting the old routine with
+  the method: "פתרון בחינות עבר מראה מה נכון. כאן גם מבינים למה: כל הסבר מגובה בציטוט מהמקור, מורה AI
+  סוקרטי מכוון אתכם, ומה שפספסתם חוזר לשינון ממוקד." The lead above #how was removed (moved, not
+  duplicated). `<title>` and meta descriptions unchanged (SEO).
+- The hero no longer shows "1,000+": three stats (9 / 100% / AI), 3 columns at every width; in the
+  Hebrew page the LTR stat figures are right-aligned to their labels.
+- HELD, not shipped: "sources from the most up-to-date syllabus". Owner chose "the current editions in
+  the official literature list" once verified. Verified today only for family medicine (P0062-2025);
+  nephrology and pediatrics have no official list on file, so the claim waits for those.
+- Pre-existing, not changed: on /en at 390px the nav "Start learning" button wraps to two lines (same
+  on main).
