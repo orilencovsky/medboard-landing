@@ -61,8 +61,8 @@ test('Hebrew page never shows the language pill', () => {
 
 test('announce and closing name every soon track, with Hebrew prefixes', () => {
   const out = render(real, page(ALL), 'he', 'x');
-  assert.match(out, /הכנה לשלב א ברפואת משפחה וברפואת ילדים/);
-  assert.match(out, /מתכוננים לשלב א ברפואת משפחה או ברפואת ילדים\?/);
+  assert.match(out, /הכנה לשלב א׳ ברפואת משפחה וברפואת ילדים/);
+  assert.match(out, /מתכוננים לשלב א׳ ברפואת משפחה או ברפואת ילדים\?/);
 });
 
 test('a new soon entry is one list item: it reaches cards, chips, announce and closing', () => {

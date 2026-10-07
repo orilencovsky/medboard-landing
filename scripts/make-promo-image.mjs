@@ -18,8 +18,8 @@ import { join } from 'node:path';
 // The second argument picks the page; family medicine stays the default so
 // the original commands keep producing the same files.
 const PAGES = {
-  fm:   { slug: 'family-medicine', h1: 'הכנה לשלב א<br>ברפואת משפחה' },
-  peds: { slug: 'pediatrics',      h1: 'הכנה לשלב א<br>ברפואת ילדים' },
+  fm:   { slug: 'family-medicine', h1: 'הכנה לשלב א׳<br>ברפואת משפחה' },
+  peds: { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים' },
 };
 const PAGE = PAGES[process.argv[3] || 'fm'];
 
