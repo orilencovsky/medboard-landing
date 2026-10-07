@@ -35,6 +35,7 @@ export function list(items, joiner) {
 }
 
 const CHECK = '<svg class="track-pill-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.6l4.5-5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+const CLOCK = '<svg class="hero-track-clock" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.6" stroke="currentColor" stroke-width="1.5"></circle><path d="M7 4.2V7l1.9 1.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
 const ARROW = '<svg class="track-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
 
 export function validate(data) {
@@ -91,7 +92,9 @@ function cards(data, locale) {
 function chips(data, locale) {
   const ui = data.ui[locale];
   return data.tracks.map((t) => {
-    const soon = t.status === 'soon' ? `<span class="hero-track-soon">${esc(ui.chipSoon)}</span>` : '';
+    // Coming soon is never colour alone: the words on wide screens, a clock
+    // where the row is too narrow for them (CSS swaps the two at 600px).
+    const soon = t.status === 'soon' ? `${CLOCK}<span class="hero-track-soon">${esc(ui.chipSoon)}</span>` : '';
     return `<a class="hero-track hero-track--${t.status}" href="#track-${t.id}" data-track="${t.id}" data-track-via="chip">${esc(t[locale].name)}${soon}</a>`;
   }).join('\n');
 }

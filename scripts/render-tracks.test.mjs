@@ -104,3 +104,9 @@ test('shipped pages are in sync with tracks.json', () => {
     assert.equal(render(real, html, loc, file), html, file + ' drifted');
   }
 });
+
+test('coming-soon chips carry a non-colour marker (clock + words), live chips do not', () => {
+  const out = render(real, page(ALL), 'he', 'x');
+  assert.match(out, /data-track="pediatrics" data-track-via="chip">רפואת ילדים<svg class="hero-track-clock"[^]*?<\/svg><span class="hero-track-soon">· בקרוב<\/span><\/a>/);
+  assert.doesNotMatch(out, /data-track="nephrology" data-track-via="chip">[^<]*<svg/);
+});
