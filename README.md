@@ -41,6 +41,8 @@ api/tutor.js             Serverless endpoint behind the hero card's live AI tuto
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
 scripts/make-promo-image.mjs renders a coming-soon promo (`og` | `square`, then `fm` (default) | `peds`); pngquant after, as above
+                         (it loads IBM Plex from Google Fonts itself; with no pngquant, Pillow `quantize(256)` gives the
+                         same ~100-145 KB). After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
 scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
 scripts/render-tracks.mjs    renders tracks.json into both landing pages (`--check` = drift guard; tests beside it)
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
