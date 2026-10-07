@@ -317,7 +317,7 @@
   @media (max-width: 600px) {
     [data-mq-nav] { padding: 0 14px !important; }
     [data-mq-navright] { gap: 10px !important; }
-    [data-mq-cta] { padding: 8px 14px !important; font-size: 13px !important; }
+    [data-mq-cta] { padding: 8px 14px !important; font-size: 13px !important; white-space: nowrap; }
     [data-mq-lang] { padding: 6px 10px !important; font-size: 13px !important; }
     [data-mq-logo] { gap: 8px !important; }
     [data-mq-logo] > svg { width: 30px !important; height: 30px !important; }
@@ -341,8 +341,10 @@
     .cmp2-card { padding: 22px 20px !important; }
     .cmp2-name { font-size: 17px !important; }
   }
-  /* Smallest phones (iPhone SE class): the wordmark is what stops the nav row fitting. */
-  @media (max-width: 350px) {
+  /* Small phones: the wordmark is what stops the nav row fitting. 380px, not the
+     Hebrew page's 350: "Start learning" no longer wraps (nowrap above), which made
+     the English row 24px too wide at 360px. The logo mark stays. */
+  @media (max-width: 380px) {
     [data-mq-logo-text] { display: none !important; }
   }
   [data-mq-burger] { display: none; }
