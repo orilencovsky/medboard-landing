@@ -1,0 +1,91 @@
+{
+  "_comment": "The homepage's study tracks — the ONE list behind the #tracks cards, the hero chips, the announcement bar and the closing line, in both index.html and en/index.html. Edit here, then run `node scripts/render-tracks.mjs` and commit the pages with it; `--check` fails if a page drifted. In blurbs, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). `cta` adds data-cta (counted in cta_click); `pageLang` marks a destination page in another language (on /en it shows a \"Hebrew content\" pill).",
+  "ui": {
+    "he": {
+      "live": "פתוח עכשיו",
+      "soon": "בקרוב",
+      "otherLang": "",
+      "chipSoon": "· בקרוב",
+      "announce": "הכנה לשלב א {list} · מחיר השקה מיוחד לנרשמים מראש · <u>לפרטים</u>",
+      "announceItem": "ב{name}",
+      "closing": "מתכוננים לשלב א {list}? <a href=\"#tracks\">לפרטים ולהרשמה לעדכון</a>",
+      "closingItem": "ב{name}",
+      "and": " ו",
+      "or": " או "
+    },
+    "en": {
+      "live": "Open now",
+      "soon": "Coming soon",
+      "otherLang": "Hebrew content",
+      "chipSoon": "· soon",
+      "announce": "Stage A prep for {list} · launch pricing for early sign-ups · <u>Details</u>",
+      "announceItem": "{name}",
+      "closing": "Preparing for Stage A in {list}? <a href=\"#tracks\">Details and updates</a>",
+      "closingItem": "{name}",
+      "and": " and ",
+      "or": " or "
+    }
+  },
+  "tracks": [
+    {
+      "id": "nephrology",
+      "status": "live",
+      "href": "https://app.meduxa.ai/?signup=1&src=landing&pl=hero",
+      "cta": "hero",
+      "he": {
+        "name": "נפרולוגיה",
+        "inline": "נפרולוגיה",
+        "stage": "שלב א",
+        "blurb": "שאלות בסגנון שלב א, הסבר עם ציטוט מהמקור, מורה סוקרטי וחזרה מרווחת.",
+        "action": "התחילו ללמוד — חינם"
+      },
+      "en": {
+        "name": "Nephrology",
+        "inline": "nephrology",
+        "stage": "Stage A",
+        "blurb": "Stage A-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.",
+        "action": "Start studying free"
+      }
+    },
+    {
+      "id": "family-medicine",
+      "status": "soon",
+      "href": "/family-medicine",
+      "pageLang": "he",
+      "he": {
+        "name": "רפואת משפחה",
+        "inline": "רפואת משפחה",
+        "stage": "שלב א",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Family medicine",
+        "inline": "family medicine",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, and launch pricing for early sign-ups.",
+        "action": "Get notified"
+      }
+    },
+    {
+      "id": "pediatrics",
+      "status": "soon",
+      "href": "/pediatrics",
+      "pageLang": "he",
+      "he": {
+        "name": "רפואת ילדים",
+        "inline": "רפואת ילדים",
+        "stage": "שלב א",
+        "blurb": "שאלות שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Pediatrics",
+        "inline": "pediatrics",
+        "stage": "Stage A",
+        "blurb": "Questions checked by a pediatrics specialist, answers explained with a quote from the source, and launch pricing for early sign-ups.",
+        "action": "Get notified"
+      }
+    }
+  ]
+}
