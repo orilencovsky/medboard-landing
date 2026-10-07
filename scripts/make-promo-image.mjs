@@ -1,16 +1,27 @@
-// Renders the "coming soon — family medicine Stage A" promo images.
+// Renders the "coming soon — <specialty> Stage A" promo images.
 //
 //   node scripts/make-promo-image.mjs og      ->  og-family-medicine.png (1200x630, link preview)
 //   node scripts/make-promo-image.mjs square  ->  whatsapp-family-medicine.png (1080x1080, send as an image)
+//   node scripts/make-promo-image.mjs og peds     ->  og-pediatrics.png
+//   node scripts/make-promo-image.mjs square peds ->  whatsapp-pediatrics.png
 //
 // Same fonts, Chromium and pngquant step as scripts/make-og-image.mjs; the
 // card's look (mark, wordmark, navy gradient, cyan accent) is copied from it.
 // The og card is what WhatsApp shows when someone pastes
-// https://meduxa.ai/family-medicine — family-medicine.html points og:image at it.
+// https://meduxa.ai/family-medicine — family-medicine.html points og:image at it
+// (pediatrics.html at og-pediatrics.png the same way).
 import { writeFileSync, unlinkSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+
+// The second argument picks the page; family medicine stays the default so
+// the original commands keep producing the same files.
+const PAGES = {
+  fm:   { slug: 'family-medicine', h1: 'הכנה לשלב א<br>ברפואת משפחה' },
+  peds: { slug: 'pediatrics',      h1: 'הכנה לשלב א<br>ברפואת ילדים' },
+};
+const PAGE = PAGES[process.argv[3] || 'fm'];
 
 const VARIANTS = {
   og:     { out: 'og-family-medicine.png',       w: 1200, h: 630,  mark: 80,  word: 40, pill: 24, h1: 58, sub: 24, url: 24, offer: 28, motto: 26, gap: 0.8, stack: false },
@@ -18,10 +29,11 @@ const VARIANTS = {
 };
 
 const V = VARIANTS[process.argv[2]];
-if (!V) {
-  console.error(`usage: node scripts/make-promo-image.mjs <${Object.keys(VARIANTS).join('|')}>`);
+if (!V || !PAGE) {
+  console.error(`usage: node scripts/make-promo-image.mjs <${Object.keys(VARIANTS).join('|')}> [${Object.keys(PAGES).join('|')}]`);
   process.exit(1);
 }
+V.out = V.out.replace('family-medicine', PAGE.slug);
 // Wide card: one line with dots. Square card: one feature per line, since a
 // dotted line wraps mid-feature at 1080px.
 const FEATURES = V.stack
@@ -69,12 +81,12 @@ const html = `<!doctype html><html lang="he"><head><meta charset="utf-8"><style>
   <div class="inner">
     <div class="brand">${MARK}<span><span class="name">MeduXa</span><span class="tld">.ai</span></span></div>
     <div class="pill">בקרוב</div>
-    <h1>הכנה לשלב א<br>ברפואת משפחה</h1>
+    <h1>${PAGE.h1}</h1>
     <div class="motto">נעשה על ידי רופאים, עבור רופאים</div>
     <div class="offer">מחיר השקה מיוחד לנרשמים מראש</div>
     <div class="sub">${FEATURES.join(V.stack ? '<br>' : ' · ')}</div>
     <div class="bar"></div>
-    <div class="url">meduxa.ai/family-medicine</div>
+    <div class="url">meduxa.ai/${PAGE.slug}</div>
   </div>
 </div>
 </body></html>`;
