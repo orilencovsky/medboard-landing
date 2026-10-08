@@ -300,8 +300,17 @@ key used by the form cannot delete a row even if it wanted to. Deletion is a man
    this, in both languages (§ 7).
 2. Whoever holds it opens the Supabase dashboard for the `MeduXa` project (`pappjpdsajkcoqrfqqqx`)
    → **Table Editor** → `waitlist`, finds the row by the email in the request, and deletes it — or
-   runs the equivalent `delete from waitlist where email = '<address>';` in the SQL editor. Either
-   path needs a Supabase account with access to this project; there is no separate admin tool.
+   runs the equivalent `delete from waitlist where lower(email) = lower(trim('<address>'));` in the
+   SQL editor. Either path needs a Supabase account with access to this project; there is no
+   separate admin tool.
+
+   The address can also sit in a second table, `waitlist_interest_requests` (a sign-up on another
+   bundle's page from an address that was already listed; Pilot `docs/claude/supabase-schema.md`).
+   Once the trigger `waitlist_delete_interest_requests` is live, deleting the `waitlist` row
+   deletes those too, in the same transaction. Check with
+   `select 1 from pg_trigger where tgname = 'waitlist_delete_interest_requests';` — if it returns
+   no row, the trigger has not shipped yet, so also run
+   `delete from waitlist_interest_requests where lower(email) = lower(trim('<address>'));`.
 3. Reply to the requester confirming it's done. The privacy pages promise this inside **30 days**
    (§ 5, § 7) — that clock is not enforced by anything technical, so it is on whoever is watching
    the inbox.
