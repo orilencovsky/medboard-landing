@@ -518,7 +518,9 @@
   .track-link { margin-top: auto; padding-top: 10px; align-self: flex-start; color: inherit; }
   .track-link::before { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 1; }
   .track-link:hover { color: inherit; }
-  .track-link:focus-visible { outline: none; }
+  /* Only where :has() works can the card take over the ring; elsewhere the
+     link keeps the browser's own focus outline (accessibility statement). */
+  @supports selector(:has(a)) { .track-link:focus-visible { outline: none; } }
   .track:has(.track-link:focus-visible) { outline: 2px solid #A78BFA; outline-offset: 3px; }
   .track-btn { display: inline-block; border-radius: 12px; padding: 13px 28px; font-size: 16px; font-weight: 700; }
   .track-soon-btn { display: inline-flex; align-items: center; gap: 8px; color: #7DD3FC; font-size: 15px; font-weight: 600; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 10px 16px; }
@@ -537,6 +539,7 @@
   /* The reveal (.rv-card) owns transform and transition once the motion script
      marks a card; the hover lift rides on `translate`, which composes with it. */
   .motion .track.rv-card { transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease), translate .25s var(--ease), border-color .2s ease, box-shadow .25s var(--ease); transition-delay: var(--d, 0ms); }
+  .ltr-iso { direction: ltr; unicode-bidi: isolate; } /* render-tracks emits it for {{...}} runs */
   /* Clock = "coming soon" on phones, where the words are screen-reader only. */
   .hero-track-clock { display: none; flex-shrink: 0; color: #7DA2C4; }
   /* A chip jump lands on its card: mark which one, since several look alike. */
@@ -1785,7 +1788,7 @@
       })(el);
       // Screen readers get the heading whole, not word by word; innerText
       // keeps a <br> as a break between the words either side of it.
-      el.setAttribute('aria-label', el.innerText.replace(/\s+/g, ' ').trim());
+      el.setAttribute('aria-label', el.innerText.replace(/\s+/g, ' ').replace(/ ([:,.])/g, '$1').trim());
       el.classList.add('split');
       return n;
     }
