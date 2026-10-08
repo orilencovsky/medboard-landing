@@ -34,12 +34,18 @@
      is served by the platform, so it 404s on a local static server. -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  // cta_click: which of the three "start" buttons sent a visitor to the app
-  // (nav / hero / closing). Cookieless like the rest of Vercel Analytics, so it
+  // cta_click: which "start" link sent a visitor to the app (nav / hero /
+  // closing). The nephrology card in #tracks also carries data-cta="hero" (the
+  // app's placement vocabulary is closed), so "hero" counts the hero button and
+  // that card together. Cookieless like the rest of Vercel Analytics, so it
   // counts every click regardless of the GA4/Clarity consent choice.
+  // track_click: which study track was picked, and via a #tracks card or a hero
+  // chip. A click on the nephrology card fires both events, on purpose.
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[data-cta]') : null;
     if (a) window.va('event', { name: 'cta_click', data: { placement: a.getAttribute('data-cta') } });
+    var t = e.target && e.target.closest ? e.target.closest('a[data-track]') : null;
+    if (t) window.va('event', { name: 'track_click', data: { track: t.getAttribute('data-track'), via: t.getAttribute('data-track-via') } });
   }, true);
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -94,7 +100,7 @@
             mask-image: linear-gradient(to bottom, #000 78%, transparent 100%); }
   .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: opacity 1s linear; }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
-  @media (prefers-reduced-motion: reduce) { .hero-video { display: none; } .hero-mark path { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
 
   /* ===== Hero demo card (interactive) ===== */
   .qopt { border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA; display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: pointer; transition: border-color .15s, background .15s; }
@@ -225,9 +231,6 @@
   .sci-refs ol { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 8px; }
   .sci-refs li { font-size: 13px; line-height: 1.6; color: #7DA2C4; }
   .sci-refs a { color: #7DD3FC; text-decoration: underline; text-underline-offset: 2px; }
-  @keyframes heroDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
-  .hero-mark path { stroke-dasharray: 200; stroke-dashoffset: 0; animation: heroDraw 3.5s ease-out both; }
-  .hero-mark path:nth-child(2) { animation-delay: .4s; }
 
   /* ===== Comparison cards =====
      A table forces a horizontal swipe on a phone before you've read a single
@@ -311,7 +314,7 @@
   @media (max-width: 600px) {
     [data-mq-nav] { padding: 0 14px !important; }
     [data-mq-navright] { gap: 10px !important; }
-    [data-mq-cta] { padding: 8px 14px !important; font-size: 13px !important; }
+    [data-mq-cta] { padding: 8px 14px !important; font-size: 13px !important; white-space: nowrap; }
     [data-mq-lang] { padding: 6px 10px !important; font-size: 13px !important; }
     [data-mq-logo] { gap: 8px !important; }
     [data-mq-logo] > svg { width: 30px !important; height: 30px !important; }
@@ -321,7 +324,7 @@
     [data-mq-hero-sub] { font-size: 17px !important; }
     [data-mq-hero-actions] { flex-direction: column !important; align-items: stretch !important; }
     [data-mq-hero-actions] > a { text-align: center !important; }
-    [data-mq-stats] { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    [data-mq-stats] { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 12px !important; }
     [data-mq-demo] { padding: 18px !important; }
     [data-mq-demo-q] { font-size: 16px !important; }
     [data-mq-demo-opts] > div { font-size: 14px !important; }
@@ -335,10 +338,15 @@
     .cmp2-card { padding: 22px 20px !important; }
     .cmp2-name { font-size: 17px !important; }
   }
-  /* Smallest phones (iPhone SE class): the wordmark is what stops the nav row fitting. */
-  @media (max-width: 350px) {
+  /* Small phones: the wordmark is what stops the nav row fitting. 380px, not the
+     Hebrew page's 350: "Start learning" no longer wraps (nowrap above), which made
+     the English row 24px too wide at 360px. The logo mark stays. */
+  @media (max-width: 380px) {
     [data-mq-logo-text] { display: none !important; }
   }
+  /* The headline's first line names what the page sells (Stage A prep), then
+     the campaign line. Part of the h1, so it is also what the heading says. */
+  .hero-stage { display: block; font-size: .5em; font-weight: 600; line-height: 1.3; color: #67E8F9; margin-bottom: .3em; letter-spacing: 0; }
   [data-mq-burger] { display: none; }
   html { scroll-behavior: smooth; }
   header[data-mq-hero], section[data-mq-section], .sci-section { scroll-margin-top: 80px; }
@@ -463,6 +471,126 @@
     .loop-comet { display: none; }
     .loop-dot, .loop-label, .loop-pill, .loop-panel { transition: none; }
   }
+
+  /* ===== Study tracks (#tracks, hero chips, announce bar, closing line) =====
+     Every piece of markup here is rendered from tracks.json by
+     scripts/render-tracks.mjs. A live track spans two of four columns, so the
+     open track reads as the door and the coming ones as signposts beside it,
+     and a new entry joins the same grid with no layout change. Teal says
+     "open now" (a status, so cyan-family); the one violet in the section is
+     the live track's commit button. */
+  .announce { display: block; background: linear-gradient(90deg, #0E7490, #4A38C9); color: #fff; text-align: center; font-size: 15px; font-weight: 600; line-height: 1.5; padding: 10px 20px; }
+  .announce-pill { display: inline-block; background: #22D3EE; color: #04101E; border-radius: 999px; padding: 1px 12px; font-size: 13px; font-weight: 700; margin-inline-end: 8px; }
+  .announce u { text-underline-offset: 3px; }
+
+  .hero-tracks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: -6px; }
+  .hero-tracks-label { font-size: 14px; color: #7DA2C4; margin-inline-end: 4px; }
+  .hero-track { display: inline-flex; align-items: center; gap: .35em; min-height: 40px; box-sizing: border-box; padding: 8px 16px; border-radius: 100px; font-size: 14.5px; font-weight: 600;
+                color: #B8D4EA; background: rgba(34,211,238,.05); border: 1px solid #1E4A6E; transition: border-color .15s, color .15s, background .15s; }
+  .hero-track--live { color: #5EEAD4; border-color: rgba(94,234,212,.4); background: rgba(94,234,212,.07); }
+  .hero-track-soon { color: #7DA2C4; font-weight: 500; }
+  .hero-track:hover { color: #E2F4FD; border-color: #22D3EE; background: rgba(34,211,238,.1); }
+  .hero-track:focus-visible { outline: 2px solid #A78BFA; outline-offset: 2px; }
+
+  .tracks { position: relative; background: #061225; border-top: 1px solid #153650; padding: 96px 32px; }
+  .tracks-in { max-width: 1200px; margin: 0 auto; }
+  .tracks-head { display: flex; flex-direction: column; gap: 14px; max-width: 720px; margin-bottom: 44px; }
+  .tracks-head h2 { margin: 0; font-size: 40px; font-weight: 700; color: #fff; line-height: 1.2; letter-spacing: -0.01em; text-wrap: balance; }
+  .tracks-head p { margin: 0; font-size: 18px; line-height: 1.7; color: #B8D4EA; max-width: 62ch; }
+  .tracks-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+
+  .track { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 28px 26px; border-radius: 20px; background: #081D3A; border: 1px solid #1E4A6E;
+           scroll-margin-top: 96px; transition: border-color .2s ease, box-shadow .25s var(--ease), translate .25s var(--ease); }
+  .track--live { grid-column: span 2; background: #0B2545; border-color: rgba(34,211,238,.45); box-shadow: 0 24px 60px rgba(2,8,20,.55); padding: 32px 32px 30px; }
+  /* The #compare brand card's cyan top rule, so the open track reads as ours. */
+  .track--live::after { content: ''; position: absolute; inset-block-start: -1.5px; inset-inline: 26px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #0EA5E9, #22D3EE); pointer-events: none; }
+  .track-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .track-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; line-height: 1; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 6px 12px; }
+  .track-pill--live { color: #5EEAD4; border-color: rgba(94,234,212,.4); background: rgba(94,234,212,.07); }
+  .track-name { margin: 6px 0 0; display: flex; flex-direction: column; gap: 4px; font-size: 26px; font-weight: 700; line-height: 1.2; color: #F1F7FC; }
+  .track--live .track-name { font-size: 34px; }
+  .track-stage { font-size: 14px; font-weight: 600; color: #7DA2C4; }
+  .track-blurb { margin: 0; font-size: 15px; line-height: 1.7; color: #9CC3DF; max-width: 46ch; }
+  .track--live .track-blurb { font-size: 16.5px; color: #B8D4EA; }
+  /* The whole card is the link's hit area: one tab stop per card. Stretched
+     with ::before on the plain <a>, never on .btn-action, which already owns
+     ::after (its hover fade) and clips with overflow: hidden. */
+  .track-link { margin-top: auto; padding-top: 10px; align-self: flex-start; color: inherit; }
+  .track-link::before { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 1; }
+  .track-link:hover { color: inherit; }
+  /* Only where :has() works can the card take over the ring; elsewhere the
+     link keeps the browser's own focus outline (accessibility statement). */
+  @supports selector(:has(a)) { .track-link:focus-visible { outline: none; } }
+  .track:has(.track-link:focus-visible) { outline: 2px solid #A78BFA; outline-offset: 3px; }
+  .track-btn { display: inline-block; border-radius: 12px; padding: 13px 28px; font-size: 16px; font-weight: 700; }
+  .track-soon-btn { display: inline-flex; align-items: center; gap: 8px; color: #7DD3FC; font-size: 15px; font-weight: 600; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 10px 16px; }
+  .track-arrow { transition: transform .2s var(--ease); }
+  [dir="rtl"] .track-arrow { transform: scaleX(-1); }
+  @media (hover: hover) and (pointer: fine) {
+    .track:hover { translate: 0 -2px; border-color: rgba(34,211,238,.45); }
+    .track--live:hover { border-color: rgba(34,211,238,.7); box-shadow: 0 28px 70px rgba(2,8,20,.6); }
+    .track:hover .btn-action::after { opacity: 1; }
+    .track:hover .track-soon-btn { border-color: #22D3EE; color: #E2F4FD; }
+    .track:hover .track-arrow { transform: translateX(3px); }
+    [dir="rtl"] .track:hover .track-arrow { transform: scaleX(-1) translateX(3px); }
+  }
+  .track-link:active .btn-action, .track-link:active .track-soon-btn { transform: scale(.97); }
+  .track-soon-btn { transition: border-color .15s, color .15s, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  /* The reveal (.rv-card) owns transform and transition once the motion script
+     marks a card; the hover lift rides on `translate`, which composes with it. */
+  .motion .track.rv-card { transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease), translate .25s var(--ease), border-color .2s ease, box-shadow .25s var(--ease); transition-delay: var(--d, 0ms); }
+  .ltr-iso { direction: ltr; unicode-bidi: isolate; } /* render-tracks emits it for {{...}} runs */
+  /* Clock = "coming soon" on phones, where the words are screen-reader only. */
+  .hero-track-clock { display: none; flex-shrink: 0; color: #7DA2C4; }
+  /* A chip jump lands on its card: mark which one, since several look alike. */
+  .track:target { border-color: #22D3EE; box-shadow: 0 0 0 3px rgba(34,211,238,.3), 0 24px 60px rgba(2,8,20,.55); }
+  .track--live:target { border-color: #67E8F9; }
+  .tracks-more { margin: 28px 0 0; font-size: 15px; color: #9CC3DF; }
+  .tracks-more a, .pilot-tracks a { text-decoration: underline; text-underline-offset: 3px; }
+  .tracks-more a { color: #7DD3FC; }
+  .tracks-more a:hover { color: #22D3EE; }
+  .pilot-tracks { margin: 0; font-size: 15px; color: #475569; }
+  .pilot-tracks a { color: #0E7490; font-weight: 600; }
+  @media (max-width: 980px) {
+    .tracks-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .tracks-grid { grid-template-columns: 1fr; gap: 14px; }
+    .track--live { grid-column: auto; padding: 26px 22px 22px; }
+    .track { padding: 22px; }
+    .track--live .track-name { font-size: 28px; }
+    .track-name { font-size: 22px; }
+    .tracks-head { margin-bottom: 28px; }
+    .tracks-head p { font-size: 16px; }
+    .track--live .track-link { align-self: stretch; }
+    .track--live .track-btn { display: block; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .hero-tracks { margin-top: 0; }
+    .hero-tracks-label { display: none; }
+    .hero-track { padding: 8px 12px; font-size: 14px; }
+    .hero-track-clock { display: block; }
+    /* "· בקרוב" stays for screen readers; visually the chip row then fits one line. */
+    .hero-track-soon { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .announce { font-size: 14px; padding: 9px 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track, .track-arrow, .track-soon-btn { transition: none; }
+    .track:hover { translate: none; }
+    .track-link:active .btn-action, .track-link:active .track-soon-btn { transform: none; }
+  }
+
+  /* The X mark stands in for the hero video on PHONES only, when the video is
+     not playing: the loop script adds .no-video to the header when autoplay is
+     blocked (iOS Low Power Mode, data savers), and reduced motion never plays
+     it. On desktop a missing video just leaves the header's gradient. */
+  .hero-mark { display: none; position: absolute; z-index: 1; inset-inline-end: -220px; top: -180px; width: 880px; height: 880px; opacity: .08; pointer-events: none; }
+  .hero-mark path { stroke-dasharray: 200; animation: heroMarkDraw 3.5s cubic-bezier(.16, 1, .3, 1) both; }
+  .hero-mark path:nth-child(2) { animation-delay: .4s; }
+  @keyframes heroMarkDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+  @media (max-width: 600px) { .no-video .hero-mark { display: block; } }
+  @media (max-width: 600px) and (prefers-reduced-motion: reduce) { .hero-mark { display: block; } }
+  @media (prefers-reduced-motion: reduce) { .hero-mark path { animation: none; } }
 
   /* Off-screen until focused, so the first Tab press offers a way past the nav
      instead of walking the whole menu. Targets the <main> below. */
@@ -590,10 +718,10 @@
         <span data-mq-logo-text style="display: flex; align-items: baseline;"><span style="font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE;">.ai</span></span>
       </div>
       <div data-mq-navright style="display: flex; align-items: center; gap: 26px;">
+        <a data-mq-hide class="nav-link" href="#tracks">Specialties</a>
         <a data-mq-hide class="nav-link" href="#science">The Science</a>
         <a data-mq-hide class="nav-link" href="#features">Features</a>
         <a data-mq-hide class="nav-link" href="#how">How it works</a>
-        <a data-mq-hide class="nav-link" href="#vision">Vision</a>
         <a data-mq-hide class="nav-link" href="#compare">Comparison</a>
         <a data-mq-lang href="/?lang=he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px;">עברית</a>
         <a data-mq-cta class="btn-action btn-action-md" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=nav" data-cta="nav" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700;">Start learning</a>
@@ -603,10 +731,10 @@
       </div>
     </div>
     <div id="mobileMenu" style="display: none; background: rgba(6,18,37,.98); border-bottom: 1px solid rgba(34,211,238,.15); flex-direction: column; padding: 12px 24px 20px; gap: 4px;">
+      <a class="m-link" href="#tracks" onclick="closeMenu()">Specialties</a>
       <a class="m-link" href="#science" onclick="closeMenu()">The Science</a>
       <a class="m-link" href="#features" onclick="closeMenu()">Features</a>
       <a class="m-link" href="#how" onclick="closeMenu()">How it works</a>
-      <a class="m-link" href="#vision" onclick="closeMenu()">Vision</a>
       <a class="m-link" href="#compare" onclick="closeMenu()">Comparison</a>
     </div>
   </nav>
@@ -630,7 +758,9 @@
       </video>
     </div>
     <div class="hero-overlay"></div>
-    <svg class="hero-mark" width="900" height="900" viewBox="0 0 96 96" fill="none" style="position: absolute; right: -260px; top: -160px; opacity: .07; pointer-events: none; z-index: 2;">
+    <!-- The X mark: on phones only, and only when the video is not playing
+         (autoplay blocked, Low Power Mode, reduced motion). See .hero-mark. -->
+    <svg class="hero-mark" viewBox="0 0 96 96" fill="none" aria-hidden="true">
       <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
       <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
     </svg>
@@ -639,14 +769,22 @@
     <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; gap: 64px; align-items: flex-start; flex-wrap: wrap;">
       <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 26px;">
         <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block;"></span> Science-Based Learning · AI-Powered</span>
-        <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;">The smarter way to prepare<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">for medical boards</span></h1>
-        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">Active recall, spaced repetition, and a Socratic AI tutor — all grounded in the real sources your exam is written from. Built for medical residents, worldwide.</p>
+        <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;"><span class="hero-stage">Stage A board prep<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;">:</span></span>The exam hasn’t changed.<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">The way to prepare for it has.</span></h1>
+        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">Solving past exams shows you what is correct. Here you also learn why: every explanation is backed by a quote from the source, a Socratic AI tutor guides you, and what you missed comes back for targeted review.</p>
         <div data-mq-hero-actions style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
           <a class="btn-action btn-action-lg" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=hero" data-cta="hero" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">Start studying free</a>
           <a href="#how" style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">See how it works</a>
         </div>
-        <div data-mq-stats style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 24px; margin-top: 8px;">
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">1,000+</div><div style="font-size: 14px; color: #7DA2C4;">Board-style questions</div></div>
+        <!-- One chip per study track, jumping to its card in #tracks. -->
+        <div class="hero-tracks" data-mq-hero-tracks>
+          <span class="hero-tracks-label">Or jump to a specialty:</span>
+          <!-- tracks:chips -->
+          <a class="hero-track hero-track--live" href="#track-nephrology" data-track="nephrology" data-track-via="chip">Nephrology</a>
+          <a class="hero-track hero-track--soon" href="#track-family-medicine" data-track="family-medicine" data-track-via="chip">Family medicine<svg class="hero-track-clock" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.6" stroke="currentColor" stroke-width="1.5"></circle><path d="M7 4.2V7l1.9 1.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="hero-track-soon">· soon</span></a>
+          <a class="hero-track hero-track--soon" href="#track-pediatrics" data-track="pediatrics" data-track-via="chip">Pediatrics<svg class="hero-track-clock" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.6" stroke="currentColor" stroke-width="1.5"></circle><path d="M7 4.2V7l1.9 1.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="hero-track-soon">· soon</span></a>
+          <!-- /tracks:chips -->
+        </div>
+        <div data-mq-stats style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 24px; margin-top: 8px;">
           <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">9</div><div style="font-size: 14px; color: #7DA2C4;">Evidence-based principles</div></div>
           <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">100%</div><div style="font-size: 14px; color: #7DA2C4;">Source-cited answers</div></div>
           <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">AI</div><div style="font-size: 14px; color: #7DA2C4;">Socratic tutor per question</div></div>
@@ -729,6 +867,40 @@
       </div>
     </div>
   </header>
+
+  <!-- TRACKS: one card per study track. The cards are rendered from
+       tracks.json by scripts/render-tracks.mjs; edit the list, not the cards. -->
+  <section id="tracks" class="tracks" data-mq-section aria-labelledby="tracks-title">
+    <div class="tracks-in">
+      <div class="tracks-head">
+        <h2 id="tracks-title" data-mq-h2>Choose your specialty</h2>
+        <p>One learning engine, with content built separately for each exam. Start an open track, or leave your email and we'll tell you when another one opens.</p>
+      </div>
+      <div class="tracks-grid">
+        <!-- tracks:cards -->
+        <article class="track track--live" id="track-nephrology">
+          <div class="track-pills"><span class="track-pill track-pill--live"><svg class="track-pill-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.6l4.5-5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Open now</span></div>
+          <h3 class="track-name" id="track-nephrology-name">Nephrology <span class="track-stage">Stage A</span></h3>
+          <p class="track-blurb">Stage A-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.</p>
+          <a class="track-link" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=hero" data-track="nephrology" data-track-via="card" data-cta="hero" aria-describedby="track-nephrology-name"><span class="btn-action btn-action-md track-btn">Start studying free</span></a>
+        </article>
+        <article class="track track--soon" id="track-family-medicine">
+          <div class="track-pills"><span class="track-pill">Coming soon</span><span class="track-pill" id="track-family-medicine-lang">Hebrew content</span></div>
+          <h3 class="track-name" id="track-family-medicine-name">Family medicine <span class="track-stage">Stage A</span></h3>
+          <p class="track-blurb">Exam-style questions, answers explained with a quote from the source, and launch pricing for early sign-ups.</p>
+          <a class="track-link track-link--soon" href="/family-medicine" data-track="family-medicine" data-track-via="card" hreflang="he" aria-describedby="track-family-medicine-name track-family-medicine-lang"><span class="track-soon-btn">Get notified<svg class="track-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        </article>
+        <article class="track track--soon" id="track-pediatrics">
+          <div class="track-pills"><span class="track-pill">Coming soon</span><span class="track-pill" id="track-pediatrics-lang">Hebrew content</span></div>
+          <h3 class="track-name" id="track-pediatrics-name">Pediatrics <span class="track-stage">Stage A</span></h3>
+          <p class="track-blurb">Questions checked by a pediatrics specialist, answers explained with a quote from the source, and launch pricing for early sign-ups.</p>
+          <a class="track-link track-link--soon" href="/pediatrics" data-track="pediatrics" data-track-via="card" hreflang="he" aria-describedby="track-pediatrics-name track-pediatrics-lang"><span class="track-soon-btn">Get notified<svg class="track-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        </article>
+        <!-- /tracks:cards -->
+      </div>
+      <p class="tracks-more">Preparing for another specialty? <a href="mailto:hello@meduxa.ai">Write to us</a></p>
+    </div>
+  </section>
 
   <!-- SCIENCE — 9 principles -->
   <section id="science" class="sci-section" style="--sci-dir:1;">
@@ -1035,20 +1207,6 @@
     </div>
   </section>
 
-  <!-- VISION -->
-  <section id="vision" data-mq-section style="background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); padding: 96px 32px;">
-    <div style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center;">
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #22D3EE; letter-spacing: .14em;">THE VISION</span>
-      <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">One engine, every board exam</h2>
-      <p style="margin: 0; font-size: 19px; color: #B8D4EA; line-height: 1.7; max-width: 700px;">MeduXa is subject-agnostic — the same science-backed engine can power any structured board exam, in any specialty. The first exam track is live in the pilot right now, with more subjects rolling out.</p>
-      <p style="margin: 0; font-size: 20px; color: #67E8F9; font-weight: 600; font-style: italic;">"One platform to rule them all."</p>
-      <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 8px;">
-        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.35); color: #5EEAD4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">✓ Nephrology (Stage A) — live now</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.06); border: 1px solid #1E4A6E; color: #7DA2C4; border-radius: 100px; padding: 8px 20px; font-size: 15px; font-weight: 600;">More specialties coming</span>
-      </div>
-    </div>
-  </section>
-
   <!-- COMPARISON -->
   <section id="compare" data-mq-section style="background: #fff; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
     <div style="max-width: 1100px; margin: 0 auto;">
@@ -1270,6 +1428,9 @@
       <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Ready to study smarter?</h2>
       <p style="margin: 0; font-size: 18px; color: #475569; line-height: 1.65;">Join residents preparing for their boards the science-backed way.</p>
       <a class="btn-action btn-action-lg" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=closing" data-cta="closing" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700; margin-top: 8px;">Start studying free</a>
+      <!-- tracks:closing -->
+      <p class="pilot-tracks">Preparing for Stage A in family medicine or pediatrics? <a href="#tracks">Details and updates</a></p>
+      <!-- /tracks:closing -->
     </div>
   </section>
 
@@ -1515,7 +1676,8 @@
     // autoplay and show a native play button instead. There's no way to
     // force it, so fall back to hiding the video and letting the header's
     // own gradient background show through instead of a stuck play button.
-    function hideVideos() { vids.forEach(function (v) { v.style.display = 'none'; }); }
+    // .no-video lets the phone-only X mark stand in (see .hero-mark).
+    function hideVideos() { vids.forEach(function (v) { v.style.display = 'none'; }); var h = document.querySelector('header[data-mq-hero]'); if (h) h.classList.add('no-video'); }
     var frontPlay = vids[0].play();
     if (frontPlay && frontPlay.catch) frontPlay.catch(hideVideos);
     setTimeout(function () { if (vids[0].paused) hideVideos(); }, 1500);
@@ -1626,7 +1788,7 @@
       })(el);
       // Screen readers get the heading whole, not word by word; innerText
       // keeps a <br> as a break between the words either side of it.
-      el.setAttribute('aria-label', el.innerText.replace(/\s+/g, ' ').trim());
+      el.setAttribute('aria-label', el.innerText.replace(/\s+/g, ' ').replace(/ ([:,.])/g, '$1').trim());
       el.classList.add('split');
       return n;
     }
@@ -1706,6 +1868,20 @@
     }
     cards(document.querySelector('#features [data-mq-cards]'), 'rv-card', S);
     cards(document.querySelector('#compare .cmp2-grid'), 'rv-card', 110);
+    cards(document.querySelector('#tracks .tracks-grid'), 'rv-card', 90);
+    // A hero chip jumps to a card that has not entered yet: it still sits
+    // 48px low mid-reveal, so the browser would scroll to the wrong place and
+    // leave the card under the sticky nav. Finish the entrance instantly first.
+    document.addEventListener('click', function (e) {
+      var chip = e.target && e.target.closest ? e.target.closest('a.hero-track') : null;
+      var grid = document.querySelector('#tracks .tracks-grid');
+      if (!chip || !grid || grid.classList.contains('in')) return;
+      var tc = grid.querySelectorAll('.rv-card');
+      tc.forEach(function (c) { c.style.transition = 'none'; });
+      grid.classList.add('in');
+      void grid.offsetWidth;
+      tc.forEach(function (c) { c.style.transition = ''; c.classList.add('settled'); });
+    }, true);
     cards(document.querySelector('#science .sci-grid'), 'rv-deal', 60);
 
     // ── Loop: the travelled arc draws, then stages 01 to 04 light in order,

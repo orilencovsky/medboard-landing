@@ -21,23 +21,23 @@
   }, true);
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
-<title>בקרוב: הכנה לשלב א ברפואת ילדים | MeduXa.ai</title>
+<title>בקרוב: הכנה לשלב א׳ ברפואת ילדים | MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/pediatrics" />
-<meta name="description" content="בקרוב ב-MeduXa: הכנה לשלב א ברפואת ילדים, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי." />
+<meta name="description" content="בקרוב ב-MeduXa: הכנה לשלב א׳ ברפואת ילדים, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
-<meta property="og:title" content="בקרוב: הכנה לשלב א ברפואת ילדים | MeduXa.ai" />
+<meta property="og:title" content="בקרוב: הכנה לשלב א׳ ברפואת ילדים | MeduXa.ai" />
 <meta property="og:description" content="שאלות בסגנון הבחינה שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
 <meta property="og:url" content="https://meduxa.ai/pediatrics" />
-<meta property="og:image" content="https://meduxa.ai/og-pediatrics.png?v=1" />
+<meta property="og:image" content="https://meduxa.ai/og-pediatrics.png?v=2" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="MeduXa.ai: בקרוב, הכנה לשלב א ברפואת ילדים" />
+<meta property="og:image:alt" content="MeduXa.ai: בקרוב, הכנה לשלב א׳ ברפואת ילדים" />
 <meta property="og:locale" content="he_IL" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="בקרוב: הכנה לשלב א ברפואת ילדים | MeduXa.ai" />
+<meta name="twitter:title" content="בקרוב: הכנה לשלב א׳ ברפואת ילדים | MeduXa.ai" />
 <meta name="twitter:description" content="שאלות בסגנון הבחינה שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
-<meta name="twitter:image" content="https://meduxa.ai/og-pediatrics.png?v=1" />
+<meta name="twitter:image" content="https://meduxa.ai/og-pediatrics.png?v=2" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#061225" />
 <meta name="color-scheme" content="dark" />
@@ -129,14 +129,18 @@
   .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 1s linear; }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none;
                   background: linear-gradient(165deg, rgba(6,18,37,.88) 0%, rgba(10,31,61,.84) 85%, rgba(12,42,78,.82) 100%); }
-  .hero-mark { position: absolute; z-index: 1; inset-inline-end: -220px; top: -180px; width: 880px; height: 880px; opacity: .08; pointer-events: none; }
-  /* The static X is the video's fallback, never both at once: with JS on it
-     stays hidden unless the loop script marks the hero .no-video. */
-  .js .hero-mark { display: none; }
-  .js .hero.no-video .hero-mark { display: block; }
-  .hero-mark path { stroke-dasharray: 200; animation: draw 3.5s var(--ease) both; }
+  /* The X mark stands in for the hero video on PHONES only, when the video is
+     not playing: the loop script adds .no-video to the header when autoplay is
+     blocked (iOS Low Power Mode, data savers), and reduced motion never plays
+     it. On desktop a missing video just leaves the header's gradient. */
+  .hero-mark { display: none; position: absolute; z-index: 1; inset-inline-end: -220px; top: -180px; width: 880px; height: 880px; opacity: .08; pointer-events: none; }
+  .hero-mark path { stroke-dasharray: 200; animation: heroMarkDraw 3.5s cubic-bezier(.16, 1, .3, 1) both; }
   .hero-mark path:nth-child(2) { animation-delay: .4s; }
-  @keyframes draw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+  @keyframes heroMarkDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+  @media (max-width: 600px) { .no-video .hero-mark { display: block; } }
+  @media (max-width: 600px) and (prefers-reduced-motion: reduce) { .hero-mark { display: block; } }
+  @media (prefers-reduced-motion: reduce) { .hero-mark path { animation: none; } }
+
   /* start, not center: the card grows as it is answered, and a centred row
      would move the headline with it. */
   .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 64px; align-items: start; }
@@ -146,7 +150,11 @@
   /* The one status dot on the page: the program is not open yet. Static,
      since nothing behind it is live. */
   .chip .live { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); }
-  h1 { margin: 0; font-size: clamp(40px, 5.2vw, 66px); font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; color: #fff; }
+  /* The campaign line, as on the homepage: a small first line names the page
+     (Stage A in this specialty), then "the exam hasn't changed". Smaller than
+     the old two-word headline, which this longer line replaced. */
+  h1 { margin: 0; font-size: clamp(32px, 4.4vw, 54px); font-weight: 700; line-height: 1.15; letter-spacing: -0.015em; color: #fff; }
+  h1 .hero-stage { display: block; font-size: .5em; font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--cyan-soft); margin-bottom: .3em; }
   h1 .grad { background: linear-gradient(90deg, var(--sky-light), var(--cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .lead { margin: 0; font-size: 20px; line-height: 1.65; color: var(--t2); max-width: 30ch; }
   .lead strong { color: #fff; font-weight: 600; }
@@ -422,8 +430,7 @@
      fade helps the eye follow what changed. */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .hero-mark path { animation: none; }
-    .hero-video { display: none; }
+      .hero-video { display: none; }
     .q-explain, .q-tutor, .ok-box, .err { animation: fade-in .2s ease both; }
     .spin { animation-duration: 1.2s; }
     .btn, .btn .ph, .q-opt, .q-opt .ph, .tile { transition-property: opacity, background-color, border-color, color, box-shadow; }
@@ -520,14 +527,16 @@
       </video>
     </div>
     <div class="hero-overlay"></div>
+    <!-- The X mark: on phones only, and only when the video is not playing
+         (autoplay blocked, Low Power Mode, reduced motion). See .hero-mark. -->
     <svg class="hero-mark" viewBox="0 0 96 96" fill="none" aria-hidden="true">
       <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
       <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
     </svg>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>בקרוב: רפואת ילדים, שלב א</span>
-        <h1 class="enter" style="--i:1">הכנה לשלב א<br><span class="grad">ברפואת ילדים</span></h1>
+        <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>בקרוב: רפואת ילדים, שלב א׳</span>
+        <h1 class="enter" style="--i:1"><span class="hero-stage">הכנה לשלב א׳ ברפואת ילדים<span class="sr">:</span></span>הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></h1>
         <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.</p>
         <a class="btn hero-cta enter" style="--i:3" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
       </div>
@@ -555,11 +564,11 @@
     <h2 id="t-status" class="sr">מה כבר קיים ומה נבנה עכשיו</h2>
     <div class="wrap status-grid">
       <div class="status-state" data-reveal>
-        <div class="state done"><i class="ph ph-check-circle" aria-hidden="true"></i><div><h3>המנוע קיים ועובד</h3><p>מתמחים כבר מתכוננים איתו לשלב א.</p></div></div>
+        <div class="state done"><i class="ph ph-check-circle" aria-hidden="true"></i><div><h3>המנוע קיים ועובד</h3><p>מתמחים כבר מתכוננים איתו לשלב א׳.</p></div></div>
         <div class="state build"><i class="ph ph-hammer" aria-hidden="true"></i><div><h3>התוכן לרפואת ילדים נבנה עכשיו</h3><p>השאירו מייל ונעדכן ברגע שזה נפתח.</p></div></div>
         <div class="state done"><i class="ph ph-stethoscope" aria-hidden="true"></i><div><h3>כל שאלה נבדקת בידי רופא מומחה ברפואת ילדים</h3><p><span class="ltr-iso">AI</span> עוזר לנו לעבוד מהר, אבל הוא לא המילה האחרונה. שאלה עולה לאתר רק אחרי שרופא מומחה עבר עליה ואישר אותה.</p></div></div>
       </div>
-      <p class="statement" data-reveal style="--i:1">שאלות בסגנון שלב א, ולכל תשובה <em>הסבר שמגובה בציטוט מילה במילה מהמקור</em> שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם.</p>
+      <p class="statement" data-reveal style="--i:1">שאלות בסגנון שלב א׳, ולכל תשובה <em>הסבר שמגובה בציטוט מילה במילה מהמקור</em> שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם.</p>
     </div>
   </section>
 
@@ -603,7 +612,7 @@
     <div class="wrap">
       <div class="sec-head" data-reveal>
         <h2 id="t-what">מה תקבלו</h2>
-        <p>כל מה שמתמחים כבר משתמשים בו באפליקציה, מותאם לבחינת שלב א ברפואת ילדים.</p>
+        <p>כל מה שמתמחים כבר משתמשים בו באפליקציה, מותאם לבחינת שלב א׳ ברפואת ילדים.</p>
       </div>
       <div class="bento">
         <article class="tile t-tutor" data-reveal>
@@ -657,14 +666,14 @@
   <section class="sec compare" aria-labelledby="t-cmp">
     <div class="wrap">
       <div class="sec-head" data-reveal>
-        <h2 id="t-cmp">לא עוד מאגר שאלות. לא עוד צ׳אט <span class="ltr-iso">AI</span> כללי.</h2>
-        <p>מאגר שאלות נותן תרגול בלי הכוונה. צ׳אט <span class="ltr-iso">AI</span> כללי נותן הכוונה, רק אחרי שתאספו לבד את המקורות ותבנו לו את ההקשר. <span class="ltr-iso">MeduXa</span> משלבת את שניהם, סביב הבחינה.</p>
+        <h2 id="t-cmp">לא רק לדעת מה התשובה. לדעת למה, ולבדוק במקור.</h2>
+        <p>ההשוואה כאן היא בין דרכי לימוד: להיזכר בתשובה הנכונה, או להבין אותה ולוודא אותה מול המקור.</p>
       </div>
       <div class="cmp-wrap" data-reveal>
         <table class="cmp">
           <thead><tr><th scope="col"><span class="sr">יכולת</span></th><th scope="col" class="us"><span class="cmp-brand"><span class="sr">MeduXa</span><svg width="22" height="22" viewBox="0 0 96 96" fill="none" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect><rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="5"></rect><path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="8" stroke-linecap="round" fill="none"></path><path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="9" stroke-linecap="round" fill="none"></path><circle cx="48" cy="48" r="11" fill="#22D3EE"></circle></svg><span class="word" aria-hidden="true"><b>MeduXa</b><i>.ai</i></span></span></th><th scope="col"><span class="full">מאגר שאלות רגיל</span><span class="short">מאגר</span></th><th scope="col"><span class="full">צ׳אט <span class="ltr-iso">AI</span> כללי</span><span class="short"><span class="ltr-iso">AI</span> כללי</span></th></tr></thead>
           <tbody>
-          <tr><th scope="row">שאלות בסגנון שלב א</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">שאלות בפורמט שלב א, עם הסבר מלא</span><span class="short">יש</span></span></td><td class="yes"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></span></td></tr>
+          <tr><th scope="row">שאלות בסגנון שלב א׳</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">שאלות בפורמט שלב א׳, עם הסבר מלא</span><span class="short">יש</span></span></td><td class="yes"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></span></td></tr>
           <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">ציטוט מילה במילה לכל שאלה, שאפשר לבדוק</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">לרוב בלי מקור מצוטט</span><span class="short">לרוב לא</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">רק אם העליתם את המקור בעצמכם</span><span class="short">אם תעלו</span></span></td></tr>
           <tr><th scope="row">בדיקה של רופא מומחה</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">כל שאלה נבדקת בידי רופא מומחה ברפואת ילדים</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>משתנה<span class="full">&nbsp;בין מאגרים</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
           <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">מובנה בכל שאלה</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">רק אם תבנו לו את כל ההקשר</span><span class="short">אם תבנו</span></span></td></tr>
@@ -684,7 +693,7 @@
       <div class="signup-copy" data-reveal>
         <span class="eyebrow" lang="en">EARLY ACCESS</span>
         <h2 id="t-signup">הרשמה לעדכון: רפואת ילדים</h2>
-        <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א ברפואת ילדים</strong>. נכתוב לכם כשהיא נפתחת.</p>
+        <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א׳ ברפואת ילדים</strong>. נכתוב לכם כשהיא נפתחת.</p>
         <ul class="perks">
           <li><i class="ph ph-tag" aria-hidden="true"></i><span><strong>מחיר השקה מיוחד</strong> לנרשמים מראש.</span></li>
           <li><i class="ph ph-users-three" aria-hidden="true"></i><span>מתכוננים כקבוצה, למשל כל המתמחים במחלקה? <strong>תהיה גם הנחה קבוצתית</strong>, הפרטים במייל הפתיחה.</span></li>
@@ -699,7 +708,7 @@
           </label>
           <label class="consent" for="notifyConsent">
             <input id="notifyConsent" type="checkbox" required>
-            <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א ברפואת ילדים תיפתח.</span>
+            <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א׳ ברפואת ילדים תיפתח.</span>
           </label>
           <button id="notifySubmit" class="btn" type="submit">עדכנו אותי</button>
           <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
@@ -976,7 +985,7 @@
           form.style.display = 'none';
           msg.className = 'ok-box';
           msg.innerHTML = '<i class="ph ph-check-circle" aria-hidden="true"></i><span></span>';
-          msg.lastChild.textContent = 'נרשמתם לעדכונים על רפואת ילדים. נכתוב לכם כשההכנה לשלב א נפתחת, עם מחיר ההשקה.';
+          msg.lastChild.textContent = 'נרשמתם לעדכונים על רפואת ילדים. נכתוב לכם כשההכנה לשלב א׳ נפתחת, עם מחיר ההשקה.';
         });
         if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist_pediatrics' });
         if (typeof window.va === 'function') window.va('event', { name: 'peds_signup' });

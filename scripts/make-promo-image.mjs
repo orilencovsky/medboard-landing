@@ -18,8 +18,8 @@ import { join } from 'node:path';
 // The second argument picks the page; family medicine stays the default so
 // the original commands keep producing the same files.
 const PAGES = {
-  fm:   { slug: 'family-medicine', h1: 'הכנה לשלב א<br>ברפואת משפחה' },
-  peds: { slug: 'pediatrics',      h1: 'הכנה לשלב א<br>ברפואת ילדים' },
+  fm:   { slug: 'family-medicine', h1: 'הכנה לשלב א׳<br>ברפואת משפחה' },
+  peds: { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים' },
 };
 const PAGE = PAGES[process.argv[3] || 'fm'];
 
@@ -49,7 +49,12 @@ const MARK = `<svg width="${V.mark}" height="${V.mark}" viewBox="0 0 96 96" fill
   <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
 </svg>`;
 
-const html = `<!doctype html><html lang="he"><head><meta charset="utf-8"><style>
+// The fonts come from Google Fonts, the same families the pages load, so the
+// card renders the same on a machine without IBM Plex installed (a missing
+// font silently fell back to the system face). display=block + the virtual
+// time budget below give them time to arrive before the screenshot.
+const FONTS = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;600;700&family=IBM+Plex+Sans:wght@700&family=IBM+Plex+Mono:wght@400&display=block';
+const html = `<!doctype html><html lang="he"><head><meta charset="utf-8"><link rel="stylesheet" href="${FONTS}"><style>
   html, body { margin: 0; padding: 0; }
   .card {
     width: ${V.w}px; height: ${V.h}px; position: relative; overflow: hidden; box-sizing: border-box;
@@ -104,7 +109,7 @@ if (!chrome) { console.error('No Chromium found. Set CHROME to the browser binar
 execFileSync(chrome, [
   '--headless', '--no-sandbox', '--disable-gpu', '--hide-scrollbars',
   '--force-device-scale-factor=1', `--window-size=${V.w},${V.h}`,
-  `--screenshot=${V.out}`, '--virtual-time-budget=4000', `file://${page}`,
+  `--screenshot=${V.out}`, '--virtual-time-budget=8000', `file://${page}`,
 ], { stdio: 'ignore' });
 
 unlinkSync(page);

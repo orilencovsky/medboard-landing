@@ -27,19 +27,24 @@ hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
 og-image-he.png          Open Graph / Twitter card — Hebrew (root)
 family-medicine.html     /family-medicine — "coming soon" page for family medicine Stage A, with a consented
-                         email sign-up (waitlist, source 'landing_fm'); linked from the homepage's top banner
+                         email sign-up (waitlist, source 'landing_fm'); linked from the homepage's #tracks card
 og-family-medicine.png   its link-preview card (what WhatsApp shows for the link)
 whatsapp-family-medicine.png  1080x1080 version of the same ad, to send as an image
 pediatrics.html          /pediatrics — the same "coming soon" page for pediatrics Stage A (waitlist source
-                         'landing_peds', interest 'pediatrics'); not linked from the homepage yet
+                         'landing_peds', interest 'pediatrics'); linked from the homepage's #tracks card
 og-pediatrics.png, whatsapp-pediatrics.png  its promo cards (`make-promo-image.mjs og|square peds`)
+tracks.json              The study tracks (live / coming soon) behind the homepage's #tracks cards, hero chips,
+                         top banner and closing line, in both languages; see "Study tracks" below
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
 scripts/make-promo-image.mjs renders a coming-soon promo (`og` | `square`, then `fm` (default) | `peds`); pngquant after, as above
+                         (it loads IBM Plex from Google Fonts itself; with no pngquant, Pillow `quantize(256)` gives the
+                         same ~100-145 KB). After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
 scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
+scripts/render-tracks.mjs    renders tracks.json into both landing pages (`--check` = drift guard; tests beside it)
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
 
@@ -63,13 +68,44 @@ Both language versions share the same section order, anchored for in-page nav:
 
 | Anchor | Section (EN heading) |
 |---|---|
-| — | Hero — video background + the one-line pitch |
+| — | Hero — video background + the one-line pitch, and one chip per study track |
+| `#tracks` | "Choose your specialty" — one card per study track, rendered from `tracks.json` |
 | `#science` | "Learning backed by how the brain actually works" — the nine evidence-based principles |
 | `#features` | "Everything you need to pass — nothing you don't" |
 | `#how` | "From first question to exam day" |
-| `#vision` | "One engine, every board exam" — the subject-agnostic story beyond nephrology |
 | `#compare` | "Not a question bank. Not a general AI tool." — a table against two generic categories (static banks, general AI tools), deliberately naming no specific product |
-| `#pilot` | "Ready to study smarter?" — the nephrology pilot, and the page's one call to action |
+| `#pilot` | "Ready to study smarter?" — the nephrology call to action, plus a line pointing coming-soon tracks back to `#tracks` |
+
+`#tracks` replaced the old `#vision` section ("One engine, every board exam") on 2026-10-07.
+
+## Study tracks
+
+`tracks.json` is the one list of study tracks. Each entry has an `id`, a `status` (`live` or
+`soon`), an `href`, and per-language copy (`he`, `en`). From it, `node scripts/render-tracks.mjs`
+writes four places in **both** landing pages, between marker comments:
+
+| Marker | What | Notes |
+|---|---|---|
+| `tracks:cards` | the `#tracks` grid | a `live` card spans two of four columns; `soon` cards one |
+| `tracks:chips` | the hero chips under the main CTA | in-page jumps to `#track-<id>` |
+| `tracks:announce` | the top banner | Hebrew page only (`/en` has no banner); lists every `soon` track; omitted when there is none |
+| `tracks:closing` | the line under the `#pilot` CTA | lists every `soon` track |
+
+**Adding a specialty is one entry** in `tracks.json`, then `node scripts/render-tracks.mjs`, then
+commit the list and both pages together. Never hand-edit between the markers — the next render
+overwrites it, and `node scripts/render-tracks.mjs --check` (run it beside the crawler check)
+exits 1 when a page has drifted from the list. Tests: `node --test scripts/render-tracks.test.mjs`.
+The pages stay plain static HTML, so crawlers, no-JS visitors and the first paint all see the cards.
+
+- `cta` on an entry adds `data-cta` to its card (the nephrology card carries `hero`; see Analytics).
+- `pageLang` marks a destination page in another language: on `/en`, the family medicine and
+  pediatrics cards show a "Hebrew content" pill, which is also part of the link's accessible
+  description, and the link carries `hreflang="he"`.
+- `{{…}}` inside a Hebrew blurb marks a Latin run (`1,000+`, `AI`) that is rendered as
+  `<span class="ltr-iso">`.
+- When a coming-soon track goes live: flip its `status`, point `href` at the app with a `pl` value
+  the app already accepts, and re-render — its card widens, and it drops out of the banner and the
+  closing line by itself.
 
 Off that spine sit six standalone legal pages — `/privacy`, `/terms`, `/accessibility` and their
 `/en` counterparts — reachable from every footer.
@@ -401,7 +437,15 @@ served by the platform, so it 404s on a local static server. Custom events, all 
 
 - `cta_click` — `data.placement` is `nav`, `hero` or `closing`, read from the button's `data-cta`
   attribute. This is the landing→app click-through measure. A new "start" button needs a `data-cta`
-  value in **both** languages or it is not counted.
+  value in **both** languages or it is not counted. The nephrology card in `#tracks` also carries
+  `data-cta="hero"` and links with `pl=hero`, since the app's placement vocabulary is closed: from
+  2026-10-07, `hero` counts the hero button **and** that card together, here and in the app's
+  `signup_sources`. Use `track_click` to tell them apart.
+- `track_click` — `data.track` is the track `id` from `tracks.json` (`nephrology`,
+  `family-medicine`, `pediatrics`), `data.via` is `card` (a `#tracks` card) or `chip` (a hero chip).
+  `via` is deliberately not called `placement`, so it is never joined with `cta_click`'s. One click
+  on the nephrology card fires **both** `cta_click` and `track_click` — expected, not a double count
+  to fix.
 - The same buttons link to `app.meduxa.ai/?signup=1&src=landing&pl=<placement>`. The app reads
   `src`/`pl`, carries them through signup, and records one row per NEW account in its
   `signup_sources` table (Pilot repo, `src/signupSource.js`). That is the other half: clicks here,
