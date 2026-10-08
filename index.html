@@ -370,7 +370,14 @@
     [data-mq-hero-sub] { font-size: 17px !important; }
     [data-mq-hero-actions] { flex-direction: column !important; align-items: stretch !important; }
     [data-mq-hero-actions] > a { text-align: center !important; }
-    [data-mq-stats] { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 12px !important; }
+    /* Phones: the hero keeps headline, one-line pitch, CTA and the specialty
+       chips, so the demo card (the proof) starts inside the first screen. The
+       eyebrow, the pitch's detail, the "how it works" link (also in the menu)
+       and the stat row are desktop-only; the demo card right below shows the
+       same things working. */
+    [data-mq-eyebrow], [data-mq-secondary], [data-mq-stats] { display: none !important; }
+    .hero-sub-more { display: none; }
+    .hero-sub-why { display: block; } /* second sentence on its own line */
     [data-mq-demo] { padding: 18px !important; }
     [data-mq-demo-q] { font-size: 16px !important; }
     [data-mq-demo-opts] > div { font-size: 14px !important; }
@@ -827,12 +834,12 @@
          centred row would push the headline down with it. -->
     <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; gap: 64px; align-items: flex-start; flex-wrap: wrap;">
       <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 26px;">
-        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block;"></span> למידה מבוססת-מדע · מונעת AI</span>
+        <span data-mq-eyebrow style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); color: #67E8F9; border-radius: 100px; padding: 7px 18px; font-size: 14px; font-weight: 600;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22D3EE; display: inline-block;"></span> למידה מבוססת-מדע · מונעת AI</span>
         <h1 data-mq-hero-title style="margin: 0; font-size: 54px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.01em;"><span class="hero-stage">הכנה לשלב א׳<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;">:</span></span>הבחינה לא השתנתה.<br><span style="background: linear-gradient(90deg, #38BDF8, #22D3EE); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">הדרך להתכונן אליה, כן.</span></h1>
-        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">פתרון בחינות עבר מראה מה נכון. כאן גם מבינים למה: כל הסבר מגובה בציטוט מהמקור, מורה AI סוקרטי מכוון אתכם, ומה שפספסתם חוזר לשינון ממוקד.</p>
+        <p data-mq-hero-sub style="margin: 0; font-size: 20px; color: #B8D4EA; line-height: 1.65; max-width: 540px;">פתרון בחינות עבר מראה מה נכון. <span class="hero-sub-why">כאן גם מבינים למה<span class="hero-sub-more">: כל הסבר מגובה בציטוט מהמקור, מורה AI סוקרטי מכוון אתכם, ומה שפספסתם חוזר לשינון ממוקד</span>.</span></p>
         <div data-mq-hero-actions style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
           <a class="btn-action btn-action-lg" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=hero" data-cta="hero" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">התחילו ללמוד — חינם</a>
-          <a href="#how" style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">איך זה עובד</a>
+          <a href="#how" data-mq-secondary style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">איך זה עובד</a>
         </div>
         <!-- One chip per study track, jumping to its card in #tracks. -->
         <div class="hero-tracks" data-mq-hero-tracks>
