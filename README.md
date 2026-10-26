@@ -27,7 +27,8 @@ hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
 og-image-he.png          Open Graph / Twitter card — Hebrew (root)
 specialty.template.html  The ONE template behind the four specialty pages below (header + exam countdown, sample
-                         questions, sources, status, method, features, comparison, closing). Generated, not served
+                         questions, sources, status, method, features, comparison, closing). Hand-authored input to
+                         `scripts/render-specialties.mjs`, which renders it with the page data; not deployed
 specialties/             Per-specialty page data (`nephrology|family-medicine|pediatrics|cardiology.json`): copy,
                          sample questions, sign-up settings. Exam dates and sources are NOT here — see "Exam dates"
 nephrology.html          /nephrology — the live nephrology sub-specialty (part A) page, with an app CTA
@@ -48,20 +49,22 @@ tracks.json              The study tracks (live / coming soon) behind the homepa
                          top banner and closing line, in both languages; see "Study tracks" below
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
-.vercelignore            Keeps `specialty.template.html` and `specialties/` out of the deployment, so the raw
-                         template (full of `{{…}}` placeholders) and the page data are not served. Only those two:
+.vercelignore            Keeps `specialty.template.html`, `specialties/` and `docs/` out of the deployment, so the raw
+                         template (full of `{{…}}` placeholders), the page data and the internal docs (specs, plans,
+                         unapproved question candidates) are not served. Only those three:
                          `api/`, `scripts/` and everything else still deploy
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
 scripts/make-promo-image.mjs renders a specialty promo card: `og|square` × `fm|peds|nephro|cardio` (`fm` is the default;
                          `nephro` is "open now" with no launch-price line, `cardio` is "coming soon" with none either),
-                         e.g. `node scripts/make-promo-image.mjs og cardio` -> og-cardiology.png. It then wants pngquant,
-                         as above. It loads IBM Plex from Google Fonts itself, so it needs network. Chrome binary: `$CHROME`
+                         e.g. `node scripts/make-promo-image.mjs og cardio` -> og-cardiology.png. The raw render is large, so shrink
+                         it afterwards: `pngquant --quality 80-95 --ext .png -f <file>` if installed (optional), else
+                         Pillow `quantize(256)` (~100-145 KB either way; the Mac these were made on has no pngquant).
+                         The script loads IBM Plex from Google Fonts itself, so it needs network. Chrome binary: `$CHROME`
                          if set, else the first of a Playwright headless shell, `/Applications/Google Chrome.app/…`,
                          `google-chrome`, `chromium` that answers `--version` — so on a Mac the local Chrome is used as is.
-                         With no pngquant (the case on the Mac these were made on), Pillow `quantize(256)` gives the same
-                         ~100-145 KB. After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
+                         After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
 scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
 scripts/render-tracks.mjs    renders tracks.json into both landing pages (`--check` = drift guard; tests beside it)
 scripts/render-specialties.mjs  renders specialty.template.html + specialties/*.json + tracks.json into the four
@@ -148,8 +151,9 @@ method, features, comparison, closing. A `mode: "live"` page (nephrology) ends i
 `mode: "soon"` page ends in the consented sign-up form. Exam name, date and sources come from the
 track's entry in `tracks.json`, never from the page data (see "Exam dates").
 
-The template and the page data are not meant to be served: `.vercelignore` keeps `specialty.template.html`
-and `specialties/` out of the deployment. Nothing else is excluded — `api/` and `scripts/` still deploy.
+The template, the page data and `docs/` are not meant to be served: `.vercelignore` keeps
+`specialty.template.html`, `specialties/` and `docs/` out of the deployment. Nothing else is excluded —
+`api/` and `scripts/` still deploy.
 
 | Track id | Analytics prefix | Waitlist source / interest | App module |
 |---|---|---|---|
@@ -334,7 +338,7 @@ roadmap; when one is actually being added, plan for more than a new folder:
 
 ## Waitlist
 
-**This page no longer collects addresses.** The signup form in `#pilot` was removed on 2026-09-07,
+**The homepage no longer collects addresses.** The signup form in `#pilot` was removed on 2026-09-07,
 when the page collapsed to a single call to action. Someone without an invite code is now offered
 the waitlist on the app's own signup screen (`app.meduxa.ai`), which is also where they would have
 been sent to enter a code — one destination instead of two competing ones.
