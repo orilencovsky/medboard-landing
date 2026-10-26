@@ -3,6 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
 import { renderPage, validatePage } from './render-specialties.mjs';
 import { daysUntil, countdownState } from './countdown.mjs';
 
@@ -51,6 +52,58 @@ test('countdown script is the tested function', () => {
   assert.ok(js.includes(countdownState.toString()));
   assert.ok(js.includes('מועד הבחינה הבא יפורסם בקרוב'));
   assert.ok(js.includes('הבחינה היום'));
+});
+
+// Runs the countdown script as shipped in a rendered page, in a vm against a
+// minimal stub DOM and a fixed clock (Israel calendar days, so now is given as
+// a UTC instant). Returns what the script left on the stub elements.
+function runCountdown(html, { now, examDate, breakIntl = false }) {
+  const js = scripts(html);
+  const start = js.indexOf('// Exam countdown.');
+  assert.ok(start >= 0, 'countdown script not found');
+  const open = js.indexOf('(function () {', start);
+  const close = js.indexOf('\n  })();', open);
+  assert.ok(open >= 0 && close >= 0, 'countdown IIFE not found');
+  const code = js.slice(open, close + '\n  })();'.length);
+  const el = (o = {}) => ({ hidden: true, textContent: '', ...o });
+  const num = el({ hidden: false }), unit = el(), exam = el({ textContent: 'SERVED' });
+  const line = el({ querySelector: (q) => (q === '[data-days]' ? num : q === '[data-cd-unit]' ? unit : null) });
+  const box = { getAttribute: () => examDate, querySelector: (q) => (q === '.cd-days' ? line : q === '.cd-exam' ? exam : null) };
+  const ctx = vm.createContext({ document: { querySelector: (q) => (q === '[data-exam-date]' ? box : null) } });
+  vm.runInContext(`Date = class extends Date { constructor(...a) { super(...(a.length ? a : [${JSON.stringify(now)}])); } };`, ctx);
+  if (breakIntl) vm.runInContext('Intl = { DateTimeFormat: function () { throw new Error("no Intl"); } };', ctx);
+  vm.runInContext(code, ctx);
+  return { lineHidden: line.hidden, num: String(num.textContent), numHidden: num.hidden, unit: unit.textContent, exam: exam.textContent };
+}
+
+test('countdown script: future shows the number, today says so, past gives way to the next-date line, a failure leaves the served date alone', () => {
+  const NEXT = 'מועד הבחינה הבא יפורסם בקרוב';
+  for (const id of PAGES) {
+    const html = render(id);
+    // 2027-06-14 is the exam; 10:00Z is the same Israel calendar day.
+    const future = runCountdown(html, { now: '2027-06-09T10:00:00Z', examDate: '2027-06-14' });
+    assert.deepEqual(future, { lineHidden: false, num: '5', numHidden: false, unit: 'ימים לבחינה', exam: 'SERVED' }, id);
+    const tomorrow = runCountdown(html, { now: '2027-06-13T10:00:00Z', examDate: '2027-06-14' });
+    assert.equal(tomorrow.num, '1', id);
+    assert.equal(tomorrow.unit, 'יום לבחינה', id);
+    // 22:30Z on the 13th is already the 14th in Israel (UTC+3 in June).
+    const today = runCountdown(html, { now: '2027-06-13T22:30:00Z', examDate: '2027-06-14' });
+    assert.equal(today.lineHidden, false, id);
+    assert.equal(today.numHidden, true, id);
+    assert.equal(today.unit, 'הבחינה היום', id);
+    assert.equal(today.exam, 'SERVED', id);
+    const past = runCountdown(html, { now: '2027-06-15T10:00:00Z', examDate: '2027-06-14' });
+    assert.equal(past.exam, NEXT, id);
+    assert.equal(past.lineHidden, true, id);
+    assert.equal(past.num, '', id);
+    // Failure: Intl throws, or the day count is NaN. Nothing is touched, and
+    // "NaN" and the next-date line never appear.
+    for (const bad of [{ breakIntl: true, examDate: '2027-06-14' }, { examDate: 'bogus' }]) {
+      const r = runCountdown(html, { now: '2027-06-09T10:00:00Z', ...bad });
+      assert.deepEqual(r, { lineHidden: true, num: '', numHidden: false, unit: '', exam: 'SERVED' }, `${id} ${JSON.stringify(bad)}`);
+      assert.ok(!JSON.stringify(r).includes('NaN'), id);
+    }
+  }
 });
 
 test('sources are escaped and LTR-isolated', () => {
