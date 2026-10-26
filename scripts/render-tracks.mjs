@@ -49,6 +49,13 @@ export function validate(data) {
     for (const loc of ['he', 'en']) for (const k of ['name', 'inline', 'stage', 'blurb', 'action']) {
       if (!t[loc] || !t[loc][k]) throw new Error(`${t.id}: ${loc}.${k} is required`);
     }
+    if (!t.exam || !/^\d{4}-\d{2}-\d{2}$/.test(t.exam.date || '')) throw new Error(`${t.id}: exam.date must be YYYY-MM-DD`);
+    for (const k of ['nameHe', 'url']) if (!t.exam[k]) throw new Error(`${t.id}: exam.${k} is required`);
+    if (!Array.isArray(t.sources) || !t.sources.length) throw new Error(`${t.id}: sources must be a non-empty list`);
+    for (const src of t.sources) {
+      if (!src || !src.title) throw new Error(`${t.id}: every source needs a title`);
+      if (src.kind !== 'book' && src.kind !== 'guideline') throw new Error(`${t.id}: source kind must be "book" or "guideline": ${JSON.stringify(src.title)}`);
+    }
   }
 }
 
@@ -110,9 +117,10 @@ function closing(data, locale) {
   return `<p class="pilot-tracks">${ui.closing.replace('{list}', list(names, ui.or))}</p>`;
 }
 
+// The launch-price bar names only the soon tracks that carry the offer.
 function announce(data, locale) {
   const ui = data.ui[locale];
-  const soon = soonTracks(data);
+  const soon = soonTracks(data).filter((t) => t.launchOffer);
   if (!soon.length) return '';
   const names = soon.map((t) => fill(ui.announceItem, t[locale].inline));
   return [
