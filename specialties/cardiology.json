@@ -1,5 +1,5 @@
 {
-  "_comment": "Page data for specialty.template.html, rendered by scripts/render-specialties.mjs into <track href>.html. Exam date/name and sources come from tracks.json, not from here. Plain-text fields are escaped; in lead, states, quote, citation, stem, topic, option text and why, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). Fields ending in Html, perk html and tutor are trusted HTML, inserted as they are. Claims here come only from what the homepage and the family-medicine page already say about the engine; no price, no group discount, no team list, no specialist-review claim.",
+  "_comment": "Page data for specialty.template.html, rendered by scripts/render-specialties.mjs into <track href>.html. Exam date/name and sources come from tracks.json, not from here. Plain-text fields are escaped; in lead, states, quote, citation, stem, topic, option text and why, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). Fields ending in Html, perk html and tutor are trusted HTML, inserted as they are. Claims here come only from what the homepage and the family-medicine page already say about the engine; no price, no group discount, no team list, no specialist-review claim (so no cmpReview: the review row of the comparison table is not rendered).",
   "trackId": "cardiology",
   "prefix": "cardio",
   "mode": "soon",
@@ -30,10 +30,6 @@
   "cmpStyle": {
     "label": "שאלות בסגנון הבחינה",
     "full": "שאלות בפורמט הבחינה, עם הסבר מלא"
-  },
-  "cmpReview": {
-    "label": "ביקורת מומחה",
-    "full": "כל שאלה עוברת ביקורת מומחה"
   },
   "signup": {
     "source": "landing_cardio",

@@ -208,6 +208,16 @@ test('cardiology is a soon page with its own waitlist keys and no launch price',
   assert.ok(!out.includes('_app_click'));
   assert.ok(!out.includes('class="q-opt"'), 'no sample question yet');
   assert.ok(!out.includes('id="q-title"'));
+  assert.ok(!out.includes('ביקורת מומחה'), 'no expert-review claim for cardiology');
   assert.ok(out.includes('<link rel="canonical" href="https://meduxa.ai/cardiology" />'));
   assert.ok(out.includes('https://meduxa.ai/og-cardiology.png'));
+});
+
+test('the expert-review comparison row is optional: rendered where cmpReview is present, absent otherwise, strict when half-filled', () => {
+  for (const id of ['family-medicine', 'pediatrics', 'nephrology']) assert.ok(page(id).cmpReview && served(render(id)).includes(page(id).cmpReview.full), `${id} keeps its review row`);
+  assert.ok(served(render('family-medicine')).includes('ביקורת מומחה'));
+  assert.ok(!render('family-medicine', (p) => { delete p.cmpReview; }).includes('ביקורת מומחה'));
+  assert.equal(render('cardiology', (p) => { p.cmpReview = { label: 'x', full: 'y' }; }).includes('<th scope="row">x</th>'), true);
+  const half = page('family-medicine'); half.cmpReview = { label: 'x' };
+  assert.throws(() => validatePage(half, track('family-medicine')), /cmpReview\.full/);
 });

@@ -14,7 +14,8 @@
 //   {{{name}}}    HTML, inserted as it is. Alone on its line, every line of
 //                 the value gets that line's indentation.
 //   <!-- if:flag --> … <!-- /if:flag -->   kept only when the flag is on.
-//                 Flags: soon, live (from mode), questions (any questions).
+//                 Flags: soon, live (from mode), questions (any questions),
+//                 review (page has cmpReview, the expert-review comparison row).
 // The countdown, sources, questions, status states and perks are built here
 // and inserted with {{{countdown}}}, {{{sources}}}, {{{questions}}},
 // {{{states}}} and {{{perks}}}.
@@ -36,7 +37,7 @@ const SITE = 'https://meduxa.ai';
 const KEYS = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
 const MAX_QUESTIONS = 5;
 const TEXT = ['title', 'description', 'ogDescription', 'ogImage', 'ogImageAlt', 'chip', 'heroStage', 'lead',
-  'statementHtml', 'featuresLead', 'cmpStyle.label', 'cmpStyle.full', 'cmpReview.label', 'cmpReview.full'];
+  'statementHtml', 'featuresLead', 'cmpStyle.label', 'cmpStyle.full'];
 
 // Inside a double-quoted attribute only & and " need escaping, and the value
 // may carry HTML (data-tutor is shown with innerHTML), as the pages always did.
@@ -61,6 +62,9 @@ export function validatePage(page, track) {
   if (!/^[a-z]+$/.test(page.prefix || '')) fail('prefix must be lowercase letters');
   if (page.mode !== 'soon' && page.mode !== 'live') fail('mode must be "soon" or "live"');
   for (const k of TEXT) if (!lookup(page, k)) fail(`${k} is required`);
+  // The comparison row on expert review is optional: a page whose questions are
+  // not (yet) reviewed leaves cmpReview out and the row is not rendered.
+  if (page.cmpReview !== undefined) for (const k of ['cmpReview.label', 'cmpReview.full']) if (!lookup(page, k)) fail(`${k} is required when cmpReview is present`);
   if (!Array.isArray(page.states) || !page.states.length) fail('states must be a non-empty list');
   for (const s of page.states) {
     if (s.kind !== 'done' && s.kind !== 'build') fail('state kind must be "done" or "build"');
@@ -248,7 +252,7 @@ export function renderPage(template, page, track) {
     daysUntilFn: String(daysUntil),
     countdownStateFn: String(countdownState),
   };
-  const flags = { soon: page.mode === 'soon', live: page.mode === 'live', questions: page.questions.length > 0 };
+  const flags = { soon: page.mode === 'soon', live: page.mode === 'live', questions: page.questions.length > 0, review: page.cmpReview !== undefined };
   return fill(keepBlocks(template, flags), view);
 }
 
