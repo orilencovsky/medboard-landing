@@ -25,7 +25,7 @@ const PAGES = [
   { file: 'en/index.html', locale: 'en' },
 ];
 
-export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 // Escaped text, with {{…}} turned into an isolated left-to-right run.
 export const rich = (s) => esc(s).replace(/\{\{(.+?)\}\}/g, '<span class="ltr-iso">$1</span>');
 

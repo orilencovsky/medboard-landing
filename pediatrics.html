@@ -159,6 +159,23 @@
   .lead { margin: 0; font-size: 20px; line-height: 1.65; color: var(--t2); max-width: 30ch; }
   .lead strong { color: #fff; font-weight: 600; }
   .hero-cta { padding: 17px 30px; font-size: 18px; }
+  /* A page with no sample questions: the copy takes the whole row. The grid
+     is a flex item of .hero, so it is told to fill it, or it would shrink to
+     the copy and sit in the middle. */
+  .hero-grid { width: 100%; }
+  .hero-copy:only-child { grid-column: 1 / -1; }
+
+  /* COUNTDOWN: the exam name and date are served as text; the day count is
+     filled in by script (and stays hidden without it). */
+  .countdown { display: grid; gap: 6px; border-inline-start: 3px solid var(--cyan); padding-inline-start: 14px; }
+  .countdown p { margin: 0; }
+  .cd-days { font-size: 17px; font-weight: 600; color: var(--t1); }
+  .cd-days b { font-family: 'IBM Plex Sans', var(--sans); font-size: 30px; font-weight: 700; line-height: 1.1; color: var(--cyan-soft);
+               font-variant-numeric: tabular-nums; margin-inline-end: 6px; }
+  .cd-exam { font-size: 15px; line-height: 1.6; color: var(--t2); }
+  .cd-note { font-size: 13px; line-height: 1.6; }
+  .cd-note a { color: var(--t3); text-decoration: underline; text-underline-offset: 2px; }
+  .cd-note a:hover { color: var(--cyan-soft); }
 
   /* SAMPLE QUESTION: a real, working component, not a picture of one. */
   .q { background: rgba(11,37,69,.78); border: 1px solid rgba(34,211,238,.22); border-radius: var(--r-xl); padding: 24px;
@@ -202,11 +219,37 @@
   .q-tutor .ph { font-size: 20px; color: var(--violet-on); margin-top: 2px; }
   .q-tutor p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--violet-on-soft); }
   .q-tutor b { color: #fff; }
+  /* A wrong answer without a tutor line: why it is wrong. */
+  .q-why { display: flex; gap: 12px; align-items: flex-start; background: rgba(248,113,113,.07); border: 1px solid rgba(248,113,113,.45);
+           border-radius: var(--r-md); padding: 12px 14px; animation: swap-in .3s var(--ease) both; }
+  .q-why .ph { font-size: 20px; color: var(--bad); margin-top: 2px; }
+  .q-why p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--t2); }
+  .q-why b { color: #fff; }
+  /* Previous / next: only rendered when there are two or more questions. */
+  .q-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .q-count { font-size: 14px; font-weight: 600; color: var(--t3); }
+  .q-step { display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--border); border-radius: var(--pill);
+            padding: 7px 14px; color: var(--t2); font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color .2s ease, color .2s ease, transform var(--press); }
+  .q-step .ph { font-size: 16px; }
+  .q-step:active:not(:disabled) { transform: scale(.97); }
+  .q-step:disabled { opacity: .45; cursor: default; }
+  @media (hover: hover) and (pointer: fine) {
+    .q-step:hover:not(:disabled) { border-color: rgba(34,211,238,.55); color: var(--cyan-soft); }
+  }
   @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   /* Swapping one answer's feedback for another's: a 2px blur blends the two
      states so it reads as one change, not two boxes trading places. */
   @keyframes swap-in { from { opacity: 0; transform: translateY(4px); filter: blur(2px); } to { opacity: 1; transform: none; filter: none; } }
   @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+  /* SOURCES: what the explanations quote from. Latin titles are isolated
+     left-to-right runs, so they read whole inside the Hebrew page. */
+  .sources { background: var(--ink); padding: 96px 0; border-top: 1px solid var(--line); }
+  .sources .sec-head { margin-bottom: 36px; }
+  .src-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .src-list li { display: flex; align-items: flex-start; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md);
+                 padding: 14px 16px; font-size: 15.5px; line-height: 1.55; color: var(--t1); }
+  .src-list .ph { flex: none; font-size: 20px; color: var(--cyan); margin-top: 1px; }
 
   /* STATUS: one editorial statement, what exists and what is being built. */
   .status { background: var(--ink); padding: 104px 0; border-top: 1px solid var(--line); }
@@ -431,9 +474,9 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
       .hero-video { display: none; }
-    .q-explain, .q-tutor, .ok-box, .err { animation: fade-in .2s ease both; }
+    .q-explain, .q-tutor, .q-why, .ok-box, .err { animation: fade-in .2s ease both; }
     .spin { animation-duration: 1.2s; }
-    .btn, .btn .ph, .q-opt, .q-opt .ph, .tile { transition-property: opacity, background-color, border-color, color, box-shadow; }
+    .btn, .btn .ph, .q-opt, .q-opt .ph, .q-step, .tile { transition-property: opacity, background-color, border-color, color, box-shadow; }
     .q-opt .ph { transform: none; }
   }
 
@@ -460,7 +503,7 @@
     .hero-cta { align-self: stretch; font-size: 17px; }
     .q { padding: 18px; }
     .q-stem { font-size: 16px; }
-    .status, .sec { padding: 72px 0; }
+    .status, .sec, .sources { padding: 72px 0; }
     .sec-head { margin-bottom: 36px; }
     .sec-head p, .signup-for { font-size: 16px; }
     .group { padding: 22px 18px; }
@@ -539,6 +582,11 @@
         <h1 class="enter" style="--i:1"><span class="hero-stage">הכנה לשלב א׳ ברפואת ילדים<span class="sr">:</span></span>הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></h1>
         <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.</p>
         <a class="btn hero-cta enter" style="--i:3" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
+        <div class="countdown enter" style="--i:4" data-exam-date="2027-06-14">
+          <p class="cd-days" hidden><b data-days></b> <span data-cd-unit></span></p>
+          <p class="cd-exam">בחינת שלב א׳ · <span class="ltr-iso">14.06.2027</span></p>
+          <p class="cd-note"><a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לפי לוח הבחינות של הר״י · המועד עשוי להשתנות</a></p>
+        </div>
       </div>
 
       <!-- A working sample question, in the app's own shape: answer it and the
@@ -556,9 +604,23 @@
           <button type="button" class="q-opt" data-k="d" data-tutor="על מי נאמר כאן שיש אפילפסיה, ועל מי מחליטים אם לחסן היום? מה במצבו של הילד עצמו היה גורם לך לדחות את החיסון?"><span class="q-key">ד</span>אפילפסיה אצל האב<i class="ph ph-x-circle" aria-hidden="true"></i></button>
         </div>
         <div class="q-out" id="q-out" aria-live="polite"></div>
+        <template class="q-explain-src"><p><strong>נכון.</strong> החיסון של כיתה א׳ הוא המנה השנייה של <span class="ltr-iso">MMRV</span> (חצבת, חזרת, אדמת ואבעבועות רוח), תרכיב חי מוחלש. מחלת חום חדה היא סיבה לדחות אותו עד להחלמה. הדחייה זמנית, ומטרתה שלא לבלבל בין תופעות לוואי של החיסון לבין סימני המחלה.</p><figure class="q-src"><blockquote>״מנה שנייה: לילדים שנולדו עד <span class="ltr-iso">31.12.2024</span>: גיל <span class="ltr-iso">6-7</span> שנים / כיתה א׳.״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק אבעבועות רוח, עדכון יוני 2026</figcaption></figure><figure class="q-src"><blockquote>״מחלת חום חדה ו/או מחלה זיהומית חריפה - יש לדחות החיסון עד להחלמה. [...] מחלה קלה ללא חום או עם חום לא גבוה (מתחת ל-<span class="ltr-iso">38°C</span>), כגון זיהום קל בדרכי הנשימה העליונות, שלשול קל או זיהום מקומי אינה סיבה לדחיית החיסון.״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק כללי, עדכון ספטמבר 2024</figcaption></figure><p><strong>שימו לב:</strong> לילדים שנולדו מ־<span class="ltr-iso">2025</span> המנה השנייה של <span class="ltr-iso">MMRV</span> ניתנת בגיל 18 חודשים, ובכיתה א׳ תינתן במקומה המנה השנייה של <span class="ltr-iso">HAV</span> (צהבת A), תרכיב מומת. גם אז, מחלת חום חדה היא סיבה לדחות את החיסון.</p><p><strong>ב. משאפי סטרואידים:</strong> בחיסון חי, מה שמונע חיסון הוא סטרואידים במינון שמדכא את מערכת החיסון, למשל <span class="ltr-iso">prednisone</span> במינון <span class="ltr-iso">2 mg/kg</span> ומעלה ליום במשך שבועיים ויותר. טיפול מקומי, כולל שאיפה, לא מגיע לרמה כזו, ומותר לחסן.</p><figure class="q-src"><blockquote>״אפשר לחסן בתרכיב <span class="ltr-iso">Varilrix</span> בזמן טיפול בסטרואידים במינון שאינו מגיע לרמה מדכאת חסינות. [...] טיפול מקומי (כגון, שאיפה, עור, אף, עיניים, מפרקים).״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק אבעבועות רוח, עדכון יוני 2026</figcaption></figure><p><strong>ג. שיתוק מוחין:</strong> לפני כל חיסון מבררים אם יש מחלה <em>מתקדמת</em> של מערכת העצבים המרכזית. שיתוק מוחין הוא מצב נוירולוגי יציב שאינו מתקדם, ולכן אינו סיבה לדחות את החיסון.</p><figure class="q-src"><blockquote>״בעיות רפואיות (כגון: ליקויים במערכת החיסון, מחלה מתקדמת של מערכת עצבים מרכזית).״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק כללי, עדכון ספטמבר 2024</figcaption></figure><p><strong>ד. אפילפסיה אצל האב:</strong> התדריך מתייחס לפרכוסים בעבר אצל הילד עצמו, ורק עד גיל 3. גם אז הוא לא דוחה את החיסון, אלא ממליץ לתת את <span class="ltr-iso">MMR</span> ואת אבעבועות הרוח בזריקות נפרדות באותו מועד. אצל ילד בכיתה א׳, פרכוסים אצל האב אינם סיבה לדחות.</p><figure class="q-src"><blockquote>״בילדים עד גיל 3 שנים (כולל) עם עבר של פרכוסים מומלץ על מתן החיסון בזריקות נפרדות של מרכיב ה-<span class="ltr-iso">MMR</span> וה-<span class="ltr-iso">varicella</span>, שיינתנו באותו המועד.״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק אבעבועות רוח, עדכון יוני 2026</figcaption></figure></template>
       </section>
     </div>
   </header>
+
+  <section class="sources" aria-labelledby="t-sources">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <h2 id="t-sources">על מה מבוססים ההסברים</h2>
+        <p>המקורות המרכזיים שמהם לקוחים ההסברים והציטוטים בשאלות.</p>
+      </div>
+      <ul class="src-list" data-reveal style="--i:1">
+        <li><i class="ph ph-book-open" aria-hidden="true"></i><span class="ltr-iso">Nelson Textbook of Pediatrics 22e</span></li>
+        <li><i class="ph ph-file-text" aria-hidden="true"></i>הנחיות קליניות ישראליות (25)</li>
+      </ul>
+    </div>
+  </section>
 
   <section class="status" aria-labelledby="t-status">
     <h2 id="t-status" class="sr">מה כבר קיים ומה נבנה עכשיו</h2>
@@ -846,46 +908,111 @@
     els.forEach(function (el) { io.observe(el); });
   })();
 
-  // Sample question. One answer is marked at a time: picking another clears
+  // Sample questions. One answer is marked at a time: picking another clears
   // the last. A right answer opens the explanation and its source; a wrong
-  // one gets its own question back from the tutor, the way the app does it.
+  // one gets its own question back from the tutor, the way the app does it,
+  // or, where there is no tutor line, why that answer is wrong. Either way
+  // the visitor can pick again. Previous/next exist only with 2+ questions.
   (function () {
-    var opts = Array.prototype.slice.call(document.querySelectorAll('.q-opt'));
-    var out = document.getElementById('q-out');
-    opts.forEach(function (o) {
-      o.setAttribute('aria-pressed', 'false');
-      o.addEventListener('click', function () {
-        var right = o.hasAttribute('data-right');
-        var again = o.getAttribute('aria-pressed') === 'true'; // same answer again: nothing new to show
-        if (!again) {
-          opts.forEach(function (x) { x.classList.remove('is-right', 'is-wrong'); x.setAttribute('aria-pressed', 'false'); });
-          o.classList.add(right ? 'is-right' : 'is-wrong');
-          o.setAttribute('aria-pressed', 'true');
-          swapHeight(out, function () {
-            if (right) {
-              out.innerHTML =
-                '<div class="q-explain">' +
-                  '<p><strong>נכון.</strong> החיסון של כיתה א׳ הוא המנה השנייה של <span class="ltr-iso">MMRV</span> (חצבת, חזרת, אדמת ואבעבועות רוח), תרכיב חי מוחלש. מחלת חום חדה היא סיבה לדחות אותו עד להחלמה. הדחייה זמנית, ומטרתה שלא לבלבל בין תופעות לוואי של החיסון לבין סימני המחלה.</p>' +
-                  '<figure class="q-src"><blockquote>״מנה שנייה: לילדים שנולדו עד <span class="ltr-iso">31.12.2024</span>: גיל <span class="ltr-iso">6-7</span> שנים / כיתה א׳.״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק אבעבועות רוח, עדכון יוני 2026</figcaption></figure>' +
-                  '<figure class="q-src"><blockquote>״מחלת חום חדה ו/או מחלה זיהומית חריפה - יש לדחות החיסון עד להחלמה. [...] מחלה קלה ללא חום או עם חום לא גבוה (מתחת ל-<span class="ltr-iso">38°C</span>), כגון זיהום קל בדרכי הנשימה העליונות, שלשול קל או זיהום מקומי אינה סיבה לדחיית החיסון.״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק כללי, עדכון ספטמבר 2024</figcaption></figure>' +
-                  '<p><strong>שימו לב:</strong> לילדים שנולדו מ־<span class="ltr-iso">2025</span> המנה השנייה של <span class="ltr-iso">MMRV</span> ניתנת בגיל 18 חודשים, ובכיתה א׳ תינתן במקומה המנה השנייה של <span class="ltr-iso">HAV</span> (צהבת A), תרכיב מומת. גם אז, מחלת חום חדה היא סיבה לדחות את החיסון.</p>' +
-                  '<p><strong>ב. משאפי סטרואידים:</strong> בחיסון חי, מה שמונע חיסון הוא סטרואידים במינון שמדכא את מערכת החיסון, למשל <span class="ltr-iso">prednisone</span> במינון <span class="ltr-iso">2 mg/kg</span> ומעלה ליום במשך שבועיים ויותר. טיפול מקומי, כולל שאיפה, לא מגיע לרמה כזו, ומותר לחסן.</p>' +
-                  '<figure class="q-src"><blockquote>״אפשר לחסן בתרכיב <span class="ltr-iso">Varilrix</span> בזמן טיפול בסטרואידים במינון שאינו מגיע לרמה מדכאת חסינות. [...] טיפול מקומי (כגון, שאיפה, עור, אף, עיניים, מפרקים).״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק אבעבועות רוח, עדכון יוני 2026</figcaption></figure>' +
-                  '<p><strong>ג. שיתוק מוחין:</strong> לפני כל חיסון מבררים אם יש מחלה <em>מתקדמת</em> של מערכת העצבים המרכזית. שיתוק מוחין הוא מצב נוירולוגי יציב שאינו מתקדם, ולכן אינו סיבה לדחות את החיסון.</p>' +
-                  '<figure class="q-src"><blockquote>״בעיות רפואיות (כגון: ליקויים במערכת החיסון, מחלה מתקדמת של מערכת עצבים מרכזית).״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק כללי, עדכון ספטמבר 2024</figcaption></figure>' +
-                  '<p><strong>ד. אפילפסיה אצל האב:</strong> התדריך מתייחס לפרכוסים בעבר אצל הילד עצמו, ורק עד גיל 3. גם אז הוא לא דוחה את החיסון, אלא ממליץ לתת את <span class="ltr-iso">MMR</span> ואת אבעבועות הרוח בזריקות נפרדות באותו מועד. אצל ילד בכיתה א׳, פרכוסים אצל האב אינם סיבה לדחות.</p>' +
-                  '<figure class="q-src"><blockquote>״בילדים עד גיל 3 שנים (כולל) עם עבר של פרכוסים מומלץ על מתן החיסון בזריקות נפרדות של מרכיב ה-<span class="ltr-iso">MMR</span> וה-<span class="ltr-iso">varicella</span>, שיינתנו באותו המועד.״</blockquote><figcaption>משרד הבריאות, תדריך החיסונים, פרק אבעבועות רוח, עדכון יוני 2026</figcaption></figure>' +
-                  '</div>';
-            } else {
-              out.innerHTML =
-                '<div class="q-tutor"><i class="ph ph-chats-circle" aria-hidden="true"></i>' +
-                  '<p><b>המורה:</b> ' + o.getAttribute('data-tutor') + '</p></div>';
-            }
-          });
-        }
-        if (typeof gtag === 'function') gtag('event', 'peds_sample_question', { result: right ? 'right' : 'wrong', answer: o.getAttribute('data-k') });
+    var card = document.querySelector('.q');
+    if (!card) return;
+    var groups = Array.prototype.slice.call(card.querySelectorAll('.q-opts'));
+    groups.forEach(function (group, qi) {
+      var opts = Array.prototype.slice.call(group.querySelectorAll('.q-opt'));
+      var out = group.parentNode.querySelector('.q-out');
+      var explain = group.parentNode.querySelector('.q-explain-src');
+      opts.forEach(function (o) {
+        o.setAttribute('aria-pressed', 'false');
+        o.addEventListener('click', function () {
+          var right = o.hasAttribute('data-right');
+          var again = o.getAttribute('aria-pressed') === 'true'; // same answer again: nothing new to show
+          if (!again) {
+            opts.forEach(function (x) { x.classList.remove('is-right', 'is-wrong'); x.setAttribute('aria-pressed', 'false'); });
+            o.classList.add(right ? 'is-right' : 'is-wrong');
+            o.setAttribute('aria-pressed', 'true');
+            swapHeight(out, function () {
+              if (right) {
+                out.innerHTML = '<div class="q-explain">' + explain.innerHTML + '</div>';
+              } else if (o.hasAttribute('data-tutor')) {
+                out.innerHTML =
+                  '<div class="q-tutor"><i class="ph ph-chats-circle" aria-hidden="true"></i>' +
+                    '<p><b>המורה:</b> ' + o.getAttribute('data-tutor') + '</p></div>';
+              } else {
+                out.innerHTML =
+                  '<div class="q-why"><i class="ph ph-x-circle" aria-hidden="true"></i>' +
+                    '<p><b>לא נכון.</b> ' + o.getAttribute('data-why') + '</p></div>';
+              }
+            });
+          }
+          if (typeof gtag === 'function') gtag('event', 'peds_sample_question', { result: right ? 'right' : 'wrong', answer: o.getAttribute('data-k'), q: qi + 1 });
+        });
       });
     });
+
+    // One question at a time: every element of question i carries data-q="i".
+    var prev = card.querySelector('.q-prev'), next = card.querySelector('.q-next');
+    if (!prev || !next) return;
+    var parts = Array.prototype.slice.call(card.querySelectorAll('[data-q]'));
+    var count = card.querySelector('.q-count');
+    var n = groups.length, cur = 0;
+    function show(i) {
+      swapHeight(card, function () {
+        cur = i;
+        parts.forEach(function (el) { el.hidden = el.getAttribute('data-q') !== String(i + 1); });
+        count.textContent = 'שאלה ' + (i + 1) + ' מתוך ' + n;
+        prev.disabled = i === 0;
+        next.disabled = i === n - 1;
+      });
+      // A button that just turned disabled drops focus; hand it to the other.
+      if (document.activeElement === prev && prev.disabled) next.focus();
+      if (document.activeElement === next && next.disabled) prev.focus();
+    }
+    prev.addEventListener('click', function () { if (cur > 0) show(cur - 1); });
+    next.addEventListener('click', function () { if (cur < n - 1) show(cur + 1); });
+  })();
+
+  // Exam countdown. The served HTML already names the exam and its date, so
+  // crawlers and no-JS read it; this only adds the day count, in Israel
+  // calendar days (scripts/countdown.mjs, inlined here by the renderer). On
+  // exam day it says so; after it, or when the count is not a number, the
+  // stale date gives way to "the next date will be published soon", never
+  // a negative or stale number.
+  (function () {
+    var box = document.querySelector('[data-exam-date]');
+    if (!box) return;
+function daysUntil(examDate, now) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(now);
+  const get = (type) => Number(parts.find((p) => p.type === type).value);
+  const todayMs = Date.UTC(get('year'), get('month') - 1, get('day'));
+  const [y, m, d] = examDate.split('-').map(Number);
+  const examMs = Date.UTC(y, m - 1, d);
+  return Math.round((examMs - todayMs) / 86400000);
+}
+function countdownState(days) {
+  if (days > 0) return 'future';
+  if (days === 0) return 'today';
+  return 'past';
+}
+    var days;
+    try { days = daysUntil(box.getAttribute('data-exam-date'), new Date()); } catch (e) { days = NaN; }
+    var state = typeof days === 'number' && isFinite(days) ? countdownState(days) : 'past';
+    var line = box.querySelector('.cd-days'), num = line.querySelector('[data-days]'), unit = line.querySelector('[data-cd-unit]');
+    if (state === 'future') {
+      num.textContent = days;
+      unit.textContent = days === 1 ? 'יום לבחינה' : 'ימים לבחינה';
+      line.hidden = false;
+    } else if (state === 'today') {
+      num.hidden = true;
+      unit.textContent = 'הבחינה היום';
+      line.hidden = false;
+    } else {
+      box.querySelector('.cd-exam').textContent = 'מועד הבחינה הבא יפורסם בקרוב';
+    }
   })();
 
   // Hero background pin: .hero-video is object-fit: cover, so every change to

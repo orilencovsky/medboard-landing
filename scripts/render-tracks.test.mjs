@@ -10,8 +10,9 @@ const clone = () => JSON.parse(JSON.stringify(real));
 const page = (markers) => markers.map((m) => `  <!-- tracks:${m} -->\n  <!-- /tracks:${m} -->`).join('\n') + '\n';
 const ALL = ['announce', 'chips', 'cards', 'closing'];
 
-test('esc escapes markup and the & in app URLs', () => {
+test('esc escapes markup, quotes and the & in app URLs', () => {
   assert.equal(esc('a&b<c>"d'), 'a&amp;b&lt;c&gt;&quot;d');
+  assert.equal(esc("Brenner & Rector's"), 'Brenner &amp; Rector&#39;s');
 });
 
 test('rich isolates {{…}} runs and still escapes them', () => {
