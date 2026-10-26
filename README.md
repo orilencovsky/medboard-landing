@@ -26,25 +26,47 @@ hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
 og-image-he.png          Open Graph / Twitter card — Hebrew (root)
+specialty.template.html  The ONE template behind the four specialty pages below (header + exam countdown, sample
+                         questions, sources, status, method, features, comparison, closing). Generated, not served
+specialties/             Per-specialty page data (`nephrology|family-medicine|pediatrics|cardiology.json`): copy,
+                         sample questions, sign-up settings. Exam dates and sources are NOT here — see "Exam dates"
+nephrology.html          /nephrology — the live nephrology sub-specialty (part A) page, with an app CTA
+                         (`התחילו ללמוד — חינם`, `pl=hero|closing`); linked from the homepage's #tracks card
+cardiology.html          /cardiology — "coming soon" page for the cardiology sub-specialty (part A), with a
+                         consented email sign-up (waitlist source 'landing_cardio', interest 'cardiology');
+                         linked from the homepage's #tracks card. No launch-price copy anywhere
 family-medicine.html     /family-medicine — "coming soon" page for family medicine Stage A, with a consented
                          email sign-up (waitlist, source 'landing_fm'); linked from the homepage's #tracks card
-og-family-medicine.png   its link-preview card (what WhatsApp shows for the link)
-whatsapp-family-medicine.png  1080x1080 version of the same ad, to send as an image
 pediatrics.html          /pediatrics — the same "coming soon" page for pediatrics Stage A (waitlist source
                          'landing_peds', interest 'pediatrics'); linked from the homepage's #tracks card
-og-pediatrics.png, whatsapp-pediatrics.png  its promo cards (`make-promo-image.mjs og|square peds`)
+                         (all four pages are generated: `node scripts/render-specialties.mjs`; see "Specialty pages")
+og-nephrology.png, og-cardiology.png, og-family-medicine.png, og-pediatrics.png
+                         link-preview cards (what WhatsApp shows for each page's link)
+whatsapp-nephrology.png, whatsapp-cardiology.png, whatsapp-family-medicine.png, whatsapp-pediatrics.png
+                         1080x1080 versions of the same ad, to send as an image
 tracks.json              The study tracks (live / coming soon) behind the homepage's #tracks cards, hero chips,
                          top banner and closing line, in both languages; see "Study tracks" below
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
+.vercelignore            Keeps `specialty.template.html` and `specialties/` out of the deployment, so the raw
+                         template (full of `{{…}}` placeholders) and the page data are not served. Only those two:
+                         `api/`, `scripts/` and everything else still deploy
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
-scripts/make-promo-image.mjs renders a coming-soon promo (`og` | `square`, then `fm` (default) | `peds`); pngquant after, as above
-                         (it loads IBM Plex from Google Fonts itself; with no pngquant, Pillow `quantize(256)` gives the
-                         same ~100-145 KB). After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
+scripts/make-promo-image.mjs renders a specialty promo card: `og|square` × `fm|peds|nephro|cardio` (`fm` is the default;
+                         `nephro` is "open now" with no launch-price line, `cardio` is "coming soon" with none either),
+                         e.g. `node scripts/make-promo-image.mjs og cardio` -> og-cardiology.png. It then wants pngquant,
+                         as above. It loads IBM Plex from Google Fonts itself, so it needs network. Chrome binary: `$CHROME`
+                         if set, else the first of a Playwright headless shell, `/Applications/Google Chrome.app/…`,
+                         `google-chrome`, `chromium` that answers `--version` — so on a Mac the local Chrome is used as is.
+                         With no pngquant (the case on the Mac these were made on), Pillow `quantize(256)` gives the same
+                         ~100-145 KB. After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
 scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
 scripts/render-tracks.mjs    renders tracks.json into both landing pages (`--check` = drift guard; tests beside it)
+scripts/render-specialties.mjs  renders specialty.template.html + specialties/*.json + tracks.json into the four
+                         specialty pages (`--check` = drift guard; tests beside it)
+scripts/countdown.mjs    the Israel-date day count to an exam, shared by the renderer and the page's script (tests beside it)
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
 
@@ -97,15 +119,63 @@ overwrites it, and `node scripts/render-tracks.mjs --check` (run it beside the c
 exits 1 when a page has drifted from the list. Tests: `node --test scripts/render-tracks.test.mjs`.
 The pages stay plain static HTML, so crawlers, no-JS visitors and the first paint all see the cards.
 
-- `cta` on an entry adds `data-cta` to its card (the nephrology card carries `hero`; see Analytics).
-- `pageLang` marks a destination page in another language: on `/en`, the family medicine and
-  pediatrics cards show a "Hebrew content" pill, which is also part of the link's accessible
+- `cta` on an entry adds `data-cta` to its card, which makes the click count as `cta_click` (see
+  Analytics). No entry sets it today: the nephrology card goes to `/nephrology`, not to the app, so it
+  fires only `track_click`.
+- `exam` and `sources` on an entry feed the specialty pages, and `launchOffer` puts a `soon` track in the
+  top banner (see "Exam dates" and "Specialty pages").
+- `pageLang` marks a destination page in another language: on `/en`, every card whose page is Hebrew
+  (all four today) shows a "Hebrew content" pill, which is also part of the link's accessible
   description, and the link carries `hreflang="he"`.
 - `{{…}}` inside a Hebrew blurb marks a Latin run (`1,000+`, `AI`) that is rendered as
   `<span class="ltr-iso">`.
 - When a coming-soon track goes live: flip its `status`, point `href` at the app with a `pl` value
   the app already accepts, and re-render — its card widens, and it drops out of the banner and the
   closing line by itself.
+
+## Specialty pages
+
+`/nephrology`, `/cardiology`, `/family-medicine` and `/pediatrics` are generated from one template,
+`specialty.template.html`, with one data file per page in `specialties/<track-id>.json` (copy, status
+lines, sample questions, sign-up settings). `node scripts/render-specialties.mjs` writes each page to
+`<track href>.html` at the repo root; the generated pages are committed, so there is still no build
+step at deploy. `node scripts/render-specialties.mjs --check` exits 1 when a page has drifted (run it
+beside the other checks); never hand-edit a generated page. Tests:
+`node --test scripts/render-specialties.test.mjs scripts/countdown.test.mjs`.
+
+Page order: header + exam countdown, sample questions (absent when there are none), sources, status,
+method, features, comparison, closing. A `mode: "live"` page (nephrology) ends in an app button; a
+`mode: "soon"` page ends in the consented sign-up form. Exam name, date and sources come from the
+track's entry in `tracks.json`, never from the page data (see "Exam dates").
+
+The template and the page data are not meant to be served: `.vercelignore` keeps `specialty.template.html`
+and `specialties/` out of the deployment. Nothing else is excluded — `api/` and `scripts/` still deploy.
+
+| Track id | Analytics prefix | Waitlist source / interest | App module |
+|---|---|---|---|
+| `nephrology` | `nephro` | — (live: app button) | `nephrology` |
+| `family-medicine` | `fm` | `landing_fm` / `family_medicine` | `family` |
+| `pediatrics` | `peds` | `landing_peds` / `pediatrics` | `peds` |
+| `cardiology` | `cardio` | `landing_cardio` / `cardiology` | `cardio` |
+
+## Exam dates
+
+The dates on the specialty pages and their countdowns live in one place: the `exam` object of each
+entry in `tracks.json` (`date`, `nameHe`, `url`). No page or script hard-codes a date. The count is
+by Israel's calendar day (not UTC), shows `הבחינה היום` on the day itself, and once the date has
+passed shows `מועד הבחינה הבא יפורסם בקרוב` instead of a negative or stale number. The exam name and
+date are also in the served HTML, so crawlers and no-JS visitors see them.
+
+To refresh them:
+
+1. Open the IMA calendar (`https://www.ima.org.il/Internship/Events.aspx`) and filter by specialty.
+2. Take only the exam rows — never `ועדה מקצועית` (a professional committee, not an exam) — and only
+   part A / Stage A.
+3. Update `exam.date` for each track in `tracks.json`.
+4. Re-check each date a month before it, when the IMA finalises it.
+5. Run `node scripts/render-specialties.mjs` and commit `tracks.json` with the regenerated pages. The
+   footnote on the pages says the date may change (`לפי לוח הבחינות של הר״י · המועד עשוי להשתנות`),
+   so a late move is a data fix, not a redesign.
 
 Off that spine sit six standalone legal pages — `/privacy`, `/terms`, `/accessibility` and their
 `/en` counterparts — reachable from every footer.
@@ -290,6 +360,20 @@ ever added back here, note that adding a new column to the insert body needs the
 policy's `with_check` to keep allowing it — an unknown column makes PostgREST reject the row with a
 `400` and the visitor sees the generic failure message.
 
+### Specialty-page sign-ups
+
+The "coming soon" pages (`/family-medicine`, `/pediatrics`, `/cardiology`) do collect an address, with
+the consent checkbox and the § 11 notice at the point of collection. They call the product's
+`waitlist_add_interest` RPC (`p_email`, `p_interest`), and the page's `signup.interest` is the mark
+stored in `waitlist.interests` (`family_medicine`, `pediatrics`, `cardiology`).
+
+**`/cardiology` must not go live before the product's migration is applied.** The interest has to exist
+as a row in the product repo's `waitlist_interest_keys` table (key `cardiology`, active), added by
+orilencovsky/Pilot#1045. Without it a cardiology sign-up is saved with no interest mark, and nobody
+sees an error. Gate the deploy on a read-only check:
+`select key, active from public.waitlist_interest_keys where key = 'cardiology';` must return one
+active row. A new "coming soon" specialty needs the same row first.
+
 ### Handling a deletion request
 
 There is no self-serve deletion endpoint and no `DELETE` RLS policy on `waitlist` — the table only
@@ -415,7 +499,7 @@ oversight):
 - `https://fonts.googleapis.com` (stylesheet) and `https://fonts.gstatic.com` (the font files it
   references) — Google Fonts, every page.
 - `https://cdn.jsdelivr.net` — the Phosphor Icons stylesheet and the icon font files it references,
-  `family-medicine.html` and `pediatrics.html` only.
+  the four specialty pages only.
 - `https://www.googletagmanager.com` and `https://www.clarity.ms` / `https://*.clarity.ms` — GA4 and
   Microsoft Clarity, loaded by `consent.js` only after opt-in. Clarity's tag itself loads from a
   `scripts.clarity.ms` subdomain, hence the wildcard rather than just `www`.
@@ -424,7 +508,7 @@ oversight):
   is in both too, per Google's gtag.js CSP guide (gtag contacts it once the property has linked
   destinations). If Google Signals is ever turned on, add `https://stats.g.doubleclick.net`.
 - `https://*.clarity.ms` and `https://c.bing.com` — Clarity's own data collection (`connect-src`).
-- `https://pappjpdsajkcoqrfqqqx.supabase.co` — the family-medicine and pediatrics waitlist inserts (`connect-src`).
+- `https://pappjpdsajkcoqrfqqqx.supabase.co` — the specialty-page waitlist inserts (`connect-src`).
 
 **Any new third-party origin has to be added to this policy or it is silently blocked** — a script,
 stylesheet, font, image, or fetch/XHR target that isn't listed simply fails to load, with only a
@@ -439,22 +523,23 @@ no entry.
 Two layers, with different consent rules.
 
 **Vercel Web Analytics — every visitor.** Wired inline on both landing pages and on
-`/family-medicine` and `/pediatrics` (the shim plus `/_vercel/insights/script.js`). Cookieless, no visitor id, so it
+the four specialty pages (the shim plus `/_vercel/insights/script.js`). Cookieless, no visitor id, so it
 needs no consent. It has to be switched on under **Vercel → Project → Analytics**; the path is
 served by the platform, so it 404s on a local static server. Custom events, all through
 `va('event', { name, data })`:
 
 - `cta_click` — `data.placement` is `nav`, `hero` or `closing`, read from the button's `data-cta`
   attribute. This is the landing→app click-through measure. A new "start" button needs a `data-cta`
-  value in **both** languages or it is not counted. The nephrology card in `#tracks` also carries
-  `data-cta="hero"` and links with `pl=hero`, since the app's placement vocabulary is closed: from
-  2026-10-07, `hero` counts the hero button **and** that card together, here and in the app's
-  `signup_sources`. Use `track_click` to tell them apart.
+  value in **both** languages or it is not counted. No `#tracks` card carries `data-cta`: from the
+  specialty-pages change, the nephrology card goes to `/nephrology` rather than to the app, so a card
+  click fires `track_click` only, not `cta_click`. Between 2026-10-07 and that change the nephrology
+  card did carry `data-cta="hero"` (the app's placement vocabulary is closed), so `hero` counts in
+  that window include card clicks; from then on `hero` is the hero button alone. The visit then
+  reaches the app through `/nephrology`'s own buttons, counted by `nephro_app_click` below.
 - `track_click` — `data.track` is the track `id` from `tracks.json` (`nephrology`,
-  `family-medicine`, `pediatrics`), `data.via` is `card` (a `#tracks` card) or `chip` (a hero chip).
-  `via` is deliberately not called `placement`, so it is never joined with `cta_click`'s. One click
-  on the nephrology card fires **both** `cta_click` and `track_click` — expected, not a double count
-  to fix.
+  `family-medicine`, `pediatrics`, `cardiology`), `data.via` is `card` (a `#tracks` card) or `chip`
+  (a hero chip). `via` is deliberately not called `placement`, so it is never joined with
+  `cta_click`'s.
 - The same buttons link to `app.meduxa.ai/?signup=1&src=landing&pl=<placement>`. The app reads
   `src`/`pl`, carries them through signup, and records one row per NEW account in its
   `signup_sources` table (Pilot repo, `src/signupSource.js`). That is the other half: clicks here,
@@ -463,12 +548,23 @@ served by the platform, so it 404s on a local static server. Custom events, all 
 - `tutor_reply_shown`, `demo_answer_selected` — the hero demo card.
 - `fm_signup` — a successful (or already-listed, HTTP 409) waitlist insert on `/family-medicine`.
 - `peds_signup`, `peds_home_click` — the same two events on `/pediatrics` (`data-peds-cta`).
+- `cardio_signup`, `cardio_home_click` — the same two events on `/cardiology` (`data-cardio-cta`).
+- `nephro_app_click` — `data.placement` is `hero` or `closing`: which of `/nephrology`'s two
+  "start" buttons sent a visitor to the app (`app.meduxa.ai/?signup=1&src=landing&pl=hero|closing`,
+  the same `pl` values the app already accepts). Kept apart from `cta_click`, which is the homepage's
+  measure, so the two funnels are not mixed.
+- `nephro_home_click` — `data.placement` is `logo` or `nav`: which route back to the homepage a
+  `/nephrology` visitor used (`data-nephro-cta`).
 - `fm_home_click` — `data.placement` is `logo` or `nav`, read from the link's `data-fm-cta`
   attribute: which route back to the homepage a `/family-medicine` visitor used. Kept separate from
   `cta_click` since these links go to `/`, not to the app, so they are not part of that
   landing→app click-through measure.
 
-**Google Analytics 4 + Microsoft Clarity — only after opt-in.** Every page loads `/consent.js`
+**Google Analytics 4 + Microsoft Clarity — only after opt-in.** The specialty pages' sample-question
+widget sends `<prefix>_sample_question` (`fm_`, `peds_`, `nephro_`, `cardio_`) through `gtag` when a
+visitor picks an option, with `{ result, answer, q }`: `result` is `right` or `wrong`, `answer` the
+option key picked, `q` the question's number (1-based; `fm_sample_question` gained `q` with the
+specialty-pages change). It fires only when `gtag` exists, i.e. after consent. Every page loads `/consent.js`
 instead of the tags themselves. It shows a bilingual banner (accept and decline with equal weight),
 stores the choice in `localStorage.mx_analytics_consent`, and injects GA4 (`G-XGGFVEFFWZ`) and
 Clarity (`yhjkv4kj7h`) only on `granted`. Undecided or `denied` loads nothing. The privacy pages
