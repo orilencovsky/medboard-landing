@@ -1,9 +1,12 @@
-// Renders the "coming soon — <specialty> Stage A" promo images.
+// Renders the promo images for a specialty page: "coming soon" (fm, peds, cardio)
+// or "open now" (nephro), each with its own pill and, on the soon pages that
+// have one, the launch-price line.
 //
 //   node scripts/make-promo-image.mjs og      ->  og-family-medicine.png (1200x630, link preview)
 //   node scripts/make-promo-image.mjs square  ->  whatsapp-family-medicine.png (1080x1080, send as an image)
 //   node scripts/make-promo-image.mjs og peds     ->  og-pediatrics.png
 //   node scripts/make-promo-image.mjs square peds ->  whatsapp-pediatrics.png
+//   node scripts/make-promo-image.mjs og nephro   ->  og-nephrology.png (also: square nephro, og|square cardio)
 //
 // Same fonts, Chromium and pngquant step as scripts/make-og-image.mjs; the
 // card's look (mark, wordmark, navy gradient, cyan accent) is copied from it.
@@ -17,9 +20,12 @@ import { join } from 'node:path';
 
 // The second argument picks the page; family medicine stays the default so
 // the original commands keep producing the same files.
+const LAUNCH_OFFER = 'מחיר השקה מיוחד לנרשמים מראש';
 const PAGES = {
-  fm:   { slug: 'family-medicine', h1: 'הכנה לשלב א׳<br>ברפואת משפחה' },
-  peds: { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים' },
+  fm:     { slug: 'family-medicine', h1: 'הכנה לשלב א׳<br>ברפואת משפחה',            pill: 'בקרוב',      offer: LAUNCH_OFFER },
+  peds:   { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים',            pill: 'בקרוב',      offer: LAUNCH_OFFER },
+  nephro: { slug: 'nephrology',      h1: 'הכנה לבחינת<br>מקצוע-על בנפרולוגיה',      pill: 'פתוח עכשיו', offer: null },
+  cardio: { slug: 'cardiology',      h1: 'הכנה לבחינת<br>מקצוע-על בקרדיולוגיה',     pill: 'בקרוב',      offer: null },
 };
 const PAGE = PAGES[process.argv[3] || 'fm'];
 
@@ -85,10 +91,10 @@ const html = `<!doctype html><html lang="he"><head><meta charset="utf-8"><link r
   </svg>
   <div class="inner">
     <div class="brand">${MARK}<span><span class="name">MeduXa</span><span class="tld">.ai</span></span></div>
-    <div class="pill">בקרוב</div>
+    <div class="pill">${PAGE.pill}</div>
     <h1>${PAGE.h1}</h1>
     <div class="motto">נעשה על ידי רופאים, עבור רופאים</div>
-    <div class="offer">מחיר השקה מיוחד לנרשמים מראש</div>
+    ${PAGE.offer ? `<div class="offer">${PAGE.offer}</div>` : ''}
     <div class="sub">${FEATURES.join(V.stack ? '<br>' : ' · ')}</div>
     <div class="bar"></div>
     <div class="url">meduxa.ai/${PAGE.slug}</div>

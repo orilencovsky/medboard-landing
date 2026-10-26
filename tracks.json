@@ -1,5 +1,5 @@
 {
-  "_comment": "The homepage's study tracks — the ONE list behind the #tracks cards, the hero chips, the announcement bar and the closing line, in both index.html and en/index.html. Edit here, then run `node scripts/render-tracks.mjs` and commit the pages with it; `--check` fails if a page drifted. In blurbs, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). `cta` adds data-cta (counted in cta_click); `pageLang` marks a destination page in another language (on /en it shows a \"Hebrew content\" pill).",
+  "_comment": "The homepage's study tracks — the ONE list behind the #tracks cards, the hero chips, the announcement bar and the closing line, in both index.html and en/index.html. Edit here, then run `node scripts/render-tracks.mjs` and commit the pages with it; `--check` fails if a page drifted. In blurbs, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). `cta` adds data-cta (counted in cta_click); `pageLang` marks a destination page in another language (on /en it shows a \"Hebrew content\" pill). `exam` ({date, nameHe, url}) and `sources` ([{title, kind: book|guideline}]) feed the specialty pages. `launchOffer` puts a soon track in the launch-price announcement bar.",
   "ui": {
     "he": {
       "live": "פתוח עכשיו",
@@ -8,7 +8,7 @@
       "chipSoon": "· בקרוב",
       "announce": "הכנה לשלב א׳ {list} · מחיר השקה מיוחד לנרשמים מראש · <u>לפרטים</u>",
       "announceItem": "ב{name}",
-      "closing": "מתכוננים לשלב א׳ {list}? <a href=\"#tracks\">לפרטים ולהרשמה לעדכון</a>",
+      "closing": "מתכוננים לבחינה {list}? <a href=\"#tracks\">לפרטים ולהרשמה לעדכון</a>",
       "closingItem": "ב{name}",
       "and": " ו",
       "or": " או "
@@ -20,7 +20,7 @@
       "chipSoon": "· soon",
       "announce": "Stage A prep for {list} · launch pricing for early sign-ups · <u>Details</u>",
       "announceItem": "{name}",
-      "closing": "Preparing for Stage A in {list}? <a href=\"#tracks\">Details and updates</a>",
+      "closing": "Preparing for an exam in {list}? <a href=\"#tracks\">Details and updates</a>",
       "closingItem": "{name}",
       "and": " and ",
       "or": " or "
@@ -30,26 +30,70 @@
     {
       "id": "nephrology",
       "status": "live",
-      "href": "https://app.meduxa.ai/?signup=1&src=landing&pl=hero",
-      "cta": "hero",
+      "href": "/nephrology",
+      "pageLang": "he",
       "he": {
         "name": "נפרולוגיה",
         "inline": "נפרולוגיה",
-        "stage": "שלב א׳",
-        "blurb": "שאלות בסגנון שלב א׳, הסבר עם ציטוט מהמקור, מורה סוקרטי וחזרה מרווחת.",
+        "stage": "מקצוע-על, חלק א׳",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, מורה סוקרטי וחזרה מרווחת.",
         "action": "התחילו ללמוד — חינם"
       },
       "en": {
         "name": "Nephrology",
         "inline": "nephrology",
-        "stage": "Stage A",
-        "blurb": "Stage A-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.",
+        "stage": "Sub-specialty, part A",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.",
         "action": "Start studying free"
-      }
+      },
+      "exam": {
+        "date": "2027-01-12",
+        "nameHe": "בחינה במקצוע-על — חלק א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "Brenner & Rector's The Kidney 11e",
+          "kind": "book"
+        },
+        {
+          "title": "Johnson, Comprehensive Clinical Nephrology 7e",
+          "kind": "book"
+        },
+        {
+          "title": "Daugirdas, Handbook of Dialysis 6e",
+          "kind": "book"
+        },
+        {
+          "title": "Rose & Post, Clinical Physiology of Acid-Base and Electrolyte Disorders 5e",
+          "kind": "book"
+        },
+        {
+          "title": "Danovitch, Handbook of Kidney Transplantation 7e",
+          "kind": "book"
+        },
+        {
+          "title": "KDIGO",
+          "kind": "guideline"
+        },
+        {
+          "title": "KDOQI",
+          "kind": "guideline"
+        },
+        {
+          "title": "ISPD",
+          "kind": "guideline"
+        },
+        {
+          "title": "נייר עמדה ישראלי ליתר לחץ דם 2026",
+          "kind": "guideline"
+        }
+      ]
     },
     {
       "id": "family-medicine",
       "status": "soon",
+      "launchOffer": true,
       "href": "/family-medicine",
       "pageLang": "he",
       "he": {
@@ -65,11 +109,51 @@
         "stage": "Stage A",
         "blurb": "Exam-style questions, answers explained with a quote from the source, and launch pricing for early sign-ups.",
         "action": "Get notified"
-      }
+      },
+      "exam": {
+        "date": "2027-06-14",
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "Goroll, Primary Care Medicine 9e",
+          "kind": "book"
+        },
+        {
+          "title": "Nelson Textbook of Pediatrics 22e",
+          "kind": "book"
+        },
+        {
+          "title": "AFP review articles",
+          "kind": "guideline"
+        },
+        {
+          "title": "הנחיות ונייר עמדה של ההסתדרות הרפואית",
+          "kind": "guideline"
+        },
+        {
+          "title": "GINA",
+          "kind": "guideline"
+        },
+        {
+          "title": "GOLD",
+          "kind": "guideline"
+        },
+        {
+          "title": "ADA 2025",
+          "kind": "guideline"
+        },
+        {
+          "title": "מדריך החיסונים של משרד הבריאות",
+          "kind": "guideline"
+        }
+      ]
     },
     {
       "id": "pediatrics",
       "status": "soon",
+      "launchOffer": true,
       "href": "/pediatrics",
       "pageLang": "he",
       "he": {
@@ -85,7 +169,61 @@
         "stage": "Stage A",
         "blurb": "Questions checked by a pediatrics specialist, answers explained with a quote from the source, and launch pricing for early sign-ups.",
         "action": "Get notified"
-      }
+      },
+      "exam": {
+        "date": "2027-06-14",
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "Nelson Textbook of Pediatrics 22e",
+          "kind": "book"
+        },
+        {
+          "title": "הנחיות קליניות ישראליות (25)",
+          "kind": "guideline"
+        }
+      ]
+    },
+    {
+      "id": "cardiology",
+      "status": "soon",
+      "href": "/cardiology",
+      "pageLang": "he",
+      "he": {
+        "name": "קרדיולוגיה",
+        "inline": "קרדיולוגיה",
+        "stage": "מקצוע-על, חלק א׳",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה {{AI}} סוקרטי.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Cardiology",
+        "inline": "cardiology",
+        "stage": "Sub-specialty, part A",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, and a Socratic {{AI}} tutor.",
+        "action": "Get notified"
+      },
+      "exam": {
+        "date": "2026-12-15",
+        "nameHe": "בחינה במקצוע-על — חלק א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "Braunwald's Heart Disease 13e",
+          "kind": "book"
+        },
+        {
+          "title": "ESC Guidelines",
+          "kind": "guideline"
+        },
+        {
+          "title": "מאמרים עדכניים מכתבי עת (Eur Heart J, JACC, Circulation, JAMA)",
+          "kind": "guideline"
+        }
+      ]
     }
   ]
 }
