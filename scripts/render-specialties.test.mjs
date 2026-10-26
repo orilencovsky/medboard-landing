@@ -11,8 +11,8 @@ const template = read('specialty.template.html');
 const tracks = JSON.parse(read('tracks.json')).tracks;
 const track = (id) => JSON.parse(JSON.stringify(tracks.find((t) => t.id === id)));
 const page = (id) => JSON.parse(read(`specialties/${id}.json`));
-const PAGES = ['family-medicine', 'pediatrics', 'nephrology'];
-const SOON = ['family-medicine', 'pediatrics'];
+const PAGES = ['family-medicine', 'pediatrics', 'nephrology', 'cardiology'];
+const SOON = ['family-medicine', 'pediatrics', 'cardiology'];
 const render = (id, edit = (p, t) => {}) => {
   const p = page(id), t = track(id);
   edit(p, t);
@@ -184,4 +184,30 @@ test('the live page closing and later-line carry no "opening day" or waitlist wo
   assert.ok(!out.includes('ביום הפתיחה'));
   assert.ok(!out.includes('waitlist'));
   assert.ok(!out.includes('בקרוב:'));
+});
+
+test('cardiology is a soon page with its own waitlist keys and no launch price', () => {
+  const out = render('cardiology');
+  const s = served(out);
+  assert.ok(out.includes("source: 'landing_cardio'"));
+  assert.ok(out.includes("p_interest: 'cardiology'"));
+  assert.ok(out.includes('cardio_signup'));
+  assert.ok(out.includes('cardio_home_click'));
+  // The sample-question script ships only with a question; cardiology has none yet, so it is absent until one is added.
+  assert.ok(!out.includes('_sample_question'));
+  assert.ok(render('cardiology', (p) => { p.questions = page('family-medicine').questions; }).includes("'cardio_sample_question'"));
+  assert.ok(s.includes('15.12.2026'));
+  assert.ok(s.includes('בחינה במקצוע-על — חלק א׳'));
+  assert.ok(s.includes('Braunwald'));
+  assert.ok(s.includes('id="notifyForm"'));
+  assert.ok(s.includes('נכתוב לכם ברגע שההכנה בקרדיולוגיה נפתחת.'));
+  assert.ok(!out.includes('מחיר השקה'));
+  assert.ok(!out.includes('הנחה קבוצתית'));
+  assert.ok(!out.includes('שלב א׳'), 'IMA name for cardiology is the sub-specialty part, never stage A');
+  assert.ok(!out.includes('landing_fm') && !out.includes('landing_peds'));
+  assert.ok(!out.includes('_app_click'));
+  assert.ok(!out.includes('class="q-opt"'), 'no sample question yet');
+  assert.ok(!out.includes('id="q-title"'));
+  assert.ok(out.includes('<link rel="canonical" href="https://meduxa.ai/cardiology" />'));
+  assert.ok(out.includes('https://meduxa.ai/og-cardiology.png'));
 });

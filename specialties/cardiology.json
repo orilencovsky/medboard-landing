@@ -1,0 +1,51 @@
+{
+  "_comment": "Page data for specialty.template.html, rendered by scripts/render-specialties.mjs into <track href>.html. Exam date/name and sources come from tracks.json, not from here. Plain-text fields are escaped; in lead, states, quote, citation, stem, topic, option text and why, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). Fields ending in Html, perk html and tutor are trusted HTML, inserted as they are. Claims here come only from what the homepage and the family-medicine page already say about the engine; no price, no group discount, no team list, no specialist-review claim.",
+  "trackId": "cardiology",
+  "prefix": "cardio",
+  "mode": "soon",
+  "title": "בקרוב: הכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai",
+  "description": "בקרוב ב-MeduXa: הכנה לבחינת מקצוע-על בקרדיולוגיה. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. השאירו מייל ונעדכן כשזה נפתח.",
+  "ogDescription": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. השאירו מייל ונעדכן כשההכנה בקרדיולוגיה נפתחת.",
+  "ogImage": "https://meduxa.ai/og-cardiology.png?v=1",
+  "ogImageAlt": "MeduXa.ai: בקרוב, הכנה לבחינת מקצוע-על בקרדיולוגיה",
+  "chip": "בקרוב: קרדיולוגיה, מקצוע-על",
+  "heroStage": "הכנה לבחינת מקצוע-על בקרדיולוגיה",
+  "lead": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ועדכון במייל כשההכנה נפתחת.",
+  "states": [
+    {
+      "kind": "done",
+      "icon": "check-circle",
+      "title": "המנוע קיים ועובד",
+      "text": "מתמחים כבר מתכוננים איתו."
+    },
+    {
+      "kind": "build",
+      "icon": "hammer",
+      "title": "התוכן לקרדיולוגיה נבנה עכשיו",
+      "text": "השאירו מייל ונעדכן ברגע שזה נפתח."
+    }
+  ],
+  "statementHtml": "שאלות בסגנון הבחינה, ולכל תשובה <em>הסבר שמגובה בציטוט מילה במילה מהמקור</em> שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם.",
+  "featuresLead": "כל מה שמתמחים כבר משתמשים בו באפליקציה, מותאם לבחינת מקצוע-על בקרדיולוגיה.",
+  "cmpStyle": {
+    "label": "שאלות בסגנון הבחינה",
+    "full": "שאלות בפורמט הבחינה, עם הסבר מלא"
+  },
+  "cmpReview": {
+    "label": "ביקורת מומחה",
+    "full": "כל שאלה עוברת ביקורת מומחה"
+  },
+  "signup": {
+    "source": "landing_cardio",
+    "interest": "cardiology",
+    "consentText": "אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לבחינת מקצוע-על בקרדיולוגיה תיפתח.",
+    "successText": "נרשמתם לעדכונים על קרדיולוגיה. נכתוב לכם כשההכנה לבחינת מקצוע-על נפתחת.",
+    "perks": [
+      {
+        "icon": "envelope-simple",
+        "html": "נכתוב לכם ברגע שההכנה בקרדיולוגיה נפתחת."
+      }
+    ]
+  },
+  "questions": []
+}
