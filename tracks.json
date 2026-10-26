@@ -36,14 +36,14 @@
         "name": "נפרולוגיה",
         "inline": "נפרולוגיה",
         "stage": "מקצוע-על, חלק א׳",
-        "blurb": "שאלות בסגנון שלב א׳, הסבר עם ציטוט מהמקור, מורה סוקרטי וחזרה מרווחת.",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, מורה סוקרטי וחזרה מרווחת.",
         "action": "התחילו ללמוד — חינם"
       },
       "en": {
         "name": "Nephrology",
         "inline": "nephrology",
         "stage": "Sub-specialty, part A",
-        "blurb": "Stage A-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.",
         "action": "Start studying free"
       },
       "exam": {

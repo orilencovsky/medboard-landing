@@ -12,6 +12,7 @@
      is served by the platform, so it 404s on a local static server. -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+<!-- if:soon -->
   // {{prefix}}_home_click: which link sent a visitor from this "coming soon" page back
   // to the homepage (logo / nav). Cookieless like the rest of Vercel Analytics,
   // so it counts regardless of the GA4/Clarity consent choice.
@@ -19,6 +20,20 @@
     var a = e.target && e.target.closest ? e.target.closest('a[data-{{prefix}}-cta]') : null;
     if (a) window.va('event', { name: '{{prefix}}_home_click', data: { placement: a.getAttribute('data-{{prefix}}-cta') } });
   }, true);
+<!-- /if:soon -->
+<!-- if:live -->
+  // {{prefix}}_app_click: which of the two "start" links (hero / closing) sent a
+  // visitor to the app. {{prefix}}_home_click: which link (logo / nav) sent them to
+  // the homepage. Cookieless like the rest of Vercel Analytics, so both count
+  // regardless of the GA4/Clarity consent choice.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-{{prefix}}-cta]') : null;
+    if (!a) return;
+    var placement = a.getAttribute('data-{{prefix}}-cta');
+    var toApp = placement === 'hero' || placement === 'closing';
+    window.va('event', { name: toApp ? '{{prefix}}_app_click' : '{{prefix}}_home_click', data: { placement: placement } });
+  }, true);
+<!-- /if:live -->
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <title>{{title}}</title>
@@ -702,7 +717,12 @@
           <p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p>
         </article>
       </div>
+<!-- if:soon -->
       <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו קרבות בין מתמחים.</span></p>
+<!-- /if:soon -->
+<!-- if:live -->
+      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך:</strong> דו קרבות בין מתמחים.</span></p>
+<!-- /if:live -->
     </div>
   </section>
 

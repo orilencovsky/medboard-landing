@@ -11,7 +11,8 @@ const template = read('specialty.template.html');
 const tracks = JSON.parse(read('tracks.json')).tracks;
 const track = (id) => JSON.parse(JSON.stringify(tracks.find((t) => t.id === id)));
 const page = (id) => JSON.parse(read(`specialties/${id}.json`));
-const PAGES = ['family-medicine', 'pediatrics'];
+const PAGES = ['family-medicine', 'pediatrics', 'nephrology'];
+const SOON = ['family-medicine', 'pediatrics'];
 const render = (id, edit = (p, t) => {}) => {
   const p = page(id), t = track(id);
   edit(p, t);
@@ -149,4 +150,38 @@ test('shipped pages are in sync with their data', () => {
     const t = track(id);
     assert.equal(render(id), read(t.href.slice(1) + '.html'), `${id} drifted`);
   }
+});
+
+test('nephrology is a live page with app links and no form', () => {
+  const out = render('nephrology');
+  const s = served(out);
+  assert.ok(s.includes('https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=hero'));
+  assert.ok(s.includes('https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=closing'));
+  assert.ok(s.includes('התחילו ללמוד — חינם'));
+  assert.ok(s.includes('בחינה במקצוע-על — חלק א׳'));
+  assert.ok(s.includes('12.01.2027'));
+  assert.ok(s.includes('Brenner &amp; Rector'));
+  assert.ok(!out.includes('id="notifyForm"'));
+  assert.ok(!out.includes('מחיר השקה'));
+  assert.ok(!out.includes('שלב א׳'), 'no stage wording on the nephrology page');
+  assert.ok(out.includes('<link rel="canonical" href="https://meduxa.ai/nephrology" />'));
+  assert.ok(out.includes('https://meduxa.ai/og-nephrology.png'));
+  assert.ok(!out.includes('class="q-opt"'), 'no sample question yet');
+  assert.ok(!out.includes('id="q-title"'));
+});
+
+test('a live page sends nephro_app_click for its two app links, home click for the rest; soon pages are untouched', () => {
+  const live = scripts(render('nephrology'));
+  assert.ok(live.includes("'nephro_app_click'"));
+  assert.ok(live.includes("'nephro_home_click'"));
+  assert.ok(live.includes("'hero'") && live.includes("'closing'"));
+  assert.ok(!render('nephrology').includes('"coming soon"'));
+  for (const id of SOON) assert.ok(!render(id).includes('_app_click'), `${id} must not get an app click event`);
+});
+
+test('the live page closing and later-line carry no "opening day" or waitlist wording', () => {
+  const out = render('nephrology');
+  assert.ok(!out.includes('ביום הפתיחה'));
+  assert.ok(!out.includes('waitlist'));
+  assert.ok(!out.includes('בקרוב:'));
 });
