@@ -101,6 +101,9 @@ export function validatePage(page, track) {
       if (!o.right && !o.tutor && !o.why) qfail(`wrong option ${o.key} needs a tutor line or a why`);
     }
   });
+  // examBased: the questions are edited from past-exam topics, and the page says so.
+  if (page.examBased !== undefined && page.examBased !== true) fail('examBased must be true or absent');
+  if (page.examBased && !page.questions.length) fail('examBased needs questions');
 }
 
 // The served HTML names the exam and its date; the page script only adds
@@ -158,7 +161,8 @@ function explanation(q) {
 
 // One question: today's card, as it was. Two or more: one at a time, with
 // "שאלה X מתוך N" and previous/next; every part of question i has data-q="i".
-function questions(qs) {
+// Questions edited from past-exam topics end with a line that says so.
+function questions(qs, examBased) {
   const many = qs.length > 1;
   const nth = (i) => (many ? ` data-q="${i + 1}"${i ? ' hidden' : ''}` : '');
   const head = [
@@ -186,9 +190,10 @@ function questions(qs) {
     '  <button type="button" class="q-step q-next">הבאה<i class="ph ph-arrow-left" aria-hidden="true"></i></button>',
     '</div>',
   ] : [];
+  const note = examBased ? ['<p class="q-note">השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.</p>'] : [];
   return [
     '<section class="q enter" style="--i:2" aria-labelledby="q-title">',
-    ...[...head, ...body, ...nav].map((l) => '  ' + l),
+    ...[...head, ...body, ...nav, ...note].map((l) => '  ' + l),
     '</section>',
   ].join('\n');
 }
@@ -245,7 +250,7 @@ export function renderPage(template, page, track) {
     leadHtml: rich(page.lead),
     countdown: countdown(track),
     sources: sources(track),
-    questions: page.questions.length ? questions(page.questions) : '',
+    questions: page.questions.length ? questions(page.questions, page.examBased) : '',
     states: states(page.states),
     perks: signup.perks ? perks(signup.perks) : '',
     successJs: signup.successText ? jsStr(signup.successText) : '',

@@ -138,7 +138,7 @@ test('questions section is omitted when empty and numbered when present', () => 
 
 test('no placeholder survives', () => {
   for (const id of PAGES) {
-    for (const out of [render(id), render(id, (p) => { p.questions = []; })]) {
+    for (const out of [render(id), render(id, (p) => { p.questions = []; delete p.examBased; })]) {
       assert.doesNotMatch(out, /\{\{/);
       assert.doesNotMatch(out, /<!-- (\/)?if:/);
     }
@@ -219,8 +219,7 @@ test('nephrology is a live page with app links and no form', () => {
   assert.ok(!out.includes('שלב א׳'), 'no stage wording on the nephrology page');
   assert.ok(out.includes('<link rel="canonical" href="https://meduxa.ai/nephrology" />'));
   assert.ok(out.includes('https://meduxa.ai/og-nephrology.png'));
-  assert.ok(!out.includes('class="q-opt"'), 'no sample question yet');
-  assert.ok(!out.includes('id="q-title"'));
+  assert.equal(out.match(/class="q-item"/g).length, 5, 'the five owner-approved questions');
 });
 
 test('a live page sends nephro_app_click for its two app links, home click for the rest; soon pages are untouched', () => {
@@ -273,4 +272,15 @@ test('the expert-review comparison row is optional: rendered where cmpReview is 
   assert.equal(render('cardiology', (p) => { p.cmpReview = { label: 'x', full: 'y' }; }).includes('<th scope="row">x</th>'), true);
   const half = page('family-medicine'); half.cmpReview = { label: 'x' };
   assert.throws(() => validatePage(half, track('family-medicine')), /cmpReview\.full/);
+});
+
+test('approved questions render with the rights note', () => {
+  const NOTE = 'השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.';
+  const neph = render('nephrology');
+  assert.ok(neph.includes(`שאלה 1 מתוך ${page('nephrology').questions.length}`));
+  assert.equal(served(neph).split(NOTE).length - 1, 1);
+  // The hand-written FM/peds questions are not from past exams: no note there.
+  for (const id of ['family-medicine', 'pediatrics']) assert.ok(!render(id).includes(NOTE), id);
+  assert.throws(() => validatePage({ ...page('cardiology'), examBased: true }, track('cardiology')), /examBased needs questions/);
+  assert.throws(() => validatePage({ ...page('nephrology'), examBased: 'yes' }, track('nephrology')), /examBased must be true or absent/);
 });

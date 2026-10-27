@@ -39,5 +39,152 @@
     "hrefHero": "https://app.meduxa.ai/?signup=1&src=landing&pl=hero",
     "hrefClosing": "https://app.meduxa.ai/?signup=1&src=landing&pl=closing"
   },
-  "questions": []
+  "questions": [
+    {
+      "topic": "גלומרולופתיות",
+      "stem": "מה מאפיין את שקיעת נוגדני {{IgA}} בכליה ב-{{IGA NEPHROPATHY}}?",
+      "options": [
+        {
+          "key": "a",
+          "text": "מדובר בנוגדנים מונומרים {{(monomeric)}} מסוג {{IgA 2}}",
+          "why": "{{IgA2}} חסר את אזור ה-{{hinge}} האופייני ל-{{IgA1}} ולכן אינו נושא את הסוכרים {{O-linked}} האופייניים. המקור מציין במפורש כי '{{IgA2 has no hinge and carries no such sugars}}', ולכן {{IgA2}} אינו מעורב בפתוגנזה של {{IgAN}} ואינו מונומרי בהקשר המזנגיאלי."
+        },
+        {
+          "key": "b",
+          "text": "מדובר בנוגדנים מונוקלונלים {{(monoclonal)}} בד\"כ מסוג {{Lambda}}",
+          "why": "{{IgA}} הנוגד מזנגיאלי ב-{{IgAN}} אינו מונוקלונלי אלא פולי-קלונלי. {{IgA}} מונוקלונלי עשוי להופיע במצבים כגון {{IgA monoclonal gammopathy}} (מיאלומה), אך שם שקיעה מזנגיאלית של {{IgA}} היא נדירה. המקור מדגיש כי '{{High circulating levels of monoclonal IgA in myeloma... only infrequently provoke mesangial IgA deposition}}', ולכן מסיח זה אינו נכון."
+        },
+        {
+          "key": "c",
+          "text": "מדובר בנוגדנים פולימרים {{(polymeric)}} מסוג {{IgA 1}}",
+          "right": true
+        },
+        {
+          "key": "d",
+          "text": "מדובר בנוגדנים מונומרים {{(monomeric)}} שיכולים להיות מסוג {{IgA 1}} או {{IgA 2}}",
+          "why": "ה-{{IgA}} המשקע במזנגיום ב-{{IgAN}} אינו מונומרי אלא פולימרי, וספציפית הוא {{IgA1}} בלבד — לא {{IgA2}}. המקור מציין כי '{{mesangial IgA in IgAN is predominantly pIgA1}}', כאשר הפולימריות היא תכונה מהותית המאפשרת שקיעה מזנגיאלית. {{IgA}} מונומרי {{(mIgA1)}} מוסלק בכבד דרך {{receptors}} ייעודיים ואינו מתאפיין בשקיעה מזנגיאלית."
+        }
+      ],
+      "explanationHtml": "<p><strong>נכון.</strong> ב-<span class=\"ltr-iso\">IgA Nephropathy</span>, ה-<span class=\"ltr-iso\">IgA</span> המשקע במזנגיום הוא ספציפית פולימרי <span class=\"ltr-iso\">IgA1 (pIgA1)</span>. <span class=\"ltr-iso\">IgA1</span> הוא תת-המחלקה הנושאת את שרשרת ה-<span class=\"ltr-iso\">hinge</span> האופיינית עם סוכרים <span class=\"ltr-iso\">O-linked</span>, בעוד ש-<span class=\"ltr-iso\">IgA2</span> חסר <span class=\"ltr-iso\">hinge</span> ואינו ממלא תפקיד בפתוגנזה. ה-<span class=\"ltr-iso\">IgA</span> הפולימרי מקורו בעיקר ברקמת המוקוזה <span class=\"ltr-iso\">(MALT)</span> ועובר לזרם הדם ומשם מגיע למזנגיום. ה-<span class=\"ltr-iso\">IgA1</span> במחלה זו מאופיין בגליקוזילציה לקויה (<span class=\"ltr-iso\">galactose-deficient IgA1</span>, <span class=\"ltr-iso\">gd-IgA1</span>) הגורמת לשקיעה מזנגיאלית ולנזק גלומרולרי.</p>",
+      "quote": "{{mesangial IgA in IgAN is predominantly pIgA1}}",
+      "citation": "{{Johnson, Comprehensive Clinical Nephrology, 7th ed. — Immunoglobulin A Nephropathy and Immunoglobulin A Vasculitis (Henoch-Schönlein Purpura)}}"
+    },
+    {
+      "topic": "הפרעות אלקטרוליטים",
+      "stem": "מה מעלה סיכון לפתח {{osmotic demyelination syndrome (ODS)}} במהלך תיקון היפונתרמיה {{(Hyponatremia)}}?",
+      "options": [
+        {
+          "key": "a",
+          "text": "היפרקלמיה",
+          "why": "היפוקלמיה {{(hypokalemia)}} — ולא היפרקלמיה — מוזכרת כגורם סיכון ל-{{ODS}}. היפרקלמיה אינה מופיעה כגורם סיכון ל-{{ODS}} בשום מקור מותר, ולמעשה היא שכיחה בהיפונתרמיה הנגרמת מאי-ספיקת אדרנל ואינה מגבירה סיכון לדמיאלינציה."
+        },
+        {
+          "key": "b",
+          "text": "המודיאליזה במטופל אורמי",
+          "why": "המודיאליזה במטופל אורמי אינה מוזכרת כגורם סיכון ל-{{ODS}}. אי-ספיקת כליות כרונית מתקדמת עם אוליגוריה עלולה לגרום להיפונתרמיה, אך לא מדובר בגורם סיכון מוכר לתסמונת זו; קצב תיקון הנתרן בהמודיאליזה עשוי להיות מהיר ולדרוש ניטור, אך עצם הדיאליזה אינה מגדירה סיכון ל-{{ODS}}."
+        },
+        {
+          "key": "c",
+          "text": "היפונתרמיה שמתפתחת בזמן ריצת מרתון",
+          "why": "היפונתרמיה בריצת מרתון היא דוגמה קלאסית להיפונתרמיה אקוטית {{(acute hyponatremia)}} — כזו שהתפתחה תוך פחות מ-48 שעות. המקור מציין במפורש שחולים עם היפונתרמיה אקוטית, כדוגמת רצי מרתון, הם בסיכון נמוך ל-{{ODS}} כיוון שלמוח לא הייתה שהות לבצע הסתגלות אוסמוטית; בהיעדר הסתגלות זו, הסיכון לנזק מתיקון מהיר הוא מינימלי."
+        },
+        {
+          "key": "d",
+          "text": "אלכוהוליזם",
+          "right": true
+        }
+      ],
+      "explanationHtml": "<p><strong>נכון.</strong> תסמונת הדמיאלינציה האוסמוטית <span class=\"ltr-iso\">(ODS)</span> היא סיבוך חמור של תיקון מהיר מדי של היפונתרמיה כרונית חמורה. גורמי סיכון מוכרים ל-<span class=\"ltr-iso\">ODS</span> כוללים: ריכוז נתרן סרום נמוך מ-<span class=\"ltr-iso\">105 mEq/L</span>, היפוקלמיה, הפרעות שתייה <span class=\"ltr-iso\">(alcohol use disorder)</span>, תת-תזונה ומחלת כבד. אלכוהוליזם <span class=\"ltr-iso\">(alcohol use disorder)</span> מוזכר במפורש כגורם סיכון גבוה ל-<span class=\"ltr-iso\">ODS</span>, ולכן תשובה ד נכונה. נקודת הלמידה: בחולים עם גורמי סיכון אלה, קצב התיקון המרבי הבטוח הוא <span class=\"ltr-iso\">8 mEq/L</span> בכל פרק זמן של 24 שעות.</p>",
+      "quote": "{{Among patients with severe, chronic hyponatremia, individuals at highest risk for ODS include those with serum sodium concentrations of less than or equal to 105 mEq/L; those with hypokalemia, alcohol use disorder, malnutrition, or liver disease; and, possibly, those with hypophosphatemia.}}",
+      "citation": "{{UpToDate — Overview of the treatment of hyponatremia in adults}}"
+    },
+    {
+      "topic": "יתר לחץ דם והריון",
+      "stem": "מהו המנגנון העיקרי המוצע להשפעת {{sFLT}} ברעלת הריון?",
+      "options": [
+        {
+          "key": "a",
+          "text": "מכווץ את המזנגיום בתיווך {{TGF}}",
+          "why": "{{sFlt1}} אינו פועל דרך כיווץ מזנגיאלי בתיווך {{TGF}}. המקור מציין ש-{{sEng (soluble endoglin)}} — ולא {{sFlt1}} — הוא הגורם הקשור לנתיב {{TGF-β}}. {{sEng}} הוא צורה מקוצרת של קולטן ה-{{TGF-β}} ופועל בסינרגיה עם {{sFlt1}}, אך המנגנון של {{sFlt1}} עצמו הוא לכידת {{VEGF}} ו-{{PlGF}} בזרם הדם."
+        },
+        {
+          "key": "b",
+          "text": "לוכד {{VEGF}} ובכך אינו מאפשר חיבור {{VEGF}} לקולטנים שלו על תאי האנדותל",
+          "right": true
+        },
+        {
+          "key": "c",
+          "text": "מדכא ברמת ה- {{RNA}} יצור {{VEGF}} בתאי הפודוציטים",
+          "why": "{{sFlt1}} אינו מדכא ייצור {{VEGF}} ברמת ה-{{RNA}} בפודוציטים. להיפך — המקור מתאר ש-{{sFlt1}} פועל כחלבון מסיס במחזור הדם שלוכד {{VEGF}} שכבר הופרש, ולא כמדכא תעתיק. יתרה מכך, דווקא ירידה בסיגנול {{VEGF}} (בשל לכידתו) גורמת לירידה בביטוי נפרין בפודוציטים, אך זהו נזק משני ולא מנגנון הפעולה הראשוני של {{sFlt1}}."
+        },
+        {
+          "key": "d",
+          "text": "נקשר לחלק ה {{NC}} של שרשרת אלפא-5 של קולגן סוג {{VI}} בממברנה הבזלית ומוביל להורדת ה {{charge selectivity}}",
+          "why": "קולגן סוג {{IV}} (ולא {{VI}}) הוא המרכיב המרכזי של הממברנה הבזלית הגלומרולרית, ו-{{sFlt1}} אינו נקשר לממברנה הבזלית כלל. הפגיעה ב-{{charge selectivity}} המתוארת בפרה-אקלמפסיה נובעת מ-{{endotheliosis}} גלומרולרית ומאובדן {{fenestrae}} אנדותליאליות — לא מקשירה ישירה לקולגן הממברנה הבזלית. מסיח זה מתאר מנגנון שאינו מוזכר בהקשר של {{sFlt1}} בשום מקור מותר."
+        }
+      ],
+      "explanationHtml": "<p><strong>נכון.</strong> <span class=\"ltr-iso\">sFlt1</span> הוא ספליס-וריאנט מקוצר של קולטן ה-<span class=\"ltr-iso\">VEGF (Flt1)</span>, החסר את הדומיין התוך-תאי והטרנס-ממברנלי אך שומר על הדומיין החוץ-תאי הקושר <span class=\"ltr-iso\">VEGF</span> ו-<span class=\"ltr-iso\">PlGF</span>. בפרה-אקלמפסיה, השיליה מייצרת עודף <span class=\"ltr-iso\">sFlt1</span> שמשתחרר למחזור הדם האימהי. שם הוא לוכד את ה-<span class=\"ltr-iso\">VEGF</span> החופשי ואת ה-<span class=\"ltr-iso\">PlGF</span> ומונע מהם להתקשר לקולטניהם על תאי האנדותל. כתוצאה מכך, האנדותל מאבד את תמיכת ה-<span class=\"ltr-iso\">VEGF</span> הנחוצה לשמירת תפקודו התקין, מה שמוביל לעווית כלי דם, פגיעה אנדותליאלית מפושטת, יתר לחץ דם ופרוטאינוריה — כל הסימנים הקליניים של רעלת הריון. זוהי נקודת הלמידה המרכזית: <span class=\"ltr-iso\">sFlt1</span> פועל כ-'<span class=\"ltr-iso\">decoy receptor</span>' במחזור הדם ולא כמולקולה הפועלת ישירות על הגרעין או על הממברנה הבזלית.</p>",
+      "quote": "{{sFlt1, a truncated splice variant of the VEGFR Flt1, antagonizes VEGF and PlGF by binding them in the circulation and preventing interaction with their endogenous receptors in the vasculature.}}",
+      "citation": "{{Brenner & Rector's The Kidney, 11th ed. — Ch. 48, Pregnancy and Kidney Disease}}"
+    },
+    {
+      "topic": "השתלת כליה",
+      "stem": "אריתרוציטוזיס לאחר ההשתלה",
+      "options": [
+        {
+          "key": "a",
+          "text": "קשורה להופעה של פוליציטמיה וורה",
+          "why": "{{PTE}} אינה קשורה לפוליציטמיה ורה {{(Polycythemia Vera)}}, שהיא מחלה מיאלופרוליפרטיבית ראשונית הנגרמת ממוטציה ב-{{JAK2}}. {{PTE}} היא תופעה משנית הנובעת מתפקוד טוב של השתל הכלייתי ומייצור עודף אריתרופויאטין. שתי הישויות הן נפרדות לחלוטין מבחינה פתופיזיולוגית ואינן מהוות אחת את האחרת."
+        },
+        {
+          "key": "b",
+          "text": "ניתנת לטיפול על ידי חוסמי {{ace}}",
+          "right": true
+        },
+        {
+          "key": "c",
+          "text": "מלווה בדרך כלל בעודפי פריטין בדם",
+          "why": "{{PTE}} אינה מלווה בעודפי פריטין בדם. להפך — מאחר שמדובר בייצור מוגבר של תאי דם אדומים, צריכת הברזל עולה ועלולה להתפתח דלדול מאגרי ברזל. עודף פריטין אופייני לתהליכים דלקתיים כרוניים, המוכרומטוזיס, או למצבי עומס ברזל — לא ל-{{PTE}}."
+        },
+        {
+          "key": "d",
+          "text": "שכיחה יותר במטופלים ב-{{MTOR INHIBITORS}}",
+          "why": "המקור מציין כגורמי סיכון ל-{{PTE}}: נוכחות כליות נטיביות, מין זכר, העדר דחיות, המוגלובין גבוה לפני ההשתלה, יתר לחץ דם, עישון, סוכרת, מחלת כליות פוליציסטית וגלומרולונפריטיס — ואין כל אזכור לקשר בין מעכבי {{mTOR}} לבין שכיחות מוגברת של {{PTE}}. בפועל, מעכבי {{mTOR}} ידועים כגורמים לאנמיה ולא לאריתרוציטוזיס."
+        }
+      ],
+      "explanationHtml": "<p><strong>נכון.</strong> אריתרוציטוזיס לאחר השתלת כליה <span class=\"ltr-iso\">(PTE)</span> מטופלת בהצלחה באמצעות מעכבי <span class=\"ltr-iso\">ACE</span> או חוסמי <span class=\"ltr-iso\">ARB</span>, אשר לרוב מספיקים לשמירה על ערכי המוגלובין בטווח תקין. הטיפול מומלץ כאשר רמת ההמוגלובין עולה על 17–18 גרם/ד\"ל או ה-<span class=\"ltr-iso\">Hct</span> עולה על <span class=\"ltr-iso\">51%–52%</span>, בשל הסיכון לסיבוכים תרומבואמבוליים, יתר לחץ דם וכאבי ראש. נקודת הלמידה המרכזית: מעכבי <span class=\"ltr-iso\">ACE/ARB</span> הם קו הטיפול הראשון ב-<span class=\"ltr-iso\">PTE</span>, והפלבוטומיה שמורה רק למקרים עמידים.</p>",
+      "quote": "{{Treatment with ACE inhibitors or ARBs is often sufficient, although phlebotomy may occasionally be necessary.}}",
+      "citation": "{{Danovitch, Handbook of Kidney Transplantation, 7th ed. — Ch. 11, Posttransplant: The First 3 Months}}"
+    },
+    {
+      "topic": "אבנים בדרכי השתן",
+      "stem": "בת 35 עוברת בירור לאבני כליה. באנמנזה מסתבר שלאחיה גם יש אבני כליה ושהחולה נוטלת מולטי-ויטמין המכיל ויטמינים מסוג {{A}}, {{C}}, {{D}}. באנליזת אבן שנפלטה נמצא קלציום אוקסלט. היא קוראת באינטרנט על הנחיות תזונתיות ומגיעה להתייעץ. איזה מההמלצות הבאות מתאימה לחולה זו?",
+      "options": [
+        {
+          "key": "a",
+          "text": "אין להגביל סידן בתזונה",
+          "right": true
+        },
+        {
+          "key": "b",
+          "text": "אין להגביל חלבון מן החי",
+          "why": "להפך — מומלץ דווקא להפחית חלבון מן החי (לא-חלבי), המעלה עומס חומצה, סידן בשתן וירידה בציטרט; ולכן 'אין להגביל חלבון' שגוי."
+        },
+        {
+          "key": "c",
+          "text": "אין להגביל נתרן בתזונה",
+          "why": "מומלץ להפחית נתרן (הגבלת מלח מורידה סידן בשתן); 'אין להגביל נתרן' שגוי."
+        },
+        {
+          "key": "d",
+          "text": "ניתן להמשיך עם מולטי ויטמין",
+          "why": "יש להפסיק מולטי-ויטמין המכיל ויטמין {{C}} במינון גבוה (מטבוליזם ל-אוקסלט) — המשך הנטילה מגביר את הסיכון לאבנים."
+        }
+      ],
+      "explanationHtml": "<p><strong>נכון.</strong> בחולה עם אבני קלציום-אוקסלט, אין להגביל סידן בתזונה: הגבלת סידן תזונתי מגבירה דווקא את ספיגת האוקסלט במעי (פחות סידן לקשור אוקסלט) ומעלה את הסיכון לאבנים. ההמלצה היא לשמור על צריכת סידן תזונתי מספקת (להימנע מדיאטה דלת-סידן). נקודת הלימוד: אין להגביל סידן תזונתי באבני קלציום-אוקסלט.</p>",
+      "quote": "{{For all patients with calcium oxalate stones, we suggest against a low-calcium diet}}",
+      "citation": "{{UpToDate — Kidney stones in adults: Prevention of recurrent kidney stones}}"
+    }
+  ],
+  "examBased": true
 }
