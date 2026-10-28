@@ -22,3 +22,9 @@ test('state', () => {
   assert.equal(countdownState(0), 'today');
   assert.equal(countdownState(-1), 'past');
 });
+test('inlined functions stay ES5, like the page script they land in', () => {
+  for (const fn of [daysUntil, countdownState]) {
+    const src = String(fn);
+    assert.doesNotMatch(src, /=>|\b(const|let)\s|\bvar\s*[[{]|`|\.\.\./, fn.name);
+  }
+});

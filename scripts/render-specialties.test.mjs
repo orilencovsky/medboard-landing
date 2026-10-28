@@ -119,6 +119,15 @@ test('sources are escaped and LTR-isolated', () => {
   }
 });
 
+test('sources speak in the future tense on a page with no questions yet', () => {
+  const built = render('family-medicine');
+  assert.ok(built.includes('על מה מבוססים ההסברים') && built.includes('שמהם לקוחים'));
+  const empty = render('family-medicine', (p) => { p.questions = []; delete p.examBased; });
+  assert.ok(empty.includes('על מה יתבססו ההסברים') && empty.includes('שמהם יילקחו'));
+  assert.ok(!empty.includes('על מה מבוססים') && !empty.includes('שמהם לקוחים'));
+  assert.ok(render('cardiology').includes('על מה יתבססו ההסברים'));
+});
+
 test('questions section is omitted when empty and numbered when present', () => {
   const none = render('family-medicine', (p) => { p.questions = []; });
   assert.ok(!none.includes('id="q-title"'));

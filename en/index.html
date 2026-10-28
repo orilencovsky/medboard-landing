@@ -35,10 +35,11 @@
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   // cta_click: which "start" link sent a visitor to the app (nav / hero /
-  // closing), read from data-cta. No #tracks card carries data-cta: the
-  // nephrology card goes to /nephrology, not the app, so it fires only
-  // track_click. Cookieless like the rest of Vercel Analytics, so it counts
-  // every click regardless of the GA4/Clarity consent choice.
+  // closing), read from data-cta. The nephrology #tracks card goes straight to
+  // the app here (its page is Hebrew-only), so it carries data-cta="hero" as
+  // before and fires both events. Cookieless like the rest of Vercel
+  // Analytics, so it counts every click regardless of the GA4/Clarity consent
+  // choice.
   // track_click: which study track was picked, and via a #tracks card or a hero
   // chip.
   document.addEventListener('click', function (e) {
@@ -887,10 +888,10 @@
       <div class="tracks-grid">
         <!-- tracks:cards -->
         <article class="track track--live" id="track-nephrology">
-          <div class="track-pills"><span class="track-pill track-pill--live"><svg class="track-pill-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.6l4.5-5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Open now</span><span class="track-pill" id="track-nephrology-lang">Hebrew content</span></div>
+          <div class="track-pills"><span class="track-pill track-pill--live"><svg class="track-pill-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 5 8.6l4.5-5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Open now</span></div>
           <h3 class="track-name" id="track-nephrology-name">Nephrology <span class="track-stage">Sub-specialty, part A</span></h3>
           <p class="track-blurb">Exam-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.</p>
-          <a class="track-link" href="/nephrology" data-track="nephrology" data-track-via="card" hreflang="he" aria-describedby="track-nephrology-name track-nephrology-lang"><span class="btn-action btn-action-md track-btn">Start studying free</span></a>
+          <a class="track-link" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=hero" data-track="nephrology" data-track-via="card" data-cta="hero" aria-describedby="track-nephrology-name"><span class="btn-action btn-action-md track-btn">Start studying free</span></a>
         </article>
         <article class="track track--soon" id="track-family-medicine">
           <div class="track-pills"><span class="track-pill">Coming soon</span><span class="track-pill" id="track-family-medicine-lang">Hebrew content</span></div>
