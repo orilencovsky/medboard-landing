@@ -189,6 +189,7 @@
            border: 1px solid var(--border); background: rgba(6,18,37,.5); color: #DDEBF7; font-size: 15.5px; cursor: pointer;
            transition: border-color .2s ease, background-color .2s ease, color .2s ease, transform var(--press);
            -webkit-tap-highlight-color: transparent; } /* the answer's own marking is the tap feedback */
+  .q-opt-text { flex: 1 1 auto; min-width: 0; }
   @media (hover: hover) and (pointer: fine) {
     .q-opt:hover:not(.is-right):not(.is-wrong) { border-color: rgba(34,211,238,.55); background: rgba(34,211,238,.06); }
   }
@@ -600,10 +601,10 @@
         </div>
         <p class="q-stem" id="q-stem">בן 52 מגיע לביקורת. לחץ הדם במרפאה <span class="ltr-iso">148/94</span> ממ״כ בשתי ביקורות, בלי סימנים לפגיעה באיברי מטרה. לדבריו, במכשיר שלו בבית הוא מודד בסביבות <span class="ltr-iso">115/70</span>. מה הצעד הבא?</p>
         <div class="q-opts" role="group" aria-labelledby="q-stem">
-          <button type="button" class="q-opt" data-k="a" data-tutor="בבית <span class=&quot;ltr-iso&quot;>115/70</span>, אצלך <span class=&quot;ltr-iso&quot;>148/94</span>. איזה מהמספרים משקף את לחץ הדם שלו ביומיום, ומה יקרה אם תטפל לפי הלא נכון?"><span class="q-key">א</span>להתחיל טיפול תרופתי כבר היום<i class="ph ph-x-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="b" data-right><span class="q-key">ב</span>לאשר במדידות מחוץ למרפאה לפי פרוטוקול<i class="ph ph-check-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="c" data-tutor="יש כאן פער גדול בין המרפאה לבית. למה לחכות שנה, אם אפשר להכריע כבר עכשיו? ואיך?"><span class="q-key">ג</span>מדידה חוזרת בביקורת בעוד שנה<i class="ph ph-x-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="d" data-tutor="<span class=&quot;ltr-iso&quot;>115/70</span> נשמע מרגיע. אבל באיזה מכשיר ובאיזו שיטה הוא מדד? מה צריך כדי לסמוך על המספר הזה?"><span class="q-key">ד</span>לקבוע יתר לחץ דם של חלוק לבן, בלי בירור נוסף<i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="a" data-tutor="בבית <span class=&quot;ltr-iso&quot;>115/70</span>, אצלך <span class=&quot;ltr-iso&quot;>148/94</span>. איזה מהמספרים משקף את לחץ הדם שלו ביומיום, ומה יקרה אם תטפל לפי הלא נכון?"><span class="q-key">א</span><span class="q-opt-text">להתחיל טיפול תרופתי כבר היום</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="b" data-right><span class="q-key">ב</span><span class="q-opt-text">לאשר במדידות מחוץ למרפאה לפי פרוטוקול</span><i class="ph ph-check-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="c" data-tutor="יש כאן פער גדול בין המרפאה לבית. למה לחכות שנה, אם אפשר להכריע כבר עכשיו? ואיך?"><span class="q-key">ג</span><span class="q-opt-text">מדידה חוזרת בביקורת בעוד שנה</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="d" data-tutor="<span class=&quot;ltr-iso&quot;>115/70</span> נשמע מרגיע. אבל באיזה מכשיר ובאיזו שיטה הוא מדד? מה צריך כדי לסמוך על המספר הזה?"><span class="q-key">ד</span><span class="q-opt-text">לקבוע יתר לחץ דם של חלוק לבן, בלי בירור נוסף</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
         </div>
         <div class="q-out" id="q-out" aria-live="polite"></div>
         <template class="q-explain-src"><p><strong>נכון.</strong> <strong>למה לא להתחיל טיפול:</strong> הפער בין <span class="ltr-iso">148/94</span> במרפאה לבין <span class="ltr-iso">115/70</span> בבית מעלה חשד ליתר לחץ דם של חלוק לבן, וטיפול לפי מדידות המרפאה בלבד עלול להיות מיותר.</p><p><strong>ולמה לא להסתפק במדידות שלו:</strong> הן לא נעשו לפי פרוטוקול. מאשרים במדידות ביתיות מובנות (מכשיר זרוע מאושר, בוקר וערב) או בניטור אמבולטורי של 24 שעות, ורק אז מחליטים.</p><p><strong>ומה הלאה:</strong> אם יתר לחץ הדם מאושר, מתחילים ניהול שמטרתו להפחית תחלואה ותמותה קרדיווסקולרית. אם המדידות תקינות, זה יתר לחץ דם של חלוק לבן: הסיכון הקרדיווסקולרי נמוך מיתר לחץ דם מתמשך אך גבוה מלחץ דם תקין, והמצב עלול להתקדם, ולכן ממשיכים בשינוי אורחות חיים ובמעקב שנתי.</p><figure class="q-src"><blockquote>״בהתאם לעדכון 2026, מומלץ בחוזקה אישור האבחנה באמצעות מדידות מחוץ למרפאה. מדובר במרכיב מהותי של תהליך האבחנה.״</blockquote><figcaption>יתר לחץ דם בישראל: אבחנה, טיפול ואיזון, 2026. ההסתדרות הרפואית בישראל, עמ׳ 6</figcaption></figure></template>

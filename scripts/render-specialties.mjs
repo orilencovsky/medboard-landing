@@ -147,10 +147,12 @@ function sources(track, built) {
   ].join('\n');
 }
 
+// The button is a flex row, so the option text gets one wrapper: bare, each
+// Latin run (span.ltr-iso) would become its own flex column.
 function option(o, k) {
   const data = o.right ? ' data-right' : o.tutor ? ` data-tutor="${attr(o.tutor)}"` : ` data-why="${attr(rich(o.why))}"`;
   const icon = o.right ? 'ph-check-circle' : 'ph-x-circle';
-  return `<button type="button" class="q-opt" data-k="${o.key}"${data}><span class="q-key">${KEYS[k]}</span>${rich(o.text)}<i class="ph ${icon}" aria-hidden="true"></i></button>`;
+  return `<button type="button" class="q-opt" data-k="${o.key}"${data}><span class="q-key">${KEYS[k]}</span><span class="q-opt-text">${rich(o.text)}</span><i class="ph ${icon}" aria-hidden="true"></i></button>`;
 }
 
 function explanation(q) {

@@ -128,6 +128,17 @@ test('sources speak in the future tense on a page with no questions yet', () => 
   assert.ok(render('cardiology').includes('על מה יתבססו ההסברים'));
 });
 
+test('option text is one flex item, so Latin runs stay inline', () => {
+  const out = render('nephrology');
+  const opts = [...out.matchAll(/<button type="button" class="q-opt"(?:"[^"]*"|[^>"])*>([\s\S]*?)<\/button>/g)].map((m) => m[1]);
+  assert.equal(opts.length, 20);
+  for (const inner of opts) {
+    assert.match(inner, /^<span class="q-key">[^<]*<\/span><span class="q-opt-text">[\s\S]*<\/span><i class="ph [^"]*" aria-hidden="true"><\/i>$/);
+  }
+  assert.ok(out.includes('<span class="q-opt-text">מדובר בנוגדנים מונומרים <span class="ltr-iso">(monomeric)</span> מסוג <span class="ltr-iso">IgA 2</span></span>'));
+  assert.ok(out.includes('<span class="ltr-iso">IgA Nephropathy</span>'));
+});
+
 test('questions section is omitted when empty and numbered when present', () => {
   const none = render('family-medicine', (p) => { p.questions = []; });
   assert.ok(!none.includes('id="q-title"'));
