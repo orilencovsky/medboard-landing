@@ -122,8 +122,9 @@ function countdown(track) {
 }
 
 // Books first, then the rest. No per-item category label: some entries kept
-// as "guideline" in tracks.json are really review articles.
-function sources(track) {
+// as "guideline" in tracks.json are really review articles. A page with no
+// questions yet (cardiology, "being built now") speaks in the future tense.
+function sources(track, built) {
   const ordered = [...track.sources.filter((s) => s.kind === 'book'), ...track.sources.filter((s) => s.kind !== 'book')];
   const items = ordered.map((s) => {
     const icon = s.kind === 'book' ? 'ph-book-open' : 'ph-file-text';
@@ -135,8 +136,8 @@ function sources(track) {
     '<section class="sources" aria-labelledby="t-sources">',
     '  <div class="wrap">',
     '    <div class="sec-head" data-reveal>',
-    '      <h2 id="t-sources">על מה מבוססים ההסברים</h2>',
-    '      <p>המקורות המרכזיים שמהם לקוחים ההסברים והציטוטים בשאלות.</p>',
+    built ? '      <h2 id="t-sources">על מה מבוססים ההסברים</h2>' : '      <h2 id="t-sources">על מה יתבססו ההסברים</h2>',
+    built ? '      <p>המקורות המרכזיים שמהם לקוחים ההסברים והציטוטים בשאלות.</p>' : '      <p>המקורות המרכזיים שמהם יילקחו ההסברים והציטוטים בשאלות.</p>',
     '    </div>',
     '    <ul class="src-list" data-reveal style="--i:1">',
     ...items,
@@ -249,7 +250,7 @@ export function renderPage(template, page, track) {
     url: SITE + track.href,
     leadHtml: rich(page.lead),
     countdown: countdown(track),
-    sources: sources(track),
+    sources: sources(track, page.questions.length > 0),
     questions: page.questions.length ? questions(page.questions, page.examBased) : '',
     states: states(page.states),
     perks: signup.perks ? perks(signup.perks) : '',

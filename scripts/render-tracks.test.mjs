@@ -53,8 +53,14 @@ test('/en marks Hebrew destination pages, in the pill and in the link descriptio
   const out = render(real, page(ALL), 'en', 'x');
   assert.match(out, /<span class="track-pill" id="track-family-medicine-lang">Hebrew content<\/span>/);
   assert.match(out, /hreflang="he" aria-describedby="track-family-medicine-name track-family-medicine-lang"/);
-  // Nephrology now has a Hebrew page of its own, so it carries the pill too.
-  assert.match(out, /<span class="track-pill" id="track-nephrology-lang">Hebrew content<\/span>/);
+});
+
+test('/en sends the nephrology card straight to the app, not to the Hebrew-only page', () => {
+  const out = render(real, page(ALL), 'en', 'x');
+  assert.match(out, /<a class="track-link" href="https:\/\/app\.meduxa\.ai\/\?signup=1&amp;src=landing&amp;pl=hero" data-track="nephrology" data-track-via="card" data-cta="hero" aria-describedby="track-nephrology-name">/);
+  // The override drops pageLang for that card: no pill, no hreflang.
+  assert.doesNotMatch(out, /id="track-nephrology-lang"/);
+  assert.doesNotMatch(out, /data-track="nephrology" data-track-via="card"[^>]*hreflang/);
 });
 
 test('Hebrew page never shows the language pill', () => {
@@ -135,6 +141,8 @@ test('the shipped list has the four tracks, IMA dates and the nephrology page li
   assert.equal(by.pediatrics.exam.nameHe, 'בחינת שלב א׳');
   assert.equal(by.nephrology.href, '/nephrology');
   assert.equal(by.nephrology.cta, undefined);
+  assert.equal(by.nephrology.en.href, 'https://app.meduxa.ai/?signup=1&src=landing&pl=hero');
+  assert.equal(by.nephrology.en.cta, 'hero');
   assert.equal(by.cardiology.status, 'soon');
   assert.equal(by.cardiology.href, '/cardiology');
   assert.ok(!/מחיר השקה/.test(by.cardiology.he.blurb));

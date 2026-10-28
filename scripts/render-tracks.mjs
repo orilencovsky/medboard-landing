@@ -64,7 +64,11 @@ function cards(data, locale) {
   return data.tracks.map((t) => {
     const c = t[locale];
     const nameId = `track-${t.id}-name`;
-    const otherLang = t.pageLang && t.pageLang !== locale && ui.otherLang;
+    // A locale may send its card elsewhere (en nephrology goes straight to the
+    // app, since /nephrology is Hebrew-only); pageLang then no longer applies.
+    const href = c.href || t.href;
+    const cta = c.href ? c.cta : t.cta;
+    const otherLang = !c.href && t.pageLang && t.pageLang !== locale && ui.otherLang;
     const langId = `track-${t.id}-lang`;
     const live = t.status === 'live';
     const pills = [
@@ -75,10 +79,10 @@ function cards(data, locale) {
     if (otherLang) pills.push(`<span class="track-pill" id="${langId}">${esc(ui.otherLang)}</span>`);
     const attrs = [
       `class="track-link${live ? '' : ' track-link--soon'}"`,
-      `href="${esc(t.href)}"`,
+      `href="${esc(href)}"`,
       `data-track="${t.id}"`,
       'data-track-via="card"',
-      t.cta ? `data-cta="${esc(t.cta)}"` : '',
+      cta ? `data-cta="${esc(cta)}"` : '',
       otherLang ? `hreflang="${esc(t.pageLang)}"` : '',
       `aria-describedby="${nameId}${otherLang ? ' ' + langId : ''}"`,
     ].filter(Boolean).join(' ');

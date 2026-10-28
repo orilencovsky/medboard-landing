@@ -1,5 +1,5 @@
 {
-  "_comment": "The homepage's study tracks — the ONE list behind the #tracks cards, the hero chips, the announcement bar and the closing line, in both index.html and en/index.html. Edit here, then run `node scripts/render-tracks.mjs` and commit the pages with it; `--check` fails if a page drifted. In blurbs, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). `cta` adds data-cta (counted in cta_click); `pageLang` marks a destination page in another language (on /en it shows a \"Hebrew content\" pill). `exam` ({date, nameHe, url}) and `sources` ([{title, kind: book|guideline}]) feed the specialty pages. `launchOffer` puts a soon track in the launch-price announcement bar.",
+  "_comment": "The homepage's study tracks — the ONE list behind the #tracks cards, the hero chips, the announcement bar and the closing line, in both index.html and en/index.html. Edit here, then run `node scripts/render-tracks.mjs` and commit the pages with it; `--check` fails if a page drifted. In blurbs, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). `cta` adds data-cta (counted in cta_click); `pageLang` marks a destination page in another language (on /en it shows a \"Hebrew content\" pill). A locale block may set its own `href` (and `cta`) to send that locale's card elsewhere; `pageLang` then does not apply to it. `exam` ({date, nameHe, url}) and `sources` ([{title, kind: book|guideline}]) feed the specialty pages. `launchOffer` puts a soon track in the launch-price announcement bar.",
   "ui": {
     "he": {
       "live": "פתוח עכשיו",
@@ -44,7 +44,9 @@
         "inline": "nephrology",
         "stage": "Sub-specialty, part A",
         "blurb": "Exam-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.",
-        "action": "Start studying free"
+        "action": "Start studying free",
+        "href": "https://app.meduxa.ai/?signup=1&src=landing&pl=hero",
+        "cta": "hero"
       },
       "exam": {
         "date": "2027-01-12",

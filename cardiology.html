@@ -596,8 +596,8 @@
   <section class="sources" aria-labelledby="t-sources">
     <div class="wrap">
       <div class="sec-head" data-reveal>
-        <h2 id="t-sources">על מה מבוססים ההסברים</h2>
-        <p>המקורות המרכזיים שמהם לקוחים ההסברים והציטוטים בשאלות.</p>
+        <h2 id="t-sources">על מה יתבססו ההסברים</h2>
+        <p>המקורות המרכזיים שמהם יילקחו ההסברים והציטוטים בשאלות.</p>
       </div>
       <ul class="src-list" data-reveal style="--i:1">
         <li><i class="ph ph-book-open" aria-hidden="true"></i><span class="ltr-iso">Braunwald&#39;s Heart Disease 13e</span></li>
@@ -902,16 +902,17 @@
     var box = document.querySelector('[data-exam-date]');
     if (!box) return;
 function daysUntil(examDate, now) {
-  const parts = new Intl.DateTimeFormat('en-CA', {
+  var parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Asia/Jerusalem',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
   }).formatToParts(now);
-  const get = (type) => Number(parts.find((p) => p.type === type).value);
-  const todayMs = Date.UTC(get('year'), get('month') - 1, get('day'));
-  const [y, m, d] = examDate.split('-').map(Number);
-  const examMs = Date.UTC(y, m - 1, d);
+  var ymd = {};
+  for (var i = 0; i < parts.length; i++) ymd[parts[i].type] = Number(parts[i].value);
+  var todayMs = Date.UTC(ymd.year, ymd.month - 1, ymd.day);
+  var exam = examDate.split('-');
+  var examMs = Date.UTC(Number(exam[0]), Number(exam[1]) - 1, Number(exam[2]));
   return Math.round((examMs - todayMs) / 86400000);
 }
 function countdownState(days) {
