@@ -90,12 +90,12 @@
 
   <main class="doc" id="main">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: September 28, 2026</p>
+    <p class="updated">Last updated: October 30, 2026</p>
 
     <p>This policy explains what personal data meduxa.ai collects, why, who it is shared with, how long it is kept, and what rights you have over it. It is written to meet both the EU General Data Protection Regulation (GDPR) and Israel's Privacy Protection Law, 5741-1981 (including Amendment 13).</p>
 
     <div class="card">
-      <p><strong>The short version:</strong> we collect one email address (and, if you chose to give it, your specialty) — only if you typed it into the waitlist form, and only to tell you when the pilot opens. No advertising cookies, no cross-site tracking, and nothing is ever sold or shared with advertisers. You can ask us to delete your data at any time at <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>.</p>
+      <p><strong>The short version:</strong> we collect one email address (and, if you chose to give it, your specialty) — only if you typed it into the waitlist form, and only to tell you when the pilot opens. No advertising cookies, no cross-site tracking, and nothing is ever sold or shared with advertisers. You can ask us to delete your data at any time at <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>. This box covers the marketing site; for connecting your own AI tool in the app, see section 11.</p>
     </div>
 
     <h2>1. Who is responsible for your data</h2>
@@ -157,7 +157,7 @@
     <h2>4. Who your data is shared with</h2>
     <p>We do not sell your data, rent it, or hand it to advertisers. It is processed only by these service providers (processors):</p>
     <ul>
-      <li><strong>Supabase</strong> — stores the waitlist (the email addresses).</li>
+      <li><strong>Supabase</strong> — stores the waitlist (the email addresses) and, for the app, the connection data described in section 11.</li>
       <li><strong>Vercel</strong> — hosts the site, keeps operational logs and runs the aggregate traffic measurement.</li>
       <li><strong>OpenRouter</strong> and <strong>Anthropic</strong> — route (OpenRouter) and process (Anthropic, the model provider) the messages typed into the tutor demo, solely to generate the reply.</li>
       <li><strong>Google</strong> (Google Analytics) — usage measurement, only if you consent.</li>
@@ -200,6 +200,16 @@
 
     <h2>10. Contact</h2>
     <p>Privacy questions, requests and complaints: <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>.</p>
+
+    <h2>11. Connecting your own AI tool to the app</h2>
+    <p>This section applies to the app.meduxa.ai app, not to the marketing site. Where the option is available on your account, you can create a personal token in the app and use it to connect an AI tool of your choice (for example Claude Code or Cursor) to your account, read-only. The connection is your choice and stays inactive until you create a token.</p>
+    <ul>
+      <li><strong>What the tool can receive:</strong> text practice questions (no images) from the bundles you have access to; the correct answer and, only if cleared for sharing, the explanation, the rationale for the chosen option and the source, only after an answer choice is submitted for a question the tool sent you in the last 24 hours; and your own progress data: your bundles and access expiry, your attempts and accuracy per topic, and review cards that are due. Never another user's data.</li>
+      <li><strong>Where it goes:</strong> what the tool receives from MeduXa, and what you type to it, is sent to the AI provider you chose and processed under that provider's privacy policy, including whether the data is kept or used for training. That provider is not our service provider: you choose it and you operate it.</li>
+      <li><strong>What we keep:</strong> the token record (the name you gave it, an identifying prefix, and the dates it was created, expires, was revoked and was last used; the token itself is stored only as a one-way hash that cannot be turned back into the token, and the identifying prefix is the only part kept in clear); daily usage counters (tool calls, questions sent, answers checked); and a log of the questions sent to the tool and of those whose answer was revealed through it, with the time. The log is used to allow an answer check only for a question that was sent to you and to protect the service; the usage counters apply the daily limits. This data is kept at most as long as your account exists (records of expired or revoked tokens may be removed earlier) and is deleted when it is deleted (to request deletion: <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>, see section 7). Legal basis: performance of our agreement with you, Article 6(1)(b) GDPR; for the abuse-protection purpose, legitimate interest, Article 6(1)(f).</li>
+      <li><strong>Logs and IP address:</strong> our call log records only the tool name, whether the call succeeded and how long it took, and not the token, the user ID or any question text (on an unexpected failure it also records a technical error message that contains none of these). As with any request to a server, our hosting provider (Vercel) receives the requester's IP address and records it in its operational logs, as described in section 2 (legitimate interest, Article 6(1)(f)). To protect the service, our hosting provider also counts requests per IP address and limits them to 60 per minute on these endpoints (same legitimate interest). We do not store IP addresses in the connection data.</li>
+      <li><strong>Control:</strong> you can revoke one token, or all of them, at any time in the app. You can hold up to three active tokens at once; a token expires after 90 days; and changing or resetting your password revokes all tokens automatically. The connection does not change your progress in the app: an answer checked through the tool is not recorded there as an attempt.</li>
+    </ul>
 
     <p style="margin-top: 40px;"><a href="/en">← Back to the home page</a> · <a href="/en/terms">Terms of Use</a></p>
   </main>
