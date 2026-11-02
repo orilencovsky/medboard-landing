@@ -13,7 +13,7 @@ const tracks = JSON.parse(read('tracks.json')).tracks;
 const track = (id) => JSON.parse(JSON.stringify(tracks.find((t) => t.id === id)));
 const page = (id) => JSON.parse(read(`specialties/${id}.json`));
 const PAGES = ['family-medicine', 'pediatrics', 'nephrology', 'cardiology'];
-const SOON = ['family-medicine', 'pediatrics', 'cardiology'];
+const SOON = ['family-medicine', 'pediatrics'];
 const render = (id, edit = (p, t) => {}) => {
   const p = page(id), t = track(id);
   edit(p, t);
@@ -125,7 +125,9 @@ test('sources speak in the future tense on a page with no questions yet', () => 
   const empty = render('family-medicine', (p) => { p.questions = []; delete p.examBased; });
   assert.ok(empty.includes('על מה יתבססו ההסברים') && empty.includes('שמהם יילקחו'));
   assert.ok(!empty.includes('על מה מבוססים') && !empty.includes('שמהם לקוחים'));
-  assert.ok(render('cardiology').includes('על מה יתבססו ההסברים'));
+  // A live page's explanations exist even with no sample question on the page.
+  assert.ok(render('cardiology').includes('על מה מבוססים ההסברים'));
+  assert.ok(render('cardiology', (p) => { p.mode = 'soon'; p.signup = page('family-medicine').signup; delete p.app; }).includes('על מה יתבססו ההסברים'));
 });
 
 test('option text is one flex item, so Latin runs stay inline', () => {
@@ -258,31 +260,29 @@ test('the live page closing and later-line carry no "opening day" or waitlist wo
   assert.ok(!out.includes('בקרוב:'));
 });
 
-test('cardiology is a soon page with its own waitlist keys and no launch price', () => {
+test('cardiology is a live page: app links, no waitlist, parts A and B, no expert-review claim', () => {
   const out = render('cardiology');
   const s = served(out);
-  assert.ok(out.includes("source: 'landing_cardio'"));
-  assert.ok(out.includes("p_interest: 'cardiology'"));
-  assert.ok(out.includes('cardio_signup'));
-  assert.ok(out.includes('cardio_home_click'));
+  assert.ok(s.includes('https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=cardio_hero'));
+  assert.ok(s.includes('https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=cardio_closing'));
+  assert.ok(out.includes('cardio_app_click'));
+  assert.ok(!s.includes('id="notifyForm"'));
+  assert.ok(!out.includes('waitlist'));
+  assert.ok(!s.includes('בקרוב:'));
+  assert.ok(s.includes('פתוח עכשיו: קרדיולוגיה, מקצוע-על'));
   // The sample-question script ships only with a question; cardiology has none yet, so it is absent until one is added.
   assert.ok(!out.includes('_sample_question'));
-  assert.ok(render('cardiology', (p) => { p.questions = page('family-medicine').questions; }).includes("'cardio_sample_question'"));
   assert.ok(s.includes('15.12.2026'));
-  assert.ok(s.includes('בחינה במקצוע-על — חלק א׳'));
+  assert.ok(s.includes('חלק ב׳ למחרת, 16.12.2026'));
   assert.ok(s.includes('Braunwald'));
-  assert.ok(s.includes('id="notifyForm"'));
-  assert.ok(s.includes('נכתוב לכם ברגע שההכנה בקרדיולוגיה נפתחת.'));
   assert.ok(!out.includes('מחיר השקה'));
   assert.ok(!out.includes('הנחה קבוצתית'));
   assert.ok(!out.includes('שלב א׳'), 'IMA name for cardiology is the sub-specialty part, never stage A');
   assert.ok(!out.includes('landing_fm') && !out.includes('landing_peds'));
-  assert.ok(!out.includes('_app_click'));
   assert.ok(!out.includes('class="q-opt"'), 'no sample question yet');
-  assert.ok(!out.includes('id="q-title"'));
   assert.ok(!out.includes('ביקורת מומחה'), 'no expert-review claim for cardiology');
   assert.ok(out.includes('<link rel="canonical" href="https://meduxa.ai/cardiology" />'));
-  assert.ok(out.includes('https://meduxa.ai/og-cardiology.png'));
+  assert.ok(out.includes('https://meduxa.ai/og-cardiology.png?v=2'));
 });
 
 test('the expert-review comparison row is optional: rendered where cmpReview is present, absent otherwise, strict when half-filled', () => {
