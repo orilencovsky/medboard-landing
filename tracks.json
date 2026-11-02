@@ -190,26 +190,28 @@
     },
     {
       "id": "cardiology",
-      "status": "soon",
+      "status": "live",
       "href": "/cardiology",
       "pageLang": "he",
       "he": {
         "name": "קרדיולוגיה",
         "inline": "קרדיולוגיה",
-        "stage": "מקצוע-על, חלק א׳",
-        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה {{AI}} סוקרטי.",
-        "action": "הרשמה לעדכון"
+        "stage": "מקצוע-על, חלקים א׳ וב׳",
+        "blurb": "שאלות בסגנון הבחינה לחלק א׳ ולחלק ב׳, הסבר עם ציטוט מהמקור ומורה {{AI}} סוקרטי.",
+        "action": "התחילו ללמוד — חינם"
       },
       "en": {
         "name": "Cardiology",
         "inline": "cardiology",
-        "stage": "Sub-specialty, part A",
-        "blurb": "Exam-style questions, answers explained with a quote from the source, and a Socratic {{AI}} tutor.",
-        "action": "Get notified"
+        "stage": "Sub-specialty, parts A and B",
+        "blurb": "Exam-style questions for parts A and B, answers explained with a quote from the source, and a Socratic {{AI}} tutor.",
+        "action": "Start studying free",
+        "href": "https://app.meduxa.ai/?signup=1&src=landing&pl=cardio_card",
+        "cta": "hero"
       },
       "exam": {
         "date": "2026-12-15",
-        "nameHe": "בחינה במקצוע-על — חלק א׳",
+        "nameHe": "בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026)",
         "url": "https://www.ima.org.il/Internship/Events.aspx"
       },
       "sources": [

@@ -12,32 +12,36 @@
      is served by the platform, so it 404s on a local static server. -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  // cardio_home_click: which link sent a visitor from this "coming soon" page back
-  // to the homepage (logo / nav). Cookieless like the rest of Vercel Analytics,
-  // so it counts regardless of the GA4/Clarity consent choice.
+  // cardio_app_click: which of the two "start" links (hero / closing) sent a
+  // visitor to the app. cardio_home_click: which link (logo / nav) sent them to
+  // the homepage. Cookieless like the rest of Vercel Analytics, so both count
+  // regardless of the GA4/Clarity consent choice.
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[data-cardio-cta]') : null;
-    if (a) window.va('event', { name: 'cardio_home_click', data: { placement: a.getAttribute('data-cardio-cta') } });
+    if (!a) return;
+    var placement = a.getAttribute('data-cardio-cta');
+    var toApp = placement === 'hero' || placement === 'closing';
+    window.va('event', { name: toApp ? 'cardio_app_click' : 'cardio_home_click', data: { placement: placement } });
   }, true);
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
-<title>בקרוב: הכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai</title>
+<title>הכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/cardiology" />
-<meta name="description" content="בקרוב ב-MeduXa: הכנה לבחינת מקצוע-על בקרדיולוגיה. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. השאירו מייל ונעדכן כשזה נפתח." />
+<meta name="description" content="MeduXa: הכנה לבחינת מקצוע-על בקרדיולוגיה, חלק א׳ וחלק ב׳. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. פתוח עכשיו, אפשר להתחיל חינם." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
-<meta property="og:title" content="בקרוב: הכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai" />
-<meta property="og:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. השאירו מייל ונעדכן כשההכנה בקרדיולוגיה נפתחת." />
+<meta property="og:title" content="הכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai" />
+<meta property="og:description" content="שאלות בסגנון הבחינה לחלק א׳ ולחלק ב׳, הסבר עם ציטוט מהמקור, מורה AI סוקרטי וחזרה מרווחת. פתוח עכשיו, אפשר להתחיל ללמוד חינם." />
 <meta property="og:url" content="https://meduxa.ai/cardiology" />
-<meta property="og:image" content="https://meduxa.ai/og-cardiology.png?v=1" />
+<meta property="og:image" content="https://meduxa.ai/og-cardiology.png?v=2" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="MeduXa.ai: בקרוב, הכנה לבחינת מקצוע-על בקרדיולוגיה" />
+<meta property="og:image:alt" content="MeduXa.ai: פתוח עכשיו, הכנה לבחינת מקצוע-על בקרדיולוגיה" />
 <meta property="og:locale" content="he_IL" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="בקרוב: הכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai" />
-<meta name="twitter:description" content="שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי. השאירו מייל ונעדכן כשההכנה בקרדיולוגיה נפתחת." />
-<meta name="twitter:image" content="https://meduxa.ai/og-cardiology.png?v=1" />
+<meta name="twitter:title" content="הכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai" />
+<meta name="twitter:description" content="שאלות בסגנון הבחינה לחלק א׳ ולחלק ב׳, הסבר עם ציטוט מהמקור, מורה AI סוקרטי וחזרה מרווחת. פתוח עכשיו, אפשר להתחיל ללמוד חינם." />
+<meta name="twitter:image" content="https://meduxa.ai/og-cardiology.png?v=2" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#061225" />
 <meta name="color-scheme" content="dark" />
@@ -550,7 +554,7 @@
     </a>
     <div class="nav-r">
       <a class="nav-link" href="/" data-cardio-cta="nav">לעמוד הבית</a>
-      <a class="btn nav-cta" href="#signup">הרשמה לעדכון</a>
+      <a class="btn nav-cta" href="#start">התחילו ללמוד</a>
     </div>
   </div>
 </nav>
@@ -581,13 +585,13 @@
     </svg>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>בקרוב: קרדיולוגיה, מקצוע-על</span>
+        <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>פתוח עכשיו: קרדיולוגיה, מקצוע-על</span>
         <h1 class="enter" style="--i:1"><span class="hero-stage">הכנה לבחינת מקצוע-על בקרדיולוגיה<span class="sr">:</span></span>הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></h1>
-        <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ועדכון במייל כשההכנה נפתחת.</p>
-        <a class="btn hero-cta enter" style="--i:3" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
+        <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה לחלק א׳ ולחלק ב׳, הסבר עם ציטוט מהמקור, מורה סוקרטי וחזרה מרווחת.</p>
+        <a class="btn hero-cta enter" style="--i:3" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=cardio_hero" data-cardio-cta="hero">התחילו ללמוד — חינם<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
         <div class="countdown enter" style="--i:4" data-exam-date="2026-12-15">
           <p class="cd-days" hidden><b data-days></b> <span data-cd-unit></span></p>
-          <p class="cd-exam">בחינה במקצוע-על — חלק א׳ · <span class="ltr-iso">15.12.2026</span></p>
+          <p class="cd-exam">בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026) · <span class="ltr-iso">15.12.2026</span></p>
           <p class="cd-note"><a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לפי לוח הבחינות של הר״י · המועד עשוי להשתנות</a></p>
         </div>
       </div>
@@ -597,8 +601,8 @@
   <section class="sources" aria-labelledby="t-sources">
     <div class="wrap">
       <div class="sec-head" data-reveal>
-        <h2 id="t-sources">על מה יתבססו ההסברים</h2>
-        <p>המקורות המרכזיים שמהם יילקחו ההסברים והציטוטים בשאלות.</p>
+        <h2 id="t-sources">על מה מבוססים ההסברים</h2>
+        <p>המקורות המרכזיים שמהם לקוחים ההסברים והציטוטים בשאלות.</p>
       </div>
       <ul class="src-list" data-reveal style="--i:1">
         <li><i class="ph ph-book-open" aria-hidden="true"></i><span class="ltr-iso">Braunwald&#39;s Heart Disease 13e</span></li>
@@ -609,11 +613,11 @@
   </section>
 
   <section class="status" aria-labelledby="t-status">
-    <h2 id="t-status" class="sr">מה כבר קיים ומה נבנה עכשיו</h2>
+    <h2 id="t-status" class="sr">מה כבר קיים</h2>
     <div class="wrap status-grid">
       <div class="status-state" data-reveal>
         <div class="state done"><i class="ph ph-check-circle" aria-hidden="true"></i><div><h3>המנוע קיים ועובד</h3><p>מתמחים כבר מתכוננים איתו.</p></div></div>
-        <div class="state build"><i class="ph ph-hammer" aria-hidden="true"></i><div><h3>התוכן לקרדיולוגיה נבנה עכשיו</h3><p>השאירו מייל ונעדכן ברגע שזה נפתח.</p></div></div>
+        <div class="state done"><i class="ph ph-rocket-launch" aria-hidden="true"></i><div><h3>ההכנה לקרדיולוגיה פתוחה עכשיו</h3><p>פיילוט חינמי: חלק א׳ וחלק ב׳, באפליקציה.</p></div></div>
       </div>
       <p class="statement" data-reveal style="--i:1">שאלות בסגנון הבחינה, ולכל תשובה <em>הסבר שמגובה בציטוט מילה במילה מהמקור</em> שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם.</p>
     </div>
@@ -706,7 +710,7 @@
           <p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p>
         </article>
       </div>
-      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו קרבות בין מתמחים.</span></p>
+      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך:</strong> דו קרבות בין מתמחים.</span></p>
     </div>
   </section>
 
@@ -734,31 +738,12 @@
     </div>
   </section>
 
-  <section id="signup" class="sec signup-band" aria-labelledby="t-signup">
-    <div class="wrap signup-grid">
+  <section id="start" class="sec signup-band" aria-labelledby="t-start">
+    <div class="wrap">
       <div class="signup-copy" data-reveal>
-        <span class="eyebrow" lang="en">EARLY ACCESS</span>
-        <h2 id="t-signup">הרשמה לעדכון: קרדיולוגיה</h2>
-        <p class="signup-for">ההרשמה היא ל<strong>הכנה לבחינת מקצוע-על בקרדיולוגיה</strong>. נכתוב לכם כשהיא נפתחת.</p>
-        <ul class="perks">
-          <li><i class="ph ph-envelope-simple" aria-hidden="true"></i><span>נכתוב לכם ברגע שההכנה בקרדיולוגיה נפתחת.</span></li>
-        </ul>
-      </div>
-      <div class="signup" data-reveal style="--i:1">
-        <!-- `required` inside a real <form> makes the browser block the submit
-             itself, so the handler never sees an unconsented address. -->
-        <form id="notifyForm">
-          <label class="field" for="notifyEmail">כתובת מייל
-            <input id="notifyEmail" dir="auto" type="email" required autocomplete="email" inputmode="email" placeholder="name@example.com">
-          </label>
-          <label class="consent" for="notifyConsent">
-            <input id="notifyConsent" type="checkbox" required>
-            <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לבחינת מקצוע-על בקרדיולוגיה תיפתח.</span>
-          </label>
-          <button id="notifySubmit" class="btn" type="submit">עדכנו אותי</button>
-          <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
-        </form>
-        <span id="notifyMsg" role="status" aria-live="polite"></span>
+        <h2 id="t-start">מוכנים להתחיל?</h2>
+        <p class="signup-for"><strong>הכנה לבחינת מקצוע-על בקרדיולוגיה</strong> פתוחה עכשיו באפליקציה.</p>
+        <a class="btn hero-cta" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=cardio_closing" data-cardio-cta="closing">התחילו ללמוד — חינם<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
       </div>
     </div>
   </section>
@@ -993,66 +978,6 @@ function countdownState(days) {
     }, 250);
   })();
 
-  // "Notify me" → Supabase waitlist (insert-only via the publishable key; RLS
-  // blocks reads). source 'landing_cardio' marks these rows as cardiology
-  // sign-ups, apart from 'landing' (old homepage form) and 'app_door'/'app_gate'.
-  (function () {
-    var SUPA_URL = 'https://pappjpdsajkcoqrfqqqx.supabase.co';
-    var SUPA_KEY = 'sb_publishable_tV1q0WG7_bMLfsCIqOU1tA_PH8gZfCU';
-    var LABEL = 'עדכנו אותי';
-    var form = document.getElementById('notifyForm');
-    var email = document.getElementById('notifyEmail');
-    var consent = document.getElementById('notifyConsent');
-    var btn = document.getElementById('notifySubmit');
-    var msg = document.getElementById('notifyMsg');
-    var card = form.parentNode;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var val = (email.value || '').trim();
-      if (!val || !consent.checked) return;
-      btn.disabled = true; btn.innerHTML = '<span class="spin" aria-hidden="true"></span><span class="sr">שולחים</span>'; form.setAttribute('aria-busy', 'true');
-      if (msg.textContent) swapHeight(card, function () { msg.textContent = ''; msg.className = ''; });
-      fetch(SUPA_URL + '/rest/v1/waitlist', {
-        method: 'POST',
-        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
-                   'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ email: val, locale: 'he', source: 'landing_cardio', consent_at: new Date().toISOString() })
-      }).then(function (r) {
-        if (!(r.ok || r.status === 409)) { var err = new Error('status ' + r.status); err.server = true; throw err; } // 409 = already listed
-        // Every bundle's early signup is a mark in waitlist.interests, so this
-        // page's list is simply interests ? 'cardiology'. Set it on a new
-        // row and on a 409 (the address is already listed from an earlier form;
-        // the email is unique). Best effort: a failure here must not turn a
-        // sign-up the person already has into an error on screen; the row's
-        // source 'landing_cardio' still identifies a new sign-up.
-        return fetch(SUPA_URL + '/rest/v1/rpc/waitlist_add_interest', {
-          method: 'POST',
-          headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ p_email: val, p_interest: 'cardiology' })
-        }).catch(function () {});
-      }).then(function () {
-        form.removeAttribute('aria-busy');
-        swapHeight(card, function () {
-          form.style.display = 'none';
-          msg.className = 'ok-box';
-          msg.innerHTML = '<i class="ph ph-check-circle" aria-hidden="true"></i><span></span>';
-          msg.lastChild.textContent = 'נרשמתם לעדכונים על קרדיולוגיה. נכתוב לכם כשההכנה לבחינת מקצוע-על נפתחת.';
-        });
-        if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist_cardiology' });
-        if (typeof window.va === 'function') window.va('event', { name: 'cardio_signup' });
-      }).catch(function (err) {
-        form.removeAttribute('aria-busy');
-        btn.disabled = false; btn.textContent = LABEL;
-        // A thrown fetch (offline, blocked) is not the address's fault.
-        swapHeight(card, function () {
-          msg.className = 'err';
-          msg.textContent = err && err.server
-            ? 'ההרשמה לא נשמרה. בדקו את כתובת המייל ונסו שוב.'
-            : 'לא הצלחנו להתחבר. בדקו את החיבור לאינטרנט ונסו שוב בעוד רגע.';
-        });
-      });
-    });
-  })();
 </script>
 </body>
 </html>

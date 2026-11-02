@@ -122,8 +122,9 @@ function countdown(track) {
 }
 
 // Books first, then the rest. No per-item category label: some entries kept
-// as "guideline" in tracks.json are really review articles. A page with no
-// questions yet (cardiology, "being built now") speaks in the future tense.
+// as "guideline" in tracks.json are really review articles. A soon page with
+// no sample questions yet speaks in the future tense; a live page's
+// explanations already exist, sample questions or not.
 function sources(track, built) {
   const ordered = [...track.sources.filter((s) => s.kind === 'book'), ...track.sources.filter((s) => s.kind !== 'book')];
   const items = ordered.map((s) => {
@@ -252,7 +253,7 @@ export function renderPage(template, page, track) {
     url: SITE + track.href,
     leadHtml: rich(page.lead),
     countdown: countdown(track),
-    sources: sources(track, page.questions.length > 0),
+    sources: sources(track, page.mode === 'live' || page.questions.length > 0),
     questions: page.questions.length ? questions(page.questions, page.examBased) : '',
     states: states(page.states),
     perks: signup.perks ? perks(signup.perks) : '',

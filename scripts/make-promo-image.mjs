@@ -1,5 +1,5 @@
-// Renders the promo images for a specialty page: "coming soon" (fm, peds, cardio)
-// or "open now" (nephro), each with its own pill and, on the soon pages that
+// Renders the promo images for a specialty page: "coming soon" (fm, peds)
+// or "open now" (nephro, cardio), each with its own pill and, on the soon pages that
 // have one, the launch-price line.
 //
 //   node scripts/make-promo-image.mjs og      ->  og-family-medicine.png (1200x630, link preview)
@@ -25,7 +25,7 @@ const PAGES = {
   fm:     { slug: 'family-medicine', h1: 'הכנה לשלב א׳<br>ברפואת משפחה',            pill: 'בקרוב',      offer: LAUNCH_OFFER },
   peds:   { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים',            pill: 'בקרוב',      offer: LAUNCH_OFFER },
   nephro: { slug: 'nephrology',      h1: 'הכנה לבחינת<br>מקצוע-על בנפרולוגיה',      pill: 'פתוח עכשיו', offer: null },
-  cardio: { slug: 'cardiology',      h1: 'הכנה לבחינת<br>מקצוע-על בקרדיולוגיה',     pill: 'בקרוב',      offer: null },
+  cardio: { slug: 'cardiology',      h1: 'הכנה לבחינת<br>מקצוע-על בקרדיולוגיה',     pill: 'פתוח עכשיו', offer: null },
 };
 const PAGE = PAGES[process.argv[3] || 'fm'];
 

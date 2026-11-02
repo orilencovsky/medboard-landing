@@ -70,7 +70,7 @@ test('Hebrew page never shows the language pill', () => {
 test('announce and closing name every soon track, with Hebrew prefixes', () => {
   const out = render(real, page(ALL), 'he', 'x');
   assert.match(out, /הכנה לשלב א׳ ברפואת משפחה וברפואת ילדים/);
-  assert.match(out, /מתכוננים לבחינה ברפואת משפחה, ברפואת ילדים או בקרדיולוגיה\?/);
+  assert.match(out, /מתכוננים לבחינה ברפואת משפחה או ברפואת ילדים\?/);
 });
 
 test('a new soon entry is one list item: it reaches cards, chips, announce and closing', () => {
@@ -82,7 +82,7 @@ test('a new soon entry is one list item: it reaches cards, chips, announce and c
   assert.match(out, /id="track-internal"/);
   assert.match(out, /href="#track-internal"/);
   assert.match(out, /ברפואת משפחה, ברפואת ילדים ובפנימית/);
-  assert.match(out, /ברפואת משפחה, ברפואת ילדים, בקרדיולוגיה או בפנימית/);
+  assert.match(out, /ברפואת משפחה, ברפואת ילדים או בפנימית/);
 });
 
 test('no soon tracks: announce and closing render empty, markers kept', () => {
@@ -143,17 +143,20 @@ test('the shipped list has the four tracks, IMA dates and the nephrology page li
   assert.equal(by.nephrology.cta, undefined);
   assert.equal(by.nephrology.en.href, 'https://app.meduxa.ai/?signup=1&src=landing&pl=hero');
   assert.equal(by.nephrology.en.cta, 'hero');
-  assert.equal(by.cardiology.status, 'soon');
+  assert.equal(by.cardiology.status, 'live');
+  assert.equal(by.cardiology.exam.nameHe, 'בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026)');
   assert.equal(by.cardiology.href, '/cardiology');
   assert.ok(!/מחיר השקה/.test(by.cardiology.he.blurb));
 });
 
-test('cardiology gets a card and the closing line, but not the launch-price bar', () => {
+test('cardiology is live: a live card, out of the launch-price bar and the closing line', () => {
   const html = render(real, page(ALL), 'he', 't');
-  assert.match(html, /id="track-cardiology"/);
+  assert.match(html, /<article class="track track--live" id="track-cardiology">/);
+  assert.match(html, /class="hero-track hero-track--live" href="#track-cardiology"/);
   assert.match(html, /href="\/nephrology"/);
   // announce bar keeps today's text: launch price, FM + peds only
   assert.match(html, /הכנה לשלב א׳ ברפואת משפחה וברפואת ילדים · מחיר השקה/);
-  // closing line names all three soon tracks, without "שלב א׳"
-  assert.match(html, /מתכוננים לבחינה ברפואת משפחה, ברפואת ילדים או בקרדיולוגיה\?/);
+  // the closing line names soon tracks only
+  assert.match(html, /מתכוננים לבחינה ברפואת משפחה או ברפואת ילדים\?/);
+  assert.doesNotMatch(html, /בקרדיולוגיה\? <a href="#tracks">/);
 });
