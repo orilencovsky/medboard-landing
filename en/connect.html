@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
+<script defer src="/consent.js"></script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connect your AI to MeduXa — MeduXa.ai</title>
+<link rel="canonical" href="https://meduxa.ai/en/connect" />
+<link rel="alternate" hreflang="he" href="https://meduxa.ai/connect" />
+<link rel="alternate" hreflang="en" href="https://meduxa.ai/en/connect" />
+<link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/connect" />
+<meta name="description" content="How to connect Claude, ChatGPT or another AI tool to your MeduXa account, what each tool does, what is stored and how to disconnect." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#061225" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
+  .doc { max-width: 820px; margin: 0 auto; padding: 56px 32px 88px; }
+  .doc h1 { margin: 0 0 8px; font-size: 38px; font-weight: 700; color: #0F172A; line-height: 1.25; }
+  .doc h2 { margin: 44px 0 14px; font-size: 22px; font-weight: 700; color: #0F172A; }
+  .doc h3 { margin: 26px 0 8px; font-size: 17px; font-weight: 600; color: #0F172A; }
+  .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
+  .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
+  .doc li { margin-bottom: 8px; }
+  /* In running text a link must not be told apart by colour alone (#0E7490 vs the
+     body #334155 is 1.9:1, under WCAG 1.4.1's 3:1) — so it keeps its underline. */
+  .doc p a, .doc li a, .doc td a { text-decoration: underline; text-underline-offset: 2px; }
+  .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
+  .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }
+  /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
+  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
+  .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
+  .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
+  .doc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .foot-link { color: #7DA2C4; font-size: 14px; transition: color .15s; }
+  .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  .m-link { color: #B8D4EA; font-size: 15px; padding: 10px 4px; }
+  :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
+  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
+          padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
+  .skip:focus { inset-inline-start: 0; text-decoration: none; color: #fff; }
+  @media (max-width: 640px) {
+    .doc { padding: 36px 20px 64px; }
+    .doc h1 { font-size: 30px; }
+    .doc h2 { font-size: 20px; }
+    .doc table, .doc thead, .doc tbody, .doc tr, .doc th, .doc td { display: block; }
+    .doc thead { display: none; }
+    .doc tr { border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 12px; background: #fff; }
+    .doc td { border: none; border-bottom: 1px solid #EEF2F6; }
+    .doc tr td:last-child { border-bottom: none; }
+    .doc td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: #0E7490; margin-bottom: 4px; }
+    footer [data-mq-footer] { flex-direction: column !important; text-align: center !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div style="background: #F0F6FA; min-height: 100vh;">
+
+  <!-- NAV -->
+  <nav style="background: rgba(6,18,37,.96); border-bottom: 1px solid rgba(34,211,238,.15);">
+    <div class="doc-nav" style="max-width: 1200px; margin: 0 auto; padding: 0 32px; min-height: 68px;">
+      <a href="/en" style="display: flex; align-items: center; gap: 12px;">
+        <svg width="34" height="34" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+          <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+          <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+          <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+          <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+        </svg>
+        <span style="display: flex; align-items: baseline;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 18px;">
+        <a href="/en/privacy" style="color: #B8D4EA; font-size: 14px;">Privacy Policy</a>
+        <a href="/en/terms" style="color: #B8D4EA; font-size: 14px;">Terms of Use</a>
+        <a href="/connect" lang="he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 6px 13px;">עברית</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="doc" id="main">
+    <h1>Connect your AI to MeduXa</h1>
+    <p class="updated">Last updated: November 8, 2026</p>
+
+    <p>You can practise with your MeduXa account inside Claude, ChatGPT or another AI tool: ask for practice questions by topic, answer in the chat, have your answer checked with an explanation, and see your progress and the review cards that are due.</p>
+
+    <div class="card">
+      <p><strong>In short:</strong> you connect once, from a browser on a computer, with your MeduXa account. The connection does not change your answers or progress in the app unless you turn on "Save answers". You can disconnect at any time.</p>
+    </div>
+
+    <h2>1. What you need</h2>
+    <ul>
+      <li>A MeduXa account with an active study pack.</li>
+      <li>A claude.ai or ChatGPT account, or a tool that runs on your computer (for example Claude Code or Cursor).</li>
+      <li>The connection address: <code>https://app.meduxa.ai/api/mcp</code> (no slash at the end).</li>
+    </ul>
+
+    <h2>2. Connect claude.ai</h2>
+    <p><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=MeduXa&amp;connectorUrl=https%3A%2F%2Fapp.meduxa.ai%2Fapi%2Fmcp" rel="noopener">Open the add-connector window in Claude</a>, with the name and address already filled in. Then:</p>
+    <ol>
+      <li>Click Continue and finish adding it.</li>
+      <li>Sign in to MeduXa and approve access.</li>
+      <li>In a new chat, open the tools menu (+) next to the message box and turn MeduXa on.</li>
+    </ol>
+    <p>If the link does not open: in Claude's settings choose Connectors, click Add custom connector, give it a name and paste the address. A free account can add one custom connector. On a Team or Enterprise plan, an organization Owner usually adds connectors.</p>
+
+    <h2>3. Connect ChatGPT</h2>
+    <ol>
+      <li>In Settings, under apps and connectors, turn on Developer mode.</li>
+      <li>Create a new connector and paste the address.</li>
+      <li>Sign in to MeduXa and approve access.</li>
+      <li>In a new chat, click + next to the message box, choose Developer mode and turn MeduXa on.</li>
+    </ol>
+    <p>Developer mode is available on some ChatGPT plans only.</p>
+
+    <h2>4. Claude Code, Cursor and other tools on your computer</h2>
+    <p>These connect with a personal token: in the app's settings menu choose "Connect my AI", create a token and copy the ready-made setup for your tool. A personal token expires after 90 days.</p>
+
+    <h2>5. What the tools do</h2>
+    <table>
+      <thead><tr><th>Tool</th><th>What it does</th><th>Does it write anything?</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Tool">get_my_status, list_topics, get_progress, list_due_reviews</td><td data-label="What it does">Your packs and access expiry, the topics, your progress by topic, and the review cards that are due.</td><td data-label="Does it write anything?">No.</td></tr>
+        <tr><td data-label="Tool">get_practice_questions</td><td data-label="What it does">Text practice questions you have not answered yet, without the answer key.</td><td data-label="Does it write anything?">Logs which questions were sent (deleted after 30 days) and counts them toward the daily limit.</td></tr>
+        <tr><td data-label="Tool">check_answer</td><td data-label="What it does">Checks the option you chose and returns the correct answer, plus the explanation and source where cleared for sharing.</td><td data-label="Does it write anything?">Counts the check toward the daily limit. With "Save answers": saves your first answer to the question, as answering in the app does.</td></tr>
+        <tr><td data-label="Tool">get_review_questions, check_review_answer</td><td data-label="What it does">Review questions that are due, and checking your answer to them (where available on your account).</td><td data-label="Does it write anything?">With "Save answers": updates that card's review schedule.</td></tr>
+        <tr><td data-label="Tool">create_practice_set</td><td data-label="What it does">Saves a list of questions as a practice set under "My sets" in the app, when you ask it to (where available on your account).</td><td data-label="Does it write anything?">Yes: the set. Saving again with the same name and day replaces it.</td></tr>
+      </tbody>
+    </table>
+    <p>Questions with images are not sent through the connection. The tool never receives another user's data or any patient data.</p>
+
+    <h2>6. What is stored, and where</h2>
+    <p>What we store, for how long and on what legal basis is set out in the <a href="/en/privacy">privacy policy</a>, section 11. What the tool receives from you and from MeduXa is processed by the AI provider you chose, under its own privacy policy. A connection from claude.ai or ChatGPT lasts 30 days; after that you sign in again.</p>
+
+    <h2>7. Disconnecting</h2>
+    <p>You can disconnect at any time: in the app, under "Connect my AI" (one connection or all of them), or in Claude's or ChatGPT's connector settings. Changing or resetting your password disconnects all of them.</p>
+
+    <h2>8. Questions</h2>
+    <p>Write to us: <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>.</p>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background: #04101E; padding: 36px 32px;">
+    <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+        <a class="foot-link" href="/en/privacy">Privacy Policy</a>
+        <a class="foot-link" href="/en/terms">Terms of Use</a>
+        <a class="foot-link" href="/en/accessibility">Accessibility</a>
+      </span>
+      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · Study smarter for the boards · All rights reserved</span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>

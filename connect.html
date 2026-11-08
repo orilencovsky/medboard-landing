@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
+<script defer src="/consent.js"></script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>חיבור כלי AI ל-MeduXa — MeduXa.ai</title>
+<link rel="canonical" href="https://meduxa.ai/connect" />
+<link rel="alternate" hreflang="he" href="https://meduxa.ai/connect" />
+<link rel="alternate" hreflang="en" href="https://meduxa.ai/en/connect" />
+<link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/connect" />
+<meta name="description" content="איך מחברים את Claude, ‏ChatGPT או כלי AI אחר לחשבון MeduXa שלך, מה כל כלי עושה, מה נשמר ואיך מנתקים." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#061225" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
+  /* Latin terms and numerals inside Hebrew sentences, kept from reordering. */
+  .ltr-iso { direction: ltr; unicode-bidi: isolate; }
+  .doc { max-width: 820px; margin: 0 auto; padding: 56px 32px 88px; }
+  .doc h1 { margin: 0 0 8px; font-size: 38px; font-weight: 700; color: #0F172A; line-height: 1.25; }
+  .doc h2 { margin: 44px 0 14px; font-size: 22px; font-weight: 700; color: #0F172A; }
+  .doc h3 { margin: 26px 0 8px; font-size: 17px; font-weight: 600; color: #0F172A; }
+  .doc p, .doc li { font-size: 16px; color: #334155; line-height: 1.75; }
+  .doc ul, .doc ol { padding-inline-start: 22px; margin: 12px 0; }
+  .doc li { margin-bottom: 8px; }
+  /* In running text a link must not be told apart by colour alone (#0E7490 vs the
+     body #334155 is 1.9:1, under WCAG 1.4.1's 3:1) — so it keeps its underline. */
+  .doc p a, .doc li a, .doc td a { text-decoration: underline; text-underline-offset: 2px; }
+  .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .doc th, .doc td { border: 1px solid #E2E8F0; padding: 12px 14px; text-align: start; font-size: 15px; color: #334155; line-height: 1.65; vertical-align: top; }
+  .doc th { background: #E7F0F7; color: #0F172A; font-weight: 600; }
+  /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
+  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
+  .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
+  .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
+  .doc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .foot-link { color: #7DA2C4; font-size: 14px; transition: color .15s; }
+  .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  .m-link { color: #B8D4EA; font-size: 15px; padding: 10px 4px; }
+  :focus-visible { outline: 2px solid #0E7490; outline-offset: 2px; }
+  .skip { position: absolute; inset-inline-start: -9999px; top: 0; z-index: 100; background: #04101E; color: #fff;
+          padding: 12px 20px; border-radius: 0 0 10px 10px; font-size: 15px; font-weight: 600; }
+  .skip:focus { inset-inline-start: 0; text-decoration: none; color: #fff; }
+  @media (max-width: 640px) {
+    .doc { padding: 36px 20px 64px; }
+    .doc h1 { font-size: 30px; }
+    .doc h2 { font-size: 20px; }
+    .doc table, .doc thead, .doc tbody, .doc tr, .doc th, .doc td { display: block; }
+    .doc thead { display: none; }
+    .doc tr { border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 12px; background: #fff; }
+    .doc td { border: none; border-bottom: 1px solid #EEF2F6; }
+    .doc tr td:last-child { border-bottom: none; }
+    .doc td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: #0E7490; margin-bottom: 4px; }
+    footer [data-mq-footer] { flex-direction: column !important; text-align: center !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">דילוג לתוכן העמוד</a>
+
+<div dir="rtl" style="background: #F0F6FA; min-height: 100vh;">
+
+  <!-- NAV -->
+  <nav style="background: rgba(6,18,37,.96); border-bottom: 1px solid rgba(34,211,238,.15);">
+    <div class="doc-nav" style="max-width: 1200px; margin: 0 auto; padding: 0 32px; min-height: 68px;">
+      <a href="/" style="display: flex; align-items: center; gap: 12px;">
+        <svg width="34" height="34" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="92" height="92" rx="22" fill="#0B2545"></rect>
+          <rect x="2" y="2" width="92" height="92" rx="22" stroke="#22D3EE" stroke-width="3"></rect>
+          <path d="M18 22 C 30 26, 40 36, 48 48 C 56 60, 66 70, 78 74" stroke="#1E4A6E" stroke-width="6" stroke-linecap="round" fill="none"></path>
+          <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
+          <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
+        </svg>
+        <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 18px;">
+        <a href="/privacy" style="color: #B8D4EA; font-size: 14px;">מדיניות פרטיות</a>
+        <a href="/terms" style="color: #B8D4EA; font-size: 14px;">תנאי שימוש</a>
+        <a href="/en/connect" lang="en" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 6px 13px; direction: ltr;">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="doc" id="main">
+    <h1>חיבור כלי AI ל-MeduXa</h1>
+    <p class="updated">עודכן לאחרונה: 8 בנובמבר 2026</p>
+
+    <p>אפשר לתרגל עם החשבון שלך ב-<span class="ltr-iso">MeduXa</span> מתוך <span class="ltr-iso">Claude</span>, <span class="ltr-iso">ChatGPT</span> או כלי <span class="ltr-iso">AI</span> אחר: לבקש שאלות תרגול לפי נושא, לענות בשיחה, לבדוק את התשובה ולקבל הסבר, ולראות את ההתקדמות שלך ואת כרטיסי החזרה שהגיע מועדם.</p>
+
+    <div class="card">
+      <p><strong>בקצרה:</strong> מתחברים פעם אחת, מדפדפן במחשב, עם החשבון שלך ב-<span class="ltr-iso">MeduXa</span>. החיבור אינו משנה את התשובות או את ההתקדמות שלך באפליקציה, אלא אם הפעלת את "שמירת תשובות". אפשר לנתק אותו בכל רגע.</p>
+    </div>
+
+    <h2>1. מה צריך</h2>
+    <ul>
+      <li>חשבון ב-<span class="ltr-iso">MeduXa</span> עם חבילת לימוד פעילה.</li>
+      <li>חשבון ב-<span class="ltr-iso">claude.ai</span> או ב-<span class="ltr-iso">ChatGPT</span>, או כלי שרץ במחשב (למשל <span class="ltr-iso">Claude Code</span> או <span class="ltr-iso">Cursor</span>).</li>
+      <li>הכתובת של החיבור: <code class="ltr-iso">https://app.meduxa.ai/api/mcp</code> (בלי לוכסן בסוף).</li>
+    </ul>
+
+    <h2>2. חיבור ל-<span class="ltr-iso">claude.ai</span></h2>
+    <p><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=MeduXa&amp;connectorUrl=https%3A%2F%2Fapp.meduxa.ai%2Fapi%2Fmcp" rel="noopener">פתיחת חלון ההוספה ב-<span class="ltr-iso">Claude</span></a>, עם השם והכתובת כבר ממולאים. אחר כך:</p>
+    <ol>
+      <li>לחץ <span class="ltr-iso">Continue</span> וסיים את ההוספה.</li>
+      <li>התחבר ל-<span class="ltr-iso">MeduXa</span> ואשר את הגישה.</li>
+      <li>בשיחה חדשה, פתח את תפריט הכלים (+) ליד תיבת הכתיבה והפעל את <span class="ltr-iso">MeduXa</span>.</li>
+    </ol>
+    <p>אם הקישור לא נפתח: בהגדרות של <span class="ltr-iso">Claude</span> בוחרים <span class="ltr-iso">Connectors</span>, לוחצים <span class="ltr-iso">Add custom connector</span>, נותנים שם ומדביקים את הכתובת. בחשבון חינמי אפשר להוסיף מחבר מותאם אחד. בתוכנית <span class="ltr-iso">Team</span> או <span class="ltr-iso">Enterprise</span>, בדרך כלל מנהל הארגון מוסיף מחברים.</p>
+
+    <h2>3. חיבור ל-<span class="ltr-iso">ChatGPT</span></h2>
+    <ol>
+      <li>בהגדרות, באזור האפליקציות והמחברים, הפעל את מצב המפתחים (<span class="ltr-iso">Developer mode</span>).</li>
+      <li>צור מחבר חדש והדבק את הכתובת.</li>
+      <li>התחבר ל-<span class="ltr-iso">MeduXa</span> ואשר את הגישה.</li>
+      <li>בשיחה חדשה, לחץ על + ליד תיבת הכתיבה, בחר <span class="ltr-iso">Developer mode</span> והפעל את <span class="ltr-iso">MeduXa</span>.</li>
+    </ol>
+    <p>מצב המפתחים זמין רק בחלק מהמנויים של <span class="ltr-iso">ChatGPT</span>.</p>
+
+    <h2>4. <span class="ltr-iso">Claude Code</span>, <span class="ltr-iso">Cursor</span> וכלים שרצים במחשב</h2>
+    <p>הכלים האלה מתחברים עם טוקן אישי: באפליקציה, בתפריט ההגדרות, בוחרים "חיבור ל-AI שלי", יוצרים טוקן ומעתיקים את ההגדרה המוכנה לכלי שלך. טוקן אישי פג אחרי 90 יום.</p>
+
+    <h2>5. מה הכלים עושים</h2>
+    <table>
+      <thead><tr><th>כלי</th><th>מה הוא עושה</th><th>כותב משהו?</th></tr></thead>
+      <tbody>
+        <tr><td data-label="כלי"><span class="ltr-iso">get_my_status</span>, <span class="ltr-iso">list_topics</span>, <span class="ltr-iso">get_progress</span>, <span class="ltr-iso">list_due_reviews</span></td><td data-label="מה הוא עושה">החבילות ותוקף הגישה, הנושאים, ההתקדמות שלך לפי נושא, וכרטיסי החזרה שהגיע מועדם.</td><td data-label="כותב משהו?">לא.</td></tr>
+        <tr><td data-label="כלי"><span class="ltr-iso">get_practice_questions</span></td><td data-label="מה הוא עושה">שאלות תרגול טקסטואליות שעוד לא ענית עליהן, בלי התשובה הנכונה.</td><td data-label="כותב משהו?">רושם אילו שאלות נשלחו (נמחק אחרי 30 יום) ומונה אותן במגבלה היומית.</td></tr>
+        <tr><td data-label="כלי"><span class="ltr-iso">check_answer</span></td><td data-label="מה הוא עושה">בודק את התשובה שבחרת ומחזיר את התשובה הנכונה, ואם אושר לשיתוף גם הסבר ומקור.</td><td data-label="כותב משהו?">מונה את הבדיקה במגבלה היומית. עם "שמירת תשובות": שומר את התשובה הראשונה שלך לשאלה, כמו מענה באפליקציה.</td></tr>
+        <tr><td data-label="כלי"><span class="ltr-iso">get_review_questions</span>, <span class="ltr-iso">check_review_answer</span></td><td data-label="מה הוא עושה">שאלות חזרה שהגיע מועדן, ובדיקת התשובה עליהן (כשהאפשרות זמינה בחשבון שלך).</td><td data-label="כותב משהו?">עם "שמירת תשובות": מעדכן את לוח החזרות של אותו כרטיס.</td></tr>
+        <tr><td data-label="כלי"><span class="ltr-iso">create_practice_set</span></td><td data-label="מה הוא עושה">שומר רשימת שאלות כסט תרגול ב"הסטים שלי" באפליקציה, כשביקשת זאת (כשהאפשרות זמינה בחשבון שלך).</td><td data-label="כותב משהו?">כן: את הסט. שמירה חוזרת באותו שם ובאותו יום מחליפה אותו.</td></tr>
+      </tbody>
+    </table>
+    <p>שאלות עם תמונות לא נשלחות דרך החיבור. הכלי לעולם לא מקבל מידע של משתמש אחר או מידע על מטופלים.</p>
+
+    <h2>6. מה נשמר ואיפה</h2>
+    <p>מה נשמר אצלנו, לכמה זמן ועל איזה בסיס חוקי מפורט ב<a href="/privacy">מדיניות הפרטיות</a>, סעיף 11. מה שהכלי מקבל ממך ומ-<span class="ltr-iso">MeduXa</span> מעובד אצל ספק ה-<span class="ltr-iso">AI</span> שבחרת, לפי מדיניות הפרטיות שלו. חיבור מתוך <span class="ltr-iso">claude.ai</span> או <span class="ltr-iso">ChatGPT</span> תקף 30 יום; אחרי זה מתחברים שוב.</p>
+
+    <h2>7. ניתוק</h2>
+    <p>אפשר לנתק בכל רגע: באפליקציה, ב"חיבור ל-AI שלי" (חיבור אחד או את כולם יחד), או בהגדרות המחברים של <span class="ltr-iso">Claude</span> או <span class="ltr-iso">ChatGPT</span>. שינוי או איפוס סיסמה מנתקים את כל החיבורים.</p>
+
+    <h2>8. שאלות</h2>
+    <p>כתבו לנו: <a href="mailto:privacy@meduxa.ai" class="ltr-iso">privacy@meduxa.ai</a>.</p>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background: #04101E; padding: 36px 32px;">
+    <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+        <a class="foot-link" href="/privacy">מדיניות פרטיות</a>
+        <a class="foot-link" href="/terms">תנאי שימוש</a>
+        <a class="foot-link" href="/accessibility">הצהרת נגישות</a>
+      </span>
+      <span style="font-size: 14px; color: #5B87A8;">© 2026 MeduXa · ללמוד חכם יותר לבחינות ההתמחות · כל הזכויות שמורות</span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
