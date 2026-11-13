@@ -30,6 +30,7 @@
     {
       "id": "nephrology",
       "status": "live",
+      "icon": "nephrology",
       "href": "/nephrology",
       "pageLang": "he",
       "he": {
@@ -95,6 +96,7 @@
     {
       "id": "family-medicine",
       "status": "soon",
+      "icon": "family-medicine",
       "launchOffer": true,
       "href": "/family-medicine",
       "pageLang": "he",
@@ -155,6 +157,7 @@
     {
       "id": "pediatrics",
       "status": "soon",
+      "icon": "pediatrics",
       "launchOffer": true,
       "href": "/pediatrics",
       "pageLang": "he",
@@ -191,6 +194,7 @@
     {
       "id": "cardiology",
       "status": "live",
+      "icon": "cardiology",
       "href": "/cardiology",
       "pageLang": "he",
       "he": {
@@ -226,6 +230,151 @@
         {
           "title": "מאמרים עדכניים מכתבי עת (Eur Heart J, JACC, Circulation, JAMA)",
           "kind": "guideline"
+        }
+      ]
+    },
+    {
+      "id": "geriatrics",
+      "status": "soon",
+      "icon": "geriatrics",
+      "href": "/geriatrics",
+      "pageLang": "he",
+      "he": {
+        "name": "גריאטריה",
+        "inline": "גריאטריה",
+        "stage": "שלב א׳",
+        "blurb": "שאלות בסגנון הבחינה, והסבר עם ציטוט מ-{{Hazzard}} ומ-{{Harrison}}.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Geriatrics",
+        "inline": "geriatrics",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from Hazzard and Harrison.",
+        "action": "Get notified"
+      },
+      "exam": {
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "Hazzard's Geriatric Medicine and Gerontology 8e",
+          "kind": "book"
+        },
+        {
+          "title": "Harrison's Principles of Internal Medicine 22e",
+          "kind": "book"
+        },
+        {
+          "title": "פרסומי משרד הבריאות",
+          "kind": "guideline"
+        },
+        {
+          "title": "מאמרים מכתבי עת",
+          "kind": "guideline"
+        }
+      ]
+    },
+    {
+      "id": "psychiatry",
+      "status": "soon",
+      "icon": "psychiatry",
+      "href": "/psychiatry",
+      "pageLang": "he",
+      "he": {
+        "name": "פסיכיאטריה",
+        "inline": "פסיכיאטריה",
+        "stage": "שלב א׳",
+        "blurb": "שאלות בסגנון הבחינה, והסבר עם ציטוט מ-{{DSM‑5}}.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Psychiatry",
+        "inline": "psychiatry",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from the DSM‑5.",
+        "action": "Get notified"
+      },
+      "exam": {
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "DSM-5 (American Psychiatric Association, 2013)",
+          "kind": "book"
+        }
+      ]
+    },
+    {
+      "id": "anesthesia",
+      "status": "soon",
+      "icon": "anesthesia",
+      "href": "/anesthesia",
+      "pageLang": "he",
+      "he": {
+        "name": "הרדמה",
+        "inline": "הרדמה",
+        "stage": "שלב א׳",
+        "blurb": "שאלות בסגנון הבחינה, והסבר עם ציטוט מ-{{Miller's Anesthesia}}.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Anesthesia",
+        "inline": "anesthesia",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from Miller's Anesthesia.",
+        "action": "Get notified"
+      },
+      "exam": {
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "Miller's Anesthesia 10e",
+          "kind": "book"
+        }
+      ]
+    },
+    {
+      "id": "obgyn",
+      "status": "soon",
+      "icon": "obgyn",
+      "href": "/obgyn",
+      "pageLang": "he",
+      "he": {
+        "name": "מיילדות וגינקולוגיה",
+        "inline": "מיילדות וגינקולוגיה",
+        "stage": "שלב א׳",
+        "blurb": "שאלות בסגנון הבחינה, והסבר עם ציטוט מ-{{Gabbe}}, {{Novak}} ו-{{Speroff}}.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Obstetrics and gynecology",
+        "inline": "obstetrics and gynecology",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from Gabbe, Novak and Speroff.",
+        "action": "Get notified"
+      },
+      "exam": {
+        "date": "2027-06-02",
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx"
+      },
+      "sources": [
+        {
+          "title": "Gabbe's Obstetrics: Normal and Problem Pregnancies 9e",
+          "kind": "book"
+        },
+        {
+          "title": "Berek & Novak's Gynecology 17e",
+          "kind": "book"
+        },
+        {
+          "title": "Speroff's Clinical Gynecologic Endocrinology and Infertility 10e",
+          "kind": "book"
         }
       ]
     }

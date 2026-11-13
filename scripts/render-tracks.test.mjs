@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { esc, rich, list, validate, render } from './render-tracks.mjs';
+import { esc, rich, list, validate, render, fillSpans } from './render-tracks.mjs';
 
 const real = JSON.parse(readFileSync(new URL('../tracks.json', import.meta.url), 'utf8'));
 const clone = () => JSON.parse(JSON.stringify(real));
@@ -70,19 +70,19 @@ test('Hebrew page never shows the language pill', () => {
 test('announce and closing name every soon track, with Hebrew prefixes', () => {
   const out = render(real, page(ALL), 'he', 'x');
   assert.match(out, /הכנה לשלב א׳ ברפואת משפחה וברפואת ילדים/);
-  assert.match(out, /מתכוננים לבחינה ברפואת משפחה או ברפואת ילדים\?/);
+  assert.match(out, /מתכוננים לבחינה ברפואת משפחה, ברפואת ילדים, בגריאטריה, בפסיכיאטריה, בהרדמה או במיילדות וגינקולוגיה\?/);
 });
 
 test('a new soon entry is one list item: it reaches cards, chips, announce and closing', () => {
   const d = clone();
-  d.tracks.push({ id: 'internal', status: 'soon', launchOffer: true, href: '/internal-medicine',
+  d.tracks.push({ id: 'internal', status: 'soon', icon: 'family-medicine', launchOffer: true, href: '/internal-medicine',
     he: { name: 'פנימית', inline: 'פנימית', stage: 'שלב א', blurb: 'x', action: 'להרשמה מוקדמת' },
     en: { name: 'Internal medicine', inline: 'internal medicine', stage: 'Stage A', blurb: 'x', action: 'Join' } });
   const out = render(d, page(ALL), 'he', 'x');
   assert.match(out, /id="track-internal"/);
   assert.match(out, /href="#track-internal"/);
   assert.match(out, /ברפואת משפחה, ברפואת ילדים ובפנימית/);
-  assert.match(out, /ברפואת משפחה, ברפואת ילדים או בפנימית/);
+  assert.match(out, /במיילדות וגינקולוגיה או בפנימית/);
 });
 
 test('no soon tracks: announce and closing render empty, markers kept', () => {
@@ -115,8 +115,8 @@ test('shipped pages are in sync with tracks.json', () => {
 
 test('coming-soon chips carry a non-colour marker (clock + words), live chips do not', () => {
   const out = render(real, page(ALL), 'he', 'x');
-  assert.match(out, /data-track="pediatrics" data-track-via="chip">רפואת ילדים<svg class="hero-track-clock"[^]*?<\/svg><span class="hero-track-soon">· בקרוב<\/span><\/a>/);
-  assert.doesNotMatch(out, /data-track="nephrology" data-track-via="chip">[^<]*<svg/);
+  assert.match(out, /data-track="pediatrics" data-track-via="chip"><svg class="hero-track-icon"[^]*?<\/svg>רפואת ילדים<svg class="hero-track-clock"[^]*?<\/svg><span class="hero-track-soon">· בקרוב<\/span><\/a>/);
+  assert.doesNotMatch(out, /data-track="nephrology" data-track-via="chip">[^]*?<\/svg>נפרולוגיה<svg/);
 });
 
 test('validate requires an ISO exam date, an exam name and a non-empty sources list', () => {
@@ -130,9 +130,25 @@ test('validate requires an ISO exam date, an exam name and a non-empty sources l
   assert.throws(() => validate(d), /kind/);
 });
 
-test('the shipped list has the four tracks, IMA dates and the nephrology page link', () => {
+test('validate accepts a track whose exam date is not published yet, but not an empty date', () => {
+  const a = clone(); delete a.tracks[0].exam.date;
+  assert.doesNotThrow(() => validate(a));
+  const b = clone(); b.tracks[0].exam.date = '';
+  assert.throws(() => validate(b), /exam\.date/);
+  const c = clone(); delete c.tracks[0].exam;
+  assert.throws(() => validate(c), /exam is required/);
+});
+
+test('the shipped list has the eight tracks, IMA dates and the nephrology page link', () => {
   const by = Object.fromEntries(real.tracks.map((t) => [t.id, t]));
-  assert.deepEqual(Object.keys(by).sort(), ['cardiology', 'family-medicine', 'nephrology', 'pediatrics']);
+  assert.deepEqual(Object.keys(by).sort(), ['anesthesia', 'cardiology', 'family-medicine', 'geriatrics', 'nephrology', 'obgyn', 'pediatrics', 'psychiatry']);
+  for (const id of ['geriatrics', 'psychiatry', 'anesthesia', 'obgyn']) {
+    assert.equal(by[id].status, 'soon', id);
+    assert.equal(by[id].href, '/' + id, id);
+    assert.equal(by[id].launchOffer, undefined, id); // no launch-price promise on these
+  }
+  assert.equal(by.obgyn.exam.date, '2027-06-02');
+  for (const id of ['geriatrics', 'psychiatry', 'anesthesia']) assert.equal(by[id].exam.date, undefined, id);
   assert.equal(by.nephrology.exam.date, '2027-01-12');
   assert.equal(by.cardiology.exam.date, '2026-12-15');
   assert.equal(by['family-medicine'].exam.date, '2027-06-14');
@@ -157,6 +173,33 @@ test('cardiology is live: a live card, out of the launch-price bar and the closi
   // announce bar keeps today's text: launch price, FM + peds only
   assert.match(html, /הכנה לשלב א׳ ברפואת משפחה וברפואת ילדים · מחיר השקה/);
   // the closing line names soon tracks only
-  assert.match(html, /מתכוננים לבחינה ברפואת משפחה או ברפואת ילדים\?/);
+  assert.match(html, /מתכוננים לבחינה ברפואת משפחה, ברפואת ילדים, בגריאטריה, בפסיכיאטריה, בהרדמה או במיילדות וגינקולוגיה\?/);
   assert.doesNotMatch(html, /בקרדיולוגיה\? <a href="#tracks">/);
+});
+
+test('fillSpans widens the soon cards of the last row so the 4-column grid has no empty cells', () => {
+  const L = (id) => ({ id, status: 'live' }), S = (id) => ({ id, status: 'soon' });
+  assert.deepEqual(fillSpans([L('a'), S('b'), S('c')]), {}); // full row
+  assert.deepEqual(fillSpans([L('a'), S('b'), S('c'), S('d'), S('e')]), { d: 2, e: 2 });
+  assert.deepEqual(fillSpans([S('a'), S('b'), S('c'), S('d'), S('e')]), { e: 4 });
+  assert.deepEqual(fillSpans([S('a'), S('b'), S('c'), S('d'), S('e'), S('f'), S('g')]), { e: 2 });
+  assert.deepEqual(fillSpans([L('a'), L('b'), L('c')]), {}); // a live-only last row stays as it is
+  // the shipped list: 2 live + 6 soon leaves the last two soon cards half a row each
+  assert.deepEqual(fillSpans(real.tracks), { anesthesia: 2, obgyn: 2 });
+});
+
+test('every track has its specialty icon on the card and the chip, hidden from screen readers', () => {
+  const out = render(real, page(ALL), 'he', 'x');
+  for (const t of real.tracks) {
+    assert.match(out, new RegExp(`id="track-${t.id}">\\s*<div class="track-top"><span class="track-icon"><svg class="track-icon-svg" aria-hidden="true" focusable="false"`), t.id);
+    assert.match(out, new RegExp(`data-track="${t.id}" data-track-via="chip"><svg class="hero-track-icon" aria-hidden="true" focusable="false"`), t.id);
+  }
+  assert.doesNotMatch(out, /<svg[^>]*\swidth="48"/); // the source size is dropped; CSS sizes the icon
+});
+
+test('validate refuses a track whose icon file does not exist', () => {
+  const a = clone(); a.tracks[0].icon = 'no-such-icon';
+  assert.throws(() => validate(a), /icon/);
+  const b = clone(); delete b.tracks[0].icon;
+  assert.throws(() => validate(b), /icon/);
 });

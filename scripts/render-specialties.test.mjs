@@ -38,6 +38,28 @@ test('FM and peds regenerate with their own source, interest and events', () => 
   assert.ok(!peds.includes('landing_fm'));
 });
 
+test('a track with no published exam date says so and draws no countdown', () => {
+  const html = render('geriatrics');
+  const out = served(html);
+  assert.ok(out.includes('בחינת שלב א׳ · מועד הבחינה טרם פורסם'));
+  assert.ok(!html.includes('data-exam-date="'));
+  assert.ok(!out.includes('class="cd-days"'));
+  assert.ok(out.includes('href="https://www.ima.org.il/Internship/Events.aspx"'));
+});
+
+test('the four new soon pages carry their own source and interest key', () => {
+  const want = { geriatrics: ['landing_geri', 'geriatrics'], psychiatry: ['landing_psych', 'psychiatry'],
+    anesthesia: ['landing_anes', 'anesthesia'], obgyn: ['landing_obgyn', 'obgyn'] };
+  for (const [id, [source, interest]] of Object.entries(want)) {
+    const html = render(id);
+    assert.ok(html.includes(`source: '${source}'`), id);
+    assert.ok(html.includes(`p_interest: '${interest}'`), id);
+    assert.ok(html.includes(`<link rel="canonical" href="https://meduxa.ai/${id}" />`), id);
+    assert.ok(!/מחיר השקה/.test(served(html)), id + ': no launch-price promise');
+  }
+  assert.ok(served(render('obgyn')).includes('02.06.2027'));
+});
+
 test('countdown is readable without script', () => {
   const out = served(render('family-medicine'));
   assert.ok(out.includes('בחינת שלב א׳'));
