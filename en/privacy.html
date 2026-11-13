@@ -90,12 +90,12 @@
 
   <main class="doc" id="main">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: November 12, 2026</p>
+    <p class="updated">Last updated: November 13, 2026</p>
 
     <p>This policy explains what personal data meduxa.ai collects, why, who it is shared with, how long it is kept, and what rights you have over it. It is written to meet both the EU General Data Protection Regulation (GDPR) and Israel's Privacy Protection Law, 5741-1981 (including Amendment 13).</p>
 
     <div class="card">
-      <p><strong>The short version:</strong> we collect one email address (and, if you chose to give it, your specialty) — only if you typed it into the waitlist form, and only to tell you when the pilot opens. No advertising cookies, no cross-site tracking, and nothing is ever sold or shared with advertisers. You can ask us to delete your data at any time at <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>. This box covers the marketing site; for connecting your own AI tool in the app, see section 11.</p>
+      <p><strong>The short version:</strong> we collect one email address (and, if you chose to give it, your specialty) — only if you typed it into the waitlist form, and only to tell you when the pilot opens. No advertising cookies, no cross-site tracking, and nothing is ever sold or shared with advertisers. You can ask us to delete your data at any time at <a href="mailto:privacy@meduxa.ai">privacy@meduxa.ai</a>. This box covers the marketing site; for connecting your own AI tool in the app, see section 11, and for the usage data the app keeps, see section 13.</p>
     </div>
 
     <h2>1. Who is responsible for your data</h2>
@@ -157,7 +157,7 @@
     <h2>4. Who your data is shared with</h2>
     <p>We do not sell your data, rent it, or hand it to advertisers. It is processed only by these service providers (processors):</p>
     <ul>
-      <li><strong>Supabase</strong> — stores the waitlist (the email addresses) and, for the app, the connection data described in section 11.</li>
+      <li><strong>Supabase</strong> — stores the waitlist (the email addresses) and, for the app, the connection data described in section 11 and the usage data described in section 13.</li>
       <li><strong>Vercel</strong> — hosts the site, keeps operational logs and runs the aggregate traffic measurement.</li>
       <li><strong>OpenRouter</strong> and <strong>Anthropic</strong> — route (OpenRouter) and process (Anthropic, the model provider) the messages typed into the tutor demo and into the tutor inside the app (section 12), solely to generate the reply. Anthropic's models run on infrastructure operated by Google Cloud and Amazon Web Services.</li>
       <li><strong>Google</strong> (Gemini, through OpenRouter) — translates a Hebrew question typed into the tutor inside the app into an English search query (section 12).</li>
@@ -222,6 +222,16 @@
       <li><strong>Retention:</strong> for the query-translation step we ask OpenRouter to use only endpoints that do not retain your text or use it for training. We do not send your name or email address with the text. We do not keep the text of your messages on our servers, and we have switched off input and output logging in our OpenRouter account.</li>
       <li><strong>What we keep:</strong> a technical record of each turn: your account, the time, the question you were on, the outcome, the model used, and the size, speed and cost of the turn.</li>
       <li><strong>Please note:</strong> do not type patient-identifying details into the tutor. Legal basis: performance of our agreement with you, Article 6(1)(b) GDPR. Transfers outside the EEA and Israel rely on the mechanisms in section 4.</li>
+    </ul>
+
+    <h2>13. Usage data inside the app</h2>
+    <p>This section applies to the app at app.meduxa.ai, not to the marketing site. When you are signed in, the app keeps a minimal record of how it is used, so we can see which parts help people learn and improve them. This record is separate from Google Analytics and Microsoft Clarity (section 2): it does not depend on your analytics consent, and it is not sent to them or to any other third party.</p>
+    <ul>
+      <li><strong>What is recorded:</strong> which tabs of the app you stayed on (for example practice or the exam simulation) for at least one second; in the study plan, opening the plan, the settings you chose (study style, reading order, hours per day, rest days and days until the exam), how many items were planned for that day, and which question-practice items you started and finished, with the score and the number of questions; and in the tutor (section 12), actions in the tutor panel such as opening it, tapping a suggested question or showing the sources, together with the id of the question you were on and response times.</li>
+      <li><strong>What is not recorded:</strong> any text you typed, and no content of questions, answers or messages. Only your account, the course, the kind of action and its time, and numbers and choices from a closed list are kept. A study-plan item is identified by a numeric code, not by its name.</li>
+      <li><strong>How long:</strong> study-plan and tutor actions, 90 days, except the latest study-plan settings you chose, which are kept while your account exists; tab visits, 365 days. Everything is deleted when your account is deleted.</li>
+      <li><strong>Who sees it:</strong> the data is stored in Supabase (section 4) and is available only to the MeduXa team, who use it mainly as aggregate figures to improve the service. We do not sell it or pass it on.</li>
+      <li><strong>Legal basis:</strong> legitimate interest, Article 6(1)(f) GDPR: improving the app and its learning tools, through a minimal record with no content. You can object to this processing and ask for deletion under section 7.</li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="/en">← Back to the home page</a> · <a href="/en/terms">Terms of Use</a></p>
