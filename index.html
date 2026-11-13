@@ -678,7 +678,7 @@
      already visible element would itself transition, from shown to hidden. */
   .motion.prep header[data-mq-hero] .qcard { opacity: 0; }
   .motion.prep header[data-mq-hero] div:has(> h1) > * { opacity: 0; } /* own rule: a browser without :has drops only this one */
-  .motion.prep .rv, .motion.prep .rv-card, .motion.prep .rv-deal, .motion.prep .rv-pop, .motion.prep .w,
+  .motion.prep .rv, .motion.prep .rv-card, .motion.prep .rv-deal, .motion.prep .rv-pop, .motion.prep .rv-chat, .motion.prep .w,
   .motion.prep .rv-draw { transition: none !important; }
 
   /* Generic reveal: .rv elements rise into place when their group is seen.
@@ -768,6 +768,13 @@
   .ai-compose span:nth-child(2) { flex:1; }
   .ai-compose i { width:30px; height:30px; border-radius:50%; background:#0F172A; display:inline-flex; align-items:center; justify-content:center; }
   .ai-cap { margin:10px 0 0; font-size:13px; color:#475569; text-align:center; }
+  /* Sample chat: the conversation plays out in order once the section is seen.
+     Every message keeps its space from the start (opacity and translate only),
+     so nothing around it moves. The tool chip pulses while the tool "works". */
+  .motion .rv-chat { opacity:0; translate:0 10px; transition: opacity .45s ease, translate .6s var(--ease); transition-delay: var(--d, 0ms); }
+  .motion .in .rv-chat { opacity:1; translate:0 0; }
+  .motion .in .ai-tool.rv-chat::before { animation: hp-think .3s ease-in-out calc(var(--d, 0ms) + 150ms) 4 alternate; }
+  @keyframes hp-think { to { opacity:.35; scale:.7; } }
   @media (max-width: 900px) { .ai-grid { grid-template-columns:1fr; gap:36px; } }
   @media (max-width: 480px) { #ai .ai-ctas > a, #ai .ai-ctas > div { flex:1 1 100%; text-align:center; } #ai .ai-ctas > div > a { display:block; } }
 </style>
@@ -1532,8 +1539,7 @@
   <section id="ai" data-mq-section aria-labelledby="ai-title" style="background: #F0F6FA; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
     <div class="ai-grid" style="max-width: 1200px; margin: 0 auto;">
       <div>
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em; direction: ltr; display: inline-block;">CLAUDE · CHATGPT</span>
-        <h2 id="ai-title" data-mq-h2 style="margin: 14px 0 0; font-size: 40px; font-weight: 700; color: #0F172A; line-height: 1.2;">תרגלו גם מתוך Claude ו-ChatGPT</h2>
+        <h2 id="ai-title" data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A; line-height: 1.2;">תרגלו גם מתוך Claude ו-ChatGPT</h2>
         <p style="margin: 16px 0 28px; font-size: 18px; color: #475569; line-height: 1.65;">מחברים פעם אחת את החשבון שלכם ב-MeduXa לכלי ה-AI שאתם כבר משתמשים בו, ומתרגלים בשיחה.</p>
         <ul class="ai-points"><li>שאלות מהחבילה שלכם, לפי נושא, בלי התשובה הנכונה מראש.</li><li>בדיקה מיידית של התשובה, ובשאלות שאושרו לכך גם הסבר ומקור.</li><li>שואלים בשיחה איך אתם מתקדמים בכל נושא ואילו כרטיסי חזרה הגיע מועדם.</li></ul>
         <div class="ai-ctas" style="display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 14px; margin-top: 32px;">
@@ -2094,6 +2100,16 @@
     }
     cards(document.querySelector('#features [data-mq-cards]'), 'rv-card', S);
     cards(document.querySelector('#ai .ai-grid'), 'rv-card', 140);
+    // Sample chat: once the card has risen, the conversation plays in order:
+    // question, tool call, answer with its options, reply, check, verdict.
+    var chat = document.querySelector('#ai .ai-chat');
+    if (chat) {
+      var at = [600, 1100, 1700, 2900, 3300, 3900], k = 0;
+      Array.prototype.slice.call(chat.children).forEach(function (c) {
+        if (c.classList.contains('ai-msg') || c.classList.contains('ai-tool')) mark(c, 'rv-chat', at[k++] || 0);
+      });
+      chat.querySelectorAll('.ai-msg.bot ol li').forEach(function (li, i) { mark(li, 'rv-chat', 1850 + i * 100); });
+    }
     cards(document.querySelector('#compare .cmp2-grid'), 'rv-card', 110);
     cards(document.querySelector('#tracks .tracks-grid'), 'rv-card', 90);
     // A hero chip jumps to a card that has not entered yet: it still sits
@@ -2176,7 +2192,7 @@
       document.querySelectorAll('.rv-group').forEach(function (g) { g.classList.add('in'); });
       document.querySelectorAll('.rv-draw').forEach(function (p) { p.style.strokeDashoffset = 0; });
       finals.forEach(function (f) { f[0].textContent = f[1]; });
-      document.querySelectorAll('.rv, .rv-card, .rv-deal, .rv-pop').forEach(function (e) { if (!e.closest('.in')) e.classList.add('in'); });
+      document.querySelectorAll('.rv, .rv-card, .rv-deal, .rv-pop, .rv-chat').forEach(function (e) { if (!e.closest('.in')) e.classList.add('in'); });
       if (window.console) console.error(err);
     }
   })();
