@@ -693,6 +693,33 @@
     #mobileMenu { transition: opacity .2s ease; }
     @starting-style { #mobileMenu { transform: none; } }
   }
+  /* #ai (connect your AI): outline secondary CTA + stacked mobile buttons */
+  .btn-outline { display:inline-block; border-radius:12px; padding:12.5px 26.5px; font-size:17px; font-weight:600; color:#0E7490; border:1.5px solid #0E7490; background:#fff; transition:background-color .15s ease; }
+  .btn-outline:hover, .btn-outline:focus { color:#0E7490; background:#E6F4F8; }
+  .btn-outline:focus-visible { outline:2px solid #0E7490; outline-offset:3px; }
+  .ai-sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .ai-grid { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); gap:56px; align-items:center; }
+  .ai-points { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .ai-points li { display:flex; gap:12px; align-items:flex-start; font-size:16px; color:#334155; line-height:1.6; }
+  .ai-points li::before { content:''; flex-shrink:0; width:10px; height:10px; margin-top:8px; border-radius:3px; background:linear-gradient(135deg,#0EA5E9,#22D3EE); }
+  .ai-chat { background:#fff; border:1px solid #E2E8F0; border-radius:20px; padding:20px 22px 16px; box-shadow:0 18px 50px rgba(15,23,42,.10); display:flex; flex-direction:column; gap:14px; font-size:15px; }
+  .ai-chat-head { display:flex; align-items:center; gap:8px; padding-bottom:12px; border-bottom:1px solid #F1F5F9; font-size:14px; font-weight:600; color:#0F172A; }
+  .ai-chat-head small { font-weight:400; color:#64748B; font-size:13px; }
+  .ai-msg { line-height:1.65; color:#1E293B; }
+  .ai-msg.me { align-self:flex-end; max-width:80%; background:#F1F5F9; border-radius:18px; padding:9px 15px; }
+  .ai-msg.bot { align-self:stretch; }
+  .ai-msg ol { margin:8px 0 0; padding-inline-start:22px; display:flex; flex-direction:column; gap:2px; }
+  .ai-tool { align-self:flex-start; display:inline-flex; align-items:center; gap:6px; font-size:13px; color:#64748B; margin-bottom:-6px; }
+  .ai-tool::before { content:''; width:14px; height:14px; border-radius:4px; background:linear-gradient(135deg,#0EA5E9,#22D3EE); }
+  .ai-tool::after { content:'›'; font-size:15px; line-height:1; }
+  .ai-ok { color:#0F766E; font-weight:700; }
+  .ai-compose { margin-top:4px; display:flex; align-items:center; gap:10px; border:1px solid #E2E8F0; border-radius:16px; padding:9px 12px; color:#64748B; font-size:14px; }
+  .ai-compose span:first-child { font-size:20px; line-height:1; color:#64748B; }
+  .ai-compose span:nth-child(2) { flex:1; }
+  .ai-compose i { width:30px; height:30px; border-radius:50%; background:#0F172A; display:inline-flex; align-items:center; justify-content:center; }
+  .ai-cap { margin:10px 0 0; font-size:13px; color:#475569; text-align:center; }
+  @media (max-width: 900px) { .ai-grid { grid-template-columns:1fr; gap:36px; } }
+  @media (max-width: 480px) { #ai .ai-ctas > a, #ai .ai-ctas > div { flex:1 1 100%; text-align:center; } #ai .ai-ctas > div > a { display:block; } }
 </style>
 <script>
   // html.motion: motion is welcome. html.prep: the motion script has not
@@ -1430,6 +1457,38 @@
     </div>
   </section>
 
+  <!-- AI CONNECT (MCP) -->
+  <section id="ai" data-mq-section aria-labelledby="ai-title" style="background: #F0F6FA; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
+    <div class="ai-grid" style="max-width: 1200px; margin: 0 auto;">
+      <div>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em; direction: ltr; display: inline-block;">CLAUDE · CHATGPT</span>
+        <h2 id="ai-title" data-mq-h2 style="margin: 14px 0 0; font-size: 40px; font-weight: 700; color: #0F172A; line-height: 1.2;">Practice from Claude and ChatGPT, too</h2>
+        <p style="margin: 16px 0 28px; font-size: 18px; color: #475569; line-height: 1.65;">Connect your MeduXa account once to the AI tool you already use, and practice in the chat.</p>
+        <ul class="ai-points"><li>Questions from your own package, by topic, without the answer up front.</li><li>Your answer checked on the spot, plus an explanation and source where one is cleared for sharing.</li><li>Ask in the chat how you are doing in each topic, and which review cards are due.</li></ul>
+        <div class="ai-ctas" style="display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 14px; margin-top: 32px;">
+        <a class="btn-action btn-action-md" href="https://claude.ai/directory/meduxa" target="_blank" rel="noopener" data-cta="ai-claude" style="border-radius: 12px; padding: 14px 28px; font-size: 17px; font-weight: 700;">Add to Claude<span class="ai-sr"> (opens in a new tab)</span></a>
+        <a href="/en/connect" class="btn-outline" data-cta="ai-guide">How to connect</a>
+      </div>
+        <p style="margin: 16px 0 0; font-size: 14px; color: #475569; max-width: 520px; line-height: 1.6;">The connection does not change your data in the app unless you choose to, and you can disconnect at any time. Requires an active study package. In ChatGPT it currently works through Developer mode.</p>
+      </div>
+        <div>
+          <figure style="margin: 0;" aria-label="Illustration of a practice chat in Claude with MeduXa">
+            <div class="ai-chat">
+              <div class="ai-chat-head">Claude <small>· with MeduXa</small></div>
+              <div class="ai-msg me">Give me a question on AKI</div>
+              <span class="ai-tool">Used MeduXa</span>
+              <div class="ai-msg bot">A 67-year-old man with diabetic CKD undergoes coronary catheterization. Creatinine was 1.5 mg/dL before the procedure, 1.77 mg/dL two days later. Per KDIGO criteria, which is correct?<ol style="list-style-type: upper-alpha;"><li>Does not meet AKI criteria</li><li>AKI stage 1</li><li>AKI stage 2</li><li>AKI stage 3</li></ol></div>
+              <div class="ai-msg me">A</div>
+              <span class="ai-tool">Used MeduXa · Check an answer</span>
+              <div class="ai-msg bot"><span class="ai-ok">Correct.</span> A rise of 0.27 mg/dL does not cross the 0.3 threshold, and a ratio of 1.18 from baseline does not reach 1.5.</div>
+              <div class="ai-compose" aria-hidden="true"><span>+</span><span>Reply to Claude…</span><i><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 11.5V2.5M3 6.5l4-4 4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i></div>
+            </div>
+            <figcaption class="ai-cap">Illustration. The wording of the chat varies by AI tool.</figcaption>
+          </figure>
+        </div>
+    </div>
+  </section>
+
   <!-- PILOT CTA -->
   <section id="pilot" data-mq-section style="background: #fff; padding: 96px 32px;">
     <div style="max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center;">
@@ -1458,6 +1517,7 @@
       <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: center;">
         <a class="foot-link" href="/en/privacy">Privacy Policy</a>
         <a class="foot-link" href="/en/terms">Terms of Use</a>
+        <a class="foot-link" href="/en/connect">Connect your AI</a>
         <a class="foot-link" href="/en/accessibility">Accessibility</a>
         <a class="foot-link" href="mailto:hello@meduxa.ai">hello@meduxa.ai</a>
       </span>
@@ -1882,6 +1942,7 @@
       grid.classList.add('rv-group');
     }
     cards(document.querySelector('#features [data-mq-cards]'), 'rv-card', S);
+    cards(document.querySelector('#ai .ai-grid'), 'rv-card', 140);
     cards(document.querySelector('#compare .cmp2-grid'), 'rv-card', 110);
     cards(document.querySelector('#tracks .tracks-grid'), 'rv-card', 90);
     // A hero chip jumps to a card that has not entered yet: it still sits
