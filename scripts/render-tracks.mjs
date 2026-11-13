@@ -99,6 +99,13 @@ export function fillSpans(tracks) {
   return out;
 }
 
+// The pack label shown on hover over a card's icon and a hero chip
+// ("חבילת גריאטריה · שלב א׳"). Visual only: the same name and stage are
+// already in the card's text, so the tooltip is aria-hidden.
+export function packLabel(ui, c) {
+  return (ui.pack || '{name}').replace('{name}', c.name).replace('{stage}', c.stage);
+}
+
 function cards(data, locale) {
   const ui = data.ui[locale];
   const spans = fillSpans(data.tracks);
@@ -132,7 +139,7 @@ function cards(data, locale) {
       : `<span class="track-soon-btn">${esc(c.action)}${ARROW}</span>`;
     return [
       `<article class="track track--${t.status}${spans[t.id] ? ` track--span${spans[t.id]}` : ''}" id="track-${t.id}">`,
-      `  <div class="track-top"><span class="track-icon">${icon(t.icon, 'track-icon-svg')}</span><div class="track-pills">${pills.join('')}</div></div>`,
+      `  <div class="track-top"><span class="track-icon" data-pack="${esc(packLabel(ui, c))}">${icon(t.icon, 'track-icon-svg')}</span><div class="track-pills">${pills.join('')}</div></div>`,
       `  <h3 class="track-name" id="${nameId}">${esc(c.name)} <span class="track-stage">${esc(c.stage)}</span></h3>`,
       `  <p class="track-blurb">${rich(c.blurb)}</p>`,
       `  <a ${attrs}>${action}</a>`,
@@ -147,7 +154,7 @@ function chips(data, locale) {
     // Coming soon is never colour alone: the words on wide screens, a clock
     // where the row is too narrow for them (CSS swaps the two at 600px).
     const soon = t.status === 'soon' ? `${CLOCK}<span class="hero-track-soon">${esc(ui.chipSoon)}</span>` : '';
-    return `<a class="hero-track hero-track--${t.status}" href="#track-${t.id}" data-track="${t.id}" data-track-via="chip">${icon(t.icon, 'hero-track-icon')}${esc(t[locale].name)}${soon}</a>`;
+    return `<a class="hero-track hero-track--${t.status}" href="#track-${t.id}" data-track="${t.id}" data-track-via="chip" data-pack="${esc(packLabel(ui, t[locale]))}">${icon(t.icon, 'hero-track-icon')}${esc(t[locale].name)}${soon}</a>`;
   }).join('\n');
 }
 

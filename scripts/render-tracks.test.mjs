@@ -115,8 +115,8 @@ test('shipped pages are in sync with tracks.json', () => {
 
 test('coming-soon chips carry a non-colour marker (clock + words), live chips do not', () => {
   const out = render(real, page(ALL), 'he', 'x');
-  assert.match(out, /data-track="pediatrics" data-track-via="chip"><svg class="hero-track-icon"[^]*?<\/svg>רפואת ילדים<svg class="hero-track-clock"[^]*?<\/svg><span class="hero-track-soon">· בקרוב<\/span><\/a>/);
-  assert.doesNotMatch(out, /data-track="nephrology" data-track-via="chip">[^]*?<\/svg>נפרולוגיה<svg/);
+  assert.match(out, /data-track="pediatrics" data-track-via="chip" data-pack="[^"]*"><svg class="hero-track-icon"[^]*?<\/svg>רפואת ילדים<svg class="hero-track-clock"[^]*?<\/svg><span class="hero-track-soon">· בקרוב<\/span><\/a>/);
+  assert.doesNotMatch(out, /data-track="nephrology" data-track-via="chip"[^]*?<\/svg>נפרולוגיה<svg/);
 });
 
 test('validate requires an ISO exam date, an exam name and a non-empty sources list', () => {
@@ -191,8 +191,8 @@ test('fillSpans widens the soon cards of the last row so the 4-column grid has n
 test('every track has its specialty icon on the card and the chip, hidden from screen readers', () => {
   const out = render(real, page(ALL), 'he', 'x');
   for (const t of real.tracks) {
-    assert.match(out, new RegExp(`id="track-${t.id}">\\s*<div class="track-top"><span class="track-icon"><svg class="track-icon-svg" aria-hidden="true" focusable="false"`), t.id);
-    assert.match(out, new RegExp(`data-track="${t.id}" data-track-via="chip"><svg class="hero-track-icon" aria-hidden="true" focusable="false"`), t.id);
+    assert.match(out, new RegExp(`id="track-${t.id}">\\s*<div class="track-top"><span class="track-icon" data-pack="[^"]*"><svg class="track-icon-svg" aria-hidden="true" focusable="false"`), t.id);
+    assert.match(out, new RegExp(`data-track="${t.id}" data-track-via="chip" data-pack="[^"]*"><svg class="hero-track-icon" aria-hidden="true" focusable="false"`), t.id);
   }
   assert.doesNotMatch(out, /<svg[^>]*\swidth="48"/); // the source size is dropped; CSS sizes the icon
 });
@@ -202,4 +202,13 @@ test('validate refuses a track whose icon file does not exist', () => {
   assert.throws(() => validate(a), /icon/);
   const b = clone(); delete b.tracks[0].icon;
   assert.throws(() => validate(b), /icon/);
+});
+
+test('the pack label names the pack and its stage, on the card icon and the chip', () => {
+  const he = render(real, page(ALL), 'he', 'x');
+  assert.match(he, /<span class="track-icon" data-pack="חבילת גריאטריה · שלב א׳">/);
+  assert.match(he, /data-track="geriatrics" data-track-via="chip" data-pack="חבילת גריאטריה · שלב א׳">/);
+  assert.match(he, /data-pack="חבילת קרדיולוגיה · מקצוע-על, חלקים א׳ וב׳"/);
+  const en = render(real, page(ALL), 'en', 'x');
+  assert.match(en, /data-pack="Geriatrics pack · Stage A"/);
 });
