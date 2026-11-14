@@ -43,5 +43,36 @@
    }
   ]
  },
- "questions": []
+ "examBased": true,
+ "questions": [
+  {
+   "topic": "גינקולוגיה של הילדה",
+   "stem": "אם לתינוקת בת 3 ימים מספרת על הכתמה דמית בחיתול. בבדיקה הגניטליה החיצונית תקינה. מה הצעד הבא?",
+   "options": [
+    {
+     "key": "a",
+     "text": "מעקב בלבד",
+     "right": true
+    },
+    {
+     "key": "b",
+     "text": "אולטרסאונד בגישה פרינאלית",
+     "tutor": "איזה ממצא בבדיקה מצדיק כאן הדמיה? ומה קרה לתינוקת ברחם, בחשיפה להורמונים של האם, שנגמר עכשיו בלידה?"
+    },
+    {
+     "key": "c",
+     "text": "אולטרסאונד בגישה בטנית",
+     "tutor": "הדמיה בטנית מחפשת גוש או מקור הורמונלי. האם יש לתינוקת בת 3 ימים סיבה צפויה ושפירה להכתמה?"
+    },
+    {
+     "key": "d",
+     "text": "וגינוסקופיה",
+     "tutor": "וגינוסקופיה היא בדיקה פולשנית. מה גיל התינוקת, ומה משתנה בגוף שלה בימים הראשונים אחרי הלידה?"
+    }
+   ],
+   "explanationHtml": "<p><strong>נכון.</strong> ברחם התינוקת חשופה לרמות גבוהות של אסטרוגן מהאם. אחרי הלידה החשיפה נפסקת, ובשבועות הראשונים לחיים עלול להופיע דימום נרתיקי קל של גמילה. כשהגניטליה החיצונית תקינה, אין צורך בבירור: מרגיעים את האם. עדיף להסביר להורים על האפשרות הזו מראש.</p><p><strong>ב, ג, ד:</strong> הדמיה ווגינוסקופיה שמורות לדימום נרתיקי שמופיע אחרי תקופת היילוד, כשחושדים בגוף זר, בגידול או בהתבגרות מוקדמת. לא להכתמה צפויה בימים הראשונים לחיים.</p>",
+   "quote": "{{Slight vaginal bleeding can occur within the first weeks of life because of withdrawal from exposure to high levels of maternal estrogen. New parents of female infants should be informed of this possibility to preclude unnecessary anxiety.}}",
+   "citation": "{{Berek & Novak's Gynecology, 17th ed. — Chapter 9: Pediatric and Adolescent Gynecology}}"
+  }
+ ]
 }

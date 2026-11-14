@@ -43,5 +43,36 @@
    }
   ]
  },
- "questions": []
+ "examBased": true,
+ "questions": [
+  {
+   "topic": "מוגבלות שכלית התפתחותית",
+   "stem": "לפי {{DSM‑5}}, לפי מה נקבעת דרגת החומרה של מוגבלות שכלית התפתחותית {{(intellectual disability)}}?",
+   "options": [
+    {
+     "key": "a",
+     "text": "ציון ה-{{IQ}}",
+     "tutor": "ה-<span class=\"ltr-iso\">IQ</span> חשוב לאבחנה. אבל מה קובע בפועל כמה תמיכה האדם צריך ביומיום? ועד כמה מבחני <span class=\"ltr-iso\">IQ</span> מדויקים בטווח הנמוך?"
+    },
+    {
+     "key": "b",
+     "text": "התפקוד האדפטיבי",
+     "right": true
+    },
+    {
+     "key": "c",
+     "text": "המיקום האנטומי של הפגיעה",
+     "tutor": "האם מוגבלות שכלית מוגדרת לפי מקום במוח, או לפי מה שהאדם מצליח לעשות?"
+    },
+    {
+     "key": "d",
+     "text": "נוכחות של תסמונת כרומוזומלית",
+     "tutor": "תסמונת מסבירה את הסיבה. האם היא אומרת לך כמה קשה המוגבלות אצל אדם מסוים?"
+    }
+   ],
+   "explanationHtml": "<p><strong>נכון.</strong> ב-<span class=\"ltr-iso\">DSM‑5</span> דרגות החומרה (קלה, בינונית, קשה, עמוקה) נקבעות לפי התפקוד האדפטיבי: היכולת לעמוד בדרישות היומיום בתחום המושגי, החברתי והמעשי. הסיבה כפולה: התפקוד הוא שקובע כמה תמיכה האדם צריך, ומבחני <span class=\"ltr-iso\">IQ</span> פחות תקפים בקצה הנמוך של הטווח.</p><p><strong>א:</strong> ציון ה-<span class=\"ltr-iso\">IQ</span> עדיין חלק מהאבחנה, אבל הוא לא קובע את דרגת החומרה.</p><p><strong>ג, ד:</strong> מיקום הפגיעה או תסמונת כרומוזומלית יכולים להסביר את הסיבה למוגבלות, אבל לא את חומרתה.</p>",
+   "quote": "{{The various levels of severity are defined on the basis of adaptive functioning, and not IQ scores, because it is adaptive functioning that determines the level of supports required. Moreover, IQ measures are less valid in the lower end of the IQ range.}}",
+   "citation": "{{American Psychiatric Association, DSM‑5 (2013) — Intellectual Disability: Specifiers}}"
+  }
+ ]
 }

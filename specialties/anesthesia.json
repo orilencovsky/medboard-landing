@@ -43,5 +43,36 @@
    }
   ]
  },
- "questions": []
+ "examBased": true,
+ "questions": [
+  {
+   "topic": "נתיב אוויר",
+   "stem": "בלרינגוסקופיה לפני אינטובציה רואים רק את ה-{{epiglottis}}, ואי אפשר לראות את ה-{{arytenoids}}. מהי דרגת הראייה לפי {{Cormack–Lehane}}?",
+   "options": [
+    {
+     "key": "a",
+     "text": "{{Grade 2A}}",
+     "tutor": "בדרגה 2 רואים לפחות חלק מפתח הגלוטיס. מה מתוך זה ראית כאן?"
+    },
+    {
+     "key": "b",
+     "text": "{{Grade 2B}}",
+     "tutor": "ב-<span class=\"ltr-iso\">2B</span> עוד רואים את ה-<span class=\"ltr-iso\">arytenoids</span> או את החלק האחורי של מיתרי הקול. האם ראית אותם?"
+    },
+    {
+     "key": "c",
+     "text": "{{Grade 3}}",
+     "right": true
+    },
+    {
+     "key": "d",
+     "text": "{{Grade 4}}",
+     "tutor": "בדרגה 4 גם ה-<span class=\"ltr-iso\">epiglottis</span> לא נראה. ומה כן ראית כאן?"
+    }
+   ],
+   "explanationHtml": "<p><strong>נכון.</strong> הדירוג של <span class=\"ltr-iso\">Cormack–Lehane</span> מתאר כמה מהגרון רואים בלרינגוסקופיה ישירה. בדרגה 3 רואים רק את ה-<span class=\"ltr-iso\">epiglottis</span>, בלי אף חלק מפתח הגלוטיס. זה בדיוק המצב בשאלה.</p><p><strong><span class=\"ltr-iso\">2A</span> ו-<span class=\"ltr-iso\">2B</span>:</strong> בשתיהן רואים לפחות חלק מהגלוטיס. ב-<span class=\"ltr-iso\">2A</span> חלק מפתח הגלוטיס, וב-<span class=\"ltr-iso\">2B</span> רק את ה-<span class=\"ltr-iso\">arytenoids</span> או את החלק האחורי של מיתרי הקול. כאן גם ה-<span class=\"ltr-iso\">arytenoids</span> לא נראים.</p><p><strong>דרגה 4:</strong> גם ה-<span class=\"ltr-iso\">epiglottis</span> לא נראה. כאן הוא כן נראה.</p>",
+   "quote": "{{grade 3 is visualization of only the epiglottis; and grade 4 is no visualization of the epiglottis or larynx.}}",
+   "citation": "{{Miller's Anesthesia, 10th ed. — Chapter 40: Airway Management in the Adult}}"
+  }
+ ]
 }

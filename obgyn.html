@@ -591,14 +591,33 @@
           <p class="cd-note"><a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לפי לוח הבחינות של הר״י · המועד עשוי להשתנות</a></p>
         </div>
       </div>
+
+      <!-- A working sample question, in the app's own shape: answer it and the
+           explanation opens with its source, or the tutor asks a question back. -->
+      <section class="q enter" style="--i:2" aria-labelledby="q-title">
+        <div class="q-head">
+          <h2 class="q-title" id="q-title">שאלה לדוגמה, נסו לענות</h2>
+          <span class="q-topic">גינקולוגיה של הילדה</span>
+        </div>
+        <p class="q-stem" id="q-stem">אם לתינוקת בת 3 ימים מספרת על הכתמה דמית בחיתול. בבדיקה הגניטליה החיצונית תקינה. מה הצעד הבא?</p>
+        <div class="q-opts" role="group" aria-labelledby="q-stem">
+          <button type="button" class="q-opt" data-k="a" data-right><span class="q-key">א</span><span class="q-opt-text">מעקב בלבד</span><i class="ph ph-check-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="b" data-tutor="איזה ממצא בבדיקה מצדיק כאן הדמיה? ומה קרה לתינוקת ברחם, בחשיפה להורמונים של האם, שנגמר עכשיו בלידה?"><span class="q-key">ב</span><span class="q-opt-text">אולטרסאונד בגישה פרינאלית</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="c" data-tutor="הדמיה בטנית מחפשת גוש או מקור הורמונלי. האם יש לתינוקת בת 3 ימים סיבה צפויה ושפירה להכתמה?"><span class="q-key">ג</span><span class="q-opt-text">אולטרסאונד בגישה בטנית</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="d" data-tutor="וגינוסקופיה היא בדיקה פולשנית. מה גיל התינוקת, ומה משתנה בגוף שלה בימים הראשונים אחרי הלידה?"><span class="q-key">ד</span><span class="q-opt-text">וגינוסקופיה</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+        </div>
+        <div class="q-out" id="q-out" aria-live="polite"></div>
+        <template class="q-explain-src"><p><strong>נכון.</strong> ברחם התינוקת חשופה לרמות גבוהות של אסטרוגן מהאם. אחרי הלידה החשיפה נפסקת, ובשבועות הראשונים לחיים עלול להופיע דימום נרתיקי קל של גמילה. כשהגניטליה החיצונית תקינה, אין צורך בבירור: מרגיעים את האם. עדיף להסביר להורים על האפשרות הזו מראש.</p><p><strong>ב, ג, ד:</strong> הדמיה ווגינוסקופיה שמורות לדימום נרתיקי שמופיע אחרי תקופת היילוד, כשחושדים בגוף זר, בגידול או בהתבגרות מוקדמת. לא להכתמה צפויה בימים הראשונים לחיים.</p><figure class="q-src"><blockquote>״<span class="ltr-iso">Slight vaginal bleeding can occur within the first weeks of life because of withdrawal from exposure to high levels of maternal estrogen. New parents of female infants should be informed of this possibility to preclude unnecessary anxiety.</span>״</blockquote><figcaption><span class="ltr-iso">Berek &amp; Novak&#39;s Gynecology, 17th ed. — Chapter 9: Pediatric and Adolescent Gynecology</span></figcaption></figure></template>
+        <p class="q-note">השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.</p>
+      </section>
     </div>
   </header>
 
   <section class="sources" aria-labelledby="t-sources">
     <div class="wrap">
       <div class="sec-head" data-reveal>
-        <h2 id="t-sources">על מה יתבססו ההסברים</h2>
-        <p>המקורות המרכזיים שמהם יילקחו ההסברים והציטוטים בשאלות.</p>
+        <h2 id="t-sources">על מה מבוססים ההסברים</h2>
+        <p>המקורות המרכזיים שמהם לקוחים ההסברים והציטוטים בשאלות.</p>
       </div>
       <ul class="src-list" data-reveal style="--i:1">
         <li><i class="ph ph-book-open" aria-hidden="true"></i><span class="ltr-iso">Gabbe&#39;s Obstetrics: Normal and Problem Pregnancies 9e</span></li>
@@ -891,6 +910,68 @@
     els.forEach(function (el) { io.observe(el); });
   })();
 
+  // Sample questions. One answer is marked at a time: picking another clears
+  // the last. A right answer opens the explanation and its source; a wrong
+  // one gets its own question back from the tutor, the way the app does it,
+  // or, where there is no tutor line, why that answer is wrong. Either way
+  // the visitor can pick again. Previous/next exist only with 2+ questions.
+  (function () {
+    var card = document.querySelector('.q');
+    if (!card) return;
+    var groups = Array.prototype.slice.call(card.querySelectorAll('.q-opts'));
+    groups.forEach(function (group, qi) {
+      var opts = Array.prototype.slice.call(group.querySelectorAll('.q-opt'));
+      var out = group.parentNode.querySelector('.q-out');
+      var explain = group.parentNode.querySelector('.q-explain-src');
+      opts.forEach(function (o) {
+        o.setAttribute('aria-pressed', 'false');
+        o.addEventListener('click', function () {
+          var right = o.hasAttribute('data-right');
+          var again = o.getAttribute('aria-pressed') === 'true'; // same answer again: nothing new to show
+          if (!again) {
+            opts.forEach(function (x) { x.classList.remove('is-right', 'is-wrong'); x.setAttribute('aria-pressed', 'false'); });
+            o.classList.add(right ? 'is-right' : 'is-wrong');
+            o.setAttribute('aria-pressed', 'true');
+            swapHeight(out, function () {
+              if (right) {
+                out.innerHTML = '<div class="q-explain">' + explain.innerHTML + '</div>';
+              } else if (o.hasAttribute('data-tutor')) {
+                out.innerHTML =
+                  '<div class="q-tutor"><i class="ph ph-chats-circle" aria-hidden="true"></i>' +
+                    '<p><b>המורה:</b> ' + o.getAttribute('data-tutor') + '</p></div>';
+              } else {
+                out.innerHTML =
+                  '<div class="q-why"><i class="ph ph-x-circle" aria-hidden="true"></i>' +
+                    '<p><b>לא נכון.</b> ' + o.getAttribute('data-why') + '</p></div>';
+              }
+            });
+          }
+          if (typeof gtag === 'function') gtag('event', 'obgyn_sample_question', { result: right ? 'right' : 'wrong', answer: o.getAttribute('data-k'), q: qi + 1 });
+        });
+      });
+    });
+
+    // One question at a time: every element of question i carries data-q="i".
+    var prev = card.querySelector('.q-prev'), next = card.querySelector('.q-next');
+    if (!prev || !next) return;
+    var parts = Array.prototype.slice.call(card.querySelectorAll('[data-q]'));
+    var count = card.querySelector('.q-count');
+    var n = groups.length, cur = 0;
+    function show(i) {
+      swapHeight(card, function () {
+        cur = i;
+        parts.forEach(function (el) { el.hidden = el.getAttribute('data-q') !== String(i + 1); });
+        count.textContent = 'שאלה ' + (i + 1) + ' מתוך ' + n;
+        prev.disabled = i === 0;
+        next.disabled = i === n - 1;
+      });
+      // A button that just turned disabled drops focus; hand it to the other.
+      if (document.activeElement === prev && prev.disabled) next.focus();
+      if (document.activeElement === next && next.disabled) prev.focus();
+    }
+    prev.addEventListener('click', function () { if (cur > 0) show(cur - 1); });
+    next.addEventListener('click', function () { if (cur < n - 1) show(cur + 1); });
+  })();
 
   // Exam countdown. The served HTML already names the exam and its date, so
   // crawlers and no-JS read it; this only adds the day count, in Israel
