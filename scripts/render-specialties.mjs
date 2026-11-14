@@ -110,6 +110,14 @@ export function validatePage(page, track) {
 // the day count to <b data-days> (or swaps in the "today" / "next date" text).
 function countdown(track) {
   const { date, nameHe, url } = track.exam;
+  // No published date yet: name the exam, say the date is not out, and leave
+  // out data-exam-date so the page script draws no countdown.
+  if (!date) return [
+    '<div class="countdown enter" style="--i:4">',
+    `  <p class="cd-exam">${esc(nameHe)} · מועד הבחינה טרם פורסם</p>`,
+    `  <p class="cd-note"><a href="${esc(url)}" target="_blank" rel="noopener">לוח הבחינות של הר״י</a></p>`,
+    '</div>',
+  ].join('\n');
   return [
     `<div class="countdown enter" style="--i:4" data-exam-date="${esc(date)}">`,
     // Empty and hidden until the script fills it: no-JS readers never see a

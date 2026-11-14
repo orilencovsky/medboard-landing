@@ -26,6 +26,10 @@ const PAGES = {
   peds:   { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים',            pill: 'בקרוב',      offer: LAUNCH_OFFER },
   nephro: { slug: 'nephrology',      h1: 'הכנה לבחינת<br>מקצוע-על בנפרולוגיה',      pill: 'פתוח עכשיו', offer: null },
   cardio: { slug: 'cardiology',      h1: 'הכנה לבחינת<br>מקצוע-על בקרדיולוגיה',     pill: 'פתוח עכשיו', offer: null },
+  geri:   { slug: 'geriatrics',      h1: 'הכנה לשלב א׳<br>בגריאטריה',               pill: 'בקרוב',      offer: null },
+  psych:  { slug: 'psychiatry',      h1: 'הכנה לשלב א׳<br>בפסיכיאטריה',             pill: 'בקרוב',      offer: null },
+  anes:   { slug: 'anesthesia',      h1: 'הכנה לשלב א׳<br>בהרדמה',                  pill: 'בקרוב',      offer: null },
+  obgyn:  { slug: 'obgyn',           h1: 'הכנה לשלב א׳<br>במיילדות וגינקולוגיה',    pill: 'בקרוב',      offer: null },
 };
 const PAGE = PAGES[process.argv[3] || 'fm'];
 

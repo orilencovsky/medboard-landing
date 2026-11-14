@@ -29,7 +29,7 @@ og-image-he.png          Open Graph / Twitter card — Hebrew (root)
 specialty.template.html  The ONE template behind the four specialty pages below (header + exam countdown, sample
                          questions, sources, status, method, features, comparison, closing). Hand-authored input to
                          `scripts/render-specialties.mjs`, which renders it with the page data; not deployed
-specialties/             Per-specialty page data (`nephrology|family-medicine|pediatrics|cardiology.json`): copy,
+specialties/             Per-specialty page data (`nephrology|family-medicine|pediatrics|cardiology|geriatrics|psychiatry|anesthesia|obgyn.json`): copy,
                          sample questions, sign-up settings. Exam dates and sources are NOT here — see "Exam dates"
 nephrology.html          /nephrology — the live nephrology sub-specialty (part A) page, with an app CTA
                          (`התחילו ללמוד — חינם`, `pl=hero|closing`); linked from the homepage's #tracks card
@@ -40,8 +40,13 @@ family-medicine.html     /family-medicine — "coming soon" page for family medi
                          email sign-up (waitlist, source 'landing_fm'); linked from the homepage's #tracks card
 pediatrics.html          /pediatrics — the same "coming soon" page for pediatrics Stage A (waitlist source
                          'landing_peds', interest 'pediatrics'); linked from the homepage's #tracks card
+geriatrics.html, psychiatry.html, anesthesia.html, obgyn.html
+                         /geriatrics, /psychiatry, /anesthesia, /obgyn — "coming soon" pages for Stage A, with a
+                         consented email sign-up (sources 'landing_geri|psych|anes|obgyn'; interests
+                         'geriatrics|psychiatry|anesthesia|obgyn'). No launch-price copy
                          (all four pages are generated: `node scripts/render-specialties.mjs`; see "Specialty pages")
-og-nephrology.png, og-cardiology.png, og-family-medicine.png, og-pediatrics.png
+og-nephrology.png, og-cardiology.png, og-family-medicine.png, og-pediatrics.png,
+og-geriatrics.png, og-psychiatry.png, og-anesthesia.png, og-obgyn.png
                          link-preview cards (what WhatsApp shows for each page's link)
 whatsapp-nephrology.png, whatsapp-cardiology.png, whatsapp-family-medicine.png, whatsapp-pediatrics.png
                          1080x1080 versions of the same ad, to send as an image
@@ -138,7 +143,8 @@ The pages stay plain static HTML, so crawlers, no-JS visitors and the first pain
 
 ## Specialty pages
 
-`/nephrology`, `/cardiology`, `/family-medicine` and `/pediatrics` are generated from one template,
+`/nephrology`, `/cardiology`, `/family-medicine`, `/pediatrics`, `/geriatrics`, `/psychiatry`,
+`/anesthesia` and `/obgyn` are generated from one template,
 `specialty.template.html`, with one data file per page in `specialties/<track-id>.json` (copy, status
 lines, sample questions, sign-up settings). `node scripts/render-specialties.mjs` writes each page to
 `<track href>.html` at the repo root; the generated pages are committed, so there is still no build
@@ -161,6 +167,10 @@ The template, the page data and `docs/` are not meant to be served: `.verceligno
 | `family-medicine` | `fm` | `landing_fm` / `family_medicine` | `family` |
 | `pediatrics` | `peds` | `landing_peds` / `pediatrics` | `peds` |
 | `cardiology` | `cardio` | `landing_cardio` / `cardiology` | `cardio` |
+| `geriatrics` | `geri` | `landing_geri` / `geriatrics` | `geriatrics` |
+| `psychiatry` | `psych` | `landing_psych` / `psychiatry` | `psychiatry` |
+| `anesthesia` | `anes` | `landing_anes` / `anesthesia` | `anesthesia` |
+| `obgyn` | `obgyn` | `landing_obgyn` / `obgyn` | `obgyn` |
 
 ## Exam dates
 
@@ -169,6 +179,10 @@ entry in `tracks.json` (`date`, `nameHe`, `url`). No page or script hard-codes a
 by Israel's calendar day (not UTC), shows `הבחינה היום` on the day itself, and once the date has
 passed shows `מועד הבחינה הבא יפורסם בקרוב` instead of a negative or stale number. The exam name and
 date are also in the served HTML, so crawlers and no-JS visitors see them.
+
+`date` may be left out while the IMA has not published a sitting yet (geriatrics, psychiatry and
+anesthesia, checked 2026-11-13): the page then shows `<exam name> · מועד הבחינה טרם פורסם` and no
+countdown. Add the date as soon as the calendar lists it.
 
 To refresh them:
 
@@ -366,10 +380,14 @@ policy's `with_check` to keep allowing it — an unknown column makes PostgREST 
 
 ### Specialty-page sign-ups
 
-The "coming soon" pages (`/family-medicine`, `/pediatrics`, `/cardiology`) do collect an address, with
+The "coming soon" pages (`/family-medicine`, `/pediatrics`, `/geriatrics`, `/psychiatry`, `/anesthesia`,
+`/obgyn`) do collect an address, with
 the consent checkbox and the § 11 notice at the point of collection. They call the product's
 `waitlist_add_interest` RPC (`p_email`, `p_interest`), and the page's `signup.interest` is the mark
-stored in `waitlist.interests` (`family_medicine`, `pediatrics`, `cardiology`).
+stored in `waitlist.interests` (`family_medicine`, `pediatrics`, `cardiology`, `geriatrics`, `psychiatry`,
+`anesthesia`, `obgyn`). The last four need the product migration
+`20261113180000_waitlist_interest_new_tracks.sql` applied before these pages go live (same rule as
+cardiology below).
 
 **`/cardiology` must not go live before the product's migration is applied.** The interest has to exist
 as a row in the product repo's `waitlist_interest_keys` table (key `cardiology`, active), added by
@@ -541,7 +559,7 @@ served by the platform, so it 404s on a local static server. Custom events, all 
   that window include card clicks; from then on `hero` is the hero button alone. The visit then
   reaches the app through `/nephrology`'s own buttons, counted by `nephro_app_click` below.
 - `track_click` — `data.track` is the track `id` from `tracks.json` (`nephrology`,
-  `family-medicine`, `pediatrics`, `cardiology`), `data.via` is `card` (a `#tracks` card) or `chip`
+  `family-medicine`, `pediatrics`, `cardiology`, `geriatrics`, `psychiatry`, `anesthesia`, `obgyn`), `data.via` is `card` (a `#tracks` card) or `chip`
   (a hero chip). `via` is deliberately not called `placement`, so it is never joined with
   `cta_click`'s.
 - The same buttons link to `app.meduxa.ai/?signup=1&src=landing&pl=<placement>`. The app reads
@@ -553,6 +571,8 @@ served by the platform, so it 404s on a local static server. Custom events, all 
 - `fm_signup` — a successful (or already-listed, HTTP 409) waitlist insert on `/family-medicine`.
 - `peds_signup`, `peds_home_click` — the same two events on `/pediatrics` (`data-peds-cta`).
 - `cardio_signup`, `cardio_home_click` — the same two events on `/cardiology` (`data-cardio-cta`).
+- `geri_signup`/`geri_home_click`, `psych_…`, `anes_…`, `obgyn_…` — the same pair on `/geriatrics`,
+  `/psychiatry`, `/anesthesia` and `/obgyn`.
 - `nephro_app_click` — `data.placement` is `hero` or `closing`: which of `/nephrology`'s two
   "start" buttons sent a visitor to the app (`app.meduxa.ai/?signup=1&src=landing&pl=hero|closing`,
   the same `pl` values the app already accepts). Kept apart from `cta_click`, which is the homepage's
