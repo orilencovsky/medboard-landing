@@ -385,9 +385,9 @@ The "coming soon" pages (`/family-medicine`, `/pediatrics`, `/geriatrics`, `/psy
 the consent checkbox and the § 11 notice at the point of collection. They call the product's
 `waitlist_add_interest` RPC (`p_email`, `p_interest`), and the page's `signup.interest` is the mark
 stored in `waitlist.interests` (`family_medicine`, `pediatrics`, `cardiology`, `geriatrics`, `psychiatry`,
-`anesthesia`, `obgyn`). The last four need the product migration
-`20261113180000_waitlist_interest_new_tracks.sql` applied before these pages go live (same rule as
-cardiology below).
+`anesthesia`, `obgyn`). The last four come from the product migration
+`20261113190000_waitlist_interest_new_tracks.sql` (applied on prod by the merge of Pilot #1371; same
+rule as cardiology below: a new interest key needs its migration live before the page ships).
 
 **`/cardiology` must not go live before the product's migration is applied.** The interest has to exist
 as a row in the product repo's `waitlist_interest_keys` table (key `cardiology`, active), added by
