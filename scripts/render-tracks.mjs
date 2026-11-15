@@ -15,11 +15,24 @@
 //   node scripts/render-tracks.mjs --check   exit 1 if either page differs
 //
 // Plain Node, no dependencies.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const ICON_DIR = join(root, 'scripts', 'icons');
+
+// A track's specialty icon (scripts/icons/<icon>.svg, Health Icons, CC0),
+// inlined so it takes the card's colour through currentColor. Decorative: the
+// specialty name is always written beside it.
+export function icon(name, cls) {
+  const svg = readFileSync(join(ICON_DIR, `${name}.svg`), 'utf8').trim();
+  return svg
+    .replace(/\s(width|height)="[^"]*"/g, '')
+    .replace(/\sxmlns="[^"]*"/, '')
+    .replace('<svg', `<svg class="${cls}" aria-hidden="true" focusable="false"`)
+    .replace(/>\s+</g, '><');
+}
 const PAGES = [
   { file: 'index.html', locale: 'he' },
   { file: 'en/index.html', locale: 'en' },
@@ -45,11 +58,15 @@ export function validate(data) {
     if (ids.has(t.id)) throw new Error(`duplicate track id: ${t.id}`);
     ids.add(t.id);
     if (t.status !== 'live' && t.status !== 'soon') throw new Error(`${t.id}: status must be "live" or "soon"`);
+    if (!/^[a-z0-9-]+$/.test(t.icon || '') || !existsSync(join(ICON_DIR, `${t.icon}.svg`))) throw new Error(`${t.id}: icon must name a file in scripts/icons/ (got ${JSON.stringify(t.icon)})`);
     if (!t.href) throw new Error(`${t.id}: href is required`);
     for (const loc of ['he', 'en']) for (const k of ['name', 'inline', 'stage', 'blurb', 'action']) {
       if (!t[loc] || !t[loc][k]) throw new Error(`${t.id}: ${loc}.${k} is required`);
     }
-    if (!t.exam || !/^\d{4}-\d{2}-\d{2}$/.test(t.exam.date || '')) throw new Error(`${t.id}: exam.date must be YYYY-MM-DD`);
+    // exam.date may be absent while the IMA has not published the sitting yet;
+    // the page then says so and shows no countdown.
+    if (!t.exam) throw new Error(`${t.id}: exam is required`);
+    if (t.exam.date !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(t.exam.date || '')) throw new Error(`${t.id}: exam.date must be YYYY-MM-DD or absent`);
     for (const k of ['nameHe', 'url']) if (!t.exam[k]) throw new Error(`${t.id}: exam.${k} is required`);
     if (!Array.isArray(t.sources) || !t.sources.length) throw new Error(`${t.id}: sources must be a non-empty list`);
     for (const src of t.sources) {
@@ -59,8 +76,39 @@ export function validate(data) {
   }
 }
 
+// The desktop grid has 4 columns: a live card spans 2, a soon card 1. Lay
+// the cards out in order (a card that does not fit starts the next row) and,
+// if the last row has room left, widen its soon cards to fill it, so the grid
+// never ends in empty cells. Returns { [track id]: span } for widened cards.
+export const GRID_COLS = 4;
+export function fillSpans(tracks) {
+  let row = [], used = 0;
+  for (const t of tracks) {
+    const w = t.status === 'live' ? 2 : 1;
+    if (used + w > GRID_COLS) { row = []; used = 0; }
+    row.push(t); used += w;
+  }
+  const soon = row.filter((t) => t.status !== 'live');
+  let free = GRID_COLS - used;
+  const out = {};
+  if (!free || !soon.length) return out;
+  soon.forEach((t, i) => {
+    const extra = Math.floor(free / soon.length) + (i < free % soon.length ? 1 : 0);
+    if (extra) out[t.id] = 1 + extra;
+  });
+  return out;
+}
+
+// The pack label shown on hover over a card's icon and a hero chip
+// ("חבילת גריאטריה · שלב א׳"). Visual only: the same name and stage are
+// already in the card's text, so the tooltip is aria-hidden.
+export function packLabel(ui, c) {
+  return (ui.pack || '{name}').replace('{name}', c.name).replace('{stage}', c.stage);
+}
+
 function cards(data, locale) {
   const ui = data.ui[locale];
+  const spans = fillSpans(data.tracks);
   return data.tracks.map((t) => {
     const c = t[locale];
     const nameId = `track-${t.id}-name`;
@@ -90,8 +138,8 @@ function cards(data, locale) {
       ? `<span class="btn-action btn-action-md track-btn">${esc(c.action)}</span>`
       : `<span class="track-soon-btn">${esc(c.action)}${ARROW}</span>`;
     return [
-      `<article class="track track--${t.status}" id="track-${t.id}">`,
-      `  <div class="track-pills">${pills.join('')}</div>`,
+      `<article class="track track--${t.status}${spans[t.id] ? ` track--span${spans[t.id]}` : ''}" id="track-${t.id}">`,
+      `  <div class="track-top"><span class="track-icon" data-pack="${esc(packLabel(ui, c))}">${icon(t.icon, 'track-icon-svg')}</span><div class="track-pills">${pills.join('')}</div></div>`,
       `  <h3 class="track-name" id="${nameId}">${esc(c.name)} <span class="track-stage">${esc(c.stage)}</span></h3>`,
       `  <p class="track-blurb">${rich(c.blurb)}</p>`,
       `  <a ${attrs}>${action}</a>`,
@@ -106,7 +154,7 @@ function chips(data, locale) {
     // Coming soon is never colour alone: the words on wide screens, a clock
     // where the row is too narrow for them (CSS swaps the two at 600px).
     const soon = t.status === 'soon' ? `${CLOCK}<span class="hero-track-soon">${esc(ui.chipSoon)}</span>` : '';
-    return `<a class="hero-track hero-track--${t.status}" href="#track-${t.id}" data-track="${t.id}" data-track-via="chip">${esc(t[locale].name)}${soon}</a>`;
+    return `<a class="hero-track hero-track--${t.status}" href="#track-${t.id}" data-track="${t.id}" data-track-via="chip" data-pack="${esc(packLabel(ui, t[locale]))}">${icon(t.icon, 'hero-track-icon')}${esc(t[locale].name)}${soon}</a>`;
   }).join('\n');
 }
 
