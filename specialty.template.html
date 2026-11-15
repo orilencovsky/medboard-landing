@@ -232,7 +232,10 @@
   .q-src figcaption { margin-top: 8px; font-size: 12.5px; line-height: 1.5; color: var(--t4); }
   .q-tutor { display: flex; gap: 12px; align-items: flex-start; background: rgba(124,92,255,.1); border: 1px solid rgba(124,92,255,.4);
              border-radius: var(--r-md); padding: 12px 14px; animation: swap-in .3s var(--ease) both; }
-  .q-tutor .ph { font-size: 20px; color: var(--violet-on); margin-top: 2px; }
+  /* Socrates, the app's tutor. Decorative (alt=""): the "המורה:" label beside it
+     already names the speaker. The ring reuses the box's violet border colour. */
+  .q-tutor .q-avatar { flex: none; width: 32px; height: 32px; border-radius: 50%; object-fit: cover;
+                       border: 1px solid rgba(124,92,255,.4); }
   .q-tutor p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--violet-on-soft); }
   .q-tutor b { color: #fff; }
   /* A wrong answer without a tutor line: why it is wrong. */
@@ -963,7 +966,7 @@
                 out.innerHTML = '<div class="q-explain">' + explain.innerHTML + '</div>';
               } else if (o.hasAttribute('data-tutor')) {
                 out.innerHTML =
-                  '<div class="q-tutor"><i class="ph ph-chats-circle" aria-hidden="true"></i>' +
+                  '<div class="q-tutor"><img class="q-avatar" src="/socrates-avatar-64.png" srcset="/socrates-avatar-64.png 2x, /socrates-avatar-128.png 3x" width="32" height="32" alt="" decoding="async">' +
                     '<p><b>המורה:</b> ' + o.getAttribute('data-tutor') + '</p></div>';
               } else {
                 out.innerHTML =
