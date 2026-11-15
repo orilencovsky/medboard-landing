@@ -46,33 +46,33 @@
  "examBased": true,
  "questions": [
   {
-   "topic": "נתיב אוויר",
-   "stem": "בלרינגוסקופיה לפני אינטובציה רואים רק את ה-{{epiglottis}}, ואי אפשר לראות את ה-{{arytenoids}}. מהי דרגת הראייה לפי {{Cormack–Lehane}}?",
+   "topic": "חומצה-בסיס",
+   "stem": "בן 82 עבר ניתוח {{Whipple}} בהרדמה כללית ונשאר להשגחה בהתאוששות במשך הלילה. עכשיו הוא ישנוני, עם נשימה איטית ורדודה. סטורציה 95% עם 3 ליטר חמצן, המודינמיקה יציבה. גזים בדם: {{pH 7.21, PaCO₂ 70 mmHg, HCO₃⁻ 27 mEq/L}}. מה מתאר את ההפרעה בצורה הטובה ביותר?",
    "options": [
     {
      "key": "a",
-     "text": "{{Grade 2A}}",
-     "tutor": "בדרגה 2 רואים לפחות חלק מפתח הגלוטיס. מה מתוך זה ראית כאן?"
-    },
-    {
-     "key": "b",
-     "text": "{{Grade 2B}}",
-     "tutor": "ב-<span class=\"ltr-iso\">2B</span> עוד רואים את ה-<span class=\"ltr-iso\">arytenoids</span> או את החלק האחורי של מיתרי הקול. האם ראית אותם?"
-    },
-    {
-     "key": "c",
-     "text": "{{Grade 3}}",
+     "text": "חמצת נשימתית חריפה עם פיצוי מטבולי מתאים",
      "right": true
     },
     {
+     "key": "b",
+     "text": "חמצת נשימתית חריפה עם פיצוי מטבולי לא מתאים",
+     "tutor": "בכמה עלה ה-<span class=\"ltr-iso\">PaCO₂</span> מעל 40? ובכמה, לפי הכלל של חמצת נשימתית חריפה, היה אמור לעלות ה-<span class=\"ltr-iso\">HCO₃⁻</span>? השווה לערך שנמדד."
+    },
+    {
+     "key": "c",
+     "text": "חמצת נשימתית כרונית עם פיצוי מטבולי מתאים",
+     "tutor": "תוך כמה זמן התפתחה ההפרעה? פיצוי כלייתי נבנה במשך ימים. כמה גבוה היה ה-<span class=\"ltr-iso\">HCO₃⁻</span> אילו זה היה פיצוי כרוני?"
+    },
+    {
      "key": "d",
-     "text": "{{Grade 4}}",
-     "tutor": "בדרגה 4 גם ה-<span class=\"ltr-iso\">epiglottis</span> לא נראה. ומה כן ראית כאן?"
+     "text": "חמצת נשימתית כרונית עם פיצוי מטבולי לא מתאים",
+     "tutor": "מה בסיפור מרמז על שמירת <span class=\"ltr-iso\">CO₂</span> ממושכת לפני הניתוח? ואם אין רמז כזה, לפי איזה כלל צריך לבדוק את הפיצוי?"
     }
    ],
-   "explanationHtml": "<p><strong>נכון.</strong> הדירוג של <span class=\"ltr-iso\">Cormack–Lehane</span> מתאר כמה מהגרון רואים בלרינגוסקופיה ישירה. בדרגה 3 רואים רק את ה-<span class=\"ltr-iso\">epiglottis</span>, בלי אף חלק מפתח הגלוטיס. זה בדיוק המצב בשאלה.</p><p><strong><span class=\"ltr-iso\">2A</span> ו-<span class=\"ltr-iso\">2B</span>:</strong> בשתיהן רואים לפחות חלק מהגלוטיס. ב-<span class=\"ltr-iso\">2A</span> חלק מפתח הגלוטיס, וב-<span class=\"ltr-iso\">2B</span> רק את ה-<span class=\"ltr-iso\">arytenoids</span> או את החלק האחורי של מיתרי הקול. כאן גם ה-<span class=\"ltr-iso\">arytenoids</span> לא נראים.</p><p><strong>דרגה 4:</strong> גם ה-<span class=\"ltr-iso\">epiglottis</span> לא נראה. כאן הוא כן נראה.</p>",
-   "quote": "{{grade 3 is visualization of only the epiglottis; and grade 4 is no visualization of the epiglottis or larynx.}}",
-   "citation": "{{Miller's Anesthesia, 10th ed. — Chapter 40: Airway Management in the Adult}}"
+   "explanationHtml": "<p><strong>נכון.</strong> ההפרעה הופיעה אחרי הניתוח, עם נשימה איטית ורדודה ובלי רקע של מחלת ריאות כרונית, ולכן היא חריפה. בחמצת נשימתית חריפה ה-<span class=\"ltr-iso\">HCO₃⁻</span> עולה ב-1 <span class=\"ltr-iso\">mEq/L</span> על כל עלייה של 10 <span class=\"ltr-iso\">mmHg</span> ב-<span class=\"ltr-iso\">PaCO₂</span>. כאן ה-<span class=\"ltr-iso\">PaCO₂</span> עלה ב-30 (מ-40 ל-70), ולכן צפוי <span class=\"ltr-iso\">HCO₃⁻</span> של כ-27 (24 ועוד 3). זה בדיוק הערך שנמדד, כלומר הפיצוי מתאים.</p><p><strong>ב. חריפה, פיצוי לא מתאים:</strong> ה-<span class=\"ltr-iso\">HCO₃⁻</span> שנמדד, 27, הוא בדיוק מה שהכלל מנבא. אין כאן הפרעה מטבולית נוספת.</p><p><strong>ג. כרונית, פיצוי מתאים:</strong> בחמצת כרונית הכליות מעלות את ה-<span class=\"ltr-iso\">HCO₃⁻</span> הרבה יותר מ-3 <span class=\"ltr-iso\">mEq/L</span>, ותהליך כזה נמשך ימים. כאן ההפרעה הופיעה אחרי הניתוח.</p><p><strong>ד. כרונית, פיצוי לא מתאים:</strong> אין בסיפור רקע של שמירת <span class=\"ltr-iso\">CO₂</span> כרונית. ההפרעה חריפה, ולפי הכלל של הפרעה חריפה הפיצוי מלא.</p>",
+   "quote": "{{Blood gas analysis of acute respiratory acidosis will reflect a dramatic fall in pH, an elevated PaCO2, a slight rise in HCO3− (by 1 mEq/L for every 10 mm Hg [or 1.2 kPa] rise in PaCO2).}}",
+   "citation": "{{Miller's Anesthesia, 10th ed. — Chapter 44: Perioperative Acid–Base Balance}}"
   }
  ]
 }

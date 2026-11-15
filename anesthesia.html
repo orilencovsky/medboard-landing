@@ -500,8 +500,12 @@
     .nav-in { height: 60px; }
     .nav-r .nav-link { display: none; }
     .nav-cta { padding: 9px 16px; font-size: 14px; }
-    .hero { padding: 44px 0 64px; }
+    .hero { padding: 32px 0 64px; }
+    .hero-grid { gap: 32px; }
     .hero-copy { gap: 20px; }
+    /* No exam date yet: on a phone the box says nothing the hero does not, and
+       it pushed the sample question under the cookie banner. */
+    .countdown.pending { display: none; }
     .lead { font-size: 17px; }
     .hero-cta { align-self: stretch; font-size: 17px; }
     .q { padding: 18px; }
@@ -585,7 +589,7 @@
         <h1 class="enter" style="--i:1"><span class="hero-stage">הכנה לשלב א׳ בהרדמה<span class="sr">:</span></span>הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></h1>
         <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ועדכון במייל כשההכנה נפתחת.</p>
         <a class="btn hero-cta enter" style="--i:3" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
-        <div class="countdown enter" style="--i:4">
+        <div class="countdown pending enter" style="--i:4">
           <p class="cd-exam">בחינת שלב א׳ · מועד הבחינה טרם פורסם</p>
           <p class="cd-note"><a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לוח הבחינות של הר״י</a></p>
         </div>
@@ -596,17 +600,17 @@
       <section class="q enter" style="--i:2" aria-labelledby="q-title">
         <div class="q-head">
           <h2 class="q-title" id="q-title">שאלה לדוגמה, נסו לענות</h2>
-          <span class="q-topic">נתיב אוויר</span>
+          <span class="q-topic">חומצה-בסיס</span>
         </div>
-        <p class="q-stem" id="q-stem">בלרינגוסקופיה לפני אינטובציה רואים רק את ה-<span class="ltr-iso">epiglottis</span>, ואי אפשר לראות את ה-<span class="ltr-iso">arytenoids</span>. מהי דרגת הראייה לפי <span class="ltr-iso">Cormack–Lehane</span>?</p>
+        <p class="q-stem" id="q-stem">בן 82 עבר ניתוח <span class="ltr-iso">Whipple</span> בהרדמה כללית ונשאר להשגחה בהתאוששות במשך הלילה. עכשיו הוא ישנוני, עם נשימה איטית ורדודה. סטורציה 95% עם 3 ליטר חמצן, המודינמיקה יציבה. גזים בדם: <span class="ltr-iso">pH 7.21, PaCO₂ 70 mmHg, HCO₃⁻ 27 mEq/L</span>. מה מתאר את ההפרעה בצורה הטובה ביותר?</p>
         <div class="q-opts" role="group" aria-labelledby="q-stem">
-          <button type="button" class="q-opt" data-k="a" data-tutor="בדרגה 2 רואים לפחות חלק מפתח הגלוטיס. מה מתוך זה ראית כאן?"><span class="q-key">א</span><span class="q-opt-text"><span class="ltr-iso">Grade 2A</span></span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="b" data-tutor="ב-<span class=&quot;ltr-iso&quot;>2B</span> עוד רואים את ה-<span class=&quot;ltr-iso&quot;>arytenoids</span> או את החלק האחורי של מיתרי הקול. האם ראית אותם?"><span class="q-key">ב</span><span class="q-opt-text"><span class="ltr-iso">Grade 2B</span></span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="c" data-right><span class="q-key">ג</span><span class="q-opt-text"><span class="ltr-iso">Grade 3</span></span><i class="ph ph-check-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="d" data-tutor="בדרגה 4 גם ה-<span class=&quot;ltr-iso&quot;>epiglottis</span> לא נראה. ומה כן ראית כאן?"><span class="q-key">ד</span><span class="q-opt-text"><span class="ltr-iso">Grade 4</span></span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="a" data-right><span class="q-key">א</span><span class="q-opt-text">חמצת נשימתית חריפה עם פיצוי מטבולי מתאים</span><i class="ph ph-check-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="b" data-tutor="בכמה עלה ה-<span class=&quot;ltr-iso&quot;>PaCO₂</span> מעל 40? ובכמה, לפי הכלל של חמצת נשימתית חריפה, היה אמור לעלות ה-<span class=&quot;ltr-iso&quot;>HCO₃⁻</span>? השווה לערך שנמדד."><span class="q-key">ב</span><span class="q-opt-text">חמצת נשימתית חריפה עם פיצוי מטבולי לא מתאים</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="c" data-tutor="תוך כמה זמן התפתחה ההפרעה? פיצוי כלייתי נבנה במשך ימים. כמה גבוה היה ה-<span class=&quot;ltr-iso&quot;>HCO₃⁻</span> אילו זה היה פיצוי כרוני?"><span class="q-key">ג</span><span class="q-opt-text">חמצת נשימתית כרונית עם פיצוי מטבולי מתאים</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="d" data-tutor="מה בסיפור מרמז על שמירת <span class=&quot;ltr-iso&quot;>CO₂</span> ממושכת לפני הניתוח? ואם אין רמז כזה, לפי איזה כלל צריך לבדוק את הפיצוי?"><span class="q-key">ד</span><span class="q-opt-text">חמצת נשימתית כרונית עם פיצוי מטבולי לא מתאים</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
         </div>
         <div class="q-out" id="q-out" aria-live="polite"></div>
-        <template class="q-explain-src"><p><strong>נכון.</strong> הדירוג של <span class="ltr-iso">Cormack–Lehane</span> מתאר כמה מהגרון רואים בלרינגוסקופיה ישירה. בדרגה 3 רואים רק את ה-<span class="ltr-iso">epiglottis</span>, בלי אף חלק מפתח הגלוטיס. זה בדיוק המצב בשאלה.</p><p><strong><span class="ltr-iso">2A</span> ו-<span class="ltr-iso">2B</span>:</strong> בשתיהן רואים לפחות חלק מהגלוטיס. ב-<span class="ltr-iso">2A</span> חלק מפתח הגלוטיס, וב-<span class="ltr-iso">2B</span> רק את ה-<span class="ltr-iso">arytenoids</span> או את החלק האחורי של מיתרי הקול. כאן גם ה-<span class="ltr-iso">arytenoids</span> לא נראים.</p><p><strong>דרגה 4:</strong> גם ה-<span class="ltr-iso">epiglottis</span> לא נראה. כאן הוא כן נראה.</p><figure class="q-src"><blockquote>״<span class="ltr-iso">grade 3 is visualization of only the epiglottis; and grade 4 is no visualization of the epiglottis or larynx.</span>״</blockquote><figcaption><span class="ltr-iso">Miller&#39;s Anesthesia, 10th ed. — Chapter 40: Airway Management in the Adult</span></figcaption></figure></template>
+        <template class="q-explain-src"><p><strong>נכון.</strong> ההפרעה הופיעה אחרי הניתוח, עם נשימה איטית ורדודה ובלי רקע של מחלת ריאות כרונית, ולכן היא חריפה. בחמצת נשימתית חריפה ה-<span class="ltr-iso">HCO₃⁻</span> עולה ב-1 <span class="ltr-iso">mEq/L</span> על כל עלייה של 10 <span class="ltr-iso">mmHg</span> ב-<span class="ltr-iso">PaCO₂</span>. כאן ה-<span class="ltr-iso">PaCO₂</span> עלה ב-30 (מ-40 ל-70), ולכן צפוי <span class="ltr-iso">HCO₃⁻</span> של כ-27 (24 ועוד 3). זה בדיוק הערך שנמדד, כלומר הפיצוי מתאים.</p><p><strong>ב. חריפה, פיצוי לא מתאים:</strong> ה-<span class="ltr-iso">HCO₃⁻</span> שנמדד, 27, הוא בדיוק מה שהכלל מנבא. אין כאן הפרעה מטבולית נוספת.</p><p><strong>ג. כרונית, פיצוי מתאים:</strong> בחמצת כרונית הכליות מעלות את ה-<span class="ltr-iso">HCO₃⁻</span> הרבה יותר מ-3 <span class="ltr-iso">mEq/L</span>, ותהליך כזה נמשך ימים. כאן ההפרעה הופיעה אחרי הניתוח.</p><p><strong>ד. כרונית, פיצוי לא מתאים:</strong> אין בסיפור רקע של שמירת <span class="ltr-iso">CO₂</span> כרונית. ההפרעה חריפה, ולפי הכלל של הפרעה חריפה הפיצוי מלא.</p><figure class="q-src"><blockquote>״<span class="ltr-iso">Blood gas analysis of acute respiratory acidosis will reflect a dramatic fall in pH, an elevated PaCO2, a slight rise in HCO3− (by 1 mEq/L for every 10 mm Hg [or 1.2 kPa] rise in PaCO2).</span>״</blockquote><figcaption><span class="ltr-iso">Miller&#39;s Anesthesia, 10th ed. — Chapter 44: Perioperative Acid–Base Balance</span></figcaption></figure></template>
         <p class="q-note">השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.</p>
       </section>
     </div>

@@ -46,33 +46,33 @@
  "examBased": true,
  "questions": [
   {
-   "topic": "מוגבלות שכלית התפתחותית",
-   "stem": "לפי {{DSM‑5}}, לפי מה נקבעת דרגת החומרה של מוגבלות שכלית התפתחותית {{(intellectual disability)}}?",
+   "topic": "הפרעות טראומה ודחק",
+   "stem": "בן 25 מגיע לבדיקה בליווי עמית לעבודה, כשבועיים אחרי שהותקף ונשדד בדרכו הביתה בערב, באיומי סכין וללא פגיעה גופנית. הוא מתלונן על ירידה בריכוז וקושי במשימות בעבודה, התנתקויות פתאומיות, חרדה וגלי חום עם הזעה כשהוא רואה אלימות בטלוויזיה. בלילה נרדם אחרי כוסית ויסקי, אבל מתעורר עייף, נבהל מכל רעש ולא יוצא מהבית אחרי החשכה. מהי האבחנה הסבירה ביותר?",
    "options": [
     {
      "key": "a",
-     "text": "ציון ה-{{IQ}}",
-     "tutor": "ה-<span class=\"ltr-iso\">IQ</span> חשוב לאבחנה. אבל מה קובע בפועל כמה תמיכה האדם צריך ביומיום? ועד כמה מבחני <span class=\"ltr-iso\">IQ</span> מדויקים בטווח הנמוך?"
+     "text": "{{Posttraumatic Stress Disorder}}",
+     "tutor": "התסמינים אכן מתאימים לתגובה לטראומה. מה עוד, מלבד סוג התסמינים, ה-<span class=\"ltr-iso\">DSM‑5</span> דורש כדי לאבחן <span class=\"ltr-iso\">PTSD</span>?"
     },
     {
      "key": "b",
-     "text": "התפקוד האדפטיבי",
-     "right": true
+     "text": "{{Generalized Anxiety Disorder}}",
+     "tutor": "האם החרדה כאן כללית ומפוזרת, או קשורה לאירוע מסוים ולמה שמזכיר אותו? וכמה זמן היא נמשכת?"
     },
     {
      "key": "c",
-     "text": "המיקום האנטומי של הפגיעה",
-     "tutor": "האם מוגבלות שכלית מוגדרת לפי מקום במוח, או לפי מה שהאדם מצליח לעשות?"
+     "text": "{{Adjustment Disorder}}",
+     "tutor": "הפרעת הסתגלות היא תגובה לגורם דחק. האם מה שקרה כאן הוא גורם דחק רגיל, ומה מלמדים ההתנתקויות, ההימנעות והדריכות?"
     },
     {
      "key": "d",
-     "text": "נוכחות של תסמונת כרומוזומלית",
-     "tutor": "תסמונת מסבירה את הסיבה. האם היא אומרת לך כמה קשה המוגבלות אצל אדם מסוים?"
+     "text": "{{Acute Stress Disorder}}",
+     "right": true
     }
    ],
-   "explanationHtml": "<p><strong>נכון.</strong> ב-<span class=\"ltr-iso\">DSM‑5</span> דרגות החומרה (קלה, בינונית, קשה, עמוקה) נקבעות לפי התפקוד האדפטיבי: היכולת לעמוד בדרישות היומיום בתחום המושגי, החברתי והמעשי. הסיבה כפולה: התפקוד הוא שקובע כמה תמיכה האדם צריך, ומבחני <span class=\"ltr-iso\">IQ</span> פחות תקפים בקצה הנמוך של הטווח.</p><p><strong>א:</strong> ציון ה-<span class=\"ltr-iso\">IQ</span> עדיין חלק מהאבחנה, אבל הוא לא קובע את דרגת החומרה.</p><p><strong>ג, ד:</strong> מיקום הפגיעה או תסמונת כרומוזומלית יכולים להסביר את הסיבה למוגבלות, אבל לא את חומרתה.</p>",
-   "quote": "{{The various levels of severity are defined on the basis of adaptive functioning, and not IQ scores, because it is adaptive functioning that determines the level of supports required. Moreover, IQ measures are less valid in the lower end of the IQ range.}}",
-   "citation": "{{American Psychiatric Association, DSM‑5 (2013) — Intellectual Disability: Specifiers}}"
+   "explanationHtml": "<p><strong>נכון.</strong> המטופל עבר אירוע טראומטי (איום בסכין), ומאז יש לו תסמינים של חודרנות, ניתוק, הימנעות ודריכות יתר. עברו רק שבועיים. ב-<span class=\"ltr-iso\">DSM‑5</span> מה שמבדיל בין הפרעת דחק חריפה ל-<span class=\"ltr-iso\">PTSD</span> הוא משך התסמינים: הפרעת דחק חריפה מוגבלת ל-3 ימים עד חודש אחרי האירוע.</p><p><strong>א. <span class=\"ltr-iso\">PTSD</span>:</strong> אותם סוגי תסמינים, אבל האבחנה דורשת שיימשכו יותר מחודש. אחרי שבועיים מוקדם לאבחן. אם התסמינים יימשכו מעבר לחודש, האבחנה תשתנה.</p><p><strong>ב. <span class=\"ltr-iso\">GAD</span>:</strong> החרדה כאן קשורה לאירוע ולמה שמזכיר אותו, ולא דאגה כללית ומפוזרת. היא גם נמשכת שבועיים, לא חודשים.</p><p><strong>ג. הפרעת הסתגלות:</strong> מתאימה לתגובה לגורם דחק שלא עומדת בקריטריונים של הפרעה ספציפית. כאן יש אירוע טראומטי ותסמינים מכמה אשכולות שמאפיינים תגובה לטראומה: תגובה לתזכורות, ניתוק, הימנעות ודריכות. תמונה כזו בחודש הראשון מתאימה להפרעת דחק חריפה.</p>",
+   "quote": "{{Acute stress disorder is distinguished from PTSD because the symptom pattern in acute stress disorder is restricted to a duration of 3 days to 1 month following exposure to the traumatic event.}}",
+   "citation": "{{American Psychiatric Association, DSM‑5 (2013) — Trauma- and Stressor-Related Disorders: Acute Stress Disorder}}"
   }
  ]
 }

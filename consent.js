@@ -81,12 +81,17 @@
     else if (before === 'granted' && loaded) window.location.reload();
   }
 
+  // Phones: a shorter banner, so it covers less of the first screen. Text stays
+  // 14px; the buttons share one row and the frame sits closer to the edges.
+  var narrow = !!(window.matchMedia && window.matchMedia('(max-width: 600px)').matches);
+
   function button(label, value) {
     var b = document.createElement('button');
     b.type = 'button';
     b.textContent = label;
     // Accept and reject carry equal visual weight: same size, same shape.
-    b.style.cssText = 'font:inherit;font-size:14px;font-weight:700;padding:10px 18px;' +
+    b.style.cssText = 'font:inherit;font-size:14px;font-weight:700;' +
+      (narrow ? 'padding:9px 14px;flex:1 1 0;min-height:44px;' : 'padding:10px 18px;') +
       'border-radius:10px;cursor:pointer;min-width:110px;border:1px solid #0E7490;' +
       // #0E7490, not the brand sky #0EA5E9: white on sky is 2.77:1, under the 4.5:1
       // the accessibility statement promises; white on #0E7490 is 5.36:1.
@@ -101,13 +106,15 @@
     banner.setAttribute('role', 'region');
     banner.setAttribute('aria-label', T.label);
     banner.dir = he ? 'rtl' : 'ltr';
-    banner.style.cssText = 'position:fixed;left:16px;right:16px;bottom:16px;z-index:2147483000;' +
+    banner.style.cssText = 'position:fixed;z-index:2147483000;' +
+      (narrow ? 'left:8px;right:8px;bottom:8px;padding:12px 14px;gap:10px;'
+              : 'left:16px;right:16px;bottom:16px;padding:16px 18px;gap:12px;') +
       'max-width:640px;margin:0 auto;background:#fff;color:#0F172A;border:1px solid #E2E8F0;' +
-      'border-radius:14px;box-shadow:0 10px 30px rgba(15,23,42,.18);padding:16px 18px;' +
-      'font-family:inherit;display:flex;flex-direction:column;gap:12px;';
+      'border-radius:14px;box-shadow:0 10px 30px rgba(15,23,42,.18);' +
+      'font-family:inherit;display:flex;flex-direction:column;';
 
     var p = document.createElement('p');
-    p.style.cssText = 'margin:0;font-size:14px;line-height:1.6;';
+    p.style.cssText = 'margin:0;font-size:14px;line-height:' + (narrow ? '1.5' : '1.6') + ';';
     p.appendChild(document.createTextNode(T.text + ' '));
     var a = document.createElement('a');
     a.href = T.moreHref;

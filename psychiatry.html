@@ -500,8 +500,12 @@
     .nav-in { height: 60px; }
     .nav-r .nav-link { display: none; }
     .nav-cta { padding: 9px 16px; font-size: 14px; }
-    .hero { padding: 44px 0 64px; }
+    .hero { padding: 32px 0 64px; }
+    .hero-grid { gap: 32px; }
     .hero-copy { gap: 20px; }
+    /* No exam date yet: on a phone the box says nothing the hero does not, and
+       it pushed the sample question under the cookie banner. */
+    .countdown.pending { display: none; }
     .lead { font-size: 17px; }
     .hero-cta { align-self: stretch; font-size: 17px; }
     .q { padding: 18px; }
@@ -585,7 +589,7 @@
         <h1 class="enter" style="--i:1"><span class="hero-stage">הכנה לשלב א׳ בפסיכיאטריה<span class="sr">:</span></span>הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></h1>
         <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ועדכון במייל כשההכנה נפתחת.</p>
         <a class="btn hero-cta enter" style="--i:3" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
-        <div class="countdown enter" style="--i:4">
+        <div class="countdown pending enter" style="--i:4">
           <p class="cd-exam">בחינת שלב א׳ · מועד הבחינה טרם פורסם</p>
           <p class="cd-note"><a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לוח הבחינות של הר״י</a></p>
         </div>
@@ -596,17 +600,17 @@
       <section class="q enter" style="--i:2" aria-labelledby="q-title">
         <div class="q-head">
           <h2 class="q-title" id="q-title">שאלה לדוגמה, נסו לענות</h2>
-          <span class="q-topic">מוגבלות שכלית התפתחותית</span>
+          <span class="q-topic">הפרעות טראומה ודחק</span>
         </div>
-        <p class="q-stem" id="q-stem">לפי <span class="ltr-iso">DSM‑5</span>, לפי מה נקבעת דרגת החומרה של מוגבלות שכלית התפתחותית <span class="ltr-iso">(intellectual disability)</span>?</p>
+        <p class="q-stem" id="q-stem">בן 25 מגיע לבדיקה בליווי עמית לעבודה, כשבועיים אחרי שהותקף ונשדד בדרכו הביתה בערב, באיומי סכין וללא פגיעה גופנית. הוא מתלונן על ירידה בריכוז וקושי במשימות בעבודה, התנתקויות פתאומיות, חרדה וגלי חום עם הזעה כשהוא רואה אלימות בטלוויזיה. בלילה נרדם אחרי כוסית ויסקי, אבל מתעורר עייף, נבהל מכל רעש ולא יוצא מהבית אחרי החשכה. מהי האבחנה הסבירה ביותר?</p>
         <div class="q-opts" role="group" aria-labelledby="q-stem">
-          <button type="button" class="q-opt" data-k="a" data-tutor="ה-<span class=&quot;ltr-iso&quot;>IQ</span> חשוב לאבחנה. אבל מה קובע בפועל כמה תמיכה האדם צריך ביומיום? ועד כמה מבחני <span class=&quot;ltr-iso&quot;>IQ</span> מדויקים בטווח הנמוך?"><span class="q-key">א</span><span class="q-opt-text">ציון ה-<span class="ltr-iso">IQ</span></span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="b" data-right><span class="q-key">ב</span><span class="q-opt-text">התפקוד האדפטיבי</span><i class="ph ph-check-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="c" data-tutor="האם מוגבלות שכלית מוגדרת לפי מקום במוח, או לפי מה שהאדם מצליח לעשות?"><span class="q-key">ג</span><span class="q-opt-text">המיקום האנטומי של הפגיעה</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
-          <button type="button" class="q-opt" data-k="d" data-tutor="תסמונת מסבירה את הסיבה. האם היא אומרת לך כמה קשה המוגבלות אצל אדם מסוים?"><span class="q-key">ד</span><span class="q-opt-text">נוכחות של תסמונת כרומוזומלית</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="a" data-tutor="התסמינים אכן מתאימים לתגובה לטראומה. מה עוד, מלבד סוג התסמינים, ה-<span class=&quot;ltr-iso&quot;>DSM‑5</span> דורש כדי לאבחן <span class=&quot;ltr-iso&quot;>PTSD</span>?"><span class="q-key">א</span><span class="q-opt-text"><span class="ltr-iso">Posttraumatic Stress Disorder</span></span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="b" data-tutor="האם החרדה כאן כללית ומפוזרת, או קשורה לאירוע מסוים ולמה שמזכיר אותו? וכמה זמן היא נמשכת?"><span class="q-key">ב</span><span class="q-opt-text"><span class="ltr-iso">Generalized Anxiety Disorder</span></span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="c" data-tutor="הפרעת הסתגלות היא תגובה לגורם דחק. האם מה שקרה כאן הוא גורם דחק רגיל, ומה מלמדים ההתנתקויות, ההימנעות והדריכות?"><span class="q-key">ג</span><span class="q-opt-text"><span class="ltr-iso">Adjustment Disorder</span></span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
+          <button type="button" class="q-opt" data-k="d" data-right><span class="q-key">ד</span><span class="q-opt-text"><span class="ltr-iso">Acute Stress Disorder</span></span><i class="ph ph-check-circle" aria-hidden="true"></i></button>
         </div>
         <div class="q-out" id="q-out" aria-live="polite"></div>
-        <template class="q-explain-src"><p><strong>נכון.</strong> ב-<span class="ltr-iso">DSM‑5</span> דרגות החומרה (קלה, בינונית, קשה, עמוקה) נקבעות לפי התפקוד האדפטיבי: היכולת לעמוד בדרישות היומיום בתחום המושגי, החברתי והמעשי. הסיבה כפולה: התפקוד הוא שקובע כמה תמיכה האדם צריך, ומבחני <span class="ltr-iso">IQ</span> פחות תקפים בקצה הנמוך של הטווח.</p><p><strong>א:</strong> ציון ה-<span class="ltr-iso">IQ</span> עדיין חלק מהאבחנה, אבל הוא לא קובע את דרגת החומרה.</p><p><strong>ג, ד:</strong> מיקום הפגיעה או תסמונת כרומוזומלית יכולים להסביר את הסיבה למוגבלות, אבל לא את חומרתה.</p><figure class="q-src"><blockquote>״<span class="ltr-iso">The various levels of severity are defined on the basis of adaptive functioning, and not IQ scores, because it is adaptive functioning that determines the level of supports required. Moreover, IQ measures are less valid in the lower end of the IQ range.</span>״</blockquote><figcaption><span class="ltr-iso">American Psychiatric Association, DSM‑5 (2013) — Intellectual Disability: Specifiers</span></figcaption></figure></template>
+        <template class="q-explain-src"><p><strong>נכון.</strong> המטופל עבר אירוע טראומטי (איום בסכין), ומאז יש לו תסמינים של חודרנות, ניתוק, הימנעות ודריכות יתר. עברו רק שבועיים. ב-<span class="ltr-iso">DSM‑5</span> מה שמבדיל בין הפרעת דחק חריפה ל-<span class="ltr-iso">PTSD</span> הוא משך התסמינים: הפרעת דחק חריפה מוגבלת ל-3 ימים עד חודש אחרי האירוע.</p><p><strong>א. <span class="ltr-iso">PTSD</span>:</strong> אותם סוגי תסמינים, אבל האבחנה דורשת שיימשכו יותר מחודש. אחרי שבועיים מוקדם לאבחן. אם התסמינים יימשכו מעבר לחודש, האבחנה תשתנה.</p><p><strong>ב. <span class="ltr-iso">GAD</span>:</strong> החרדה כאן קשורה לאירוע ולמה שמזכיר אותו, ולא דאגה כללית ומפוזרת. היא גם נמשכת שבועיים, לא חודשים.</p><p><strong>ג. הפרעת הסתגלות:</strong> מתאימה לתגובה לגורם דחק שלא עומדת בקריטריונים של הפרעה ספציפית. כאן יש אירוע טראומטי ותסמינים מכמה אשכולות שמאפיינים תגובה לטראומה: תגובה לתזכורות, ניתוק, הימנעות ודריכות. תמונה כזו בחודש הראשון מתאימה להפרעת דחק חריפה.</p><figure class="q-src"><blockquote>״<span class="ltr-iso">Acute stress disorder is distinguished from PTSD because the symptom pattern in acute stress disorder is restricted to a duration of 3 days to 1 month following exposure to the traumatic event.</span>״</blockquote><figcaption><span class="ltr-iso">American Psychiatric Association, DSM‑5 (2013) — Trauma- and Stressor-Related Disorders: Acute Stress Disorder</span></figcaption></figure></template>
         <p class="q-note">השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.</p>
       </section>
     </div>

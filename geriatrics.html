@@ -500,8 +500,12 @@
     .nav-in { height: 60px; }
     .nav-r .nav-link { display: none; }
     .nav-cta { padding: 9px 16px; font-size: 14px; }
-    .hero { padding: 44px 0 64px; }
+    .hero { padding: 32px 0 64px; }
+    .hero-grid { gap: 32px; }
     .hero-copy { gap: 20px; }
+    /* No exam date yet: on a phone the box says nothing the hero does not, and
+       it pushed the sample question under the cookie banner. */
+    .countdown.pending { display: none; }
     .lead { font-size: 17px; }
     .hero-cta { align-self: stretch; font-size: 17px; }
     .q { padding: 18px; }
@@ -585,7 +589,7 @@
         <h1 class="enter" style="--i:1"><span class="hero-stage">הכנה לשלב א׳ בגריאטריה<span class="sr">:</span></span>הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></h1>
         <p class="lead enter" style="--i:2"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ועדכון במייל כשההכנה נפתחת.</p>
         <a class="btn hero-cta enter" style="--i:3" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
-        <div class="countdown enter" style="--i:4">
+        <div class="countdown pending enter" style="--i:4">
           <p class="cd-exam">בחינת שלב א׳ · מועד הבחינה טרם פורסם</p>
           <p class="cd-note"><a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לוח הבחינות של הר״י</a></p>
         </div>
@@ -606,7 +610,7 @@
           <button type="button" class="q-opt" data-k="d" data-tutor="גם כאן המטופל בוחר בעצמו. מה יכול לספר לך על כאב אצל מי שלא יכול לבחור?"><span class="q-key">ד</span><span class="q-opt-text">סרגל צבעים, מלבן (אין כאב) עד אדום (כאב חזק)</span><i class="ph ph-x-circle" aria-hidden="true"></i></button>
         </div>
         <div class="q-out" id="q-out" aria-live="polite"></div>
-        <template class="q-explain-src"><p><strong>נכון.</strong> בדמנציה מתקדמת המטופל כבר לא יכול לדווח על הכאב בעצמו, ולכן מעריכים אותו לפי מה שהצוות רואה. <span class="ltr-iso">PAINAD (Pain Assessment in Advanced Dementia)</span> נבנה בדיוק לשם כך: הצוות מדרג נשימה, קולות, הבעת פנים, שפת גוף והאם אפשר להרגיע את המטופל.</p><p><strong>ב, ג, ד:</strong> סולם מספרי, סרגל פרצופים וסרגל צבעים הם כולם כלים של דיווח עצמי. הם דורשים שהמטופל יבין את הסולם ויבחר בעצמו, ובדמנציה קשה זה לא אפשרי. גם דיווח של בני משפחה במקומו אינו תחליף לדיווח עצמי.</p><figure class="q-src"><blockquote>״<span class="ltr-iso">The Pain Assessment in Advanced Dementia (PAINAD) Scale may be a useful tool in this situation.</span>״</blockquote><figcaption><span class="ltr-iso">Hazzard&#39;s Geriatric Medicine and Gerontology, 8th ed. — Chapter 67: Palliative Care and Special Management Issues</span></figcaption></figure></template>
+        <template class="q-explain-src"><p><strong>נכון.</strong> בדמנציה מתקדמת המטופל כבר לא יכול לדווח על הכאב בעצמו, ולכן מעריכים אותו לפי מה שהצוות רואה. <span class="ltr-iso">PAINAD (Pain Assessment in Advanced Dementia)</span> נבנה בדיוק לשם כך: הצוות מדרג נשימה, קולות, הבעת פנים, שפת גוף והאם אפשר להרגיע את המטופל.</p><p><strong>ב. <span class="ltr-iso">NRS</span> בעזרת בני המשפחה:</strong> בסולם מספרי המטופל מדרג את הכאב בעצמו, מ-0 עד 10. בדמנציה קשה הוא לא יכול, ובני משפחה שעונים במקומו מנחשים את הכאב, לא מדווחים עליו.</p><p><strong>ג. סרגל פרצופים:</strong> פרצופים קלים יותר ממספרים, אבל זה עדיין דיווח עצמי: המטופל צריך להבין את הסרגל ולהצביע בעצמו.</p><p><strong>ד. סרגל צבעים:</strong> אותה בעיה. גם כאן המטופל בוחר את הצבע בעצמו, ובדמנציה קשה הוא לא יכול.</p><figure class="q-src"><blockquote>״<span class="ltr-iso">The Pain Assessment in Advanced Dementia (PAINAD) Scale may be a useful tool in this situation.</span>״</blockquote><figcaption><span class="ltr-iso">Hazzard&#39;s Geriatric Medicine and Gerontology, 8th ed. — Chapter 67: Palliative Care and Special Management Issues</span></figcaption></figure></template>
         <p class="q-note">השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.</p>
       </section>
     </div>

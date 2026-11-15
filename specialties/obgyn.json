@@ -46,33 +46,33 @@
  "examBased": true,
  "questions": [
   {
-   "topic": "גינקולוגיה של הילדה",
-   "stem": "אם לתינוקת בת 3 ימים מספרת על הכתמה דמית בחיתול. בבדיקה הגניטליה החיצונית תקינה. מה הצעד הבא?",
+   "topic": "ניתוח קיסרי",
+   "stem": "שבוע אחרי ניתוח קיסרי שבוצע בגלל ירידת מים ממושכת, מטופלת פונה עם חום, כאבי בטן, הפרשה נרתיקית עם ריח רע ורגישות ניכרת של הרחם. לויקוציטים 15,000 למק״ל. כחצי שעה לפני הניתוח קיבלה {{cefazolin}} מניעתי. הוספה של איזו אנטיביוטיקה לטיפול המניעתי הייתה יכולה להקטין את הסיכון לסיבוך הזה?",
    "options": [
     {
      "key": "a",
-     "text": "מעקב בלבד",
-     "right": true
+     "text": "{{Ampicillin}}",
+     "tutor": "<span class=\"ltr-iso\">Ampicillin</span> משמש כבר היום כחלופה ל-<span class=\"ltr-iso\">cefazolin</span> בפרופילקסיס הרגיל. מה שונה אצל המטופלת הזו מניתוח קיסרי מתוכנן, ואיזה כיסוי זה מחייב?"
     },
     {
      "key": "b",
-     "text": "אולטרסאונד בגישה פרינאלית",
-     "tutor": "איזה ממצא בבדיקה מצדיק כאן הדמיה? ומה קרה לתינוקת ברחם, בחשיפה להורמונים של האם, שנגמר עכשיו בלידה?"
+     "text": "{{Azithromycin}}",
+     "right": true
     },
     {
      "key": "c",
-     "text": "אולטרסאונד בגישה בטנית",
-     "tutor": "הדמיה בטנית מחפשת גוש או מקור הורמונלי. האם יש לתינוקת בת 3 ימים סיבה צפויה ושפירה להכתמה?"
+     "text": "{{Vancomycin}}",
+     "tutor": "על אילו חיידקים <span class=\"ltr-iso\">vancomycin</span> מכוון? האם אלה החיידקים שמסכנים מטופלת אחרי ירידת מים ממושכת?"
     },
     {
      "key": "d",
-     "text": "וגינוסקופיה",
-     "tutor": "וגינוסקופיה היא בדיקה פולשנית. מה גיל התינוקת, ומה משתנה בגוף שלה בימים הראשונים אחרי הלידה?"
+     "text": "{{Cefuroxime}}",
+     "tutor": "<span class=\"ltr-iso\">Cefuroxime</span> הוא צפלוספורין, כמו <span class=\"ltr-iso\">cefazolin</span>. מה מוסיפה עוד תרופה מאותה משפחה לכיסוי שכבר יש?"
     }
    ],
-   "explanationHtml": "<p><strong>נכון.</strong> ברחם התינוקת חשופה לרמות גבוהות של אסטרוגן מהאם. אחרי הלידה החשיפה נפסקת, ובשבועות הראשונים לחיים עלול להופיע דימום נרתיקי קל של גמילה. כשהגניטליה החיצונית תקינה, אין צורך בבירור: מרגיעים את האם. עדיף להסביר להורים על האפשרות הזו מראש.</p><p><strong>ב, ג, ד:</strong> הדמיה ווגינוסקופיה שמורות לדימום נרתיקי שמופיע אחרי תקופת היילוד, כשחושדים בגוף זר, בגידול או בהתבגרות מוקדמת. לא להכתמה צפויה בימים הראשונים לחיים.</p>",
-   "quote": "{{Slight vaginal bleeding can occur within the first weeks of life because of withdrawal from exposure to high levels of maternal estrogen. New parents of female infants should be informed of this possibility to preclude unnecessary anxiety.}}",
-   "citation": "{{Berek & Novak's Gynecology, 17th ed. — Chapter 9: Pediatric and Adolescent Gynecology}}"
+   "explanationHtml": "<p><strong>נכון.</strong> חום, רגישות של הרחם והפרשה עם ריח רע שבוע אחרי ניתוח קיסרי מתאימים לאנדומטריטיס. לידה פעילה או ירידת מים לפני הניתוח מעלות את הסיכון לזיהום, ובמטופלות האלה מוסיפים <span class=\"ltr-iso\">azithromycin</span> ל-<span class=\"ltr-iso\">cefazolin</span> לפני הניתוח. בשאר הניתוחים הקיסריים, כיסוי רחב יותר לא הראה יתרון.</p><p><strong>א. <span class=\"ltr-iso\">Ampicillin</span>:</strong> הוא חלופה ל-<span class=\"ltr-iso\">cefazolin</span> בפרופילקסיס הרגיל, לא התוספת שמומלצת לירידת מים או ללידה פעילה.</p><p><strong>ג. <span class=\"ltr-iso\">Vancomycin</span>:</strong> מכוון בעיקר לחיידקים גראם-חיוביים עמידים, ואינו התוספת שמומלצת לירידת מים או ללידה פעילה.</p><p><strong>ד. <span class=\"ltr-iso\">Cefuroxime</span>:</strong> עוד צפלוספורין לא מוסיף כיסוי של ממש על <span class=\"ltr-iso\">cefazolin</span>. לפי המקור, כיסוי רחב יותר לא הראה יתרון, פרט למצב הזה, שבו מוסיפים <span class=\"ltr-iso\">azithromycin</span>.</p>",
+   "quote": "{{No apparent advantage has been shown with more broad-spectrum antibiotic prophylaxis (e.g., metronidazole), except for patients in labor or with rupture of membranes; preoperative azithromycin should be added to cefazolin in these patients.}}",
+   "citation": "{{Gabbe's Obstetrics: Normal and Problem Pregnancies, 9th ed. — Chapter 21: Cesarean Delivery}}"
   }
  ]
 }

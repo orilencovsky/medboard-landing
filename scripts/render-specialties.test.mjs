@@ -45,6 +45,26 @@ test('a track with no published exam date says so and draws no countdown', () =>
   assert.ok(!html.includes('data-exam-date="'));
   assert.ok(!out.includes('class="cd-days"'));
   assert.ok(out.includes('href="https://www.ima.org.il/Internship/Events.aspx"'));
+  // Marked so phones can drop the dateless box (the CSS rule lives in the template).
+  assert.ok(out.includes('class="countdown pending enter"'));
+});
+
+test('a dated countdown is never marked pending', () => {
+  assert.ok(!served(render('family-medicine')).includes('countdown pending'));
+});
+
+test('every sample question explains each wrong answer on its own', () => {
+  // The card promises "why the distractors are wrong": one labelled paragraph
+  // per wrong option, never a shared "ב, ג, ד:" block.
+  for (const id of ['geriatrics', 'psychiatry', 'anesthesia', 'obgyn', 'pediatrics']) {
+    const page = JSON.parse(readFileSync(new URL(`../specialties/${id}.json`, import.meta.url), 'utf8'));
+    for (const q of page.questions) {
+      const letters = 'אבגד';
+      const wrong = q.options.map((o, i) => (o.right ? null : letters[i])).filter(Boolean);
+      for (const l of wrong) assert.ok(q.explanationHtml.includes(`<strong>${l}.`), `${id}: no paragraph for ${l}`);
+      assert.ok(!/<strong>[אבגד], /.test(q.explanationHtml), `${id}: grouped distractors`);
+    }
+  }
 });
 
 test('the four new soon pages carry their own source and interest key', () => {

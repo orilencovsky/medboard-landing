@@ -111,9 +111,10 @@ export function validatePage(page, track) {
 function countdown(track) {
   const { date, nameHe, url } = track.exam;
   // No published date yet: name the exam, say the date is not out, and leave
-  // out data-exam-date so the page script draws no countdown.
+  // out data-exam-date so the page script draws no countdown. "pending" lets
+  // phones drop it: it holds no date, and it pushed the sample question down.
   if (!date) return [
-    '<div class="countdown enter" style="--i:4">',
+    '<div class="countdown pending enter" style="--i:4">',
     `  <p class="cd-exam">${esc(nameHe)} · מועד הבחינה טרם פורסם</p>`,
     `  <p class="cd-note"><a href="${esc(url)}" target="_blank" rel="noopener">לוח הבחינות של הר״י</a></p>`,
     '</div>',
