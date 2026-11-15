@@ -2,7 +2,7 @@
 //   node --test scripts/render-specialties.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import vm from 'node:vm';
 import { renderPage, validatePage } from './render-specialties.mjs';
 import { daysUntil, countdownState } from './countdown.mjs';
@@ -12,7 +12,9 @@ const template = read('specialty.template.html');
 const tracks = JSON.parse(read('tracks.json')).tracks;
 const track = (id) => JSON.parse(JSON.stringify(tracks.find((t) => t.id === id)));
 const page = (id) => JSON.parse(read(`specialties/${id}.json`));
-const PAGES = ['family-medicine', 'pediatrics', 'nephrology', 'cardiology'];
+// Every specialties/*.json page, so a new track is covered the day it is added.
+const PAGES = readdirSync(new URL('../specialties/', import.meta.url))
+  .filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)).sort();
 const SOON = ['family-medicine', 'pediatrics'];
 const render = (id, edit = (p, t) => {}) => {
   const p = page(id), t = track(id);
@@ -201,7 +203,7 @@ test('questions section is omitted when empty and numbered when present', () => 
 });
 
 test('the tutor box carries the Socrates avatar, sized, on every page with questions', () => {
-  const avatar = /<img class="q-avatar" src="\/socrates-avatar-64\.png" srcset="\/socrates-avatar-64\.png 2x, \/socrates-avatar-128\.png 3x" width="32" height="32" alt="" loading="lazy" decoding="async">/;
+  const avatar = /<img class="q-avatar" src="\/socrates-avatar-64\.png" srcset="\/socrates-avatar-64\.png 2x, \/socrates-avatar-128\.png 3x" width="32" height="32" alt="" decoding="async">/;
   for (const id of PAGES) {
     const out = render(id);
     if (!page(id).questions?.length) continue;
@@ -209,8 +211,10 @@ test('the tutor box carries the Socrates avatar, sized, on every page with quest
     assert.doesNotMatch(scripts(out), /q-tutor"><i /, `${id} tutor box still shows the old icon`);
   }
   assert.doesNotMatch(render('family-medicine', (p) => { p.questions = []; delete p.examBased; }), /socrates-avatar/);
-  for (const f of ['socrates-avatar-64.png', 'socrates-avatar-128.png']) {
-    assert.ok(readFileSync(new URL('../' + f, import.meta.url)).length > 0, `${f} is missing`);
+  for (const [f, px] of [['socrates-avatar-64.png', 64], ['socrates-avatar-128.png', 128]]) {
+    const b = readFileSync(new URL('../' + f, import.meta.url));
+    assert.equal(b.subarray(1, 4).toString('latin1'), 'PNG', `${f} is not a PNG`);
+    assert.deepEqual([b.readUInt32BE(16), b.readUInt32BE(20)], [px, px], `${f} is not ${px}x${px}`);
   }
 });
 
