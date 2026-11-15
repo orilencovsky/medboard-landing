@@ -200,6 +200,20 @@ test('questions section is omitted when empty and numbered when present', () => 
   assert.equal(one.match(/<button[^>]*\sdata-right[\s>]/g).length, 1);
 });
 
+test('the tutor box carries the Socrates avatar, sized, on every page with questions', () => {
+  const avatar = /<img class="q-avatar" src="\/socrates-avatar-64\.png" srcset="\/socrates-avatar-64\.png 2x, \/socrates-avatar-128\.png 3x" width="32" height="32" alt="" loading="lazy" decoding="async">/;
+  for (const id of PAGES) {
+    const out = render(id);
+    if (!page(id).questions?.length) continue;
+    assert.match(scripts(out), avatar, `${id} tutor box has no avatar`);
+    assert.doesNotMatch(scripts(out), /q-tutor"><i /, `${id} tutor box still shows the old icon`);
+  }
+  assert.doesNotMatch(render('family-medicine', (p) => { p.questions = []; delete p.examBased; }), /socrates-avatar/);
+  for (const f of ['socrates-avatar-64.png', 'socrates-avatar-128.png']) {
+    assert.ok(readFileSync(new URL('../' + f, import.meta.url)).length > 0, `${f} is missing`);
+  }
+});
+
 test('no placeholder survives', () => {
   for (const id of PAGES) {
     for (const out of [render(id), render(id, (p) => { p.questions = []; delete p.examBased; })]) {
