@@ -41,7 +41,8 @@ test('FM and peds regenerate with their own source, interest and events', () => 
 });
 
 test('a track with no published exam date says so and draws no countdown', () => {
-  const html = render('anesthesia');
+  // Every track has a date today, so the undated case is a fixture.
+  const html = render('anesthesia', (p, t) => { delete t.exam.date; });
   const out = served(html);
   assert.ok(out.includes('בחינת שלב א׳ · מועד הבחינה טרם פורסם'));
   assert.ok(!html.includes('data-exam-date="'));
