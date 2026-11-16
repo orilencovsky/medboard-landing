@@ -56,7 +56,12 @@ for (const cfg of PAGES) {
     assert.ok(text.includes(track.exam.nameHe), 'exam name drifted from tracks.json');
     assert.ok(text.includes(dmy(track.exam.date)), 'visible exam date drifted from tracks.json');
     assert.ok(page.includes(track.exam.url));
-    assert.ok(page.includes('<span data-exam-fact>'), 'the dated sentence must be hideable after the exam');
+    // The dated sentence outside the countdown must be hideable after the
+    // exam, and must itself carry the current date (the hero line alone
+    // would satisfy a page-wide check).
+    const fact = page.match(/<(\w+) data-exam-fact>([\s\S]*?)<\/\1>/);
+    assert.ok(fact, 'the dated sentence must carry data-exam-fact');
+    assert.ok(visible(fact[2]).includes(dmy(track.exam.date)), 'the date in the data-exam-fact sentence drifted');
     for (const d of track.exam.nameHe.match(/\d{2}\.\d{2}\.\d{4}/g) || []) assert.ok(text.includes(d), `date ${d} drifted`);
   });
 
@@ -76,7 +81,7 @@ for (const cfg of PAGES) {
 
   test(`${cfg.id}/sources: not an official list; expert-review claim only where the track page makes it`, () => {
     assert.ok(text.includes('לא רשימה רשמית'));
-    const claims = /ביקורת מומחה/.test(text);
+    const claims = /ביקורת מומחה|נבדק(ה|ות)? על ידי מומחה/.test(text);
     assert.equal(claims, cfg.expertReview);
     if (claims) assert.ok(read(`${cfg.id}.html`).includes('כל שאלה עוברת ביקורת מומחה'), 'the track page no longer makes the claim');
   });
