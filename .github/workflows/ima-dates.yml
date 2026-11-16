@@ -98,7 +98,8 @@ jobs:
           git add -A
           { echo 'Update exam dates from the IMA calendar'; echo; cat "$RUNNER_TEMP/report.md"; } > "$RUNNER_TEMP/msg.txt"
           git commit -q -F "$RUNNER_TEMP/msg.txt"
-          state=$(gh pr view "$BRANCH" --json state -q .state 2>/dev/null)
+          # No PR yet makes gh exit 1; under bash -e that must not end the step.
+          state=$(gh pr view "$BRANCH" --json state -q .state 2>/dev/null) || state=''
           push=true
           if [ "$state" = "OPEN" ] && git fetch -q origin "$BRANCH" 2>/dev/null; then
             if git diff --quiet FETCH_HEAD HEAD; then
