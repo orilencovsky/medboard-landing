@@ -41,7 +41,7 @@ test('FM and peds regenerate with their own source, interest and events', () => 
 });
 
 test('a track with no published exam date says so and draws no countdown', () => {
-  const html = render('geriatrics');
+  const html = render('anesthesia');
   const out = served(html);
   assert.ok(out.includes('בחינת שלב א׳ · מועד הבחינה טרם פורסם'));
   assert.ok(!html.includes('data-exam-date="'));
