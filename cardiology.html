@@ -313,6 +313,7 @@
   .t-tutor { grid-area: tutor; padding: 34px; justify-content: flex-end; min-height: 380px; border-color: rgba(124,92,255,.45);
              background: radial-gradient(120% 90% at 85% 0%, rgba(124,92,255,.34), transparent 60%), linear-gradient(160deg, #10204A, var(--card)); }
   .t-tutor .ph { color: var(--violet-on); font-size: 34px; }
+  .t-tutor .t-avatar { align-self: flex-start; width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
   .t-tutor h3 { font-size: 26px; }
   .t-tutor p { font-size: 16px; color: var(--t2); max-width: 46ch; }
   .styles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; padding: 0; list-style: none; }
@@ -674,7 +675,7 @@
       </div>
       <div class="bento">
         <article class="tile t-tutor" data-reveal>
-          <i class="ph ph-chats-circle" aria-hidden="true"></i>
+          <img class="t-avatar" src="/socrates-avatar-64.png" srcset="/socrates-avatar-64.png 1x, /socrates-avatar-128.png 2x" width="44" height="44" alt="" decoding="async">
           <h3>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3>
           <p>מכיר את השאלה, את התשובה ואת המקור, מחפש בספרי המקור כשצריך, ואומר כשאין לו על מה להסתמך.</p>
           <ul class="styles" aria-label="סגנונות המורה">
@@ -733,7 +734,7 @@
           <tbody>
           <tr><th scope="row">שאלות בסגנון הבחינה</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">שאלות בפורמט הבחינה, עם הסבר מלא</span><span class="short">יש</span></span></td><td class="yes"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">תלוי במה שתזינו בעצמכם</span><span class="short">תלוי בכם</span></span></td></tr>
           <tr><th scope="row">הסבר עם ציטוט מהמקור</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">ציטוט מילה במילה לכל שאלה, שאפשר לבדוק</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">לרוב בלי מקור מצוטט</span><span class="short">לרוב לא</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">רק אם העליתם את המקור בעצמכם</span><span class="short">אם תעלו</span></span></td></tr>
-          <tr><th scope="row">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">מובנה בכל שאלה</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">רק אם תבנו לו את כל ההקשר</span><span class="short">אם תבנו</span></span></td></tr>
+          <tr><th scope="row"><img src="/socrates-avatar-64.png" srcset="/socrates-avatar-64.png 1x, /socrates-avatar-128.png 2x" width="20" height="20" alt="" decoding="async" style="display:inline-block; flex-shrink:0; border-radius:50%; vertical-align:middle; margin-inline-end:6px;">מורה <span class="ltr-iso">AI</span> שמוביל בשאלות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">מובנה בכל שאלה</span><span class="short">בכל שאלה</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i><span class="full">רק אם תבנו לו את כל ההקשר</span><span class="short">אם תבנו</span></span></td></tr>
           <tr><th scope="row">חזרה מרווחת</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">חזרה יומית שמתוזמנת לפי השכחה</span><span class="short">יש</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>לרוב אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
           <tr><th scope="row">תרגול ממוקד בחולשות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">הדשבורד מזהה ופותח תרגול בלחיצה</span><span class="short">יש</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>לרוב אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
           <tr><th scope="row">סימולציית בחינה עם טיימר</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>משתנה<span class="full">&nbsp;בין מאגרים</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
