@@ -389,3 +389,15 @@ test('JSON-LD cannot be broken out of by a "<" in page copy', () => {
   assert.ok(!block.includes('<'));
   assert.ok(JSON.parse(block).description.includes('</script>'));
 });
+
+// Google weighs the start of a title most, so a soon page leads with what people
+// search for ("הכנה לשלב א׳ ב…") and says "בקרוב" after it, never before and never dropped.
+test('soon-page titles lead with the exam and still say they are coming soon', () => {
+  const soon = JSON.parse(readFileSync(new URL('../tracks.json', import.meta.url), 'utf8')).tracks
+    .filter((t) => t.status === 'soon').map((t) => t.id);
+  assert.ok(soon.length >= 2);
+  for (const id of soon) {
+    const { title } = JSON.parse(readFileSync(new URL(`../specialties/${id}.json`, import.meta.url), 'utf8'));
+    assert.match(title, /^הכנה לשלב א׳ ב.+, בקרוב \| MeduXa\.ai$/, `${id}: ${title}`);
+  }
+});
