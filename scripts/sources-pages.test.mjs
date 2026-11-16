@@ -1,4 +1,4 @@
-// /cardiology/sources, /nephrology/sources and /family-medicine/sources: hand-built static pages
+// /cardiology/sources, /nephrology/sources, /family-medicine/sources and /geriatrics/sources: hand-built static pages
 // (<track>/sources.html). Nothing regenerates them, so these checks keep each
 // one reachable, indexable and in step with tracks.json and
 // scripts/countdown.mjs.
@@ -39,6 +39,11 @@ const PAGES = [
     shows: ['Primary Care Medicine, מהדורה 9', 'Goroll', 'Nelson Textbook of Pediatrics, מהדורה 22',
       'מאמרי סקירה מכתב העת AFP', 'American Family Physician', 'הנחיות ונייר עמדה של ההסתדרות הרפואית',
       'הנחיות GINA', 'הנחיות GOLD', 'הנחיות ADA לשנת 2025', 'מדריך החיסונים של משרד הבריאות'],
+  },
+  {
+    id: 'geriatrics', crumb: 'גריאטריה', expertReview: false,
+    sources: ["Hazzard's Geriatric Medicine and Gerontology 8e", "Harrison's Principles of Internal Medicine 22e", 'פרסומי משרד הבריאות', 'מאמרים מכתבי עת'],
+    shows: ["Hazzard's Geriatric Medicine and Gerontology, מהדורה 8", "Harrison's Principles of Internal Medicine, מהדורה 22", 'פרסומי משרד הבריאות', 'מאמרים מכתבי עת'],
   },
 ];
 

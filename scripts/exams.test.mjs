@@ -104,6 +104,7 @@ test('the inlined day math is scripts/countdown.mjs', () => {
 
 test('every footer links to /exams', () => {
   const files = ['index.html', 'specialty.template.html', 'cardiology/sources.html', 'nephrology/sources.html', 'family-medicine/sources.html',
+    'geriatrics/sources.html', 'privacy.html', 'terms.html', 'accessibility.html', 'connect.html',
     ...data.tracks.map((t) => t.href.slice(1) + '.html')];
   for (const f of files) assert.match(read(f), /<a class="foot-link" href="\/exams">מועדי בחינות<\/a>/, f);
 });
@@ -172,4 +173,13 @@ test('row() escapes what it prints', () => {
   const html = row(t, data.ui.he, null);
   assert.ok(!html.includes('<b>x</b>'));
   assert.ok(html.includes('&lt;b&gt;x&lt;/b&gt;') && html.includes('a &amp; &quot;b&quot;') && html.includes('href="/x&quot;y"'));
+});
+
+test('pages inside the site link to /exams, not only footers', () => {
+  // Home: the line under the study tracks.
+  assert.match(read('index.html'), /<p class="tracks-more">[^\n]*<a href="\/exams">/);
+  // Every dated countdown, on the specialty pages and the sources pages.
+  const files = [...data.tracks.filter((t) => t.exam.date).map((t) => t.href.slice(1) + '.html'),
+    'cardiology/sources.html', 'nephrology/sources.html', 'family-medicine/sources.html', 'geriatrics/sources.html'];
+  for (const f of files) assert.match(read(f), /<p class="cd-note">[^\n]*<a href="\/exams">כל מועדי הבחינות<\/a><\/p>/, f);
 });
