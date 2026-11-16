@@ -603,9 +603,9 @@ been reviewed by a lawyer.
 
 Private project. All rights reserved.
 
-## Sources pages (/cardiology/sources, /nephrology/sources)
+## Sources pages (/cardiology/sources, /nephrology/sources, /family-medicine/sources)
 
-`cardiology/sources.html` and `nephrology/sources.html` are hand-built static pages
+`cardiology/sources.html`, `nephrology/sources.html` and `family-medicine/sources.html` are hand-built static pages
 (served at `/<track>/sources` thanks to `cleanUrls`). Each reuses the styles, nav,
 footer and countdown script of its track page, so after a template change that matters
 there, copy the change in by hand. `scripts/sources-pages.test.mjs` checks each one's
