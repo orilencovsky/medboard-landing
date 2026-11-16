@@ -366,3 +366,26 @@ test('approved questions render with the rights note', () => {
   assert.throws(() => validatePage({ ...page('cardiology'), examBased: true }, track('cardiology')), /examBased needs questions/);
   assert.throws(() => validatePage({ ...page('nephrology'), examBased: 'yes' }, track('nephrology')), /examBased must be true or absent/);
 });
+
+test('every specialty page carries valid WebPage + BreadcrumbList JSON-LD for its own URL', () => {
+  for (const id of PAGES) {
+    const html = render(id);
+    const blocks = [...html.matchAll(/<script type="application\/ld\+json">\r?\n([\s\S]*?)\r?\n<\/script>/g)].map((m) => JSON.parse(m[1]));
+    assert.equal(blocks.length, 2, id);
+    const url = 'https://meduxa.ai' + track(id).href;
+    const web = blocks.find((b) => b['@type'] === 'WebPage');
+    const crumbs = blocks.find((b) => b['@type'] === 'BreadcrumbList');
+    assert.equal(web.url, url, id);
+    assert.equal(web.inLanguage, 'he', id);
+    assert.ok(!/\{\{|\}\}/.test(web.name + web.description), `${id}: Latin-run markers leaked into JSON-LD`);
+    assert.deepEqual(crumbs.itemListElement.map((i) => i.position), [1, 2], id);
+    assert.equal(crumbs.itemListElement[1].item, url, id);
+  }
+});
+
+test('JSON-LD cannot be broken out of by a "<" in page copy', () => {
+  const html = render('nephrology', (p) => { p.description = 'x </script><img src=x> y'; });
+  const block = html.match(/<script type="application\/ld\+json">\r?\n([\s\S]*?)\r?\n<\/script>/)[1];
+  assert.ok(!block.includes('<'));
+  assert.ok(JSON.parse(block).description.includes('</script>'));
+});

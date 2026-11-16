@@ -54,6 +54,7 @@
 <meta name="twitter:description" content="{{ogDescription}}" />
 <meta name="twitter:image" content="{{ogImage}}" />
 <meta name="robots" content="index, follow" />
+{{{jsonld}}}
 <meta name="theme-color" content="#061225" />
 <meta name="color-scheme" content="dark" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -403,6 +404,10 @@
   .foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
   .foot-link { color: var(--t4); font-size: 14px; }
   .foot-link:hover { color: var(--cyan); text-decoration: none; }
+  /* A ~44px tap area around each small footer link, without changing its look;
+     sized so neighbours' areas never overlap (the links sit 20px apart). */
+  .foot-link { position: relative; }
+  .foot-link::after { content: ''; position: absolute; inset: -13px -8px; }
   .foot small { font-size: 14px; color: #6B95B5; }
 
   /* Entry + scroll reveal. Only when JS is on and motion is welcome, so the

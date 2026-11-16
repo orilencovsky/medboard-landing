@@ -253,6 +253,41 @@ function fill(tpl, view) {
     });
 }
 
+// Plain text for JSON-LD: drops the {{…}} Latin-run marker used in copy fields.
+const plain = (s) => String(s).replace(/\{\{|\}\}/g, '');
+
+// schema.org blocks for a specialty page: a WebPage (what the page is) and a
+// BreadcrumbList (Home › specialty) so search results can show the path. Built
+// only from fields the page already publishes: no new claims. Output is two
+// <script type="application/ld+json"> tags. `<` is escaped so a value can
+// never close the script element.
+export function jsonLd(page, track) {
+  const url = SITE + track.href;
+  const blocks = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': url + '#webpage',
+      url,
+      name: plain(page.title),
+      description: plain(page.description),
+      inLanguage: 'he',
+      isPartOf: { '@type': 'WebSite', name: 'MeduXa.ai', url: SITE + '/' },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'MeduXa.ai', item: SITE + '/' },
+        { '@type': 'ListItem', position: 2, name: plain(track.he.name), item: url },
+      ],
+    },
+  ];
+  return blocks
+    .map((b) => `<script type="application/ld+json">\n${JSON.stringify(b).replace(/</g, '\\u003c')}\n</script>`)
+    .join('\n');
+}
+
 export function renderPage(template, page, track) {
   validatePage(page, track);
   const signup = page.signup || {};
@@ -260,6 +295,7 @@ export function renderPage(template, page, track) {
     ...page,
     name: track.he.name,
     url: SITE + track.href,
+    jsonld: jsonLd(page, track),
     leadHtml: rich(page.lead),
     countdown: countdown(track),
     sources: sources(track, page.mode === 'live' || page.questions.length > 0),
