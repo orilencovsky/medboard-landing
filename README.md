@@ -180,9 +180,13 @@ by Israel's calendar day (not UTC), shows `הבחינה היום` on the day its
 passed shows `מועד הבחינה הבא יפורסם בקרוב` instead of a negative or stale number. The exam name and
 date are also in the served HTML, so crawlers and no-JS visitors see them.
 
-`date` may be left out while the IMA has not published a sitting yet (geriatrics, psychiatry and
-anesthesia, checked 2026-11-13): the page then shows `<exam name> · מועד הבחינה טרם פורסם` and no
-countdown. Add the date as soon as the calendar lists it.
+`date` may be left out while the IMA has not published a sitting yet: the page then shows
+`<exam name> · מועד הבחינה טרם פורסם` and no countdown. Add the date as soon as the calendar lists
+it. Last checked 2026-11-16: every track has a date.
+
+Reading the calendar: each row is date, registration window, specialty, then `מסלול` / `אירוע` and
+the event type. The type comes after the specialty, so a parser that takes the line before the date
+reads the previous row's type. The same row can appear twice (anesthesia Stage A, 22.06.2027).
 
 To refresh them:
 

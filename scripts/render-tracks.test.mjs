@@ -148,7 +148,9 @@ test('the shipped list has the eight tracks, IMA dates and the nephrology page l
     assert.equal(by[id].launchOffer, undefined, id); // no launch-price promise on these
   }
   assert.equal(by.obgyn.exam.date, '2027-06-02');
-  for (const id of ['geriatrics', 'psychiatry', 'anesthesia']) assert.equal(by[id].exam.date, undefined, id);
+  assert.equal(by.geriatrics.exam.date, '2027-06-14');
+  assert.equal(by.psychiatry.exam.date, '2027-06-14');
+  assert.equal(by.anesthesia.exam.date, '2027-06-22');
   assert.equal(by.nephrology.exam.date, '2027-01-12');
   assert.equal(by.cardiology.exam.date, '2026-12-15');
   assert.equal(by['family-medicine'].exam.date, '2027-06-14');
