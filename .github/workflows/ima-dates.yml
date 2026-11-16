@@ -48,7 +48,10 @@ jobs:
           node scripts/check-ima-dates.mjs --report "$RUNNER_TEMP/report.md"
           code=$?
           echo "code=$code" >> "$GITHUB_OUTPUT"
-          [ -f "$RUNNER_TEMP/report.md" ] || echo "The check script failed before writing a report (exit $code); see the run log." > "$RUNNER_TEMP/report.md"
+          if [ -f "$RUNNER_TEMP/report.md" ]; then echo "report=real" >> "$GITHUB_OUTPUT"; else
+            echo "report=fallback" >> "$GITHUB_OUTPUT"
+            echo "The check script failed before writing a report (exit $code); see the run log." > "$RUNNER_TEMP/report.md"
+          fi
           cat "$RUNNER_TEMP/report.md" >> "$GITHUB_STEP_SUMMARY"
           if git diff --quiet; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
 
@@ -95,29 +98,31 @@ jobs:
           git add -A
           { echo 'Update exam dates from the IMA calendar'; echo; cat "$RUNNER_TEMP/report.md"; } > "$RUNNER_TEMP/msg.txt"
           git commit -q -F "$RUNNER_TEMP/msg.txt"
+          state=$(gh pr view "$BRANCH" --json state -q .state 2>/dev/null)
           push=true
-          if git fetch -q origin "$BRANCH" 2>/dev/null; then
+          if [ "$state" = "OPEN" ] && git fetch -q origin "$BRANCH" 2>/dev/null; then
             if git diff --quiet FETCH_HEAD HEAD; then
-              push=false; echo "The bot branch already has this change."
+              push=false; echo "The open bot PR already has this change."
             elif [ "$(git log -1 --format=%ae FETCH_HEAD)" != "$BOT_EMAIL" ]; then
-              # Someone committed on the bot branch: never overwrite their work.
+              # Someone committed on the open PR's branch: never overwrite their work.
               push=false; echo "hand_edited=true" >> "$GITHUB_OUTPUT"
             fi
           fi
+          # With no open PR the branch is leftover (merged or closed): start it fresh.
           if [ "$push" = true ]; then git push -f origin "$BRANCH"; fi
-          if [ "$(gh pr view "$BRANCH" --json state -q .state 2>/dev/null)" = "OPEN" ]; then
+          if [ "$state" = "OPEN" ]; then
             if [ "$push" = true ]; then gh pr edit "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/body.md"; fi
-          elif ! gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/body.md"; then
-            # Needs "Allow GitHub Actions to create and approve pull requests"
-            # (Settings → Actions → General). Until then, the issue says so.
+          elif ! gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/body.md" 2> "$RUNNER_TEMP/pr-error.txt"; then
+            cat "$RUNNER_TEMP/pr-error.txt"
             echo "pr_failed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Close a bot PR that main has caught up with
-        if: steps.check.outputs.changed == 'false' && steps.check.outputs.code != '2'
+        # Only on a real report: a crashed script also exits non-zero with no change.
+        if: steps.check.outputs.changed == 'false' && steps.check.outputs.code != '2' && steps.check.outputs.report == 'real'
         run: |
           if [ "$(gh pr view "$BRANCH" --json state -q .state 2>/dev/null)" = "OPEN" ]; then
-            gh pr close "$BRANCH" --comment "The dates on main match the IMA calendar now, so this change is no longer needed. Run: $RUN_URL"
+            gh pr close "$BRANCH" --delete-branch --comment "Today's check finds no date on main to change, so this PR is no longer needed. Anything that needs a person is in the attention issue. Run: $RUN_URL"
           fi
 
       - name: Open, update or close the attention issue
@@ -133,13 +138,14 @@ jobs:
           fi
           if [ "${{ steps.pr.outputs.pr_failed }}" = "true" ]; then
             need=true
-            { echo; echo "A date changed, but this workflow may not open PRs. The change is on branch \`$BRANCH\`:"
+            { echo; echo "A date changed, but opening the PR failed. The change is on branch \`$BRANCH\`:"
               echo "${{ github.server_url }}/${{ github.repository }}/compare/main...$BRANCH?expand=1"
-              echo "To let it open PRs itself: Settings → Actions → General → Allow GitHub Actions to create and approve pull requests."; } >> "$RUNNER_TEMP/issue.md"
+              echo; echo "gh said:"; echo '```'; cat "$RUNNER_TEMP/pr-error.txt" 2>/dev/null; echo '```'
+              echo "If it is a permission error: Settings → Actions → General → Allow GitHub Actions to create and approve pull requests."; } >> "$RUNNER_TEMP/issue.md"
           fi
           if [ "${{ steps.pr.outputs.hand_edited }}" = "true" ]; then
             need=true
-            { echo; echo "\`$BRANCH\` has commits that are not the bot's, so today's update was not pushed over them. Merge or close that PR, then the next run starts fresh."; } >> "$RUNNER_TEMP/issue.md"
+            { echo; echo "The open PR from \`$BRANCH\` has commits that are not the bot's, so today's update was not pushed over them. Merge or close that PR; the next run then starts the branch fresh."; } >> "$RUNNER_TEMP/issue.md"
           fi
           if [ "${{ job.status }}" != "success" ] || [ -z "$code" ]; then
             need=true; echo "The workflow itself failed; see the run." >> "$RUNNER_TEMP/issue.md"

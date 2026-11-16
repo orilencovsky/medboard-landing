@@ -206,7 +206,9 @@ check against the IMA calendar needs attention", when:
 - the workflow itself failed.
 
 A PR that needs a person says so in its title. Edit on main, not on the bot branch. When main
-already matches the calendar, the next run closes the open bot PR.
+already matches the calendar, the next run closes the open bot PR and deletes its branch.
+Closing a bot PR without merging does not stop it: while the calendar and `tracks.json` disagree,
+the next run opens it again.
 
 The issue is edited, not commented on, so it notifies once, and it closes itself on the next clean
 run. The workflow can open PRs only if Settings → Actions → General → "Allow GitHub Actions to
