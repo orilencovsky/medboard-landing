@@ -392,12 +392,15 @@ test('JSON-LD cannot be broken out of by a "<" in page copy', () => {
 
 // Google weighs the start of a title most, so a soon page leads with what people
 // search for ("הכנה לשלב א׳ ב…") and says "בקרוב" after it, never before and never dropped.
+// Google cuts titles at about 60 characters, so the whole title stays under that
+// and "בקרוב" is never the part that falls off.
 test('soon-page titles lead with the exam and still say they are coming soon', () => {
   const soon = JSON.parse(readFileSync(new URL('../tracks.json', import.meta.url), 'utf8')).tracks
-    .filter((t) => t.status === 'soon').map((t) => t.id);
+    .filter((t) => t.status === 'soon');
   assert.ok(soon.length >= 2);
-  for (const id of soon) {
-    const { title } = JSON.parse(readFileSync(new URL(`../specialties/${id}.json`, import.meta.url), 'utf8'));
-    assert.match(title, /^הכנה לשלב א׳ ב.+, בקרוב \| MeduXa\.ai$/, `${id}: ${title}`);
+  for (const t of soon) {
+    const { title } = JSON.parse(readFileSync(new URL(`../specialties/${t.id}.json`, import.meta.url), 'utf8'));
+    assert.equal(title, `הכנה לשלב א׳ ב${t.he.inline}, בקרוב | MeduXa.ai`, t.id);
+    assert.ok([...title].length <= 60, `${t.id}: title is ${[...title].length} characters`);
   }
 });
