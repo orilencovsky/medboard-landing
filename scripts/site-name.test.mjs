@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8').replace(/\r\n/g, '\n');
-const blocks = (html) => [...html.matchAll(/<script type="application\/ld\+json">\n([\s\S]*?)\n<\/script>/g)]
+const blocks = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
   .map((m) => JSON.parse(m[1]));
 const he = read('index.html');
 const en = read('en/index.html');
@@ -18,8 +18,14 @@ test('home page: one WebSite block, its name matching og:site_name and the title
   assert.equal(sites.length, 1);
   const [site] = sites;
   assert.equal(site.url, 'https://meduxa.ai/');
-  assert.ok(he.includes(`<meta property="og:site_name" content="${site.name}" />`), 'og:site_name drifted');
-  assert.ok(he.match(/<title>([^<]*)<\/title>/)[1].startsWith(site.name + ' '), 'title no longer starts with the site name');
+  for (const html of [he, en]) {
+    assert.ok(html.includes(`<meta property="og:site_name" content="${site.name}" />`), 'og:site_name drifted');
+  }
+  const title = he.match(/<title>([^<]*)<\/title>/)[1];
+  assert.ok(title.startsWith(site.name + ' '), 'title no longer starts with the site name');
+  for (const meta of ['property="og:title"', 'name="twitter:title"']) {
+    assert.ok(he.includes(`<meta ${meta} content="${title}" />`), `${meta} differs from <title>`);
+  }
   assert.deepEqual([].concat(site.alternateName).sort(), ['MeduXa', 'מדוקסה'].sort());
 });
 
@@ -28,7 +34,7 @@ test('home page: one WebSite block, its name matching og:site_name and the title
 test('home page shows the Hebrew name in the title, the FAQ and the footer', () => {
   assert.ok(he.match(/<title>([^<]*)<\/title>/)[1].includes('מדוקסה'));
   assert.ok(he.includes('<p>MeduXa, או בעברית מדוקסה, היא'));
-  assert.ok(he.includes('© 2026 MeduXa · מדוקסה ·'));
+  assert.match(he, /© \d{4} MeduXa · מדוקסה ·/);
 });
 
 test('/en carries no WebSite block of its own', () => {
