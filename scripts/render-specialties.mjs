@@ -323,6 +323,7 @@ function main() {
     const page = JSON.parse(readFileSync(join(root, 'specialties', f), 'utf8'));
     const track = data.tracks.find((t) => t.id === page.trackId);
     if (!track || f !== `${track.id}.json`) throw new Error(`specialties/${f}: trackId must name a track in tracks.json and match the file name`);
+    if (page.sourcesHref && !existsSync(join(root, page.sourcesHref.slice(1) + '.html'))) throw new Error(`specialties/${f}: sourcesHref ${page.sourcesHref} has no ${page.sourcesHref.slice(1)}.html`);
     const file = track.href.slice(1) + '.html';
     const path = join(root, file);
     const after = renderPage(template, page, track);

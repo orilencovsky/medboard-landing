@@ -20,14 +20,15 @@
     var a = e.target && e.target.closest ? e.target.closest('a[data-cardio-cta]') : null;
     if (!a) return;
     var placement = a.getAttribute('data-cardio-cta');
-    var toApp = /(^|_)(hero|closing)$/.test(placement);
-    window.va('event', { name: toApp ? 'cardio_app_click' : 'cardio_home_click', data: { placement: placement } });
+    var name = /(^|_)(hero|closing)$/.test(placement) ? 'cardio_app_click'
+      : (placement === 'logo' || placement === 'nav') ? 'cardio_home_click' : 'cardio_sources_click';
+    window.va('event', { name: name, data: { placement: placement } });
   }, true);
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <title>מקורות להכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/cardiology/sources" />
-<meta name="description" content="על אילו מקורות מבוססת ההכנה לבחינת מקצוע-על בקרדיולוגיה ב-MeduXa: Braunwald 13e, הנחיות ESC ומאמרים עדכניים. מועדי הבחינה וקישור ללוח הר״י." />
+<meta name="description" content="על אילו מקורות מבוססת ההכנה לבחינת מקצוע-על בקרדיולוגיה ב-MeduXa: Braunwald 13e, הנחיות ESC ומאמרים עדכניים, וקישור ללוח הבחינות של הר״י." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
 <meta property="og:title" content="מקורות להכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai" />
@@ -44,7 +45,7 @@
 <meta name="twitter:image" content="https://meduxa.ai/og-cardiology.png?v=2" />
 <meta name="robots" content="index, follow" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","@id":"https://meduxa.ai/cardiology/sources#webpage","url":"https://meduxa.ai/cardiology/sources","name":"מקורות להכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai","description":"על אילו מקורות מבוססת ההכנה לבחינת מקצוע-על בקרדיולוגיה ב-MeduXa: Braunwald 13e, הנחיות ESC ומאמרים עדכניים. מועדי הבחינה וקישור ללוח הר״י.","inLanguage":"he","isPartOf":{"@type":"WebSite","name":"MeduXa.ai","url":"https://meduxa.ai/"}}
+{"@context":"https://schema.org","@type":"WebPage","@id":"https://meduxa.ai/cardiology/sources#webpage","url":"https://meduxa.ai/cardiology/sources","name":"מקורות להכנה לבחינת מקצוע-על בקרדיולוגיה | MeduXa.ai","description":"על אילו מקורות מבוססת ההכנה לבחינת מקצוע-על בקרדיולוגיה ב-MeduXa: Braunwald 13e, הנחיות ESC ומאמרים עדכניים, וקישור ללוח הבחינות של הר״י.","inLanguage":"he","isPartOf":{"@type":"WebSite","name":"MeduXa.ai","url":"https://meduxa.ai/"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MeduXa.ai","item":"https://meduxa.ai/"},{"@type":"ListItem","position":2,"name":"קרדיולוגיה","item":"https://meduxa.ai/cardiology"},{"@type":"ListItem","position":3,"name":"מקורות","item":"https://meduxa.ai/cardiology/sources"}]}
@@ -556,8 +557,9 @@
 
   /* /cardiology/sources: a reading page. A short hero without the video, each
      source as a card with one line on what it is, then the exam facts. */
-  .hero.page-hero { padding-block: 140px 72px; }
+  .hero.page-hero { min-height: 0; padding-block: 140px 72px; }
   .page-hero h1 { font-size: clamp(34px, 4.4vw, 56px); }
+  .page-hero .lead { max-width: 60ch; }
   .crumbs { margin: 0 0 18px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: var(--t3); }
   .crumbs li + li::before { content: '/'; margin-inline-end: 8px; color: var(--t4); }
   .crumbs a { color: var(--t3); text-decoration: underline; text-underline-offset: 3px; }
@@ -581,7 +583,7 @@
 
 <a class="skip" href="#main">דילוג לתוכן העמוד</a>
 
-<nav>
+<nav aria-label="ניווט ראשי">
   <div class="wrap nav-in">
     <a href="/" class="logo" aria-label="MeduXa, לעמוד הבית" data-cardio-cta="logo">
       <svg width="36" height="36" viewBox="0 0 96 96" fill="none" aria-hidden="true">
@@ -595,7 +597,7 @@
     </a>
     <div class="nav-r">
       <a class="nav-link" href="/" data-cardio-cta="nav">לעמוד הבית</a>
-      <a class="btn nav-cta" href="#start" data-cardio-cta="sources_nav">התחילו ללמוד</a>
+      <a class="btn nav-cta" href="#start">התחילו ללמוד</a>
     </div>
   </div>
 </nav>
@@ -607,7 +609,7 @@
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <!-- Not a <nav>: the page's nav rule styles every <nav> as the top bar. -->
-        <div role="navigation" aria-label="מיקום בעמוד">
+        <div role="navigation" aria-label="מיקום באתר">
           <ol class="crumbs enter" style="--i:0">
             <li><a href="/">MeduXa.ai</a></li>
             <li><a href="/cardiology">קרדיולוגיה</a></li>
@@ -629,13 +631,13 @@
     <div class="wrap">
       <div class="sec-head" data-reveal>
         <h2 id="t-sources">שלושת המקורות</h2>
-        <p>ספר לימוד אחד, ההנחיות הקליניות האירופיות, ומאמרים עדכניים מכתבי העת המובילים.</p>
+        <p>ספר לימוד, ההנחיות הקליניות האירופיות, ומאמרים עדכניים מכתבי עת.</p>
       </div>
       <ul class="src-detail" data-reveal style="--i:1">
         <li>
           <i class="ph ph-book-open" aria-hidden="true"></i>
           <h3><span class="ltr-iso">Braunwald&#39;s Heart Disease</span>, מהדורה 13</h3>
-          <p>ספר הלימוד המקיף בקרדיולוגיה.</p>
+          <p>ספר לימוד בקרדיולוגיה.</p>
         </li>
         <li>
           <i class="ph ph-file-text" aria-hidden="true"></i>
@@ -645,7 +647,7 @@
         <li>
           <i class="ph ph-file-text" aria-hidden="true"></i>
           <h3>מאמרים עדכניים מכתבי עת</h3>
-          <p>מארבעה כתבי עת:</p>
+          <p>מכתבי העת:</p>
           <ul class="journals"><li class="ltr-iso">European Heart Journal</li><li class="ltr-iso">JACC</li><li class="ltr-iso">Circulation</li><li class="ltr-iso">JAMA</li></ul>
         </li>
       </ul>
@@ -659,7 +661,7 @@
       </div>
       <div class="facts" data-reveal style="--i:1">
         <p><strong>זו רשימת המקורות של MeduXa, לא רשימה רשמית.</strong> אלה המקורות שמהם לקוחים ההסברים והציטוטים בשאלות אצלנו. את הפרטים הרשמיים על הבחינה מפרסמת ההסתדרות הרפואית, ב<a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לוח הבחינות של הר״י</a>.</p>
-        <p><strong>חלק א׳ וחלק ב׳.</strong> חלק א׳ ב-<span class="ltr-iso">15.12.2026</span> וחלק ב׳ למחרת, ב-<span class="ltr-iso">16.12.2026</span>. ההכנה ב-MeduXa כוללת שאלות בסגנון הבחינה לשני החלקים.</p>
+        <p><strong>חלק א׳ וחלק ב׳.</strong> <span data-exam-fact>חלק א׳ ב-<span class="ltr-iso">15.12.2026</span> וחלק ב׳ למחרת, ב-<span class="ltr-iso">16.12.2026</span>. </span>ההכנה ב-MeduXa כוללת שאלות בסגנון הבחינה לשני החלקים.</p>
         <p><strong>איך זה נראה בתרגול.</strong> שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, מורה <span class="ltr-iso">AI</span> סוקרטי שמנחה בשאלות במקום למסור את התשובה, וחזרה מרווחת. <a href="/cardiology" data-cardio-cta="sources_more">עוד על ההכנה לקרדיולוגיה</a></p>
       </div>
     </div>
@@ -669,7 +671,7 @@
     <div class="wrap">
       <div class="signup-copy" data-reveal>
         <h2 id="t-start">מוכנים להתחיל?</h2>
-        <p class="signup-for"><strong>הכנה לבחינת מקצוע-על בקרדיולוגיה</strong> פתוחה עכשיו באפליקציה.</p>
+        <p class="signup-for"><strong>ההכנה לבחינת מקצוע-על בקרדיולוגיה</strong> פתוחה עכשיו באפליקציה.</p>
         <a class="btn hero-cta" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=cardio_sources" data-cardio-cta="sources_closing">התחילו ללמוד — חינם<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
       </div>
     </div>
@@ -848,6 +850,7 @@ function countdownState(days) {
       line.hidden = false;
     } else {
       box.querySelector('.cd-exam').textContent = 'מועד הבחינה הבא יפורסם בקרוב';
+      document.querySelectorAll('[data-exam-fact]').forEach(function (el) { el.hidden = true; });
     }
   })();
 

@@ -609,5 +609,6 @@ Private project. All rights reserved.
 thanks to `cleanUrls`). It reuses the styles, nav, footer and countdown script of
 `cardiology.html`, so after a template change that matters there, copy the change in
 by hand. `scripts/cardiology-sources.test.mjs` checks its canonical URL, JSON-LD,
-exam date (against `tracks.json`), the "not an official list" line, the link from
+exam name and dates and sources (against `tracks.json`), the inlined countdown
+(against `scripts/countdown.mjs`), the "not an official list" line, the link from
 `/cardiology` (`sourcesHref` in `specialties/cardiology.json`) and the sitemap entry.
