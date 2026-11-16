@@ -96,6 +96,8 @@ for (const cfg of PAGES) {
     assert.ok(text.includes('לא רשימה רשמית'));
     const claims = /ביקורת מומחה|נבדק(ה|ות)? על ידי מומחה/.test(text);
     assert.equal(claims, cfg.expertReview);
+    // The launch-price promise only where tracks.json gives the track one.
+    assert.equal(text.includes('מחיר ההשקה'), Boolean(track.launchOffer), 'launch-price line does not match launchOffer');
     if (claims) assert.ok(read(`${cfg.id}.html`).includes('כל שאלה עוברת ביקורת מומחה'), 'the track page no longer makes the claim');
   });
 

@@ -652,7 +652,7 @@ objects in `tracks.json` (`--check` exits 1 on drift), so a date fixed in `track
 from the dated exams. A row links to its sources page when `specialties/<track>.json` has
 `sourcesHref`. The shell (styles, nav, footer, motion code) was copied from
 `family-medicine/sources.html`; copy later shell changes in by hand. Tested by
-`scripts/exams.test.mjs`. Linked from every Hebrew footer (home, specialty, sources and legal pages),
+`scripts/exams.test.mjs`. Linked from the footers of the home, specialty, sources, legal and `/connect` pages,
 from the line under the study tracks on the home page, and from every dated countdown
 (`כל מועדי הבחינות`). The row order is fixed when the page is rendered; once a sitting passes, the page script
 moves its row to the end and says the next date is coming, until `tracks.json` gets the new date.
