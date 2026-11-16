@@ -126,7 +126,8 @@ function countdown(track) {
     // "days to the exam" line without its number.
     '  <p class="cd-days" hidden><b data-days></b> <span data-cd-unit></span></p>',
     `  <p class="cd-exam">${esc(nameHe)} · <span class="ltr-iso">${esc(dateText(date))}</span></p>`,
-    `  <p class="cd-note"><a href="${esc(url)}" target="_blank" rel="noopener">לפי לוח הבחינות של הר״י · המועד עשוי להשתנות</a></p>`,
+    // Then /exams, every track's date on one page.
+    `  <p class="cd-note"><a href="${esc(url)}" target="_blank" rel="noopener">לפי לוח הבחינות של הר״י · המועד עשוי להשתנות</a> · <a href="/exams">כל מועדי הבחינות</a></p>`,
     '</div>',
   ].join('\n');
 }

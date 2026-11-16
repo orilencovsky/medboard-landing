@@ -622,6 +622,8 @@ served by the platform, so it 404s on a local static server. Custom events, all 
   keeps `nephro_app_click`. `data.placement` names the link: `sources_more` on both;
   `sources_crumb`, `sources_nav` and `sources_closing` (to the sign-up on `/family-medicine`) on
   family medicine.
+- `geri_sources_click` — the same on `/geriatrics/sources` (`data-geri-cta`): `sources_crumb`,
+  `sources_nav`, `sources_more` and `sources_closing`; its logo and nav send `geri_home_click`.
 - `exams_click` — the links on `/exams` that carry `data-ex-cta` (all but the footer). `data.placement` is
   `logo`, `nav`, `nav_tracks`, `crumb`, `row` (the specialty name), `row_sources`, `row_ima` (a row with no date yet),
   `facts_ima` or `closing`; on a specialty row `data.track` names the track.
@@ -650,8 +652,9 @@ objects in `tracks.json` (`--check` exits 1 on drift), so a date fixed in `track
 from the dated exams. A row links to its sources page when `specialties/<track>.json` has
 `sourcesHref`. The shell (styles, nav, footer, motion code) was copied from
 `family-medicine/sources.html`; copy later shell changes in by hand. Tested by
-`scripts/exams.test.mjs`. The footers of the home page, the specialty pages and the sources pages
-link to it. The row order is fixed when the page is rendered; once a sitting passes, the page script
+`scripts/exams.test.mjs`. Linked from the footers of the home, specialty, sources, legal and `/connect` pages,
+from the line under the study tracks on the home page, and from every dated countdown
+(`כל מועדי הבחינות`). The row order is fixed when the page is rendered; once a sitting passes, the page script
 moves its row to the end and says the next date is coming, until `tracks.json` gets the new date.
 `exams.template.html` is in `.vercelignore`, like `specialty.template.html`.
 
@@ -659,9 +662,9 @@ moves its row to the end and says the next date is coming, until `tracks.json` g
 
 Private project. All rights reserved.
 
-## Sources pages (/cardiology/sources, /nephrology/sources, /family-medicine/sources)
+## Sources pages (/cardiology/sources, /nephrology/sources, /family-medicine/sources, /geriatrics/sources)
 
-`cardiology/sources.html`, `nephrology/sources.html` and `family-medicine/sources.html` are hand-built static pages
+`cardiology/sources.html`, `nephrology/sources.html`, `family-medicine/sources.html` and `geriatrics/sources.html` are hand-built static pages
 (served at `/<track>/sources` thanks to `cleanUrls`). Each reuses the styles, nav,
 footer and countdown script of its track page, so after a template change that matters
 there, copy the change in by hand. `scripts/sources-pages.test.mjs` checks each one's
