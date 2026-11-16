@@ -555,7 +555,8 @@
   .exam-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
   .exam-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px 24px;
               background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 20px 24px; }
-  .exam-row h3 { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 20px; font-weight: 700; line-height: 1.35; color: #fff; }
+  .exam-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+  .exam-row h3 { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.35; color: #fff; }
   .exam-row h3 a { color: inherit; text-decoration: none; }
   .exam-row h3 a:hover { color: var(--cyan-soft); text-decoration: underline; text-underline-offset: 3px; }
   .exam-chip { font-size: 12.5px; font-weight: 600; border-radius: var(--pill); padding: 2px 10px; border: 1px solid var(--border); color: var(--t3); }
@@ -572,6 +573,7 @@
     .exam-days { text-align: start; }
     .exam-days b { display: inline; font-size: 24px; margin-inline-end: 6px; }
   }
+  .exam-days b[hidden] { display: none; }
   .hero.page-hero { min-height: 0; padding-block: 140px 72px; }
   .page-hero h1 { font-size: clamp(34px, 4.4vw, 56px); }
   .page-hero .lead { max-width: 60ch; }
@@ -627,7 +629,7 @@
         <!-- Not a <nav>: the page's nav rule styles every <nav> as the top bar. -->
         <div role="navigation" aria-label="מיקום באתר">
           <ol class="crumbs enter" style="--i:0">
-            <li><a href="/">MeduXa.ai</a></li>
+            <li><a href="/" data-ex-cta="crumb">MeduXa.ai</a></li>
             <li aria-current="page">מועדי בחינות</li>
           </ol>
         </div>
@@ -646,60 +648,60 @@
       <ol class="exam-list" data-reveal style="--i:1">
         <li class="exam-row" data-exam-date="2026-12-15">
           <div>
-            <h3><a href="/cardiology" data-ex-cta="row" data-track="cardiology">קרדיולוגיה</a><span class="exam-chip exam-chip--live">פתוח עכשיו</span></h3>
-            <p class="exam-when">בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026) · <span class="ltr-iso">15.12.2026</span></p>
+            <div class="exam-head"><h3><a href="/cardiology" data-ex-cta="row" data-track="cardiology">קרדיולוגיה</a></h3><span class="exam-chip exam-chip--live">פתוח עכשיו</span></div>
+            <p class="exam-when"><span class="ltr-iso">15.12.2026</span> · בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026)</p>
             <p class="exam-more"><a href="/cardiology/sources" data-ex-cta="row_sources" data-track="cardiology">המקורות להכנה</a></p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
         <li class="exam-row" data-exam-date="2027-01-12">
           <div>
-            <h3><a href="/nephrology" data-ex-cta="row" data-track="nephrology">נפרולוגיה</a><span class="exam-chip exam-chip--live">פתוח עכשיו</span></h3>
-            <p class="exam-when">בחינה במקצוע-על — חלק א׳ · <span class="ltr-iso">12.01.2027</span></p>
+            <div class="exam-head"><h3><a href="/nephrology" data-ex-cta="row" data-track="nephrology">נפרולוגיה</a></h3><span class="exam-chip exam-chip--live">פתוח עכשיו</span></div>
+            <p class="exam-when"><span class="ltr-iso">12.01.2027</span> · בחינה במקצוע-על — חלק א׳</p>
             <p class="exam-more"><a href="/nephrology/sources" data-ex-cta="row_sources" data-track="nephrology">המקורות להכנה</a></p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
         <li class="exam-row" data-exam-date="2027-06-02">
           <div>
-            <h3><a href="/obgyn" data-ex-cta="row" data-track="obgyn">מיילדות וגינקולוגיה</a><span class="exam-chip exam-chip--soon">בקרוב</span></h3>
-            <p class="exam-when">בחינת שלב א׳ · <span class="ltr-iso">02.06.2027</span></p>
+            <div class="exam-head"><h3><a href="/obgyn" data-ex-cta="row" data-track="obgyn">מיילדות וגינקולוגיה</a></h3><span class="exam-chip exam-chip--soon">בקרוב</span></div>
+            <p class="exam-when"><span class="ltr-iso">02.06.2027</span> · בחינת שלב א׳</p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
         <li class="exam-row" data-exam-date="2027-06-14">
           <div>
-            <h3><a href="/family-medicine" data-ex-cta="row" data-track="family-medicine">רפואת משפחה</a><span class="exam-chip exam-chip--soon">בקרוב</span></h3>
-            <p class="exam-when">בחינת שלב א׳ · <span class="ltr-iso">14.06.2027</span></p>
+            <div class="exam-head"><h3><a href="/family-medicine" data-ex-cta="row" data-track="family-medicine">רפואת משפחה</a></h3><span class="exam-chip exam-chip--soon">בקרוב</span></div>
+            <p class="exam-when"><span class="ltr-iso">14.06.2027</span> · בחינת שלב א׳</p>
             <p class="exam-more"><a href="/family-medicine/sources" data-ex-cta="row_sources" data-track="family-medicine">המקורות להכנה</a></p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
         <li class="exam-row" data-exam-date="2027-06-14">
           <div>
-            <h3><a href="/pediatrics" data-ex-cta="row" data-track="pediatrics">רפואת ילדים</a><span class="exam-chip exam-chip--soon">בקרוב</span></h3>
-            <p class="exam-when">בחינת שלב א׳ · <span class="ltr-iso">14.06.2027</span></p>
+            <div class="exam-head"><h3><a href="/pediatrics" data-ex-cta="row" data-track="pediatrics">רפואת ילדים</a></h3><span class="exam-chip exam-chip--soon">בקרוב</span></div>
+            <p class="exam-when"><span class="ltr-iso">14.06.2027</span> · בחינת שלב א׳</p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
         <li class="exam-row" data-exam-date="2027-06-14">
           <div>
-            <h3><a href="/geriatrics" data-ex-cta="row" data-track="geriatrics">גריאטריה</a><span class="exam-chip exam-chip--soon">בקרוב</span></h3>
-            <p class="exam-when">בחינת שלב א׳ · <span class="ltr-iso">14.06.2027</span></p>
+            <div class="exam-head"><h3><a href="/geriatrics" data-ex-cta="row" data-track="geriatrics">גריאטריה</a></h3><span class="exam-chip exam-chip--soon">בקרוב</span></div>
+            <p class="exam-when"><span class="ltr-iso">14.06.2027</span> · בחינת שלב א׳</p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
         <li class="exam-row" data-exam-date="2027-06-14">
           <div>
-            <h3><a href="/psychiatry" data-ex-cta="row" data-track="psychiatry">פסיכיאטריה</a><span class="exam-chip exam-chip--soon">בקרוב</span></h3>
-            <p class="exam-when">בחינת שלב א׳ · <span class="ltr-iso">14.06.2027</span></p>
+            <div class="exam-head"><h3><a href="/psychiatry" data-ex-cta="row" data-track="psychiatry">פסיכיאטריה</a></h3><span class="exam-chip exam-chip--soon">בקרוב</span></div>
+            <p class="exam-when"><span class="ltr-iso">14.06.2027</span> · בחינת שלב א׳</p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
         <li class="exam-row" data-exam-date="2027-06-22">
           <div>
-            <h3><a href="/anesthesia" data-ex-cta="row" data-track="anesthesia">הרדמה</a><span class="exam-chip exam-chip--soon">בקרוב</span></h3>
-            <p class="exam-when">בחינת שלב א׳ · <span class="ltr-iso">22.06.2027</span></p>
+            <div class="exam-head"><h3><a href="/anesthesia" data-ex-cta="row" data-track="anesthesia">הרדמה</a></h3><span class="exam-chip exam-chip--soon">בקרוב</span></div>
+            <p class="exam-when"><span class="ltr-iso">22.06.2027</span> · בחינת שלב א׳</p>
           </div>
           <p class="exam-days" hidden><b data-days></b> <span data-cd-unit></span></p>
         </li>
@@ -733,7 +735,7 @@
 <footer>
   <div class="wrap foot">
     <span class="word"><b>MeduXa</b><i>.ai</i></span>
-    <span class="foot-links"><a class="foot-link" href="/privacy">מדיניות פרטיות</a><a class="foot-link" href="/terms">תנאי שימוש</a><a class="foot-link" href="/accessibility">הצהרת נגישות</a><a class="foot-link" href="mailto:hello@meduxa.ai" dir="ltr">hello@meduxa.ai</a></span>
+    <span class="foot-links"><a class="foot-link" href="/exams">מועדי בחינות</a><a class="foot-link" href="/privacy">מדיניות פרטיות</a><a class="foot-link" href="/terms">תנאי שימוש</a><a class="foot-link" href="/accessibility">הצהרת נגישות</a><a class="foot-link" href="mailto:hello@meduxa.ai" dir="ltr">hello@meduxa.ai</a></span>
     <small>© 2026 MeduXa. ללמוד חכם יותר לבחינות ההתמחות. כל הזכויות שמורות.</small>
   </div>
 </footer>
@@ -903,6 +905,8 @@ function countdownState(days) {
         line.hidden = false;
       } else {
         row.querySelector('.exam-when').textContent = 'מועד הבחינה הבא יפורסם בקרוב';
+        // "The nearest exam first": a past sitting moves to the end of the list.
+        row.parentNode.appendChild(row);
       }
     });
   })();

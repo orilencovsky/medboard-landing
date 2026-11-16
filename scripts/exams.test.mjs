@@ -25,7 +25,7 @@ test('every track appears once, with its exam name, date and page link', () => {
     assert.equal(out.split(`href="${t.href}" data-ex-cta="row"`).length - 1, 1, t.id);
     assert.ok(out.includes(t.exam.nameHe.replace(/&/g, '&amp;')), t.id);
     if (t.exam.date) assert.ok(out.includes(`data-exam-date="${t.exam.date}"`), t.id);
-    if (t.exam.date) assert.ok(out.includes(`<span class="ltr-iso">${dotted(t.exam.date)}</span>`), t.id);
+    if (t.exam.date) assert.ok(out.includes(`<span class="ltr-iso">${dotted(t.exam.date)}</span> · `), t.id);
   }
 });
 
@@ -109,7 +109,7 @@ test('every footer links to /exams', () => {
 });
 
 // Run the page's countdown script against a fake DOM.
-function runCountdown(now) {
+function runCountdown(now, dates = ['2027-06-14', '2026-11-16', '2026-11-15'], intl = Intl) {
   const src = [...page.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).find((s) => s.includes('[data-exam-date]'));
   const iife = src.slice(src.indexOf('  // Exam countdowns'));
   const mk = (date) => {
@@ -117,15 +117,18 @@ function runCountdown(now) {
     const num = el(), unit = el(), line = el({ querySelector: (q) => (q === '[data-days]' ? num : unit) }), when = el({ textContent: 'served' });
     return { date, num, unit, line, when, getAttribute: () => date, querySelector: (q) => (q === '.exam-days' ? line : when) };
   };
-  const rows = [mk('2027-06-14'), mk('2026-11-16'), mk('2026-11-15')];
+  const rows = dates.map(mk);
+  const list = { order: [...rows], appendChild(r) { this.order.splice(this.order.indexOf(r), 1); this.order.push(r); } };
+  for (const r of rows) r.parentNode = list;
   const RealDate = Date;
   const ctx = vm.createContext({
-    Intl, Math, Number, isFinite, Array,
+    Intl: intl, Math, Number, isFinite, Array,
     Date: class extends RealDate { constructor(...a) { if (a.length) super(...a); else super(now); } static UTC(...a) { return RealDate.UTC(...a); } },
     document: { querySelectorAll: () => rows },
     window: { matchMedia: () => ({ matches: true }) },
   });
   vm.runInContext(iife, ctx);
+  rows.order = list.order;
   return rows;
 }
 
@@ -138,4 +141,35 @@ test('countdown: future shows days, exam day says so, past swaps the line', () =
   assert.equal(today.num.hidden, true);
   assert.equal(past.when.textContent, 'מועד הבחינה הבא יפורסם בקרוב');
   assert.equal(past.line.hidden, true);
+});
+
+test('countdown: a past sitting moves to the end of the list, the rest keep their order', () => {
+  const rows = runCountdown(new Date('2026-12-20T10:00:00+02:00'), ['2026-12-15', '2027-01-12', '2027-06-14']);
+  assert.deepEqual(rows.order.map((r) => r.date), ['2027-01-12', '2027-06-14', '2026-12-15']);
+});
+
+test('countdown: one day left reads in the singular', () => {
+  const [r] = runCountdown(new Date('2027-06-13T10:00:00+03:00'), ['2027-06-14']);
+  assert.equal(r.num.textContent, 1);
+  assert.equal(r.unit.textContent, 'יום לבחינה');
+});
+
+test('countdown: if the day math throws, the row stays as served', () => {
+  const broken = { DateTimeFormat: function () { throw new Error('no Intl'); } };
+  const [r] = runCountdown(new Date('2026-11-16T10:00:00+02:00'), ['2027-06-14'], broken);
+  assert.equal(r.line.hidden, true);
+  assert.equal(r.when.textContent, 'served');
+});
+
+test('the templates are not deployed (.vercelignore)', () => {
+  const ignored = read('.vercelignore').split(/\r?\n/).map((l) => l.trim());
+  for (const f of ['specialty.template.html', 'exams.template.html']) assert.ok(ignored.includes(f), f);
+});
+
+test('row() escapes what it prints', () => {
+  const t = clone().tracks[0];
+  t.he.name = '<b>x</b>'; t.exam.nameHe = 'a & "b"'; t.href = '/x"y';
+  const html = row(t, data.ui.he, null);
+  assert.ok(!html.includes('<b>x</b>'));
+  assert.ok(html.includes('&lt;b&gt;x&lt;/b&gt;') && html.includes('a &amp; &quot;b&quot;') && html.includes('href="/x&quot;y"'));
 });

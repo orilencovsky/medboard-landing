@@ -56,13 +56,16 @@ export function row(track, ui, srcHref) {
   const { date, nameHe } = track.exam;
   const id = esc(track.id);
   const cta = (placement) => `data-ex-cta="${placement}" data-track="${id}"`;
+  // Date first: in a list of dates it is what the eye scans for, and a name
+  // that carries a second date (cardiology's part B) no longer comes before it.
   const when = date
-    ? `${esc(nameHe)} · <span class="ltr-iso">${esc(dateText(date))}</span>`
+    ? `<span class="ltr-iso">${esc(dateText(date))}</span> · ${esc(nameHe)}`
     : `${esc(nameHe)} · <a href="${esc(track.exam.url)}" target="_blank" rel="noopener" ${cta('row_ima')}>המועד בלוח הר״י</a>`;
   return [
     date ? `<li class="exam-row" data-exam-date="${esc(date)}">` : '<li class="exam-row">',
     '  <div>',
-    `    <h3><a href="${esc(track.href)}" ${cta('row')}>${esc(track.he.name)}</a><span class="exam-chip exam-chip--${esc(track.status)}">${esc(ui[track.status])}</span></h3>`,
+    // The chip sits beside the heading, not in it: the heading's name is the specialty alone.
+    `    <div class="exam-head"><h3><a href="${esc(track.href)}" ${cta('row')}>${esc(track.he.name)}</a></h3><span class="exam-chip exam-chip--${esc(track.status)}">${esc(ui[track.status])}</span></div>`,
     `    <p class="exam-when">${when}</p>`,
     ...(srcHref ? [`    <p class="exam-more"><a href="${esc(srcHref)}" ${cta('row_sources')}>המקורות להכנה</a></p>`] : []),
     '  </div>',

@@ -592,8 +592,8 @@ served by the platform, so it 404s on a local static server. Custom events, all 
   keeps `nephro_app_click`. `data.placement` names the link: `sources_more` on both;
   `sources_crumb`, `sources_nav` and `sources_closing` (to the sign-up on `/family-medicine`) on
   family medicine.
-- `exams_click` — any link on `/exams` (`data-ex-cta`). `data.placement` is `logo`, `nav`,
-  `nav_tracks`, `row` (the specialty name), `row_sources`, `row_ima` (a row with no date yet),
+- `exams_click` — the links on `/exams` that carry `data-ex-cta` (all but the footer). `data.placement` is
+  `logo`, `nav`, `nav_tracks`, `crumb`, `row` (the specialty name), `row_sources`, `row_ima` (a row with no date yet),
   `facts_ima` or `closing`; on a specialty row `data.track` names the track.
 
 **Google Analytics 4 + Microsoft Clarity — only after opt-in.** The specialty pages' sample-question
@@ -620,7 +620,10 @@ objects in `tracks.json` (`--check` exits 1 on drift), so a date fixed in `track
 from the dated exams. A row links to its sources page when `specialties/<track>.json` has
 `sourcesHref`. The shell (styles, nav, footer, motion code) was copied from
 `family-medicine/sources.html`; copy later shell changes in by hand. Tested by
-`scripts/exams.test.mjs`. Every footer links to it.
+`scripts/exams.test.mjs`. The footers of the home page, the specialty pages and the sources pages
+link to it. The row order is fixed when the page is rendered; once a sitting passes, the page script
+moves its row to the end and says the next date is coming, until `tracks.json` gets the new date.
+`exams.template.html` is in `.vercelignore`, like `specialty.template.html`.
 
 ## License
 
