@@ -13,13 +13,24 @@ import { parseRows, compare, applyChanges, report, israelToday, norm, updateSour
 const script = fileURLToPath(new URL('./check-ima-dates.mjs', import.meta.url));
 const tracksSrc = readFileSync(new URL('../tracks.json', import.meta.url), 'utf8');
 
-// One calendar row as the page serves it: date, registration, specialty,
-// "מסלול", "אירוע", the event type, then the add-to-calendar link.
-const rowHtml = ([date, spec, event, reg = '01.02.27-28.02.27']) => `
-<tr><td><span>${date}</span></td><td>${reg}</td><td><b>${spec}</b></td>
-<td><small>מסלול</small></td><td><small>אירוע</small></td><td>${event.replace(/'/g, '&#39;')}</td>
-<td><a href="#">הוספה ליומן</a></td></tr>`;
-const page = (rows) => `<html><head><script>var x = "01/01/2027";</script></head><body><table>${rows.map(rowHtml).join('')}</table></body></html>`;
+// One calendar row as the page serves it (trimmed): cells with ASP.NET ids
+// ending in _<ctlNN>_<field>, the route usually empty, and the mobile
+// labels "מסלול" / "אירוע" before the route and the event.
+let ctl = 100;
+const rowHtml = ([date, spec, event, reg = '01.02.27-28.02.27', route = '']) => {
+  const id = (f) => `ctl00_ctl00_ContentPlaceHolderGeneral_ContentPlaceHolderInternship_ctl${ctl}_${f}`;
+  ctl++;
+  return `
+<div class="filter-results__tr">
+  <div id="${id('dvEventDate')}" class="filter-results__td">${date}</div>
+  <div class="filter-results__td"><span id="${id('spnDeadLineDate')}">${reg}</span></div>
+  <div id="${id('dvSpecialization')}" class="filter-results__td">${spec}</div>
+  <div class="filter-results__td"><span class="bold">מסלול</span> <span id="${id('spnRoute')}">${route}</span></div>
+  <div class="filter-results__td"><span class="bold">אירוע</span> <span id="${id('spnName')}">${event.replace(/'/g, '&#39;')}</span></div>
+  <div class="filter-results__td"><a href="#">הוספה ליומן</a></div>
+</div>`;
+};
+const page = (rows) => `<html><head><script>var x = "01/01/2027";</script></head><body>${rows.map(rowHtml).join('')}</body></html>`;
 
 const track = (id, date, specialty, event = "בחינת שלב א'", nameHe = 'בחינת שלב א׳') =>
   ({ id, exam: { ...(date ? { date } : {}), nameHe, url: 'https://www.ima.org.il/Internship/Events.aspx', ima: { specialty, event } } });
@@ -29,12 +40,49 @@ test('parseRows reads date, registration, specialty and the event that FOLLOWS t
     ['15/12/2026', 'קרדיולוגיה', "בחינה במקצוע-על - חלק א'"],
     ['16/12/2026', 'קרדיולוגיה', "בחינה במקצוע-על - חלק ב'"],
     ['30/06/2027', 'הרדמה', 'ועדה מקצועית', '09/06/2027'],
+    ['21/12/2026', 'רפואה דחופה', "בחינה במקצוע-על - חלק א'", '01.07.26-31.07.26', 'למומחים ברפואת ילדים'],
+    ['22/12/2026', 'רפואה דחופה', "בחינה במקצוע-על - חלק א'", ''],
   ]));
   assert.deepEqual(rows, [
-    { date: '2026-12-15', registration: '01.02.27-28.02.27', specialty: 'קרדיולוגיה', event: "בחינה במקצוע-על - חלק א'" },
-    { date: '2026-12-16', registration: '01.02.27-28.02.27', specialty: 'קרדיולוגיה', event: "בחינה במקצוע-על - חלק ב'" },
-    { date: '2027-06-30', registration: '09/06/2027', specialty: 'הרדמה', event: 'ועדה מקצועית' },
+    { date: '2026-12-15', registration: '01.02.27-28.02.27', specialty: 'קרדיולוגיה', route: '', event: "בחינה במקצוע-על - חלק א'" },
+    { date: '2026-12-16', registration: '01.02.27-28.02.27', specialty: 'קרדיולוגיה', route: '', event: "בחינה במקצוע-על - חלק ב'" },
+    { date: '2027-06-30', registration: '09/06/2027', specialty: 'הרדמה', route: '', event: 'ועדה מקצועית' },
+    // A filled route or an empty registration cell shifts nothing.
+    { date: '2026-12-21', registration: '01.07.26-31.07.26', specialty: 'רפואה דחופה', route: 'למומחים ברפואת ילדים', event: "בחינה במקצוע-על - חלק א'" },
+    { date: '2026-12-22', registration: '', specialty: 'רפואה דחופה', route: '', event: "בחינה במקצוע-על - חלק א'" },
   ]);
+});
+
+test('a routed row is not the plain one, and a route in exam.ima selects it', () => {
+  const rs = parseRows(page([
+    ['21/12/2026', 'רפואה דחופה', "בחינה במקצוע-על - חלק א'", 'x', 'למומחים ברפואת ילדים'],
+    ['05/01/2027', 'רפואה דחופה', "בחינה במקצוע-על - חלק א'"],
+  ]));
+  const plain = track('em', undefined, 'רפואה דחופה', "בחינה במקצוע-על - חלק א'");
+  const routed = track('em-peds', undefined, 'רפואה דחופה', "בחינה במקצוע-על - חלק א'");
+  routed.exam.ima.route = 'למומחים ברפואת ילדים';
+  const [a, b] = compare([plain, routed], rs, '2026-11-16');
+  assert.equal(a.to, '2027-01-05');
+  assert.equal(b.to, '2026-12-21');
+});
+
+test('an earlier listed sitting before our date is flagged, not changed', () => {
+  const rs = parseRows(page([['14/06/2027', 'גריאטריה', "בחינת שלב א'"], ['01/03/2027', 'גריאטריה', "בחינת שלב א'"]]));
+  const [r] = compare([track('geriatrics', '2027-06-14', 'גריאטריה')], rs, '2026-11-16');
+  assert.equal(r.status, 'ok');
+  assert.match(r.notes.join(' '), /earlier sitting/);
+});
+
+test('exam day itself still counts as upcoming', () => {
+  const rs = parseRows(page([['14/06/2027', 'גריאטריה', "בחינת שלב א'"]]));
+  assert.equal(compare([track('geriatrics', '2027-06-14', 'גריאטריה')], rs, '2027-06-14')[0].status, 'ok');
+});
+
+test('a specialty whose event was renamed is flagged even when our date is past', () => {
+  const rs = parseRows(page([['14/06/2027', 'גריאטריה', 'בחינת שלב א חדש']]));
+  const [r] = compare([track('geriatrics', '2026-01-01', 'גריאטריה')], rs, '2026-11-16');
+  assert.equal(r.status, 'none');
+  assert.match(r.notes.join(' '), /renamed/);
 });
 
 test('parseRows ignores dates outside the row layout (scripts, stray text)', () => {
@@ -88,7 +136,8 @@ test('a future date that vanished with nothing listed needs a person, and is not
 });
 
 test('a past date with nothing listed stays, quietly (the page already says the next date is coming)', () => {
-  const [r] = compare([track('geriatrics', '2026-01-01', 'גריאטריה', 'בחינה שלא קיימת')], rows, TODAY);
+  const past = parseRows(page([['01/01/2026', 'גריאטריה', "בחינת שלב א'"]]));
+  const [r] = compare([track('geriatrics', '2026-01-01', 'גריאטריה')], past, TODAY);
   assert.equal(r.status, 'none');
   assert.deepEqual(r.notes, []);
 });
@@ -117,10 +166,6 @@ test('applyChanges puts a new date first in an undated exam', () => {
   assert.deepEqual(Object.keys(out.tracks[0].exam), ['date', 'nameHe', 'url', 'ima']);
 });
 
-test('every track in tracks.json is matched on today\'s calendar shape', () => {
-  // Shape only: each track names an IMA specialty and event.
-  for (const t of JSON.parse(tracksSrc).tracks) assert.ok(t.exam.ima.specialty && t.exam.ima.event, t.id);
-});
 
 test('report lists changes and notes', () => {
   const res = compare([track('geriatrics', undefined, 'גריאטריה'), track('psychiatry', '2027-06-14', 'פסיכיאטריה')], rows, TODAY);

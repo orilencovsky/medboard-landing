@@ -190,7 +190,8 @@ reads the previous row's type. The same row can appear twice (anesthesia Stage A
 
 **Daily check.** `.github/workflows/ima-dates.yml` runs `scripts/check-ima-dates.mjs` every morning
 (and on demand from the Actions tab). For each track it looks up the calendar rows named by
-`exam.ima` (`specialty` and `event`, spelled as the IMA spells them). When `exam.date` is not a listed
+`exam.ima` (`specialty`, `event` and an optional `route`, spelled as the IMA spells them; rows with a
+route, such as רפואה דחופה / למומחים ברפואת ילדים, match only a track that names it). When `exam.date` is not a listed
 upcoming sitting, it takes the next listed one: it writes `tracks.json`, swaps the date on the
 track's hand-built sources page, re-renders the pages, runs the tests and opens (or updates) a PR from
 `bot/ima-dates`. Nothing goes live until that PR is merged. It opens one issue, titled "Exam-date
@@ -198,7 +199,14 @@ check against the IMA calendar needs attention", when:
 - the calendar cannot be read or has under 100 rows (exit 2, nothing written);
 - a listed date vanished with no other sitting;
 - a specialty has no rows at all;
-- a changed track's `nameHe` carries its own date (cardiology's part B), which needs a hand edit.
+- a specialty has rows but none for the track's event (renamed?);
+- an earlier sitting is listed before the track's date;
+- a changed track's `nameHe` carries its own date (cardiology's part B), which needs a hand edit;
+- the bot branch has commits that are not the bot's (they are never pushed over);
+- the workflow itself failed.
+
+A PR that needs a person says so in its title. Edit on main, not on the bot branch. When main
+already matches the calendar, the next run closes the open bot PR.
 
 The issue is edited, not commented on, so it notifies once, and it closes itself on the next clean
 run. The workflow can open PRs only if Settings → Actions → General → "Allow GitHub Actions to
@@ -206,7 +214,7 @@ create and approve pull requests" is on. Until then the issue links the branch i
 Locally: `node scripts/check-ima-dates.mjs --dry-run`.
 
 The tests check that the pages match `tracks.json`, not which dates it holds, so a bot PR passes
-them.
+them (simulated with nephrology, cardiology and obgyn moving at once).
 
 By hand:
 

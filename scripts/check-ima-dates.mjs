@@ -17,10 +17,12 @@
 //             2 the page could not be fetched or no longer has the layout
 //               this parser knows. Nothing is written on 2.
 //
-// Calendar layout (server-rendered): after stripping tags, each row is five
-// lines — date (dd/mm/yyyy), registration window, specialty, "מסלול",
-// "אירוע" — then the event type, then "הוספה ליומן". The type comes AFTER
-// the specialty: reading the line before the date gives the previous row's.
+// Calendar layout (server-rendered ASP.NET): each row's cells carry ids
+// ending in _<ctlNN>_dvEventDate (dd/mm/yyyy), _spnDeadLineDate
+// (registration), _dvSpecialization, _spnRoute (usually empty) and _spnName
+// (the event type). Cells are grouped by that ctlNN, so an empty or filled
+// cell never shifts the others. In the page's text the event type comes
+// AFTER the specialty: the line before a date is the previous row's type.
 //
 // Plain Node 18+, no dependencies.
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -37,20 +39,21 @@ const ENTITIES = { '&nbsp;': ' ', '&#39;': "'", '&quot;': '"', '&amp;': '&', '&l
 // Geresh (׳) and apostrophe are the same letter mark; spaces vary.
 export const norm = (s) => String(s).replace(/[׳’`]/g, "'").replace(/\s+/g, ' ').trim();
 
+const FIELDS = { dvEventDate: 'date', spnDeadLineDate: 'registration', dvSpecialization: 'specialty', spnRoute: 'route', spnName: 'event' };
+const text = (s) => norm(s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;|&#39;|&quot;|&amp;|&lt;|&gt;/g, (m) => ENTITIES[m]));
+const CELL = /<(div|span)\b[^>]*\bid="[^"]*_(ctl\d+)_(dvEventDate|spnDeadLineDate|dvSpecialization|spnRoute|spnName)"[^>]*>([\s\S]*?)<\/\1>/g;
+
 export function parseRows(html) {
-  const lines = html
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[\s\S]*?<\/style>/gi, '')
-    .replace(/<[^>]+>/g, '\n')
-    .replace(/&nbsp;|&#39;|&quot;|&amp;|&lt;|&gt;/g, (m) => ENTITIES[m])
-    .split('\n')
-    .map(norm)
-    .filter(Boolean);
+  const byRow = new Map();
+  for (const [, , ctl, field, inner] of html.matchAll(CELL)) {
+    if (!byRow.has(ctl)) byRow.set(ctl, {});
+    byRow.get(ctl)[FIELDS[field]] = text(inner);
+  }
   const rows = [];
-  for (let i = 0; i + 5 < lines.length; i++) {
-    const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(lines[i]);
-    if (!m || lines[i + 3] !== 'מסלול' || lines[i + 4] !== 'אירוע') continue;
-    rows.push({ date: `${m[3]}-${m[2]}-${m[1]}`, registration: lines[i + 1], specialty: lines[i + 2], event: lines[i + 5] });
+  for (const r of byRow.values()) {
+    const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(r.date || '');
+    if (!m || !r.specialty || !r.event) continue;
+    rows.push({ date: `${m[3]}-${m[2]}-${m[1]}`, registration: r.registration || '', specialty: r.specialty, route: r.route || '', event: r.event });
   }
   return rows;
 }
@@ -71,14 +74,19 @@ const dotted = (iso) => iso.split('-').reverse().join('.');
 export function compare(tracks, rows, today) {
   const specialties = new Set(rows.map((r) => norm(r.specialty)));
   return tracks.map((t) => {
-    const { specialty, event } = t.exam.ima;
+    const { specialty, event, route = '' } = t.exam.ima;
     const from = t.exam.date || null;
     const notes = [];
     if (!specialties.has(norm(specialty))) notes.push(`The calendar has no rows at all for "${specialty}": renamed?`);
-    const dates = [...new Set(rows.filter((r) => norm(r.specialty) === norm(specialty) && norm(r.event) === norm(event)).map((r) => r.date))].sort();
+    const ofSpecialty = rows.filter((r) => norm(r.specialty) === norm(specialty));
+    const dates = [...new Set(ofSpecialty.filter((r) => norm(r.event) === norm(event) && norm(r.route) === norm(route)).map((r) => r.date))].sort();
+    if (ofSpecialty.length && !dates.length) notes.push(`"${specialty}" has rows, but none for "${event}"${route ? ` (route "${route}")` : ''}: renamed?`);
     const upcoming = dates.filter((d) => d >= today);
     let verdict;
-    if (from && upcoming.includes(from)) verdict = { status: 'ok' };
+    if (from && upcoming.includes(from)) {
+      verdict = { status: 'ok' };
+      if (upcoming[0] < from) notes.push(`An earlier sitting is also listed (${dotted(upcoming[0])}) before ${dotted(from)}: which one applies?`);
+    }
     else if (upcoming.length) verdict = { status: 'change', to: upcoming[0] };
     else {
       verdict = { status: 'none' };
@@ -147,10 +155,18 @@ export function updateSourcesPages(results, read) {
   return out;
 }
 
+// Three tries, 30 s apart: one network blip should not open an issue.
 async function fetchPage() {
-  const res = await fetch(IMA_URL, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; exam-date-check)' }, signal: AbortSignal.timeout(60000) });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.text();
+  let last;
+  for (let i = 0; i < 3; i++) {
+    if (i) await new Promise((r) => setTimeout(r, 30000));
+    try {
+      const res = await fetch(IMA_URL, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; exam-date-check)' }, signal: AbortSignal.timeout(60000) });
+      if (res.ok) return await res.text();
+      last = new Error(`HTTP ${res.status}`);
+    } catch (e) { last = e; }
+  }
+  throw last;
 }
 
 async function main() {

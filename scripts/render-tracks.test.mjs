@@ -160,7 +160,7 @@ test('the shipped list has the eight tracks, IMA dates and the nephrology page l
   assert.equal(by.nephrology.en.href, 'https://app.meduxa.ai/?signup=1&src=landing&pl=hero');
   assert.equal(by.nephrology.en.cta, 'hero');
   assert.equal(by.cardiology.status, 'live');
-  assert.equal(by.cardiology.exam.nameHe, 'בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026)');
+  assert.match(by.cardiology.exam.nameHe, /^בחינה במקצוע-על — חלק א׳ \(חלק ב׳ למחרת, \d{2}\.\d{2}\.\d{4}\)$/);
   assert.equal(by.cardiology.href, '/cardiology');
   assert.ok(!/מחיר השקה/.test(by.cardiology.he.blurb));
 });
