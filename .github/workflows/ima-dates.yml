@@ -1,0 +1,117 @@
+# Daily check of the exam dates in tracks.json against the IMA exam
+# calendar (scripts/check-ima-dates.mjs). Nothing is published from here:
+#   - a changed date becomes a PR from bot/ima-dates, re-rendered and
+#     tested, for the owner to merge;
+#   - a calendar that cannot be read, or a date that needs a person, opens
+#     (or updates) one issue, which is closed again once all is well.
+# README: "Exam dates".
+name: IMA exam dates
+
+on:
+  schedule:
+    - cron: '17 4 * * *' # 06:17 / 07:17 in Israel
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: ima-dates
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: bot/ima-dates
+      ISSUE_TITLE: 'Exam-date check against the IMA calendar needs attention'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Compare with the IMA calendar
+        id: check
+        run: |
+          set +e
+          node scripts/check-ima-dates.mjs --report "$RUNNER_TEMP/report.md"
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          cat "$RUNNER_TEMP/report.md" >> "$GITHUB_STEP_SUMMARY"
+          if git diff --quiet; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Re-render the pages and run the tests
+        id: build
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          set +e
+          node scripts/render-specialties.mjs && node scripts/render-exams.mjs && node scripts/render-tracks.mjs
+          ok=true
+          for f in scripts/*.test.mjs; do node --test "$f" > "$RUNNER_TEMP/test.log" 2>&1 || { ok=false; echo "FAILED: $f" >> "$RUNNER_TEMP/failed.txt"; }; done
+          echo "tests=$ok" >> "$GITHUB_OUTPUT"
+
+      - name: Open or update the PR
+        id: pr
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          {
+            cat "$RUNNER_TEMP/report.md"
+            echo
+            if [ "${{ steps.build.outputs.tests }}" = "true" ]; then
+              echo "Pages re-rendered; all tests pass."
+            else
+              echo "**Tests failed** after re-rendering; fix on this branch before merging:"
+              echo; cat "$RUNNER_TEMP/failed.txt"
+            fi
+            echo
+            echo "Check each date on the IMA calendar before merging: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > "$RUNNER_TEMP/body.md"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -C "$BRANCH"
+          git add -A
+          { echo 'Update exam dates from the IMA calendar'; echo; cat "$RUNNER_TEMP/report.md"; } > "$RUNNER_TEMP/msg.txt"
+          git commit -q -F "$RUNNER_TEMP/msg.txt"
+          # Same change already on the branch: leave it (and its PR) alone.
+          if git fetch -q origin "$BRANCH" 2>/dev/null && git diff --quiet FETCH_HEAD HEAD; then
+            echo "bot branch already has this change"
+          else
+            git push -f origin "$BRANCH"
+          fi
+          if [ "$(gh pr view "$BRANCH" --json state -q .state 2>/dev/null)" = "OPEN" ]; then
+            gh pr edit "$BRANCH" --body-file "$RUNNER_TEMP/body.md"
+          elif ! gh pr create --base main --head "$BRANCH" --title 'Exam dates changed on the IMA calendar' --body-file "$RUNNER_TEMP/body.md"; then
+            # Needs "Allow GitHub Actions to create and approve pull requests"
+            # (Settings → Actions → General). Until then, say so in the issue.
+            echo "pr_failed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open, update or close the attention issue
+        if: always()
+        run: |
+          number=$(gh issue list --state open --search "in:title \"$ISSUE_TITLE\"" --json number,title -q ".[] | select(.title == \"$ISSUE_TITLE\") | .number" | head -1)
+          need=false
+          { echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"; echo; } > "$RUNNER_TEMP/body.md"
+          if [ "${{ steps.check.outputs.code }}" != "0" ]; then need=true; cat "$RUNNER_TEMP/report.md" >> "$RUNNER_TEMP/body.md"; fi
+          if [ "${{ steps.pr.outputs.pr_failed }}" = "true" ]; then
+            need=true
+            { echo; echo "A date changed, but this workflow may not open PRs. The change is on branch \`$BRANCH\`:"
+              echo "${{ github.server_url }}/${{ github.repository }}/compare/main...$BRANCH?expand=1"
+              echo "To let it open PRs itself: Settings → Actions → General → Allow GitHub Actions to create and approve pull requests."; } >> "$RUNNER_TEMP/body.md"
+          fi
+          if [ "${{ job.status }}" != "success" ] && [ "$need" = false ]; then
+            need=true; echo "The workflow itself failed; see the run." >> "$RUNNER_TEMP/body.md"
+          fi
+          if [ "$need" = true ]; then
+            # Editing the body, not commenting: no new notification each day.
+            if [ -n "$number" ]; then gh issue edit "$number" --body-file "$RUNNER_TEMP/body.md"; else gh issue create --title "$ISSUE_TITLE" --body-file "$RUNNER_TEMP/body.md"; fi
+          elif [ -n "$number" ]; then
+            gh issue close "$number" --comment "All dates match the IMA calendar again (run ${{ github.run_id }})."
+          fi

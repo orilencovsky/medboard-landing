@@ -86,7 +86,8 @@ test('the four new soon pages carry their own source and interest key', () => {
 test('countdown is readable without script', () => {
   const out = served(render('family-medicine'));
   assert.ok(out.includes('בחינת שלב א׳'));
-  assert.ok(out.includes('14.06.2027'));
+  // The date itself comes from tracks.json (kept current by check-ima-dates).
+  assert.ok(out.includes(track('family-medicine').exam.date.split('-').reverse().join('.')));
   assert.ok(out.includes('לפי לוח הבחינות של הר״י · המועד עשוי להשתנות'));
   assert.ok(out.includes('href="https://www.ima.org.il/Internship/Events.aspx"'));
 });

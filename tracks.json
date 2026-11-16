@@ -1,5 +1,5 @@
 {
-  "_comment": "The homepage's study tracks — the ONE list behind the #tracks cards, the hero chips, the announcement bar and the closing line, in both index.html and en/index.html. Edit here, then run `node scripts/render-tracks.mjs` and commit the pages with it; `--check` fails if a page drifted. In blurbs, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). `cta` adds data-cta (counted in cta_click); `pageLang` marks a destination page in another language (on /en it shows a \"Hebrew content\" pill). A locale block may set its own `href` (and `cta`) to send that locale's card elsewhere; `pageLang` then does not apply to it. `exam` ({date, nameHe, url}) and `sources` ([{title, kind: book|guideline}]) feed the specialty pages. `launchOffer` puts a soon track in the launch-price announcement bar.",
+  "_comment": "The homepage's study tracks — the ONE list behind the #tracks cards, the hero chips, the announcement bar and the closing line, in both index.html and en/index.html. Edit here, then run `node scripts/render-tracks.mjs` and commit the pages with it; `--check` fails if a page drifted. In blurbs, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). `cta` adds data-cta (counted in cta_click); `pageLang` marks a destination page in another language (on /en it shows a \"Hebrew content\" pill). A locale block may set its own `href` (and `cta`) to send that locale's card elsewhere; `pageLang` then does not apply to it. `exam` ({date, nameHe, url, ima: {specialty, event}}; ima names the IMA calendar row that scripts/check-ima-dates.mjs checks the date against) and `sources` ([{title, kind: book|guideline}]) feed the specialty pages. `launchOffer` puts a soon track in the launch-price announcement bar.",
   "ui": {
     "he": {
       "live": "פתוח עכשיו",
@@ -54,7 +54,11 @@
       "exam": {
         "date": "2027-01-12",
         "nameHe": "בחינה במקצוע-על — חלק א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "נפרולוגיה",
+          "event": "בחינה במקצוע-על - חלק א'"
+        }
       },
       "sources": [
         {
@@ -119,7 +123,11 @@
       "exam": {
         "date": "2027-06-14",
         "nameHe": "בחינת שלב א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "רפואת משפחה",
+          "event": "בחינת שלב א'"
+        }
       },
       "sources": [
         {
@@ -180,7 +188,11 @@
       "exam": {
         "date": "2027-06-14",
         "nameHe": "בחינת שלב א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "רפואת ילדים",
+          "event": "בחינת שלב א'"
+        }
       },
       "sources": [
         {
@@ -218,7 +230,11 @@
       "exam": {
         "date": "2026-12-15",
         "nameHe": "בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026)",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "קרדיולוגיה",
+          "event": "בחינה במקצוע-על - חלק א'"
+        }
       },
       "sources": [
         {
@@ -258,7 +274,11 @@
       "exam": {
         "date": "2027-06-14",
         "nameHe": "בחינת שלב א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "גריאטריה",
+          "event": "בחינת שלב א'"
+        }
       },
       "sources": [
         {
@@ -302,7 +322,11 @@
       "exam": {
         "date": "2027-06-14",
         "nameHe": "בחינת שלב א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "פסיכיאטריה",
+          "event": "בחינת שלב א'"
+        }
       },
       "sources": [
         {
@@ -334,7 +358,11 @@
       "exam": {
         "date": "2027-06-22",
         "nameHe": "בחינת שלב א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "הרדמה",
+          "event": "בחינת שלב א'"
+        }
       },
       "sources": [
         {
@@ -366,7 +394,11 @@
       "exam": {
         "date": "2027-06-02",
         "nameHe": "בחינת שלב א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx"
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "יילוד וגינקולוגיה",
+          "event": "בחינת שלב א'"
+        }
       },
       "sources": [
         {

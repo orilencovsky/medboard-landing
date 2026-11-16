@@ -188,7 +188,27 @@ Reading the calendar: each row is date, registration window, specialty, then `מ
 the event type. The type comes after the specialty, so a parser that takes the line before the date
 reads the previous row's type. The same row can appear twice (anesthesia Stage A, 22.06.2027).
 
-To refresh them:
+**Daily check.** `.github/workflows/ima-dates.yml` runs `scripts/check-ima-dates.mjs` every morning
+(and on demand from the Actions tab). For each track it looks up the calendar rows named by
+`exam.ima` (`specialty` and `event`, spelled as the IMA spells them). When `exam.date` is not a listed
+upcoming sitting, it takes the next listed one: it writes `tracks.json`, swaps the date on the
+track's hand-built sources page, re-renders the pages, runs the tests and opens (or updates) a PR from
+`bot/ima-dates`. Nothing goes live until that PR is merged. It opens one issue, titled "Exam-date
+check against the IMA calendar needs attention", when:
+- the calendar cannot be read or has under 100 rows (exit 2, nothing written);
+- a listed date vanished with no other sitting;
+- a specialty has no rows at all;
+- a changed track's `nameHe` carries its own date (cardiology's part B), which needs a hand edit.
+
+The issue is edited, not commented on, so it notifies once, and it closes itself on the next clean
+run. The workflow can open PRs only if Settings → Actions → General → "Allow GitHub Actions to
+create and approve pull requests" is on. Until then the issue links the branch instead.
+Locally: `node scripts/check-ima-dates.mjs --dry-run`.
+
+The tests check that the pages match `tracks.json`, not which dates it holds, so a bot PR passes
+them.
+
+By hand:
 
 1. Open the IMA calendar (`https://www.ima.org.il/Internship/Events.aspx`) and filter by specialty.
 2. Take only the exam rows — never `ועדה מקצועית` (a professional committee, not an exam) — and only
