@@ -1,4 +1,4 @@
-// /cardiology/sources and /nephrology/sources: hand-built static pages
+// /cardiology/sources, /nephrology/sources and /family-medicine/sources: hand-built static pages
 // (<track>/sources.html). Nothing regenerates them, so these checks keep each
 // one reachable, indexable and in step with tracks.json and
 // scripts/countdown.mjs.
