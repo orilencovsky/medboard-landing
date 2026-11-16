@@ -210,7 +210,9 @@ test('the tutor box carries the Socrates avatar, sized, on every page with quest
     assert.match(scripts(out), avatar, `${id} tutor box has no avatar`);
     assert.doesNotMatch(scripts(out), /q-tutor"><i /, `${id} tutor box still shows the old icon`);
   }
-  assert.doesNotMatch(render('family-medicine', (p) => { p.questions = []; delete p.examBased; }), /socrates-avatar/);
+  // No questions, no sample-question tutor box. The features tile and the comparison row
+  // carry their own avatar on every page, so only the box's `q-avatar` must be absent.
+  assert.doesNotMatch(render('family-medicine', (p) => { p.questions = []; delete p.examBased; }), /class="q-avatar"/);
   for (const [f, px] of [['socrates-avatar-64.png', 64], ['socrates-avatar-128.png', 128]]) {
     const b = readFileSync(new URL('../' + f, import.meta.url));
     assert.equal(b.subarray(1, 4).toString('latin1'), 'PNG', `${f} is not a PNG`);
