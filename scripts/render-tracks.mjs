@@ -68,6 +68,10 @@ export function validate(data) {
     if (!t.exam) throw new Error(`${t.id}: exam is required`);
     if (t.exam.date !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(t.exam.date || '')) throw new Error(`${t.id}: exam.date must be YYYY-MM-DD or absent`);
     for (const k of ['nameHe', 'url']) if (!t.exam[k]) throw new Error(`${t.id}: exam.${k} is required`);
+    // exam.ima names the row on the IMA calendar that scripts/check-ima-dates.mjs
+    // compares exam.date with: the specialty and event columns, as the IMA spells them.
+    if (!t.exam.ima || typeof t.exam.ima.specialty !== 'string' || !t.exam.ima.specialty || typeof t.exam.ima.event !== 'string' || !t.exam.ima.event) throw new Error(`${t.id}: exam.ima needs specialty and event`);
+    if (t.exam.ima.route !== undefined && typeof t.exam.ima.route !== 'string') throw new Error(`${t.id}: exam.ima.route must be a string`);
     if (!Array.isArray(t.sources) || !t.sources.length) throw new Error(`${t.id}: sources must be a non-empty list`);
     for (const src of t.sources) {
       if (!src || !src.title) throw new Error(`${t.id}: every source needs a title`);

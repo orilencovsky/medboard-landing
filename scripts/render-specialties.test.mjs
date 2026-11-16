@@ -11,6 +11,9 @@ const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const template = read('specialty.template.html');
 const tracks = JSON.parse(read('tracks.json')).tracks;
 const track = (id) => JSON.parse(JSON.stringify(tracks.find((t) => t.id === id)));
+// dd.mm.yyyy of a track's exam, from tracks.json: dates are not pinned here,
+// scripts/check-ima-dates.mjs keeps them current and a pin would fail its PRs.
+const examDay = (id) => track(id).exam.date.split('-').reverse().join('.');
 const page = (id) => JSON.parse(read(`specialties/${id}.json`));
 // Every specialties/*.json page, so a new track is covered the day it is added.
 const PAGES = readdirSync(new URL('../specialties/', import.meta.url))
@@ -80,13 +83,14 @@ test('the four new soon pages carry their own source and interest key', () => {
     assert.ok(html.includes(`<link rel="canonical" href="https://meduxa.ai/${id}" />`), id);
     assert.ok(!/מחיר השקה/.test(served(html)), id + ': no launch-price promise');
   }
-  assert.ok(served(render('obgyn')).includes('02.06.2027'));
+  assert.ok(served(render('obgyn')).includes(examDay('obgyn')));
 });
 
 test('countdown is readable without script', () => {
   const out = served(render('family-medicine'));
   assert.ok(out.includes('בחינת שלב א׳'));
-  assert.ok(out.includes('14.06.2027'));
+  // The date itself comes from tracks.json (kept current by check-ima-dates).
+  assert.ok(out.includes(examDay('family-medicine')));
   assert.ok(out.includes('לפי לוח הבחינות של הר״י · המועד עשוי להשתנות'));
   assert.ok(out.includes('href="https://www.ima.org.il/Internship/Events.aspx"'));
 });
@@ -297,7 +301,7 @@ test('nephrology is a live page with app links and no form', () => {
   assert.ok(s.includes('https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=closing'));
   assert.ok(s.includes('התחילו ללמוד — חינם'));
   assert.ok(s.includes('בחינה במקצוע-על — חלק א׳'));
-  assert.ok(s.includes('12.01.2027'));
+  assert.ok(s.includes(examDay('nephrology')));
   assert.ok(s.includes('Brenner &amp; Rector'));
   assert.ok(!out.includes('id="notifyForm"'));
   assert.ok(!out.includes('מחיר השקה'));
@@ -335,8 +339,8 @@ test('cardiology is a live page: app links, no waitlist, parts A and B, no exper
   assert.ok(s.includes('פתוח עכשיו: קרדיולוגיה, מקצוע-על'));
   // The sample-question script ships only with a question; cardiology has none yet, so it is absent until one is added.
   assert.ok(!out.includes('_sample_question'));
-  assert.ok(s.includes('15.12.2026'));
-  assert.ok(s.includes('חלק ב׳ למחרת, 16.12.2026'));
+  assert.ok(s.includes(examDay('cardiology')));
+  assert.ok(s.includes(track('cardiology').exam.nameHe));
   assert.ok(s.includes('Braunwald'));
   assert.ok(!out.includes('מחיר השקה'));
   assert.ok(!out.includes('הנחה קבוצתית'));

@@ -147,14 +147,12 @@ test('the shipped list has the eight tracks, IMA dates and the nephrology page l
     assert.equal(by[id].href, '/' + id, id);
     assert.equal(by[id].launchOffer, undefined, id); // no launch-price promise on these
   }
-  assert.equal(by.obgyn.exam.date, '2027-06-02');
-  assert.equal(by.geriatrics.exam.date, '2027-06-14');
-  assert.equal(by.psychiatry.exam.date, '2027-06-14');
-  assert.equal(by.anesthesia.exam.date, '2027-06-22');
-  assert.equal(by.nephrology.exam.date, '2027-01-12');
-  assert.equal(by.cardiology.exam.date, '2026-12-15');
-  assert.equal(by['family-medicine'].exam.date, '2027-06-14');
-  assert.equal(by.pediatrics.exam.date, '2027-06-14');
+  // The date values are not pinned here: scripts/check-ima-dates.mjs keeps
+  // them in step with the IMA calendar, and a pin would fail its PRs.
+  for (const t of real.tracks) {
+    if (t.exam.date !== undefined) assert.match(t.exam.date, /^\d{4}-\d{2}-\d{2}$/, t.id);
+    assert.ok(t.exam.ima.specialty && t.exam.ima.event, t.id);
+  }
   assert.equal(by.nephrology.exam.nameHe, 'בחינה במקצוע-על — חלק א׳');
   assert.equal(by.pediatrics.exam.nameHe, 'בחינת שלב א׳');
   assert.equal(by.nephrology.href, '/nephrology');
@@ -162,7 +160,7 @@ test('the shipped list has the eight tracks, IMA dates and the nephrology page l
   assert.equal(by.nephrology.en.href, 'https://app.meduxa.ai/?signup=1&src=landing&pl=hero');
   assert.equal(by.nephrology.en.cta, 'hero');
   assert.equal(by.cardiology.status, 'live');
-  assert.equal(by.cardiology.exam.nameHe, 'בחינה במקצוע-על — חלק א׳ (חלק ב׳ למחרת, 16.12.2026)');
+  assert.match(by.cardiology.exam.nameHe, /^בחינה במקצוע-על — חלק א׳ \(חלק ב׳ למחרת, \d{2}\.\d{2}\.\d{4}\)$/);
   assert.equal(by.cardiology.href, '/cardiology');
   assert.ok(!/מחיר השקה/.test(by.cardiology.he.blurb));
 });
