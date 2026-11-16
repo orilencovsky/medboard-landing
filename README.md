@@ -582,7 +582,12 @@ served by the platform, so it 404s on a local static server. Custom events, all 
 - `fm_home_click` — `data.placement` is `logo` or `nav`, read from the link's `data-fm-cta`
   attribute: which route back to the homepage a `/family-medicine` visitor used. Kept separate from
   `cta_click` since these links go to `/`, not to the app, so they are not part of that
-  landing→app click-through measure.
+  landing→app click-through measure. `/family-medicine/sources` sends it too, for its own logo and nav.
+- `nephro_sources_click`, `fm_sources_click` — the links on `/nephrology/sources` and
+  `/family-medicine/sources` that are neither logo/nav nor (on nephrology) the app button, which
+  keeps `nephro_app_click`. `data.placement` names the link: `sources_more` on both;
+  `sources_crumb`, `sources_nav` and `sources_closing` (to the sign-up on `/family-medicine`) on
+  family medicine.
 
 **Google Analytics 4 + Microsoft Clarity — only after opt-in.** The specialty pages' sample-question
 widget sends `<prefix>_sample_question` (`fm_`, `peds_`, `nephro_`, `cardio_`) through `gtag` when a
@@ -603,9 +608,9 @@ been reviewed by a lawyer.
 
 Private project. All rights reserved.
 
-## Sources pages (/cardiology/sources, /nephrology/sources)
+## Sources pages (/cardiology/sources, /nephrology/sources, /family-medicine/sources)
 
-`cardiology/sources.html` and `nephrology/sources.html` are hand-built static pages
+`cardiology/sources.html`, `nephrology/sources.html` and `family-medicine/sources.html` are hand-built static pages
 (served at `/<track>/sources` thanks to `cleanUrls`). Each reuses the styles, nav,
 footer and countdown script of its track page, so after a template change that matters
 there, copy the change in by hand. `scripts/sources-pages.test.mjs` checks each one's

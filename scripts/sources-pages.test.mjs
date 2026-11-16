@@ -1,4 +1,4 @@
-// /cardiology/sources and /nephrology/sources: hand-built static pages
+// /cardiology/sources, /nephrology/sources and /family-medicine/sources: hand-built static pages
 // (<track>/sources.html). Nothing regenerates them, so these checks keep each
 // one reachable, indexable and in step with tracks.json and
 // scripts/countdown.mjs.
@@ -31,6 +31,14 @@ const PAGES = [
     shows: ["Brenner & Rector's The Kidney, מהדורה 11", 'Comprehensive Clinical Nephrology, מהדורה 7', 'Johnson',
       'Handbook of Dialysis, מהדורה 6', 'Daugirdas', 'Clinical Physiology of Acid-Base and Electrolyte Disorders, מהדורה 5', 'Rose', 'Post',
       'Handbook of Kidney Transplantation, מהדורה 7', 'Danovitch', 'הנחיות KDIGO', 'הנחיות KDOQI', 'הנחיות ISPD', 'נייר עמדה ישראלי ליתר לחץ דם 2026'],
+  },
+  {
+    id: 'family-medicine', crumb: 'רפואת משפחה', expertReview: true,
+    sources: ['Goroll, Primary Care Medicine 9e', 'Nelson Textbook of Pediatrics 22e', 'AFP review articles',
+      'הנחיות ונייר עמדה של ההסתדרות הרפואית', 'GINA', 'GOLD', 'ADA 2025', 'מדריך החיסונים של משרד הבריאות'],
+    shows: ['Primary Care Medicine, מהדורה 9', 'Goroll', 'Nelson Textbook of Pediatrics, מהדורה 22',
+      'מאמרי סקירה מכתב העת AFP', 'American Family Physician', 'הנחיות ונייר עמדה של ההסתדרות הרפואית',
+      'הנחיות GINA', 'הנחיות GOLD', 'הנחיות ADA לשנת 2025', 'מדריך החיסונים של משרד הבריאות'],
   },
 ];
 
@@ -84,6 +92,25 @@ for (const cfg of PAGES) {
     const claims = /ביקורת מומחה|נבדק(ה|ות)? על ידי מומחה/.test(text);
     assert.equal(claims, cfg.expertReview);
     if (claims) assert.ok(read(`${cfg.id}.html`).includes('כל שאלה עוברת ביקורת מומחה'), 'the track page no longer makes the claim');
+  });
+
+  // A track that has not opened yet has nothing to sign in to: the page sends
+  // to the sign-up on the track page, never to the app.
+  test(`${cfg.id}/sources: the call to action matches the track status`, () => {
+    if (track.status === 'soon') {
+      assert.ok(!page.includes('app.meduxa.ai'), 'a soon track must not link to the app');
+      assert.ok(page.includes(`href="/${cfg.id}#signup"`));
+      assert.ok(read(`${cfg.id}.html`).includes('<section id="signup"'), 'the sign-up anchor moved');
+    } else {
+      assert.ok(page.includes('https://app.meduxa.ai/?signup=1'));
+    }
+  });
+
+  // Copied from the track page, links like the nav button's #signup can point
+  // at a section this page does not have.
+  test(`${cfg.id}/sources: every in-page #link has its target`, () => {
+    const ids = new Set([...page.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+    for (const [, id] of page.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(id), `#${id} has no target`);
   });
 
   test(`/${cfg.id} links to its sources page, and the sitemap lists it`, () => {
