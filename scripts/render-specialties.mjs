@@ -61,6 +61,7 @@ export function validatePage(page, track) {
   if (!/^\/[a-z0-9-]+$/.test(track.href || '')) fail(`track href must look like /some-page: ${JSON.stringify(track.href)}`);
   if (!/^[a-z]+$/.test(page.prefix || '')) fail('prefix must be lowercase letters');
   if (page.mode !== 'soon' && page.mode !== 'live') fail('mode must be "soon" or "live"');
+  if (page.sourcesHref !== undefined && !/^\/[a-z0-9-]+(\/[a-z0-9-]+)*$/.test(page.sourcesHref)) fail('sourcesHref must be a site path such as /cardiology/sources');
   for (const k of TEXT) if (!lookup(page, k)) fail(`${k} is required`);
   // The comparison row on expert review is optional: a page whose questions are
   // not (yet) reviewed leaves cmpReview out and the row is not rendered.
@@ -134,7 +135,7 @@ function countdown(track) {
 // as "guideline" in tracks.json are really review articles. A soon page with
 // no sample questions yet speaks in the future tense; a live page's
 // explanations already exist, sample questions or not.
-function sources(track, built) {
+function sources(track, built, moreHref) {
   const ordered = [...track.sources.filter((s) => s.kind === 'book'), ...track.sources.filter((s) => s.kind !== 'book')];
   const items = ordered.map((s) => {
     const icon = s.kind === 'book' ? 'ph-book-open' : 'ph-file-text';
@@ -152,6 +153,8 @@ function sources(track, built) {
     '    <ul class="src-list" data-reveal style="--i:1">',
     ...items,
     '    </ul>',
+    // A page that has its own sources page (e.g. /cardiology/sources) links to it.
+    ...(moreHref ? [`    <p class="src-more" data-reveal style="--i:2"><a href="${esc(moreHref)}">פירוט המקורות ומועדי הבחינה<i class="ph ph-arrow-left" aria-hidden="true"></i></a></p>`] : []),
     '  </div>',
     '</section>',
   ].join('\n');
@@ -298,7 +301,7 @@ export function renderPage(template, page, track) {
     jsonld: jsonLd(page, track),
     leadHtml: rich(page.lead),
     countdown: countdown(track),
-    sources: sources(track, page.mode === 'live' || page.questions.length > 0),
+    sources: sources(track, page.mode === 'live' || page.questions.length > 0, page.sourcesHref),
     questions: page.questions.length ? questions(page.questions, page.examBased) : '',
     states: states(page.states),
     perks: signup.perks ? perks(signup.perks) : '',
