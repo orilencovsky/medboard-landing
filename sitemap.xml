@@ -62,6 +62,9 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://meduxa.ai/en/accessibility"/>
   </url>
   <url>
+    <loc>https://meduxa.ai/exams</loc>
+  </url>
+  <url>
     <loc>https://meduxa.ai/family-medicine</loc>
   </url>
   <url>

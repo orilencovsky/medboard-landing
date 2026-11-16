@@ -195,7 +195,7 @@ To refresh them:
    part A / Stage A.
 3. Update `exam.date` for each track in `tracks.json`.
 4. Re-check each date a month before it, when the IMA finalises it.
-5. Run `node scripts/render-specialties.mjs` and commit `tracks.json` with the regenerated pages. The
+5. Run `node scripts/render-specialties.mjs` and `node scripts/render-exams.mjs`, and commit `tracks.json` with the regenerated pages. The
    footnote on the pages says the date may change (`לפי לוח הבחינות של הר״י · המועד עשוי להשתנות`),
    so a late move is a data fix, not a redesign.
 
@@ -592,6 +592,9 @@ served by the platform, so it 404s on a local static server. Custom events, all 
   keeps `nephro_app_click`. `data.placement` names the link: `sources_more` on both;
   `sources_crumb`, `sources_nav` and `sources_closing` (to the sign-up on `/family-medicine`) on
   family medicine.
+- `exams_click` — any link on `/exams` (`data-ex-cta`). `data.placement` is `logo`, `nav`,
+  `nav_tracks`, `row` (the specialty name), `row_sources`, `row_ima` (a row with no date yet),
+  `facts_ima` or `closing`; on a specialty row `data.track` names the track.
 
 **Google Analytics 4 + Microsoft Clarity — only after opt-in.** The specialty pages' sample-question
 widget sends `<prefix>_sample_question` (`fm_`, `peds_`, `nephro_`, `cardio_`) through `gtag` when a
@@ -607,6 +610,17 @@ persistent id, and the edge router sends EU traffic to `/en` (GDPR), on top of I
 GA4/Clarity were first added without a gate on 2026-09-17 (PR #25) while § 3 still said there was no
 tracking; this gate and the § 2–§ 4 rewrite closed that. Neither the gate nor the privacy text has
 been reviewed by a lawyer.
+
+## Exams page (/exams)
+
+`exams.html` lists every track's exam in date order, with a day count per row. It is generated, like
+the specialty pages: `node scripts/render-exams.mjs` fills `exams.template.html` from the `exam`
+objects in `tracks.json` (`--check` exits 1 on drift), so a date fixed in `tracks.json` reaches
+`/exams` and the specialty page together once both renderers run. The title and heading years come
+from the dated exams. A row links to its sources page when `specialties/<track>.json` has
+`sourcesHref`. The shell (styles, nav, footer, motion code) was copied from
+`family-medicine/sources.html`; copy later shell changes in by hand. Tested by
+`scripts/exams.test.mjs`. Every footer links to it.
 
 ## License
 
