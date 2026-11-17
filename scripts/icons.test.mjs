@@ -1,11 +1,12 @@
 // The site draws its icons from /ph.css (Phosphor glyphs as CSS masks), not from
-// a third-party icon font. An icon with no rule there renders as nothing.
+// a third-party icon font. An icon with no rule there renders as a solid square.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+const root = fileURLToPath(new URL('..', import.meta.url));
 const SKIP = new Set(['node_modules', '.git', '.claude', 'docs', 'design-system']);
 
 function walk(dir, out = []) {
@@ -33,6 +34,11 @@ test('every ph-* icon the pages, scripts and specialty data use has a rule in ph
   }
   const missing = [...used].filter(([n]) => !defined.has(n)).map(([n, f]) => `${n} (${f})`);
   assert.deepEqual(missing, []);
+});
+
+test('icons stay visible in Windows High Contrast and in print', () => {
+  assert.match(css, /@media \(forced-colors: active\)\{[^}]*\.ph::before\{[^}]*forced-color-adjust:none[^}]*background-color:CanvasText/);
+  assert.match(css, /print-color-adjust:exact/);
 });
 
 test('no page loads the icon font from a CDN', () => {
