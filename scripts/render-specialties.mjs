@@ -207,7 +207,9 @@ function questions(qs, examBased) {
     '  <button type="button" class="q-step q-next">הבאה<i class="ph ph-arrow-left" aria-hidden="true"></i></button>',
     '</div>',
   ] : [];
-  const note = examBased ? ['<p class="q-note">השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.</p>'] : [];
+  const note = !examBased ? [] : many
+    ? ['<p class="q-note">השאלות מבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו.</p>']
+    : ['<p class="q-note">השאלה מבוססת על נושא ממבחני עבר ונערכה על ידי הצוות שלנו.</p>'];
   return [
     '<section class="q enter" style="--i:2" aria-labelledby="q-title">',
     ...[...head, ...body, ...nav, ...note].map((l) => '  ' + l),

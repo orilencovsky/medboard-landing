@@ -9,11 +9,15 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const text = (html) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
+// A link that closes an answer ("לכל המסלולים", "איך מתחברים") is navigation,
+// not part of the answer, so the JSON-LD leaves it out: drop it before comparing.
+const trailingLink = /\s*<a\b[^>]*>[^<]*<\/a>\s*(?=<\/p>\s*$)/;
+
 export function visibleFaq(html) {
   const section = html.match(/<section id="faq"[\s\S]*?<\/section>/);
   if (!section) return [];
   return [...section[0].matchAll(/<summary>([\s\S]*?)<\/summary>\s*<div class="faq-a">([\s\S]*?)<\/div>/g)]
-    .map((m) => ({ q: text(m[1]), a: text(m[2]) }));
+    .map((m) => ({ q: text(m[1]), a: text(m[2].trim().replace(trailingLink, '')) }));
 }
 
 export function faqJsonLd(html) {

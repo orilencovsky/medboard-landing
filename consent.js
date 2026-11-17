@@ -55,7 +55,7 @@
     text: 'נשמח למדוד איך משתמשים באתר בעזרת Google Analytics ו-Microsoft Clarity, כדי לשפר אותו. הם יופעלו רק אם תסכימו.',
     more: 'מדיניות הפרטיות',
     moreHref: '/privacy',
-    accept: 'מסכים/ה',
+    accept: 'מסכימים',
     reject: 'לא, תודה'
   } : {
     label: 'Analytics consent',

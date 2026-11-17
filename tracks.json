@@ -39,14 +39,14 @@
         "name": "נפרולוגיה",
         "inline": "נפרולוגיה",
         "stage": "מקצוע-על, חלק א׳",
-        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, מורה סוקרטי וחזרה מרווחת.",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, מורה {{AI}} סוקרטי וחזרה מרווחת.",
         "action": "התחילו ללמוד — חינם"
       },
       "en": {
         "name": "Nephrology",
         "inline": "nephrology",
         "stage": "Sub-specialty, part A",
-        "blurb": "Exam-style questions, answers explained with a quote from the source, a Socratic tutor and spaced repetition.",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, a Socratic {{AI}} tutor and spaced repetition.",
         "action": "Start studying free",
         "href": "https://app.meduxa.ai/?signup=1&src=landing&pl=hero",
         "cta": "hero"
@@ -143,7 +143,7 @@
           "kind": "guideline"
         },
         {
-          "title": "הנחיות ונייר עמדה של ההסתדרות הרפואית",
+          "title": "הנחיות וניירות עמדה של ההסתדרות הרפואית",
           "kind": "guideline"
         },
         {
@@ -159,7 +159,7 @@
           "kind": "guideline"
         },
         {
-          "title": "מדריך החיסונים של משרד הבריאות",
+          "title": "תדריך החיסונים של משרד הבריאות",
           "kind": "guideline"
         }
       ]
@@ -175,7 +175,7 @@
         "name": "רפואת ילדים",
         "inline": "רפואת ילדים",
         "stage": "שלב א׳",
-        "blurb": "שאלות שנבדקו בידי רופא מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
+        "blurb": "שאלות שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
         "action": "הרשמה לעדכון"
       },
       "en": {
@@ -309,14 +309,14 @@
         "name": "פסיכיאטריה",
         "inline": "פסיכיאטריה",
         "stage": "שלב א׳",
-        "blurb": "שאלות בסגנון הבחינה, והסבר עם ציטוט מ-{{DSM‑5}}.",
+        "blurb": "שאלות בסגנון הבחינה, והסבר עם ציטוט מ-{{DSM-5}}.",
         "action": "הרשמה לעדכון"
       },
       "en": {
         "name": "Psychiatry",
         "inline": "psychiatry",
         "stage": "Stage A",
-        "blurb": "Exam-style questions, answers explained with a quote from the DSM‑5.",
+        "blurb": "Exam-style questions, answers explained with a quote from the DSM-5.",
         "action": "Get notified"
       },
       "exam": {
