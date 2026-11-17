@@ -378,7 +378,6 @@
      without this the label would flip back to cyan mid-hover. Inline colour
      used to shield it; the class does not. */
   .btn-action:hover, .btn-action:focus { color:#fff; }
-  .announce:hover { color:#fff; text-decoration:none; filter:brightness(1.08); }
   /* Focus. One ring for every control on the page, in the light violet of
      focus on the dark ground (#C4B5FD: 10.2:1 on #061225) and the deep brand
      violet on the white and pale sections (#4A38C9: 7.8:1 on #fff, 7.1:1 on
@@ -500,9 +499,6 @@
      and a new entry joins the same grid with no layout change. Teal says
      "open now" (a status, so cyan-family); the one violet in the section is
      the live track's commit button. */
-  .announce { display: block; background: linear-gradient(90deg, #0E7490, #4A38C9); color: #fff; text-align: center; font-size: 15px; font-weight: 600; line-height: 1.5; padding: 10px 20px; }
-  .announce-pill { display: inline-block; background: #22D3EE; color: #04101E; border-radius: 999px; padding: 1px 12px; font-size: 13px; font-weight: 700; margin-inline-end: 8px; }
-  .announce u { text-underline-offset: 3px; }
 
   .hero-tracks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: -6px; }
   .hero-tracks-label { font-size: 14px; color: #7DA2C4; margin-inline-end: 4px; }
@@ -644,7 +640,6 @@
     .hero-track-clock { display: block; }
     /* "· בקרוב" stays for screen readers; visually the chip row then fits one line. */
     .hero-track-soon { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    .announce { font-size: 14px; padding: 9px 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .track, .track-arrow, .track-soon-btn { transition: none; }
@@ -839,14 +834,6 @@
 <a class="skip" href="#main">דילוג לתוכן העמוד</a>
 
 <div dir="rtl" style="background: #F0F6FA; min-height: 100vh;">
-
-  <!-- ANNOUNCEMENT: the tracks on the way. Scrolls away above the sticky nav.
-       Rendered from tracks.json (scripts/render-tracks.mjs). -->
-  <!-- tracks:announce -->
-  <a href="#tracks" class="announce">
-    <span class="announce-pill">בקרוב</span>הכנה לשלב א׳ ברפואת משפחה וברפואת ילדים · מחיר השקה מיוחד לנרשמים מראש · <u>לפרטים</u>
-  </a>
-  <!-- /tracks:announce -->
 
   <!-- NAV -->
   <nav style="position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(34,211,238,.15);">
@@ -1146,7 +1133,7 @@
     </div>
   </section>
 
-  <!-- FEATURES — 7 -->
+  <!-- FEATURES — 7 (the study plan spans the last row) -->
   <section id="features" data-mq-section style="background: #fff; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
     <div style="max-width: 1200px; margin: 0 auto;">
       <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 52px;">
@@ -1177,6 +1164,10 @@
         <div style="background: #F0F6FA; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
           <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>טבלת מובילים ודו-קרבות</h3>
           <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">טפסו בטבלת דירוג מול מתמחים אחרים — עם דו-קרבות ראש-בראש בזמן אמת, בקרוב.</p>
+        </div>
+        <div style="grid-column: 1 / -1; background: #F0F6FA; border: 1px solid #A5E3F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>לוח למידה חכם</h3>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65; max-width: 680px;">בחר תאריך בחינה וכמה שעות ביום יש לך, וקבל לו״ז יום אחר יום עד הבחינה: קריאה, תרגול שאלות, חזרה מרווחת ומבחני הדמיה, לפי משקל כל נושא בבחינות עבר. שלושה סגנונות למידה לבחירה, ומעקב משימות במקום אחד.</p>
         </div>
       </div>
     </div>

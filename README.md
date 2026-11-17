@@ -118,7 +118,7 @@ writes four places in **both** landing pages, between marker comments:
 |---|---|---|
 | `tracks:cards` | the `#tracks` grid | a `live` card spans two of four columns; `soon` cards one |
 | `tracks:chips` | the hero chips under the main CTA | in-page jumps to `#track-<id>` |
-| `tracks:announce` | the top banner | Hebrew page only (`/en` has no banner); lists the `soon` tracks with `"launchOffer": true`; omitted when there is none |
+| `tracks:announce` | the top banner | optional. Currently removed from both pages (2026-11-17); to bring it back, re-add the marker pair + the `.announce` CSS to index.html. Hebrew only; lists the `soon` tracks with `"launchOffer": true`; omitted when there is none |
 | `tracks:closing` | the line under the `#pilot` CTA | lists every `soon` track |
 
 **Adding a specialty is one entry** in `tracks.json`, then `node scripts/render-tracks.mjs`, then

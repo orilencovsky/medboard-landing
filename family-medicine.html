@@ -306,10 +306,10 @@
   .techs p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--t3); }
   .opt { font-size: 12px; font-weight: 600; color: var(--t4); border: 1px solid var(--border); border-radius: var(--pill); padding: 1px 8px; }
 
-  /* FEATURES: bento, eight items in eight cells. */
+  /* FEATURES: bento, nine items in nine cells (the study plan spans the last row). */
   .features { background: var(--deep); }
   .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
-           grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report"; }
+           grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report" "builder builder builder builder"; }
   .tile { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 26px;
           display: flex; flex-direction: column; gap: 10px; transition: border-color .25s ease, transform .35s var(--ease); }
   @media (hover: hover) and (pointer: fine) {
@@ -329,6 +329,8 @@
   .t-quote { grid-area: quote; background: radial-gradient(90% 120% at 0% 100%, rgba(34,211,238,.18), transparent 60%), var(--card); }
   .t-exam { grid-area: exam; } .t-filter { grid-area: filter; } .t-map { grid-area: map; }
   .t-dash { grid-area: dash; } .t-board { grid-area: board; } .t-report { grid-area: report; }
+  .t-builder { grid-area: builder; background: radial-gradient(90% 140% at 100% 0%, rgba(34,211,238,.16), transparent 60%), var(--card); }
+  .t-builder p { max-width: 62ch; }
   .later { margin: 20px 0 0; display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--t3); line-height: 1.6; }
   .later .ph { font-size: 18px; color: var(--t4); flex: none; }
   .later strong { color: var(--t1); }
@@ -520,7 +522,7 @@
     .method-layout { grid-template-columns: 1fr; gap: 40px; }
     .method-layout .sec-head { position: static; }
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr));
-             grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report"; }
+             grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report" "builder builder"; }
     .t-tutor { min-height: 320px; }
   }
   @media (max-width: 767px) {
@@ -543,7 +545,7 @@
     .sec-head p, .signup-for { font-size: 16px; }
     .group { padding: 22px 18px; }
     .techs { grid-template-columns: 1fr; gap: 18px; }
-    .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report"; }
+    .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report" "builder"; }
     .t-tutor { min-height: 0; padding: 26px; }
     .t-tutor h3 { font-size: 22px; }
     .tile { padding: 22px; }
@@ -761,6 +763,14 @@
           <i class="ph ph-flag" aria-hidden="true"></i>
           <h3>דיווח על בעיה בשאלה</h3>
           <p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p>
+        </article>
+        <article class="tile t-builder" data-reveal style="--i:1">
+          <i class="ph ph-calendar-check" aria-hidden="true"></i>
+          <h3>לוח למידה חכם</h3>
+          <p>בוחרים תאריך בחינה וכמה שעות ביום יש לכם, ומקבלים לו״ז יום אחר יום עד הבחינה: קריאה, תרגול שאלות, חזרה מרווחת ומבחני הדמיה, לפי משקל כל נושא בבחינות עבר. בוחרים אחד משלושה סגנונות למידה, ומסמנים משימות בלוח.</p>
+          <ul class="styles" aria-label="מה הלוח לוקח בחשבון">
+            <li>תאריך הבחינה</li><li>שעות ביום</li><li>משקל נושא בבחינות עבר</li><li>סגנון למידה</li>
+          </ul>
         </article>
       </div>
       <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</span></p>
