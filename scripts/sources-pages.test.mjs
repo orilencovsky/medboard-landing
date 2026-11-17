@@ -35,10 +35,10 @@ const PAGES = [
   {
     id: 'family-medicine', crumb: 'רפואת משפחה', expertReview: true,
     sources: ['Goroll, Primary Care Medicine 9e', 'Nelson Textbook of Pediatrics 22e', 'AFP review articles',
-      'הנחיות ונייר עמדה של ההסתדרות הרפואית', 'GINA', 'GOLD', 'ADA 2025', 'מדריך החיסונים של משרד הבריאות'],
+      'הנחיות וניירות עמדה של ההסתדרות הרפואית', 'GINA', 'GOLD', 'ADA 2025', 'תדריך החיסונים של משרד הבריאות'],
     shows: ['Primary Care Medicine, מהדורה 9', 'Goroll', 'Nelson Textbook of Pediatrics, מהדורה 22',
-      'מאמרי סקירה מכתב העת AFP', 'American Family Physician', 'הנחיות ונייר עמדה של ההסתדרות הרפואית',
-      'הנחיות GINA', 'הנחיות GOLD', 'הנחיות ADA לשנת 2025', 'מדריך החיסונים של משרד הבריאות'],
+      'מאמרי סקירה מכתב העת AFP', 'American Family Physician', 'הנחיות וניירות עמדה של ההסתדרות הרפואית',
+      'הנחיות GINA', 'הנחיות GOLD', 'הנחיות ADA לשנת 2025', 'תדריך החיסונים של משרד הבריאות'],
   },
   {
     id: 'geriatrics', crumb: 'גריאטריה', expertReview: false,
