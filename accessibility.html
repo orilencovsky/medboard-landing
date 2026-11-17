@@ -44,6 +44,8 @@
   .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
   .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
   .doc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  /* Header links are tap targets: 44px tall, as on the rest of the site. */
+  .doc-nav a { box-sizing: border-box; min-height: 44px; display: inline-flex; align-items: center; }
   .foot-link { color: #7DA2C4; font-size: 14px; transition: color .15s; }
   .foot-link:hover { color: #22D3EE; text-decoration: none; }
   .m-link { color: #B8D4EA; font-size: 15px; padding: 10px 4px; }
