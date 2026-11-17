@@ -47,13 +47,13 @@
       "options": [
         {
           "key": "a",
-          "text": "מדובר בנוגדנים מונומריים {{(monomeric)}} מסוג {{IgA2}}",
-          "why": "{{IgA2}} חסר את אזור ה-{{hinge}} האופייני ל-{{IgA1}} ולכן אינו נושא את הסוכרים {{O-linked}} האופייניים. המקור מציין במפורש כי ״{{IgA2 has no hinge and carries no such sugars}}״, ולכן {{IgA2}} אינו מעורב בפתוגנזה של {{IgAN}}."
+          "text": "מדובר בנוגדנים מונומרים {{(monomeric)}} מסוג {{IgA 2}}",
+          "why": "{{IgA2}} חסר את אזור ה-{{hinge}}, ולכן אין לו את הסוכרים מסוג {{O-linked}} — אותם סוכרים שב-{{IgAN}} עוברים גליקוזילציה לקויה ({{galactose-deficient IgA1}}, {{gd-IgA1}}), השלב המרכזי שמוביל לשקיעה המזנגיאלית ולנזק. המקור מציין במפורש כי '{{IgA2 has no hinge and carries no such sugars}}', ולכן {{IgA2}} אינו מעורב בפתוגנזה של {{IgAN}}, וה-{{IgA}} השוקע במזנגיום הוא בעיקר פולימרי ולא מונומרי."
         },
         {
           "key": "b",
-          "text": "מדובר בנוגדנים מונוקלונליים {{(monoclonal)}} בד״כ מסוג {{Lambda}}",
-          "why": "ה-{{IgA}} המזנגיאלי ב-{{IgAN}} אינו מונוקלונלי אלא פולי-קלונלי. {{IgA}} מונוקלונלי עשוי להופיע במצבים כגון {{IgA monoclonal gammopathy}} (מיאלומה), אך שם שקיעה מזנגיאלית של {{IgA}} היא נדירה. המקור מדגיש כי ״{{High circulating levels of monoclonal IgA in myeloma... only infrequently provoke mesangial IgA deposition}}״, ולכן מסיח זה אינו נכון."
+          "text": "מדובר בנוגדנים מונוקלונלים {{(monoclonal)}} בד\"כ מסוג {{Lambda}}",
+          "why": "המילה השגויה באפשרות זו היא \"מונוקלונליים\": ה-{{IgA}} השוקע במזנגיום ב-{{IgAN}} הוא פולימרי ופוליקלונלי — '{{polymeric polyclonal IgA}}'. החלק השני דווקא נכון חלקית: בשקעים המזנגיאליים ב-{{IgAN}} נמצאות כמויות מוגברות של שרשראות קלות מסוג {{Lambda}}, אבל עודף {{Lambda}} אינו הופך את הנוגדנים למונוקלונליים. {{IgA}} מונוקלונלי, כמו במיאלומה, רק לעיתים רחוקות גורם לשקיעה מזנגיאלית — '{{High circulating levels of monoclonal IgA in myeloma... only infrequently provoke mesangial IgA deposition}}'."
         },
         {
           "key": "c",
@@ -62,11 +62,11 @@
         },
         {
           "key": "d",
-          "text": "מדובר בנוגדנים מונומריים {{(monomeric)}} שיכולים להיות מסוג {{IgA1}} או {{IgA2}}",
-          "why": "ה-{{IgA}} השוקע במזנגיום ב-{{IgAN}} אינו מונומרי אלא פולימרי, וספציפית הוא {{IgA1}} בלבד — לא {{IgA2}}. המקור מציין כי ״{{mesangial IgA in IgAN is predominantly pIgA1}}״, כאשר הפולימריות היא תכונה מהותית המאפשרת שקיעה מזנגיאלית. {{IgA}} מונומרי {{(mIgA1)}} מוסלק בכבד דרך {{receptors}} ייעודיים ואינו מתאפיין בשקיעה מזנגיאלית."
+          "text": "מדובר בנוגדנים מונומרים {{(monomeric)}} שיכולים להיות מסוג {{IgA 1}} או {{IgA 2}}",
+          "why": "ה-{{IgA}} השוקע במזנגיום ב-{{IgAN}} אינו מונומרי אלא פולימרי, ובעיקר מסוג {{IgA1}} — לא {{IgA2}}. המקור מציין כי '{{mesangial IgA in IgAN is predominantly pIgA1}}', כאשר הפולימריות היא תכונה מהותית המאפשרת שקיעה מזנגיאלית. {{IgA}} מונומרי {{(mIgA1)}} מסולק בכבד דרך קולטנים ייעודיים ואינו נוטה לשקוע במזנגיום."
         }
       ],
-      "explanationHtml": "<p><strong>נכון.</strong> ב-<span class=\"ltr-iso\">IgA Nephropathy</span>, ה-<span class=\"ltr-iso\">IgA</span> השוקע במזנגיום הוא ספציפית פולימרי <span class=\"ltr-iso\">IgA1 (pIgA1)</span>. <span class=\"ltr-iso\">IgA1</span> הוא תת-המחלקה הנושאת את אזור ה-<span class=\"ltr-iso\">hinge</span> האופייני עם סוכרים <span class=\"ltr-iso\">O-linked</span>, בעוד ש-<span class=\"ltr-iso\">IgA2</span> חסר <span class=\"ltr-iso\">hinge</span> ואינו ממלא תפקיד בפתוגנזה. ה-<span class=\"ltr-iso\">IgA</span> הפולימרי מקורו בעיקר ברקמת המוקוזה <span class=\"ltr-iso\">(MALT)</span> ועובר לזרם הדם ומשם מגיע למזנגיום. ה-<span class=\"ltr-iso\">IgA1</span> במחלה זו מאופיין בגליקוזילציה לקויה (<span class=\"ltr-iso\">galactose-deficient IgA1</span>, <span class=\"ltr-iso\">gd-IgA1</span>) הגורמת לשקיעה מזנגיאלית ולנזק גלומרולרי.</p>",
+      "explanationHtml": "<p><strong>נכון.</strong> ב-<span class=\"ltr-iso\">IgA Nephropathy</span>, ה-<span class=\"ltr-iso\">IgA</span> השוקע במזנגיום הוא בעיקר פולימרי <span class=\"ltr-iso\">IgA1 (pIgA1)</span>. <span class=\"ltr-iso\">IgA1</span> הוא תת-המחלקה הנושאת את אזור ה-<span class=\"ltr-iso\">hinge</span> האופייני עם סוכרים <span class=\"ltr-iso\">O-linked</span>, בעוד ש-<span class=\"ltr-iso\">IgA2</span> חסר <span class=\"ltr-iso\">hinge</span> ואינו ממלא תפקיד בפתוגנזה. ה-<span class=\"ltr-iso\">IgA</span> הפולימרי מקורו בעיקר ברקמת המוקוזה <span class=\"ltr-iso\">(MALT)</span> ועובר לזרם הדם ומשם מגיע למזנגיום. ה-<span class=\"ltr-iso\">IgA1</span> במחלה זו מאופיין בגליקוזילציה לקויה (<span class=\"ltr-iso\">galactose-deficient IgA1</span>, <span class=\"ltr-iso\">gd-IgA1</span>) שהיא שלב מרכזי בפתוגנזה של השקיעה המזנגיאלית ושל הנזק הגלומרולרי.</p>",
       "quote": "{{mesangial IgA in IgAN is predominantly pIgA1}}",
       "citation": "{{Johnson, Comprehensive Clinical Nephrology, 7th ed. — Immunoglobulin A Nephropathy and Immunoglobulin A Vasculitis (Henoch-Schönlein Purpura)}}"
     },
