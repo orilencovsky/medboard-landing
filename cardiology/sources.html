@@ -58,7 +58,8 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Sans:wght@700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <style>
   /* MeduXa landing tokens (design-system/src/styles.css). One theme for the
@@ -101,7 +102,9 @@
                 background: linear-gradient(135deg, var(--violet-deep), var(--violet)); opacity: 0; transition: opacity .15s ease; }
   .btn:hover, .btn:focus { color: #fff; text-decoration: none; }
   .btn:active { transform: scale(.97); }
-  .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ink), 0 0 0 5px var(--violet-on); }
+  /* Two rings: the ground's colour, then the light violet (#C4B5FD: 10.2:1 on
+     --ink), so the ring never touches the button's own violet. */
+  .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ink), 0 0 0 6px var(--violet-on-soft); }
   .btn:disabled { opacity: .7; cursor: default; }
   .btn .ph { font-size: 18px; transition: transform .2s var(--ease); }
   /* Hover only where there is a real pointer: a tap on a phone would leave
@@ -119,7 +122,7 @@
   nav { position: sticky; top: 0; z-index: 50; background: rgba(6,18,37,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
         border-bottom: 1px solid rgba(34,211,238,.12); }
   .nav-in { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo { display: flex; align-items: center; gap: 12px; min-height: 44px; }
   .logo:hover { text-decoration: none; }
   .word { display: flex; align-items: baseline; direction: ltr; }
   .word b { font-family: 'IBM Plex Sans', var(--sans); font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
@@ -127,7 +130,7 @@
   .nav-r { display: flex; align-items: center; gap: 24px; }
   .nav-link { color: var(--t2); font-size: 15px; font-weight: 500; transition: color .15s; }
   .nav-link:hover { color: var(--cyan); text-decoration: none; }
-  .nav-cta { padding: 10px 20px; font-size: 15px; box-shadow: 0 6px 18px rgba(74,56,201,.4); }
+  .nav-cta { min-height: 44px; padding: 10px 20px; font-size: 15px; box-shadow: 0 6px 18px rgba(74,56,201,.4); }
 
   /* HERO: copy on the start side, a working sample question on the end side. */
   .hero { position: relative; overflow: hidden; background: linear-gradient(165deg, var(--ink) 0%, var(--deep) 82%, var(--navy2) 100%);
@@ -244,7 +247,7 @@
   .q-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
   .q-count { font-size: 14px; font-weight: 600; color: var(--t3); }
   .q-step { display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--border); border-radius: var(--pill);
-            padding: 7px 14px; color: var(--t2); font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color .2s ease, color .2s ease, transform var(--press); }
+            min-height: 44px; padding: 7px 16px; color: var(--t2); font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color .2s ease, color .2s ease, transform var(--press); }
   .q-step .ph { font-size: 16px; }
   .q-step:active:not(:disabled) { transform: scale(.97); }
   .q-step:disabled { opacity: .45; cursor: default; }
@@ -380,7 +383,7 @@
   #notifyEmail { width: 100%; background: var(--tint); border: 1px solid #4E6F8E; border-radius: var(--r-md); padding: 15px 18px;
                  font-size: 16px; color: #fff; direction: rtl; text-align: right; unicode-bidi: plaintext; transition: border-color .15s, box-shadow .15s; }
   #notifyEmail::placeholder { color: var(--t4); text-align: right; }
-  #notifyEmail:focus { outline: none; border-color: var(--violet-on); box-shadow: 0 0 0 3px rgba(124,92,255,.3); }
+  #notifyEmail:focus { outline: none; border-color: var(--violet-on); box-shadow: 0 0 0 2px var(--violet-on); } /* a solid 3px ring, #A78BFA: 6.4:1 on --tint */
   .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--t2); line-height: 1.6; cursor: pointer; }
   .consent input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; accent-color: var(--violet-light); }
   #notifySubmit { width: 100%; padding: 16px 24px; font-size: 17px; }
@@ -408,80 +411,88 @@
   .foot-link::after { content: ''; position: absolute; inset: -13px -8px; }
   .foot small { font-size: 14px; color: #6B95B5; }
 
-  /* Entry + scroll reveal. Only when JS is on and motion is welcome, so the
-     page is fully visible without either. */
+  /* Entry + scroll reveal, only when motion is welcome. The hero's entrance
+     (.enter) is plain CSS. Every scroll-reveal hidden state lives under
+     html.rv-on, which the reveal script adds itself once its observer is
+     running: without JS, without IntersectionObserver, or if that script
+     fails, the page is fully visible. html.rv-prep / .rv-now switch the
+     transitions off for the one layout in which a state is put in place or
+     an element is shown at once (keyboard focus, printing). */
+  .rv-prep [data-reveal], .rv-prep [data-reveal] *, .rv-prep .split .w, .rv-now, .rv-now * { transition: none !important; }
   @media (prefers-reduced-motion: no-preference) {
-    .js .enter { opacity: 0; transform: translateY(14px); animation: rise .8s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 70ms + 80ms); }
-    .js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
-    .js [data-reveal].seen { opacity: 1; transform: none; }
+    /* The hero is readable from its first frame: its entrance moves it, never
+       fades it in from nothing. */
+    .js .enter { animation: enter-rise .8s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 70ms + 80ms); }
+    @keyframes enter-rise { from { transform: translateY(14px); } }
+    .rv-on [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
+    .rv-on [data-reveal].seen { opacity: 1; transform: none; }
     /* Once in, a revealed element answers hover at hover speed, not with its
        entrance's long duration and stagger delay. */
-    .js [data-reveal].settled { transition-delay: 0s; }
-    .js .tile[data-reveal].settled { transition: border-color .25s ease, transform .35s var(--ease); }
+    .rv-on [data-reveal].settled { transition-delay: 0s; }
+    .rv-on .tile[data-reveal].settled { transition: border-color .25s ease, transform .35s var(--ease); }
 
     /* Headlines, word by word: each word rises out of a blur. The script
        splits .split headings into .w spans and numbers them (--wi). */
-    .js .split .w { display: inline-block; opacity: 0; transform: translateY(.45em); filter: blur(8px);
+    .rv-on .split .w { display: inline-block; opacity: 0; transform: translateY(.45em); filter: blur(8px);
                     transition: opacity .7s var(--ease), transform .9s var(--ease), filter .7s var(--ease);
                     transition-delay: calc(var(--wi) * 55ms + var(--d, 0ms)); }
-    .js .split.seen .w, .js [data-reveal].seen .split .w { opacity: 1; transform: none; filter: none; }
+    .rv-on .split.seen .w, .rv-on [data-reveal].seen .split .w { opacity: 1; transform: none; filter: none; }
     /* The gradient words carry their own gradient: a clipped background on a
        parent does not follow children that move on their own layer. */
-    .js .split .grad .w { background: linear-gradient(90deg, var(--sky-light), var(--cyan)); -webkit-background-clip: text; background-clip: text; }
+    .rv-on .split .grad .w { background: linear-gradient(90deg, var(--sky-light), var(--cyan)); -webkit-background-clip: text; background-clip: text; }
     /* A split heading's block does not fade as a whole; the words do the
        entrance, and the paragraph follows the last word. */
-    .js [data-reveal].has-split { opacity: 1; transform: none; }
-    .js [data-reveal].has-split > p, .js [data-reveal].has-split > ul { opacity: 0; transform: translateY(10px); transition: opacity .8s var(--ease), transform .8s var(--ease);
+    .rv-on [data-reveal].has-split { opacity: 1; transform: none; }
+    .rv-on [data-reveal].has-split > p, .rv-on [data-reveal].has-split > ul { opacity: 0; transform: translateY(10px); transition: opacity .8s var(--ease), transform .8s var(--ease);
                                       transition-delay: calc(var(--wc) * 55ms + 180ms); }
-    .js [data-reveal].has-split.seen > p, .js [data-reveal].has-split.seen > ul { opacity: 1; transform: none; }
+    .rv-on [data-reveal].has-split.seen > p, .rv-on [data-reveal].has-split.seen > ul { opacity: 1; transform: none; }
 
     /* The status statement lights up as it is read: words start dim and turn
        on with scroll (script sets .lit). */
-    .js .statement.read .w { opacity: .22; transition: opacity .4s ease; }
-    .js .statement.read .w.lit { opacity: 1; }
+    .rv-on .statement.read .w { opacity: .5; transition: opacity .4s ease; } /* unread: --t2 at .5 is 3.8:1 on --ink, white 5.3:1 */
+    .rv-on .statement.read .w.lit { opacity: 1; }
 
     /* The sample question tilts up into place, like a card laid on the desk. */
-    /* Its resting state is fully visible (overriding .enter's hidden start),
-       so the animation only fills backwards and leaves no filter behind. */
-    .js .q.enter { opacity: 1; transform: none; transform-origin: 50% 0; animation: card-in 1.2s var(--ease) .45s backwards; }
-    @keyframes card-in { from { opacity: 0; transform: perspective(1400px) rotateX(18deg) translateY(56px) scale(.96); filter: blur(6px); }
-                         to { opacity: 1; transform: none; filter: none; } }
+    /* Transform only, and it fills backwards: the card is readable from its
+       first frame and keeps no transform once in place. */
+    .js .q.enter { transform-origin: 50% 0; animation: card-in 1s var(--ease) .2s backwards; }
+    @keyframes card-in { from { transform: perspective(1400px) rotateX(14deg) translateY(28px) scale(.98); } }
 
     /* Bento: a bigger entrance, staggered by position, then the icon turns in. */
-    .js .tile[data-reveal] { transform: translateY(56px) scale(.94); filter: blur(6px);
+    .rv-on .tile[data-reveal] { transform: translateY(56px) scale(.94); filter: blur(6px);
                              transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease), border-color .25s ease;
                              transition-delay: calc(var(--i, 0) * 70ms); }
-    .js .tile[data-reveal].seen { transform: none; filter: none; }
-    .js .tile[data-reveal] > .ph, .js .tile[data-reveal] > .t-avatar { opacity: 0; transform: scale(.5) rotate(-24deg);
+    .rv-on .tile[data-reveal].seen { transform: none; filter: none; }
+    .rv-on .tile[data-reveal] > .ph, .rv-on .tile[data-reveal] > .t-avatar { opacity: 0; transform: scale(.5) rotate(-24deg);
                                    transition: opacity .5s ease, transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 70ms + 300ms); }
-    .js .tile[data-reveal].seen > .ph, .js .tile[data-reveal].seen > .t-avatar { opacity: 1; transform: none; }
-    .js .t-tutor[data-reveal] .styles li { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .6s var(--ease); }
-    .js .t-tutor[data-reveal].seen .styles li { opacity: 1; transform: none; }
-    .js .t-tutor .styles li:nth-child(1) { transition-delay: 500ms; } .js .t-tutor .styles li:nth-child(2) { transition-delay: 550ms; }
-    .js .t-tutor .styles li:nth-child(3) { transition-delay: 600ms; } .js .t-tutor .styles li:nth-child(4) { transition-delay: 650ms; }
-    .js .t-tutor .styles li:nth-child(5) { transition-delay: 700ms; }
+    .rv-on .tile[data-reveal].seen > .ph, .rv-on .tile[data-reveal].seen > .t-avatar { opacity: 1; transform: none; }
+    .rv-on .t-tutor[data-reveal] .styles li { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .6s var(--ease); }
+    .rv-on .t-tutor[data-reveal].seen .styles li { opacity: 1; transform: none; }
+    .rv-on .t-tutor .styles li:nth-child(1) { transition-delay: 500ms; } .rv-on .t-tutor .styles li:nth-child(2) { transition-delay: 550ms; }
+    .rv-on .t-tutor .styles li:nth-child(3) { transition-delay: 600ms; } .rv-on .t-tutor .styles li:nth-child(4) { transition-delay: 650ms; }
+    .rv-on .t-tutor .styles li:nth-child(5) { transition-delay: 700ms; }
 
     /* Methods: each group slides in from the side it sits on, then its
        techniques follow one by one. */
-    .js .group[data-reveal] { transform: translateX(-48px); }
-    .js .group[data-reveal].seen { transform: none; }
-    .js .group[data-reveal] .techs li { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .7s var(--ease); }
-    .js .group[data-reveal].seen .techs li { opacity: 1; transform: none; }
-    .js .group .techs li:nth-child(1) { transition-delay: 250ms; } .js .group .techs li:nth-child(2) { transition-delay: 310ms; }
-    .js .group .techs li:nth-child(3) { transition-delay: 370ms; } .js .group .techs li:nth-child(4) { transition-delay: 430ms; }
-    .js .group .techs li:nth-child(5) { transition-delay: 490ms; }
+    .rv-on .group[data-reveal] { transform: translateX(-48px); }
+    .rv-on .group[data-reveal].seen { transform: none; }
+    .rv-on .group[data-reveal] .techs li { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .7s var(--ease); }
+    .rv-on .group[data-reveal].seen .techs li { opacity: 1; transform: none; }
+    .rv-on .group .techs li:nth-child(1) { transition-delay: 250ms; } .rv-on .group .techs li:nth-child(2) { transition-delay: 310ms; }
+    .rv-on .group .techs li:nth-child(3) { transition-delay: 370ms; } .rv-on .group .techs li:nth-child(4) { transition-delay: 430ms; }
+    .rv-on .group .techs li:nth-child(5) { transition-delay: 490ms; }
 
     /* Comparison: rows settle in top to bottom, and MeduXa's checks land last. */
-    .js .cmp-wrap[data-reveal] tbody tr > * { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .6s var(--ease);
+    .rv-on .cmp-wrap[data-reveal] tbody tr > * { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .6s var(--ease);
                                               transition-delay: calc(var(--r, 0) * 60ms + 200ms); }
-    .js .cmp-wrap[data-reveal].seen tbody tr > * { opacity: 1; transform: none; }
-    .js .cmp-wrap[data-reveal] .us .mk .ph { transform: scale(.4); transition: transform .5s var(--ease); transition-delay: calc(var(--r, 0) * 60ms + 420ms); }
-    .js .cmp-wrap[data-reveal].seen .us .mk .ph { transform: none; }
+    .rv-on .cmp-wrap[data-reveal].seen tbody tr > * { opacity: 1; transform: none; }
+    .rv-on .cmp-wrap[data-reveal] .us .mk .ph { transform: scale(.4); transition: transform .5s var(--ease); transition-delay: calc(var(--r, 0) * 60ms + 420ms); }
+    .rv-on .cmp-wrap[data-reveal].seen .us .mk .ph { transform: none; }
 
     /* Sign-up card rises in a beat after its copy. */
-    .js .signup[data-reveal] { transform: translateY(40px) scale(.96); filter: blur(6px);
+    .rv-on .signup[data-reveal] { transform: translateY(40px) scale(.96); filter: blur(6px);
                                transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease); transition-delay: 150ms; }
-    .js .signup[data-reveal].seen { transform: none; filter: none; }
+    .rv-on .signup[data-reveal].seen { transform: none; filter: none; }
   }
   /* Reading progress: a hairline under the nav, driven by the scroll itself
      (no script). It fills from the start side, which in Hebrew is the right. */
@@ -796,13 +807,39 @@
   })();
 
   // Scroll reveal: one IntersectionObserver, each element revealed once.
+  // Nothing is hidden until this script adds html.rv-on, after its observer
+  // exists; keyboard focus inside a block that has not been revealed yet
+  // shows it at once, so focus never sits on something invisible.
   (function () {
+    var root = document.documentElement;
     var els = document.querySelectorAll('[data-reveal]');
-    if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('seen'); }); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
-    els.forEach(function (el) { io.observe(el); });
+    if (!els.length || !('IntersectionObserver' in window)) return;
+    var io;
+    try {
+      io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      root.classList.add('rv-prep', 'rv-on');
+      void document.body.offsetWidth;
+      root.classList.remove('rv-prep');
+      els.forEach(function (el) { io.observe(el); });
+    } catch (err) {
+      root.classList.remove('rv-prep', 'rv-on');
+      return;
+    }
+    function showNow(el) {
+      if (el.classList.contains('seen')) return;
+      io.unobserve(el);
+      el.classList.add('rv-now', 'seen');
+      void el.offsetWidth;
+      el.classList.remove('rv-now');
+      el.classList.add('settled');
+    }
+    document.addEventListener('focusin', function (e) {
+      var el = e.target && e.target.closest ? e.target.closest('[data-reveal]:not(.seen)') : null;
+      while (el) { showNow(el); el = el.parentElement && el.parentElement.closest('[data-reveal]:not(.seen)'); }
+    });
+    window.addEventListener('beforeprint', function () { els.forEach(showNow); });
   })();
 
 
