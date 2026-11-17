@@ -368,6 +368,14 @@ test('approved questions render with the rights note', () => {
   assert.equal(served(neph).split(NOTE).length - 1, 1);
   // The hand-written FM/peds questions are not from past exams: no note there.
   for (const id of ['family-medicine', 'pediatrics']) assert.ok(!render(id).includes(NOTE), id);
+  // A page with one question says so in the singular.
+  const ONE = 'השאלה מבוססת על נושא ממבחני עבר ונערכה על ידי הצוות שלנו.';
+  for (const id of ['anesthesia', 'geriatrics', 'obgyn', 'psychiatry']) {
+    const html = served(render(id));
+    assert.equal(html.split(ONE).length - 1, 1, id);
+    assert.ok(!html.includes(NOTE), id);
+  }
+  assert.ok(!served(neph).includes(ONE));
   assert.throws(() => validatePage({ ...page('cardiology'), examBased: true }, track('cardiology')), /examBased needs questions/);
   assert.throws(() => validatePage({ ...page('nephrology'), examBased: 'yes' }, track('nephrology')), /examBased must be true or absent/);
 });
