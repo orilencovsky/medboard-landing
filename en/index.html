@@ -169,36 +169,27 @@
       radial-gradient(60% 42% at 50% 104%, rgba(34,211,238,.3), transparent 70%);
   }
   .sci-bg-scrim { background: radial-gradient(125% 95% at 50% 0%, rgba(6,18,37,.3), rgba(6,18,37,.58) 60%, rgba(6,18,37,.76) 100%); }
-  .sci-hint { display: flex; justify-content: center; margin-top: -18px; margin-bottom: 54px; }
-  .sci-hint span { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #6B95B5; border: 1px solid #1E4A6E; border-radius: 100px; padding: 7px 16px; }
-  .sci-grid { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; align-items: start; }
-  .sci-card { position: relative; cursor: pointer; border-radius: 20px; outline: none;
-    margin-top: calc(var(--flatten, 1) * var(--stagger, 0) * 1px);
-    transform: rotate(calc(var(--flatten, 1) * var(--sci-dir, 1) * var(--rot, 0) * 1deg));
-  }
-  .sci-card:focus-visible { box-shadow: 0 0 0 3px rgba(34,211,238,.55); outline: 2px solid transparent; }
-  .sci-card::before {
-    content: ''; position: absolute; inset: 0; border-radius: 20px; background: #081D3A; border: 1px solid #153650;
-    opacity: var(--flatten, 1);
-    transform: translate(calc(var(--sci-dir, 1) * var(--tx, 0) * 1px), calc(var(--ty, 0) * 1px)) rotate(calc(var(--sci-dir, 1) * var(--twin-rot, 0) * 1deg));
-  }
-  .sci-card-texture { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; border-radius: 20px; opacity: .9; transform: scaleX(var(--sci-dir, 1)); background: var(--texture); }
-  .sci-card-faces { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-  .sci-card-front, .sci-card-back { position: absolute; inset: 0; border-radius: 20px; box-shadow: 0 24px 60px rgba(2,8,20,.5); padding: 26px; display: flex; flex-direction: column; }
-  .sci-card-front { justify-content: space-between; overflow: hidden; background: linear-gradient(180deg, rgba(8,20,40,.68), rgba(8,20,40,.34) 48%, rgba(8,20,40,.74)); border: 1px solid #1E4A6E; opacity: 1; transition: opacity .34s ease; }
-  .sci-card-back { gap: 16px; background: linear-gradient(180deg, rgba(10,26,48,.9), rgba(8,20,40,.84)); border: 1px solid #22D3EE; opacity: 0; transform: translateY(12px); transition: opacity .34s ease, transform .34s cubic-bezier(.22,.8,.25,1); }
-  .sci-card:hover:not(.is-flipped) .sci-card-front, .sci-card.is-flipped:not(:hover) .sci-card-front { opacity: 0; }
-  .sci-card:hover:not(.is-flipped) .sci-card-back, .sci-card.is-flipped:not(:hover) .sci-card-back { opacity: 1; transform: translateY(0); }
-  .sci-eyebrow { position: relative; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .2em; color: #6B95B5; }
-  .sci-card-front h3 { position: relative; margin: 0; font-size: 26px; font-weight: 600; line-height: 1.28; color: #E2F4FD; }
-  .sci-reveal { position: relative; display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #22D3EE; }
-  .sci-reveal span { display: inline-block; transform: scaleX(var(--sci-dir, 1)); }
-  .sci-back-bar { width: 40px; height: 2px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); border-radius: 100px; }
-  .sci-back-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: #7DD3FC; }
-  .sci-back-desc { margin: 0; font-size: 15px; line-height: 1.7; color: #B8D4EA; }
-  @media (prefers-reduced-motion: reduce) {
-    .sci-card-front, .sci-card-back { transition: none; }
-  }
+  /* Nine principles, each readable as it stands: name, what it means in the
+     app, and its reference. A plain grid (3 / 2 / 1 columns), nothing to
+     hover, flip or swipe. The per-card texture is the deck's old surface,
+     faded out before it reaches the text. */
+  .sci-grid { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .sci-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 26px; border-radius: 20px;
+              background: linear-gradient(180deg, rgba(10,26,48,.92), rgba(8,20,40,.86)); border: 1px solid #1E4A6E; box-shadow: 0 24px 60px rgba(2,8,20,.5); }
+  .sci-card::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: var(--texture, none); opacity: .5;
+                      transform: scaleX(var(--sci-dir, 1));
+                      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 42%); mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 42%); }
+  .sci-card > * { position: relative; }
+  .sci-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .sci-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .2em; color: #7DA2C4; }
+  .sci-card h3 { margin: 0; font-size: 22px; font-weight: 600; line-height: 1.3; color: #E2F4FD; }
+  .sci-desc { margin: 0; font-size: 15px; line-height: 1.7; color: #B8D4EA; }
+  /* The reference marker is a real link to its entry below; the ::after
+     gives the small label a ~44px tap area. */
+  .sci-cite { position: relative; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; color: #67E8F9; text-decoration: none; direction: ltr; }
+  .sci-cite::after { content: ''; position: absolute; inset: -14px -12px; }
+  .sci-cite:hover { color: #A5F3FC; text-decoration: underline; text-underline-offset: 2px; }
+  .sci-cite:focus-visible { outline: 2px solid #C4B5FD; outline-offset: 3px; border-radius: 3px; }
   @media (max-width: 980px) {
     .sci-section { padding: 88px 26px 100px; }
     .sci-bg-grid { background:
@@ -207,7 +198,7 @@
       repeating-linear-gradient(90deg, rgba(56,189,248,.06) 0 1px, transparent 1px 14px),
       repeating-linear-gradient(180deg, rgba(56,189,248,.06) 0 1px, transparent 1px 14px);
     }
-    .sci-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sci-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   }
   @media (max-width: 640px) {
     .sci-section { padding: 68px 20px 76px; }
@@ -222,10 +213,10 @@
       radial-gradient(92% 26% at calc(50% + var(--sci-dir, 1) * 38%) 26%, rgba(56,189,248,.36), transparent 72%),
       radial-gradient(92% 26% at 50% 104%, rgba(34,211,238,.3), transparent 70%);
     }
-    .sci-grid { grid-template-columns: 1fr; }
-    .sci-card { --flatten: 0; }
+    .sci-grid { grid-template-columns: 1fr; gap: 14px; }
+    .sci-card { padding: 22px; gap: 10px; }
+    .sci-card h3 { font-size: 20px; }
   }
-  .sci-cite { color: #22D3EE; text-decoration: none; font-weight: 700; margin-inline-start: 3px; }
 
   .sci-refs { position: relative; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(125,162,196,.18); }
   .sci-refs-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: #6B95B5; margin: 0 0 12px; }
@@ -267,7 +258,7 @@
   .cmp2-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
   .cmp2-icon--yes { background: #0E7490; }
   .cmp2-card--brand .cmp2-icon--yes { background: linear-gradient(135deg, #0EA5E9, #22D3EE); box-shadow: 0 0 0 3px rgba(34,211,238,.16); }
-  .cmp2-icon--no { border: 1.5px solid #CBD5E1; color: #94A3B8; font-size: 12px; line-height: 1; }
+  .cmp2-icon--no { border: 1.5px solid #94A3B8; color: #64748B; font-size: 12px; line-height: 1; } /* dash #64748B: 4.8:1 on #fff, 4.5:1 on #F8FAFC */
 
   /* ===== Comparison — mobile compact strip =====
      Stacked cards read as three separate profiles once you can only see one
@@ -309,13 +300,12 @@
     [data-mq-hero] { padding: 56px 20px 64px !important; }
     [data-mq-section] { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
     [data-mq-nav] { padding: 0 18px !important; }
-    [data-mq-stats] { gap: 20px !important; }
     [data-mq-burger] { display: flex !important; }
   }
   @media (max-width: 600px) {
     [data-mq-nav] { padding: 0 14px !important; }
     [data-mq-navright] { gap: 10px !important; }
-    [data-mq-cta] { padding: 8px 14px !important; font-size: 13px !important; white-space: nowrap; }
+    [data-mq-cta] { display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 8px 14px !important; font-size: 13px !important; white-space: nowrap; }
     [data-mq-lang] { padding: 6px 10px !important; font-size: 13px !important; }
     [data-mq-logo] { gap: 8px !important; }
     [data-mq-logo] > svg { width: 30px !important; height: 30px !important; }
@@ -327,10 +317,10 @@
     [data-mq-hero-actions] > a { text-align: center !important; }
     /* Phones: the hero keeps headline, one-line pitch, CTA and the specialty
        chips, so the demo card (the proof) starts inside the first screen. The
-       eyebrow, the pitch's detail, the "how it works" link (also in the menu)
-       and the stat row are desktop-only; the demo card right below shows the
-       same things working. */
-    [data-mq-eyebrow], [data-mq-secondary], [data-mq-stats] { display: none !important; }
+       eyebrow, the pitch's detail and the "how it works" link (also in the menu)
+       are desktop-only; the demo card right below shows the same things
+       working. */
+    [data-mq-eyebrow], [data-mq-secondary] { display: none !important; }
     .hero-sub-more { display: none; }
     .hero-sub-why { display: block; } /* second sentence on its own line */
     [data-mq-demo] { padding: 18px !important; }
@@ -385,7 +375,16 @@
      without this the label would flip back to cyan mid-hover. Inline colour
      used to shield it; the class does not. */
   .btn-action:hover, .btn-action:focus { color:#fff; }
-  .btn-action:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(124,92,255,.45); }
+  /* Focus. One ring for every control on the page, in the light violet of
+     focus on the dark ground (#C4B5FD: 10.2:1 on #061225) and the deep brand
+     violet on the white and pale sections (#4A38C9: 7.8:1 on #fff, 7.1:1 on
+     #F0F6FA). A filled violet button gets two rings, the ground's colour and
+     then the focus colour, so the ring never touches the button's own violet. */
+  :root { --focus-ring: #C4B5FD; --focus-gap: #061225; }
+  #features, #compare, #faq, #pilot { --focus-ring: #4A38C9; --focus-gap: #fff; }
+  #ai { --focus-ring: #4A38C9; --focus-gap: #F0F6FA; }
+  :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+  .btn-action:focus-visible { outline:none; box-shadow:0 0 0 3px var(--focus-gap), 0 0 0 5px var(--focus-ring); }
   .btn-action-md { box-shadow:0 6px 20px rgba(74,56,201,.45); }
   .btn-action-lg { box-shadow:0 10px 34px rgba(74,56,201,.5); }
 
@@ -441,7 +440,7 @@
 
   .loop-ribbon { display: none; gap: 8px; align-items: center; margin-bottom: 4px; }
   .loop-ribbon > i { width: 14px; height: 2px; background: #1E4A6E; flex-shrink: 0; }
-  .loop-pill { flex: 1; cursor: pointer; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); border-radius: 100px; padding: 10px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; text-align: center; transition: background .25s, color .25s, border-color .25s; }
+  .loop-pill { flex: 1; min-height: 44px; cursor: pointer; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); border-radius: 100px; padding: 10px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; text-align: center; transition: background .25s, color .25s, border-color .25s; }
   .loop-pill[aria-selected="true"] { background: var(--acc-fill); color: #062033; }
   .loop-pill[data-accent="soon"] { border-color: #1E4A6E; color: #7DA2C4; }
   .loop-pill[data-accent="soon"][aria-selected="true"] { background: #0B2545; border-color: #7DA2C4; color: #B9D4E8; }
@@ -535,10 +534,10 @@
      icon (cards: the stretched card link takes the pointer, so the whole card
      is the trigger) or the chip (hero). The label is
      aria-hidden decoration: the name and stage are already in the text. */
-  .motion .track-icon { opacity: 0; scale: .82; filter: blur(4px);
+  .rv-on .track-icon { opacity: 0; scale: .82; filter: blur(4px);
                         transition: opacity .45s var(--ease), scale .6s var(--ease), filter .45s var(--ease);
                         transition-delay: calc(var(--d, 0ms) + 260ms); }
-  .motion .in .track-icon { opacity: 1; scale: 1; filter: none; }
+  .rv-on .in .track-icon { opacity: 1; scale: 1; filter: none; }
   .track-icon { position: relative; }
   .track-icon-svg, .hero-track-icon { transition: translate .2s cubic-bezier(.23, 1, .32, 1), scale .2s cubic-bezier(.23, 1, .32, 1); }
   .track-icon::after, .hero-track::after {
@@ -598,7 +597,7 @@
   .track-soon-btn { transition: border-color .15s, color .15s, transform 160ms cubic-bezier(.23, 1, .32, 1); }
   /* The reveal (.rv-card) owns transform and transition once the motion script
      marks a card; the hover lift rides on `translate`, which composes with it. */
-  .motion .track.rv-card { transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease), translate .25s var(--ease), border-color .2s ease, box-shadow .25s var(--ease); transition-delay: var(--d, 0ms); }
+  .rv-on .track.rv-card { transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease), translate .25s var(--ease), border-color .2s ease, box-shadow .25s var(--ease); transition-delay: var(--d, 0ms); }
   .ltr-iso { direction: ltr; unicode-bidi: isolate; } /* render-tracks emits it for {{...}} runs */
   /* Clock = "coming soon" on phones, where the words are screen-reader only. */
   .hero-track-clock { display: none; flex-shrink: 0; color: #7DA2C4; }
@@ -634,7 +633,7 @@
   @media (max-width: 600px) {
     .hero-tracks { margin-top: 0; }
     .hero-tracks-label { display: none; }
-    .hero-track { padding: 8px 12px; font-size: 14px; }
+    .hero-track { min-height: 44px; padding: 8px 12px; font-size: 14px; }
     .hero-track-clock { display: block; }
     /* "· בקרוב" stays for screen readers; visually the chip row then fits one line. */
     .hero-track-soon { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -666,9 +665,12 @@
 
   /* ── Motion ──────────────────────────────────────────────────────────────
      One curve for the whole site (the family medicine page uses the same).
-     Everything below is gated on html.motion, which the head script sets
-     only when the visitor has not asked for reduced motion, so without JS
-     or with reduced motion every element simply sits in place. */
+     html.motion (set by the head script when the visitor has not asked for
+     reduced motion) only switches on decoration. Every hidden starting
+     state lives under html.rv-on, which the reveal script itself adds once
+     it has marked the page and set up its observer: without JS, with
+     reduced motion, or if that script fails, every element simply sits in
+     place. */
   :root { --ease: cubic-bezier(.16, 1, .3, 1); }
 
   /* Press feedback on the violet buttons. */
@@ -680,62 +682,62 @@
   #mobileMenu { transition: opacity .2s ease, transform .25s var(--ease); }
   @starting-style { #mobileMenu { opacity: 0; transform: translateY(-8px); } }
 
-  /* Until the script has marked the page: the hero waits hidden (so it is
-     never painted and then hidden again), and every marked element takes
-     its hidden state instantly. Without this, adding the hidden state to an
-     already visible element would itself transition, from shown to hidden. */
-  .motion.prep header[data-mq-hero] .qcard { opacity: 0; }
-  .motion.prep header[data-mq-hero] div:has(> h1) > * { opacity: 0; } /* own rule: a browser without :has drops only this one */
-  .motion.prep .rv, .motion.prep .rv-card, .motion.prep .rv-deal, .motion.prep .rv-pop, .motion.prep .rv-chat, .motion.prep .w,
-  .motion.prep .rv-draw { transition: none !important; }
+  /* The hero is never hidden: headline, line and buttons are painted at once,
+     and the demo card only tilts into place. For the one layout in which the
+     reveal script switches html.rv-on on, html.rv-prep makes every marked
+     element take its hidden state instantly; without it, adding the hidden
+     state to an already visible element would itself transition. */
+  .rv-prep .rv, .rv-prep .rv-card, .rv-prep .rv-deal, .rv-prep .rv-pop, .rv-prep .rv-chat, .rv-prep .w,
+  .rv-prep .rv-draw, .rv-prep .track-icon { transition: none !important; }
 
   /* Generic reveal: .rv elements rise into place when their group is seen.
      The script writes each one's delay into --d. */
-  .motion .rv { opacity: 0; transform: translateY(18px);
+  .rv-on .rv { opacity: 0; transform: translateY(18px);
                 transition: opacity .8s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .in .rv, .motion .rv.in { opacity: 1; transform: none; }
+  .rv-on .in .rv, .rv-on .rv.in { opacity: 1; transform: none; }
 
   /* Cards: a larger rise, a slight scale and a blur that clears. */
-  .motion .rv-card { opacity: 0; transform: translateY(48px) scale(.95); filter: blur(6px);
+  .rv-on .rv-card { opacity: 0; transform: translateY(48px) scale(.95); filter: blur(6px);
                      transition: opacity .9s var(--ease), transform 1.1s var(--ease), filter .9s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .in .rv-card { opacity: 1; transform: none; filter: none; }
+  .rv-on .in .rv-card { opacity: 1; transform: none; filter: none; }
 
   /* Headings word by word, out of a blur. The script splits the heading
      into .w spans, each with its own --d. */
-  .motion .split .w { display: inline-block; opacity: 0; transform: translateY(.45em); filter: blur(8px);
+  .rv-on .split .w { display: inline-block; opacity: 0; transform: translateY(.45em); filter: blur(8px);
                       transition: opacity .7s var(--ease), transform .9s var(--ease), filter .7s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .in .split .w { opacity: 1; transform: none; filter: none; }
+  .rv-on .in .split .w { opacity: 1; transform: none; filter: none; }
   /* A gradient phrase: each word carries the gradient itself, since a
      clipped background on the parent does not follow words that move. */
-  .motion .split [data-grad] .w { background: inherit; -webkit-background-clip: text; background-clip: text; }
+  .rv-on .split [data-grad] .w { background: inherit; -webkit-background-clip: text; background-clip: text; }
 
-  /* Hero demo card tilts up into place, like a card laid on a desk. */
-  .motion .rv-tilt { transform-origin: 50% 0; animation: hp-tilt 1.2s var(--ease) var(--d, 0ms) backwards; }
-  @keyframes hp-tilt { from { opacity: 0; transform: perspective(1400px) rotateX(18deg) translateY(56px) scale(.96); filter: blur(6px); } }
+  /* Hero demo card tilts up into place, like a card laid on a desk. Transform
+     only: the card is readable from its first frame. */
+  .rv-on .rv-tilt { transform-origin: 50% 0; animation: hp-tilt 1s var(--ease) var(--d, 0ms) backwards; }
+  @keyframes hp-tilt { from { transform: perspective(1400px) rotateX(14deg) translateY(28px) scale(.98); } }
 
   /* Science deck: the nine cards are dealt onto the table. The individual
      translate/rotate/scale properties stack on top of each card's own tilt
      (its transform), so the deck's layout is untouched. */
-  .motion .rv-deal { opacity: 0; translate: 0 64px; rotate: calc(var(--rot, 0) * 5deg); scale: .94;
+  .rv-on .rv-deal { opacity: 0; translate: 0 64px; rotate: calc(var(--rot, 0) * 5deg); scale: .94;
                      transition: opacity .7s var(--ease), translate 1s var(--ease), rotate 1.1s var(--ease), scale 1s var(--ease);
                      transition-delay: var(--d, 0ms); }
-  .motion .in .rv-deal { opacity: 1; translate: 0 0; rotate: 0deg; scale: 1; }
+  .rv-on .in .rv-deal { opacity: 1; translate: 0 0; rotate: 0deg; scale: 1; }
 
   /* Loop: the travelled arc draws itself, then the stages light in order. */
-  .motion .rv-draw { transition: stroke-dashoffset 1.4s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .rv-pop { opacity: 0; translate: 0 14px; transition: opacity .5s ease, translate .7s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .in .rv-pop { opacity: 1; translate: 0 0; }
+  .rv-on .rv-draw { transition: stroke-dashoffset 1.4s var(--ease); transition-delay: var(--d, 0ms); }
+  .rv-on .rv-pop { opacity: 0; translate: 0 14px; transition: opacity .5s ease, translate .7s var(--ease); transition-delay: var(--d, 0ms); }
+  .rv-on .in .rv-pop { opacity: 1; translate: 0 0; }
   /* (translate, not scale: these elements centre themselves with their own
      transform, and a scale would scale that offset too.) */
 
   /* Once an entrance has played, drop its delay so later interactions
      (hover, focus, the loop's tabs) answer immediately. */
-  .motion .settled { transition-delay: 0s !important; }
+  .rv-on .settled { transition-delay: 0s !important; }
 
   /* Phones: half the blur, for the smaller GPU. */
   @media (max-width: 600px) {
-    .motion .rv-card { filter: blur(3px); }
-    .motion .split .w { filter: blur(4px); }
+    .rv-on .rv-card { filter: blur(3px); }
+    .rv-on .split .w { filter: blur(4px); }
   }
 
   /* Reading progress under the nav, driven by the scroll itself. */
@@ -745,6 +747,14 @@
                          animation: hp-progress linear both; animation-timeline: scroll(root); }
     .motion:not([dir="rtl"]) nav::after { transform-origin: 0 50%; background: linear-gradient(90deg, #38BDF8, #22D3EE); }
     @keyframes hp-progress { to { transform: scaleX(1); } }
+  }
+  /* Reduced motion switched on after load: whatever the script marked shows
+     at rest. */
+  @media (prefers-reduced-motion: reduce) {
+    .rv-on .rv, .rv-on .rv-card, .rv-on .rv-deal, .rv-on .rv-pop, .rv-on .rv-chat, .rv-on .split .w, .rv-on .track-icon {
+      opacity: 1 !important; transform: none !important; translate: none !important; rotate: none !important; scale: none !important; filter: none !important; transition: none !important; }
+    .rv-on .rv-draw { stroke-dashoffset: 0 !important; transition: none !important; }
+    .rv-on .rv-tilt { animation: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .btn-action:active { transform: none; }
@@ -779,21 +789,19 @@
   /* Sample chat: the conversation plays out in order once the section is seen.
      Every message keeps its space from the start (opacity and translate only),
      so nothing around it moves. The tool chip pulses while the tool "works". */
-  .motion .rv-chat { opacity:0; translate:0 10px; transition: opacity .45s ease, translate .6s var(--ease); transition-delay: var(--d, 0ms); }
-  .motion .in .rv-chat { opacity:1; translate:0 0; }
-  .motion .in .ai-tool.rv-chat::before { animation: hp-think .3s ease-in-out calc(var(--d, 0ms) + 150ms) 4 alternate; }
+  .rv-on .rv-chat { opacity:0; translate:0 10px; transition: opacity .45s ease, translate .6s var(--ease); transition-delay: var(--d, 0ms); }
+  .rv-on .in .rv-chat { opacity:1; translate:0 0; }
+  .rv-on .in .ai-tool.rv-chat::before { animation: hp-think .3s ease-in-out calc(var(--d, 0ms) + 150ms) 4 alternate; }
   @keyframes hp-think { to { opacity:.35; scale:.7; } }
   @media (max-width: 900px) { .ai-grid { grid-template-columns:1fr; gap:36px; } }
   @media (max-width: 480px) { #ai .ai-ctas > a, #ai .ai-ctas > div { flex:1 1 100%; text-align:center; } #ai .ai-ctas > div > a { display:block; } }
 </style>
 <script>
-  // html.motion: motion is welcome. html.prep: the motion script has not
-  // taken over yet; the hero waits hidden, and marked elements take their
-  // hidden state without a transition. The script clears it; if the script
-  // never runs, DOMContentLoaded does, so the page can never stay hidden.
+  // html.motion: motion is welcome. It hides nothing by itself: the reveal
+  // script at the bottom adds html.rv-on once it has marked the page, and
+  // only that class carries hidden starting states.
   if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-    document.documentElement.classList.add('motion', 'prep');
-    document.addEventListener('DOMContentLoaded', function () { document.documentElement.classList.remove('prep'); });
+    document.documentElement.classList.add('motion');
   }
 </script>
 <noscript><style>.loop-panel[hidden] { display: flex; }</style></noscript>
@@ -825,7 +833,7 @@
         <a data-mq-hide class="nav-link" href="#compare">Comparison</a>
         <a data-mq-lang href="/?lang=he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px;">עברית</a>
         <a data-mq-cta class="btn-action btn-action-md" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=nav" data-cta="nav" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700;">Start studying</a>
-        <button data-mq-burger onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
+        <button data-mq-burger onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 44px; height: 44px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5 H 17 M 3 10 H 17 M 3 15 H 17" stroke="#7DD3FC" stroke-width="2" stroke-linecap="round"></path></svg>
         </button>
       </div>
@@ -850,7 +858,7 @@
         <source src="/hero.webm" type="video/webm">
         <source src="/hero.mp4" type="video/mp4">
       </video>
-      <video class="hero-video" muted loop playsinline preload="auto" aria-hidden="true" style="opacity: 0;">
+      <video class="hero-video" muted loop playsinline preload="none" aria-hidden="true" style="opacity: 0;">
         <source src="/hero-mobile.webm" type="video/webm" media="(max-width: 600px)">
         <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 600px)">
         <source src="/hero.webm" type="video/webm">
@@ -888,11 +896,6 @@
           <a class="hero-track hero-track--soon" href="#track-anesthesia" data-track="anesthesia" data-track-via="chip" data-pack="Anesthesia pack · Stage A"><svg class="hero-track-icon" aria-hidden="true" focusable="false" viewBox="0 0 48 48" fill="none"><path d="M40 16.6094C39.9999 15.5048 39.1045 14.6094 38 14.6094H37V20.8574C37 21.631 36.935 22.3427 36.8115 23H38C39.1046 23 40 22.1046 40 21V16.6094ZM27.3076 24.7861C28.6179 23.7961 29.4618 22.2358 29.4619 20.4834C29.4619 17.5027 27.0238 15.0723 24 15.0723C20.9762 15.0723 18.5381 17.5027 18.5381 20.4834C18.5382 22.2358 19.3821 23.7961 20.6924 24.7861V20.6211C20.6925 18.8074 22.2126 17.4072 24 17.4072C25.7874 17.4072 27.3075 18.8074 27.3076 20.6211V24.7861ZM31.4619 20.4834C31.4618 23.4006 29.7646 25.9158 27.3076 27.125V28.5869C28.9086 28.013 30.3114 27.5246 31.5205 26.8799C33.0005 26.0907 34.0336 25.1388 34.5713 23.6582C34.8403 22.9173 35 22.0053 35 20.8574V13.6094C35 13.3195 34.8156 13.0299 34.4902 12.9014C34.4151 12.8717 34.2495 12.8106 34.0977 12.7344L25.2637 8.29784C24.4736 7.90102 23.5264 7.90102 22.7363 8.29784L13.9023 12.7344C13.7505 12.8106 13.5849 12.8717 13.5098 12.9014C13.1844 13.0299 13 13.3195 13 13.6094V20.8574C13 21.9885 13.1803 22.8875 13.4805 23.6211C14.0593 25.0357 15.1493 25.9929 16.6611 26.8096C17.8607 27.4575 19.2076 27.9619 20.6924 28.541V27.125C18.2354 25.9158 16.5382 23.4006 16.5381 20.4834C16.5381 16.3832 19.8866 13.0723 24 13.0723C28.1134 13.0723 31.4619 16.3832 31.4619 20.4834ZM8 21C8 22.1046 8.89543 23 10 23H11.2129C11.0741 22.3422 11 21.6305 11 20.8574V14.625L10.0078 14.6221C8.90022 14.6177 8 15.5144 8 16.6221V21ZM42 21C42 23.2091 40.2091 25 38 25H36.1748C35.3625 26.71 34.0216 27.8128 32.4619 28.6445C30.9499 29.4509 29.1137 30.0607 27.3076 30.7158V42H25.3076V20.6211C25.3075 19.9891 24.7615 19.4072 24 19.4072C23.2385 19.4072 22.6925 19.9891 22.6924 20.6211V42H20.6924V30.6934C19.0038 30.0228 17.2089 29.3784 15.7109 28.5693C14.1657 27.7347 12.784 26.6486 11.9209 25H10C7.79086 25 6 23.2091 6 21V16.6221C6 14.4066 7.80116 12.6131 10.0166 12.6221L11.1855 12.626C11.4654 11.9086 12.0424 11.3307 12.7764 11.041C12.9099 10.9883 12.9565 10.9715 13.0049 10.9473L21.8389 6.51073C23.1938 5.83024 24.8062 5.83024 26.1611 6.51073L34.9951 10.9473C35.0435 10.9715 35.0901 10.9883 35.2236 11.041C35.9519 11.3284 36.5253 11.8998 36.8076 12.6094H38C40.2091 12.6094 41.9999 14.4003 42 16.6094V21Z" fill="currentColor"/></svg>Anesthesia<svg class="hero-track-clock" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.6" stroke="currentColor" stroke-width="1.5"></circle><path d="M7 4.2V7l1.9 1.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="hero-track-soon">· soon</span></a>
           <a class="hero-track hero-track--soon" href="#track-obgyn" data-track="obgyn" data-track-via="chip" data-pack="Obstetrics and gynecology pack · Stage A"><svg class="hero-track-icon" aria-hidden="true" focusable="false" viewBox="0 0 48 48" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M24.574 11C25.9547 11 27.074 9.88071 27.074 8.5C27.074 7.11929 25.9547 6 24.574 6C23.1933 6 22.074 7.11929 22.074 8.5C22.074 9.88071 23.1933 11 24.574 11ZM24.574 13C27.0593 13 29.074 10.9853 29.074 8.5C29.074 6.01472 27.0593 4 24.574 4C22.0887 4 20.074 6.01472 20.074 8.5C20.074 10.9853 22.0887 13 24.574 13Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M20.1535 15.3065C20.4267 15.1874 20.9327 15 21.574 15H23.574C24.145 15 24.6014 15.1643 24.7246 15.2086L24.7327 15.2115C24.933 15.2835 25.1184 15.3671 25.2714 15.4416C25.5836 15.5936 25.9252 15.7884 26.2749 16.0088C26.9808 16.4536 27.843 17.0806 28.7434 17.8729C30.5209 19.4371 32.627 21.8048 33.8594 24.8858C34.6426 26.8438 34.5872 28.7332 33.8585 30.3777C33.177 31.9159 32.0231 32.9814 31.041 33.675C27.9911 35.829 27.848 37.2291 27.072 41.1087C27.0148 42.7152 25.6944 44 24.074 44C22.4171 44 21.074 42.6569 21.074 41C21.074 35.8673 21.0716 32.8134 20.8397 29.9253C19.5344 30.8767 17.7005 30.6238 16.7037 29.3389C16.4607 29.0258 15.7882 28.0796 15.1877 27.1692C14.8835 26.7081 14.5629 26.2037 14.3086 25.7575C14.1841 25.539 14.0465 25.2842 13.9312 25.028C13.8738 24.9005 13.8014 24.7275 13.7385 24.529C13.6894 24.3742 13.574 23.9883 13.574 23.5C13.574 22.7844 13.8347 22.228 13.8915 22.1067L13.8922 22.1053L13.8929 22.1038L13.8947 22.1C13.9893 21.8945 14.0951 21.7097 14.1789 21.5706C14.3518 21.284 14.5664 20.9715 14.7854 20.6694C15.2309 20.0545 15.8141 19.3184 16.4212 18.6101C17.0216 17.9096 17.6997 17.1727 18.3346 16.5859C18.6462 16.298 19.0126 15.9851 19.3997 15.7252C19.5939 15.5948 19.8508 15.4386 20.1535 15.3065ZM21.574 17C20.839 17 20.1994 17.5858 19.6921 18.0547C19.1367 18.568 18.5148 19.2407 17.9397 19.9117C17.3623 20.5853 16.8138 21.2786 16.4048 21.8429C16.1534 22.1899 15.8913 22.546 15.711 22.9372C15.6295 23.1141 15.574 23.3039 15.574 23.5C15.574 23.9569 15.8275 24.3834 16.0463 24.7673C16.2689 25.158 16.5621 25.6207 16.8572 26.0679C17.4447 26.9585 18.0855 27.8573 18.2839 28.113C18.6224 28.5493 19.2506 28.6286 19.687 28.2901C20.1233 27.9516 20.2026 27.3234 19.8641 26.887C19.7103 26.6888 19.1011 25.8375 18.5267 24.9666C18.3293 24.6674 18.1431 24.3766 17.9849 24.1169L17.6385 23.5483L18.0294 23.0094C18.4013 22.4968 18.913 21.8493 19.4582 21.2133C19.581 21.0701 19.704 20.9291 19.8261 20.7919L21.1638 19.2881L21.5543 21.2625C23.0661 28.9082 23.074 31.4231 23.074 41C23.074 41.5523 23.5217 42 24.074 42C24.6952 42 25.074 41.479 25.074 40.901C25.8902 36.8201 26.369 34.5261 29.8872 32.0413C30.7024 31.4656 31.5475 30.6563 32.03 29.5674C32.5281 28.4433 32.597 27.115 32.0025 25.6286C30.925 22.935 29.0563 20.8124 27.4221 19.3743C26.6012 18.6519 25.8242 18.0887 25.2087 17.7008C24.8441 17.4711 24.4643 17.2402 24.0567 17.0938C23.9017 17.0381 23.7394 17 23.574 17H21.574Z" fill="currentColor"/></svg>Obstetrics and gynecology<svg class="hero-track-clock" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.6" stroke="currentColor" stroke-width="1.5"></circle><path d="M7 4.2V7l1.9 1.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="hero-track-soon">· soon</span></a>
           <!-- /tracks:chips -->
-        </div>
-        <div data-mq-stats style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 24px; margin-top: 8px;">
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">9</div><div style="font-size: 14px; color: #7DA2C4;">Evidence-based principles</div></div>
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">100%</div><div style="font-size: 14px; color: #7DA2C4;">Source-cited answers</div></div>
-          <div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #22D3EE;">AI</div><div style="font-size: 14px; color: #7DA2C4;">Socratic tutor per question</div></div>
         </div>
       </div>
 
@@ -1040,160 +1043,68 @@
     <div class="sci-bg-glow"></div>
     <div class="sci-bg-scrim"></div>
     <div style="position: relative; max-width: 1200px; margin: 0 auto;">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 22px;">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #22D3EE; letter-spacing: .14em;">THE SCIENCE</span>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 48px;">
         <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #fff;">Learning backed by how the brain actually works</h2>
         <p style="margin: 0; font-size: 18px; color: #B8D4EA; max-width: 640px; line-height: 1.65;">MeduXa is built on nine evidence-based learning principles — with an AI layer that adapts to each resident.</p>
       </div>
-      <div class="sci-hint"><span>HOVER OR TAP ANY CARD TO REVEAL IT</span></div>
-      <div class="sci-grid" onmouseover="sciOver(event)" onmouseout="sciOut(event)" onclick="sciClick(event)" onkeydown="sciKeyDown(event)">
-      <div class="sci-card" data-card="1" tabindex="0" role="button" aria-expanded="false" style="min-height:296px; --stagger:0; --rot:-1.1; --tx:8; --ty:11; --twin-rot:1.7; --texture:radial-gradient(circle at center, rgba(56,189,248,0.62) 0 1px, transparent 1.7px) 0 0/17px 17px;">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Active Recall</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">ACTIVE RECALL<span class="sci-cite" aria-hidden="true"><sup>[1]</sup></span></span>
-            <p class="sci-back-desc">Learning is driven by retrieving answers, not re-reading them. Every session forces retrieval.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="2" tabindex="0" role="button" aria-expanded="false" style="min-height:312px; --stagger:22; --rot:0.8; --tx:-8; --ty:11; --twin-rot:-1.5; --texture:repeating-linear-gradient(90deg, rgba(56,189,248,0.53) 0 2px, transparent 2px 14px), repeating-linear-gradient(90deg, transparent 0 140px, rgba(34,211,238,0.38) 140px 142px, transparent 142px 190px);">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Spaced Repetition</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SPACED REPETITION<span class="sci-cite" aria-hidden="true"><sup>[2]</sup></span></span>
-            <p class="sci-back-desc">Review is scheduled to fight the forgetting curve — questions resurface exactly when memory fades.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="3" tabindex="0" role="button" aria-expanded="false" style="min-height:344px; --stagger:8; --rot:-0.6; --tx:9; --ty:9; --twin-rot:1.3; --texture:repeating-linear-gradient(45deg, rgba(56,189,248,0.38) 0 1px, transparent 1px 15px), repeating-linear-gradient(-45deg, rgba(34,211,238,0.34) 0 1px, transparent 1px 15px);">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Interleaved Practice</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">INTERLEAVED PRACTICE<span class="sci-cite" aria-hidden="true"><sup>[3]</sup></span></span>
-            <p class="sci-back-desc">Topics are mixed, not blocked. Switching between subjects forces your brain to discriminate — the way the real exam demands.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="4" tabindex="0" role="button" aria-expanded="false" style="min-height:312px; --stagger:14; --rot:0.9; --tx:-9; --ty:10; --twin-rot:-1.6; --texture:repeating-radial-gradient(circle at 80% 20%, rgba(34,211,238,0.48) 0 1px, transparent 1px 17px);">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Targeted Practice</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">TARGETED PRACTICE<span class="sci-cite" aria-hidden="true"><sup>[4]</sup></span></span>
-            <p class="sci-back-desc">Study time flows to your weakest topics first — never spread evenly across material you've already mastered.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="5" tabindex="0" role="button" aria-expanded="false" style="min-height:344px; --stagger:0; --rot:-1.2; --tx:8; --ty:12; --twin-rot:1.8; --texture:repeating-linear-gradient(90deg, rgba(56,189,248,0.29) 0 1px, transparent 1px 24px), repeating-linear-gradient(180deg, rgba(56,189,248,0.29) 0 1px, transparent 1px 24px), repeating-linear-gradient(135deg, rgba(34,211,238,0.48) 0 2px, transparent 2px 26px);">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Error-Driven Remediation</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">ERROR-DRIVEN REMEDIATION<span class="sci-cite" aria-hidden="true"><sup>[5]</sup></span></span>
-            <p class="sci-back-desc">The questions you missed — and the ones you were sure about but got wrong — come back as a focused deck to drill.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="6" tabindex="0" role="button" aria-expanded="false" style="min-height:330px; --stagger:26; --rot:0.6; --tx:-8; --ty:11; --twin-rot:-1.4; --texture:repeating-linear-gradient(180deg, rgba(56,189,248,0.43) 0 1px, transparent 1px 21px);">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Self-Explanation</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SELF-EXPLANATION<span class="sci-cite" aria-hidden="true"><sup>[6]</sup></span></span>
-            <p class="sci-back-desc">Before the answer unlocks, you explain your reasoning in your own words — the single act that deepens understanding most.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="7" tabindex="0" role="button" aria-expanded="false" style="min-height:344px; --stagger:6; --rot:-0.9; --tx:9; --ty:10; --twin-rot:1.5; --texture:repeating-linear-gradient(90deg, rgba(34,211,238,0.53) 0 5px, transparent 5px 19px);">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Confidence Calibration</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">CONFIDENCE CALIBRATION<span class="sci-cite" aria-hidden="true"><sup>[7]</sup></span></span>
-            <p class="sci-back-desc">Rate how sure you are before each answer. The app surfaces where you're confident but wrong — the most dangerous gap.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="8" tabindex="0" role="button" aria-expanded="false" style="min-height:330px; --stagger:20; --rot:1.1; --tx:-9; --ty:11; --twin-rot:-1.7; --texture:conic-gradient(from 200deg at 22% 82%, rgba(34,211,238,0.53), transparent 38%), conic-gradient(from 20deg at 84% 16%, rgba(56,189,248,0.43), transparent 34%);">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Guided Discovery</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">GUIDED DISCOVERY<span class="sci-cite" aria-hidden="true"><sup>[8]</sup></span></span>
-            <p class="sci-back-desc">The tutor draws the answer out of you with questions instead of handing it over — the effort of reasoning is what makes it stick.</p>
-          </div>
-        </div>
-      </div>
-      <div class="sci-card" data-card="9" tabindex="0" role="button" aria-expanded="false" style="min-height:296px; --stagger:0; --rot:-0.5; --tx:8; --ty:11; --twin-rot:1.4; --texture:repeating-linear-gradient(180deg, rgba(56,189,248,0.38) 0 1px, transparent 1px 13px), linear-gradient(180deg, transparent 52%, rgba(34,211,238,0.29));">
-        <div class="sci-card-texture"></div>
-        <div class="sci-card-faces">
-          <div class="sci-card-front">
-            <span class="sci-eyebrow">PRINCIPLE</span>
-            <h3>Source-Grounded Truth</h3>
-            <span class="sci-reveal">REVEAL<span>→</span></span>
-          </div>
-          <div class="sci-card-back">
-            <span class="sci-back-bar"></span>
-            <span class="sci-back-label">SOURCE-GROUNDED TRUTH</span>
-            <p class="sci-back-desc">Every explanation is backed by a verbatim citation from the textbook. Every claim can be checked against the source.</p>
-          </div>
-        </div>
-      </div>
-      </div>
+      <ul class="sci-grid" role="list">
+        <li class="sci-card" style="--texture:radial-gradient(circle at center, rgba(56,189,248,0.62) 0 1px, transparent 1.7px) 0 0/17px 17px;">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-1" aria-label="Reference 1 in the list below">[1]</a></div>
+          <h3>Active Recall</h3>
+          <p class="sci-desc">Learning is driven by retrieving answers, not re-reading them. Every session forces retrieval.</p>
+        </li>
+        <li class="sci-card" style="--texture:repeating-linear-gradient(90deg, rgba(56,189,248,0.53) 0 2px, transparent 2px 14px), repeating-linear-gradient(90deg, transparent 0 140px, rgba(34,211,238,0.38) 140px 142px, transparent 142px 190px);">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-2" aria-label="Reference 2 in the list below">[2]</a></div>
+          <h3>Spaced Repetition</h3>
+          <p class="sci-desc">Review is scheduled to fight the forgetting curve — questions resurface exactly when memory fades.</p>
+        </li>
+        <li class="sci-card" style="--texture:repeating-linear-gradient(45deg, rgba(56,189,248,0.38) 0 1px, transparent 1px 15px), repeating-linear-gradient(-45deg, rgba(34,211,238,0.34) 0 1px, transparent 1px 15px);">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-3" aria-label="Reference 3 in the list below">[3]</a></div>
+          <h3>Interleaved Practice</h3>
+          <p class="sci-desc">Topics are mixed, not blocked. Switching between subjects forces your brain to discriminate — the way the real exam demands.</p>
+        </li>
+        <li class="sci-card" style="--texture:repeating-radial-gradient(circle at 80% 20%, rgba(34,211,238,0.48) 0 1px, transparent 1px 17px);">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-4" aria-label="Reference 4 in the list below">[4]</a></div>
+          <h3>Targeted Practice</h3>
+          <p class="sci-desc">Study time flows to your weakest topics first — never spread evenly across material you've already mastered.</p>
+        </li>
+        <li class="sci-card" style="--texture:repeating-linear-gradient(90deg, rgba(56,189,248,0.29) 0 1px, transparent 1px 24px), repeating-linear-gradient(180deg, rgba(56,189,248,0.29) 0 1px, transparent 1px 24px), repeating-linear-gradient(135deg, rgba(34,211,238,0.48) 0 2px, transparent 2px 26px);">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-5" aria-label="Reference 5 in the list below">[5]</a></div>
+          <h3>Error-Driven Remediation</h3>
+          <p class="sci-desc">The questions you missed — and the ones you were sure about but got wrong — come back as a focused deck to drill.</p>
+        </li>
+        <li class="sci-card" style="--texture:repeating-linear-gradient(180deg, rgba(56,189,248,0.43) 0 1px, transparent 1px 21px);">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-6" aria-label="Reference 6 in the list below">[6]</a></div>
+          <h3>Self-Explanation</h3>
+          <p class="sci-desc">Before the answer unlocks, you explain your reasoning in your own words — the single act that deepens understanding most.</p>
+        </li>
+        <li class="sci-card" style="--texture:repeating-linear-gradient(90deg, rgba(34,211,238,0.53) 0 5px, transparent 5px 19px);">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-7" aria-label="Reference 7 in the list below">[7]</a></div>
+          <h3>Confidence Calibration</h3>
+          <p class="sci-desc">Rate how sure you are before each answer. The app surfaces where you're confident but wrong — the most dangerous gap.</p>
+        </li>
+        <li class="sci-card" style="--texture:conic-gradient(from 200deg at 22% 82%, rgba(34,211,238,0.53), transparent 38%), conic-gradient(from 20deg at 84% 16%, rgba(56,189,248,0.43), transparent 34%);">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span><a class="sci-cite" href="#sci-ref-8" aria-label="Reference 8 in the list below">[8]</a></div>
+          <h3>Guided Discovery</h3>
+          <p class="sci-desc">The tutor draws the answer out of you with questions instead of handing it over — the effort of reasoning is what makes it stick.</p>
+        </li>
+        <li class="sci-card" style="--texture:repeating-linear-gradient(180deg, rgba(56,189,248,0.38) 0 1px, transparent 1px 13px), linear-gradient(180deg, transparent 52%, rgba(34,211,238,0.29));">
+          <div class="sci-card-top"><span class="sci-eyebrow">PRINCIPLE</span></div>
+          <h3>Source-Grounded Truth</h3>
+          <p class="sci-desc">Every explanation is backed by a verbatim citation from the textbook. Every claim can be checked against the source.</p>
+        </li>
+      </ul>
       <div class="sci-refs">
         <p class="sci-refs-title">REFERENCES</p>
         <ol>
-        <li id="sci-ref-1">1. Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science, 17</em>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
-        <li id="sci-ref-2">2. Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin, 132</em>(3), 354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
-        <li id="sci-ref-3">3. Brunmair, M., & Richter, T. (2019). Similarity matters: A meta-analysis of interleaved learning and its moderators. <em>Psychological Bulletin, 145</em>(11), 1029–1052. <a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
-        <li id="sci-ref-4">4. Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. <em>Review of Educational Research, 60</em>(2), 265–299. <a href="https://doi.org/10.3102/00346543060002265" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
-        <li id="sci-ref-5">5. Metcalfe, J. (2017). Learning from errors. <em>Annual Review of Psychology, 68</em>, 465–489. <a href="https://doi.org/10.1146/annurev-psych-010416-044022" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
-        <li id="sci-ref-6">6. Bisra, K., Liu, Q., Nesbit, J. C., Salimi, F., & Winne, P. H. (2018). Inducing self-explanation: A meta-analysis. <em>Educational Psychology Review, 30</em>(3), 703–725. <a href="https://doi.org/10.1007/s10648-018-9434-x" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
-        <li id="sci-ref-7">7. Gardner-Medwin, A. R. (2006). Confidence-based marking: Towards deeper learning and better exams. In <em>Innovative Assessment in Higher Education</em>. Routledge. <a href="https://www.tmedwin.net/~ucgbarg/tea/innovass4.pdf" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
-        <li id="sci-ref-8">8. Alfieri, L., Brooks, P. J., Aldrich, N. J., & Tenenbaum, J. M. (2011). Does discovery-based instruction enhance learning? <em>Journal of Educational Psychology, 103</em>(1), 1–18. <a href="https://doi.org/10.1037/a0021017" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-1">Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science, 17</em>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-2">Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin, 132</em>(3), 354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-3">Brunmair, M., & Richter, T. (2019). Similarity matters: A meta-analysis of interleaved learning and its moderators. <em>Psychological Bulletin, 145</em>(11), 1029–1052. <a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-4">Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. <em>Review of Educational Research, 60</em>(2), 265–299. <a href="https://doi.org/10.3102/00346543060002265" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-5">Metcalfe, J. (2017). Learning from errors. <em>Annual Review of Psychology, 68</em>, 465–489. <a href="https://doi.org/10.1146/annurev-psych-010416-044022" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-6">Bisra, K., Liu, Q., Nesbit, J. C., Salimi, F., & Winne, P. H. (2018). Inducing self-explanation: A meta-analysis. <em>Educational Psychology Review, 30</em>(3), 703–725. <a href="https://doi.org/10.1007/s10648-018-9434-x" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-7">Gardner-Medwin, A. R. (2006). Confidence-based marking: Towards deeper learning and better exams. In <em>Innovative Assessment in Higher Education</em>. Routledge. <a href="https://www.tmedwin.net/~ucgbarg/tea/innovass4.pdf" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
+        <li id="sci-ref-8">Alfieri, L., Brooks, P. J., Aldrich, N. J., & Tenenbaum, J. M. (2011). Does discovery-based instruction enhance learning? <em>Journal of Educational Psychology, 103</em>(1), 1–18. <a href="https://doi.org/10.1037/a0021017" target="_blank" rel="noopener" aria-label="Full article (opens in a new tab)">↗</a></li>
         </ol>
       </div>
     </div>
@@ -1203,7 +1114,6 @@
   <section id="features" data-mq-section style="background: #fff; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
     <div style="max-width: 1200px; margin: 0 auto;">
       <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 52px;">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em;">FEATURES</span>
         <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Everything you need to pass — nothing you don't</h2>
         <p style="margin: 0; font-size: 18px; color: #475569; max-width: 620px; line-height: 1.65;">One platform for questions, review, a Socratic AI tutor, and progress tracking. No juggling apps.</p>
       </div>
@@ -1240,8 +1150,7 @@
   <section id="how" data-mq-section class="loop-section" style="padding: 96px 32px;">
     <div style="max-width: 1200px; margin: 0 auto;">
       <div style="text-align: center; margin-bottom: 48px;">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .14em; color: #22D3EE;">HOW IT WORKS</span>
-        <h2 data-mq-h2 style="margin: 12px 0 0; font-size: 42px; font-weight: 700; color: #F1F7FC; line-height: 1.25;">One loop — built for retention</h2>
+        <h2 data-mq-h2 style="margin: 0; font-size: 42px; font-weight: 700; color: #F1F7FC; line-height: 1.25;">One loop — built for retention</h2>
         <p style="margin: 16px auto 0; max-width: 660px; font-size: 17px; line-height: 1.7; color: #B9D4E8;">A question bank, a Socratic AI tutor, a dashboard, and a leaderboard aren't four separate products. Here it's one system feeding itself — every round sharpens your readiness model.</p>
       </div>
 
@@ -1343,7 +1252,6 @@
   <section id="compare" data-mq-section style="background: #fff; border-bottom: 1px solid #E2E8F0; padding: 96px 32px;">
     <div style="max-width: 1100px; margin: 0 auto;">
       <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 44px;">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #0E7490; letter-spacing: .14em;">COMPARISON</span>
         <h2 data-mq-h2 style="margin: 0; font-size: 40px; font-weight: 700; color: #0F172A;">Not a question bank. Not a general AI tool.</h2>
         <p style="margin: 0; font-size: 18px; color: #475569; max-width: 680px; line-height: 1.65;">A question bank gives you practice with no guidance. A general AI tool gives you guidance — but only once you've gathered every source yourself and fed it the context. MeduXa comes pre-built around the Israeli board exam, with both already in place.</p>
       </div>
@@ -1362,7 +1270,7 @@
               </svg>
             </span>
             <div>
-              <h3 class="cmp2-name">MeduXa<span style="font-family: 'IBM Plex Mono', monospace; color: #22D3EE;">.ai</span></h3>
+              <h3 class="cmp2-name">MeduXa<span style="font-family: 'IBM Plex Mono', monospace; color: #0E7490;">.ai</span></h3>
               <span class="cmp2-name-sub">Already built around the exam</span>
             </div>
           </div>
@@ -1618,16 +1526,6 @@
 <script>
   function toggleMenu(){var m=document.getElementById('mobileMenu');var open=(m.style.display==='none'||!m.style.display);m.style.display=open?'flex':'none';var b=document.querySelector('[data-mq-burger]');if(b)b.setAttribute('aria-expanded',String(open));}
   function closeMenu(){document.getElementById('mobileMenu').style.display='none';var b=document.querySelector('[data-mq-burger]');if(b)b.setAttribute('aria-expanded','false');}
-  // Each card is a role="button", so the [n] citation inside it is plain text, not a link:
-  // a control nested in a control is announced unpredictably. (It was never clickable
-  // anyway — .sci-card-faces is pointer-events:none.) The sources are ordinary links in
-  // the list under the grid.
-  function sciCardOf(el) { return el && el.closest ? el.closest('[data-card]') : null; }
-  function sciSync(c) { var revealed = c.matches(':hover') !== c.classList.contains('is-flipped'); c.setAttribute('aria-expanded', String(revealed)); }
-  function sciOver(e) { var c = sciCardOf(e.target); if (c) sciSync(c); }
-  function sciOut(e) { var c = sciCardOf(e.target); if (c) sciSync(c); }
-  function sciClick(e) { var c = sciCardOf(e.target); if (!c) return; c.classList.toggle('is-flipped'); sciSync(c); }
-  function sciKeyDown(e) { if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return; var c = sciCardOf(e.target); if (!c) return; e.preventDefault(); c.classList.toggle('is-flipped'); sciSync(c); }
 </script>
 <script>
 </script>
@@ -1828,7 +1726,9 @@
 </script>
 <script>
   // Seamless hero loop: crossfade between two copies of the clip so the
-  // restart cut is never visible. The file is cached, so no extra download.
+  // restart cut is never visible. The second copy downloads nothing at page
+  // load (preload="none"), and none at all when the clip never plays
+  // (reduced motion, blocked autoplay).
   (function () {
     var vids = document.querySelectorAll('.hero-video');
     if (vids.length < 2) return;
@@ -1857,7 +1757,13 @@
     }
     setInterval(function () {
       var a = vids[front];
-      if (a.duration && !a.paused && a.currentTime > a.duration - FADE) swap();
+      if (!a.duration || a.paused) return;
+      var b = vids[1 - front];
+      // The second copy loads once the first holds the whole file (so the
+      // browser cache can serve it), or two seconds before its first turn.
+      var full = a.buffered.length && a.buffered.end(a.buffered.length - 1) >= a.duration - 0.1;
+      if (b.preload === 'none' && (full || a.currentTime > a.duration - FADE - 2)) { b.preload = 'auto'; b.load(); }
+      if (a.currentTime > a.duration - FADE) swap();
     }, 250);
   })();
 </script>
@@ -1914,12 +1820,20 @@
   // Motion. Runs only when the head script set html.motion (motion is
   // welcome). It marks elements with reveal classes and per-element delays,
   // then one IntersectionObserver plays each group once, the first time it
-  // scrolls into view. Nothing is hidden by the stylesheet unless this
-  // script has marked it, so a script failure leaves the page as it was.
+  // scrolls into view. Nothing is hidden by the stylesheet until this script
+  // adds html.rv-on, so a script failure leaves the page as it was. Keyboard
+  // focus landing in a block that has not played yet shows it at once.
   (function () {
     var root = document.documentElement;
     if (!root.classList.contains('motion')) return;
     var finals = []; // [element, printed value] for every counter
+    // Back to the page as written: no hidden states, every drawn line drawn,
+    // every counter at its printed value.
+    function restore() {
+      root.classList.remove('rv-prep', 'rv-on');
+      document.querySelectorAll('.rv-draw').forEach(function (p) { p.style.strokeDashoffset = 0; });
+      finals.forEach(function (f) { f[0].textContent = f[1]; });
+    }
     try {
     var W = 55;   // ms between heading words
     var S = 70;   // ms between items in a group
@@ -2000,26 +1914,11 @@
       };
     }
 
-    // ── Hero: plays on load. ──
+    // ── Hero: the copy is painted as it is, never hidden. The demo card
+    //    tilts up into place (transform only). ──
     var hero = document.querySelector('header[data-mq-hero]');
-    var heroCopy = hero && hero.querySelector('h1').parentNode;
-    if (heroCopy) {
-      var t = head(heroCopy, 120);
-      var stats = heroCopy.querySelector('[data-mq-stats]'), counters = [];
-      if (stats) Array.prototype.slice.call(stats.children).forEach(function (s, i) {
-        s.classList.remove('rv'); mark(s, 'rv', t - 110 + i * S);
-        var fig = s.firstElementChild;
-        countUp(fig, t - 110 + i * S + 150);
-        if (fig._play) counters.push(fig);
-      });
-      if (stats) stats.classList.remove('rv');
-      var demo = hero.querySelector('.qcard');
-      if (demo) mark(demo.parentNode, 'rv-tilt', 450);
-      requestAnimationFrame(function () { requestAnimationFrame(function () {
-        heroCopy.classList.add('in');
-        counters.forEach(function (n) { n._play(); });
-      }); });
-    }
+    var demo = hero && hero.querySelector('.qcard');
+    if (demo) mark(demo.parentNode, 'rv-tilt', 0);
 
     // ── Section heading blocks (every h2 outside the hero). ──
     document.querySelectorAll('main section h2[data-mq-h2]').forEach(function (h) { head(h.parentNode, 0); });
@@ -2091,25 +1990,43 @@
       p._play = function () { p.style.strokeDashoffset = 0; };
     });
 
-    // Hidden states are in place; one layout commits them, then transitions
-    // come back for the entrances.
-    void document.body.offsetWidth;
-    root.classList.remove('prep');
-
     // ── Play each group once, when it scrolls into view. ──
     function play(g) {
       g.classList.add('in');
       g.querySelectorAll('.rv-draw').forEach(function (p) { if (p._play) p._play(); });
       g.querySelectorAll('.loop-center-value').forEach(function (n) { if (n._play) n._play(); });
     }
-    var groups = document.querySelectorAll('.rv-group');
-    if (!('IntersectionObserver' in window)) { groups.forEach(play); }
-    else {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { play(e.target); io.unobserve(e.target); } });
-      }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
-      groups.forEach(function (g) { if (g !== heroCopy) io.observe(g); });
+    // At rest at once, no entrance: for focus and printing.
+    var MARKED = '.rv, .rv-card, .rv-deal, .rv-pop, .rv-chat, .w, .rv-draw, .track-icon';
+    function showNow(g) {
+      if (g.classList.contains('in')) return;
+      var els = g.querySelectorAll(MARKED);
+      els.forEach(function (el) { el.style.transition = 'none'; });
+      play(g);
+      void g.offsetWidth;
+      els.forEach(function (el) { el.style.transition = ''; el.classList.add('settled'); });
     }
+    var groups = document.querySelectorAll('.rv-group');
+    // No observer, nothing gets hidden: the page stays as it is.
+    if (!('IntersectionObserver' in window)) { restore(); return; }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { play(e.target); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
+
+    // Hidden states go in now: one layout under rv-prep commits them without
+    // a transition, then transitions come back for the entrances.
+    root.classList.add('rv-prep', 'rv-on');
+    void document.body.offsetWidth;
+    root.classList.remove('rv-prep');
+    groups.forEach(function (g) { io.observe(g); });
+
+    // Focus never lands on something invisible: tabbing into a block that
+    // has not played yet shows it (and any unplayed block around it) at once.
+    document.addEventListener('focusin', function (e) {
+      var g = e.target && e.target.closest ? e.target.closest('.rv-group:not(.in)') : null;
+      while (g) { showNow(g); io.unobserve(g); g = g.parentElement && g.parentElement.closest('.rv-group:not(.in)'); }
+    });
+    window.addEventListener('beforeprint', function () { groups.forEach(showNow); });
 
     // Once an element's entrance ends, it drops the delay (see .settled).
     document.addEventListener('transitionend', function (e) {
@@ -2120,11 +2037,7 @@
     } catch (err) {
       // Whatever broke, show everything as it would be at rest: a page that
       // doesn't animate beats a page that stays hidden.
-      root.classList.remove('prep');
-      document.querySelectorAll('.rv-group').forEach(function (g) { g.classList.add('in'); });
-      document.querySelectorAll('.rv-draw').forEach(function (p) { p.style.strokeDashoffset = 0; });
-      finals.forEach(function (f) { f[0].textContent = f[1]; });
-      document.querySelectorAll('.rv, .rv-card, .rv-deal, .rv-pop, .rv-chat').forEach(function (e) { if (!e.closest('.in')) e.classList.add('in'); });
+      restore();
       if (window.console) console.error(err);
     }
   })();
