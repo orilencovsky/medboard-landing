@@ -75,7 +75,7 @@ export function validate(data) {
     if (!Array.isArray(t.sources) || !t.sources.length) throw new Error(`${t.id}: sources must be a non-empty list`);
     for (const src of t.sources) {
       if (!src || !src.title) throw new Error(`${t.id}: every source needs a title`);
-      if (src.kind !== 'book' && src.kind !== 'guideline') throw new Error(`${t.id}: source kind must be "book" or "guideline": ${JSON.stringify(src.title)}`);
+      if (!['book', 'guideline', 'reference'].includes(src.kind)) throw new Error(`${t.id}: source kind must be "book", "guideline" or "reference": ${JSON.stringify(src.title)}`);
     }
   }
 }
