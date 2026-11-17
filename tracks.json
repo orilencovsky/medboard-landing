@@ -96,6 +96,10 @@
         {
           "title": "נייר עמדה ישראלי ליתר לחץ דם 2026",
           "kind": "guideline"
+        },
+        {
+          "title": "UpToDate",
+          "kind": "reference"
         }
       ]
     },
@@ -155,7 +159,7 @@
           "kind": "guideline"
         },
         {
-          "title": "ADA 2025",
+          "title": "ADA 2026",
           "kind": "guideline"
         },
         {
