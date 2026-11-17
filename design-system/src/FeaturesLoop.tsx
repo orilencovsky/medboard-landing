@@ -67,7 +67,7 @@ function accentAttr(accent: FeaturesLoopAccent = 'cyan'): FeaturesLoopAccent | u
 
 /**
  * Features section built as a four-step loop (Practice → Understand → Review & Retain →
- * Compete) around a readiness ring, with one detail panel that swaps per step. Below 980px
+ * Self-explanation) around a readiness ring, with one detail panel that swaps per step. Below 980px
  * the ring is replaced by a pill ribbon — same four tabs, same four panels. Two tablists
  * (ring nodes + ribbon) share one set of panels; only one tablist is visible at a time.
  *
