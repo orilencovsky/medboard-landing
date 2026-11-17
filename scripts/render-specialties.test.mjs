@@ -186,7 +186,7 @@ test('option text is one flex item, so Latin runs stay inline', () => {
   for (const inner of opts) {
     assert.match(inner, /^<span class="q-key">[^<]*<\/span><span class="q-opt-text">[\s\S]*<\/span><i class="ph [^"]*" aria-hidden="true"><\/i>$/);
   }
-  assert.ok(out.includes('<span class="q-opt-text">מדובר בנוגדנים מונומרים <span class="ltr-iso">(monomeric)</span> מסוג <span class="ltr-iso">IgA 2</span></span>'));
+  assert.ok(out.includes('<span class="q-opt-text">מדובר בנוגדנים מונומריים <span class="ltr-iso">(monomeric)</span> מסוג <span class="ltr-iso">IgA2</span></span>'));
   assert.ok(out.includes('<span class="ltr-iso">IgA Nephropathy</span>'));
 });
 

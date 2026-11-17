@@ -52,7 +52,7 @@
     {
      "key": "a",
      "text": "{{Posttraumatic Stress Disorder}}",
-     "tutor": "התסמינים אכן מתאימים לתגובה לטראומה. מה עוד, מלבד סוג התסמינים, ה-<span class=\"ltr-iso\">DSM‑5</span> דורש כדי לאבחן <span class=\"ltr-iso\">PTSD</span>?"
+     "tutor": "התסמינים אכן מתאימים לתגובה לטראומה. מה עוד, מלבד סוג התסמינים, ה-<span class=\"ltr-iso\">DSM-5</span> דורש כדי לאבחן <span class=\"ltr-iso\">PTSD</span>?"
     },
     {
      "key": "b",
@@ -70,9 +70,9 @@
      "right": true
     }
    ],
-   "explanationHtml": "<p><strong>נכון.</strong> המטופל עבר אירוע טראומטי (איום בסכין), ומאז יש לו תסמינים של חודרנות, ניתוק, הימנעות ודריכות יתר. עברו רק שבועיים. ב-<span class=\"ltr-iso\">DSM‑5</span> מה שמבדיל בין הפרעת דחק חריפה ל-<span class=\"ltr-iso\">PTSD</span> הוא משך התסמינים: הפרעת דחק חריפה מוגבלת ל-3 ימים עד חודש אחרי האירוע.</p><p><strong>א. <span class=\"ltr-iso\">PTSD</span>:</strong> אותם סוגי תסמינים, אבל האבחנה דורשת שיימשכו יותר מחודש. אחרי שבועיים מוקדם לאבחן. אם התסמינים יימשכו מעבר לחודש, האבחנה תשתנה.</p><p><strong>ב. <span class=\"ltr-iso\">GAD</span>:</strong> החרדה כאן קשורה לאירוע ולמה שמזכיר אותו, ולא דאגה כללית ומפוזרת. היא גם נמשכת שבועיים, לא חודשים.</p><p><strong>ג. הפרעת הסתגלות:</strong> מתאימה לתגובה לגורם דחק שלא עומדת בקריטריונים של הפרעה ספציפית. כאן יש אירוע טראומטי ותסמינים מכמה אשכולות שמאפיינים תגובה לטראומה: תגובה לתזכורות, ניתוק, הימנעות ודריכות. תמונה כזו בחודש הראשון מתאימה להפרעת דחק חריפה.</p>",
+   "explanationHtml": "<p><strong>נכון.</strong> המטופל עבר אירוע טראומטי (איום בסכין), ומאז יש לו תסמינים של חודרנות, ניתוק, הימנעות ודריכות יתר. עברו רק שבועיים. ב-<span class=\"ltr-iso\">DSM-5</span> מה שמבדיל בין הפרעת דחק חריפה ל-<span class=\"ltr-iso\">PTSD</span> הוא משך התסמינים: הפרעת דחק חריפה מוגבלת ל-3 ימים עד חודש אחרי האירוע.</p><p><strong>א. <span class=\"ltr-iso\">PTSD</span>:</strong> אותם סוגי תסמינים, אבל האבחנה דורשת שיימשכו יותר מחודש. אחרי שבועיים מוקדם לאבחן. אם התסמינים יימשכו מעבר לחודש, האבחנה תשתנה.</p><p><strong>ב. <span class=\"ltr-iso\">GAD</span>:</strong> החרדה כאן קשורה לאירוע ולמה שמזכיר אותו, ולא דאגה כללית ומפוזרת. היא גם נמשכת שבועיים, לא חודשים.</p><p><strong>ג. הפרעת הסתגלות:</strong> מתאימה לתגובה לגורם דחק שלא עומדת בקריטריונים של הפרעה ספציפית. כאן יש אירוע טראומטי ותסמינים מכמה אשכולות שמאפיינים תגובה לטראומה: תגובה לתזכורות, ניתוק, הימנעות ודריכות. תמונה כזו בחודש הראשון מתאימה להפרעת דחק חריפה.</p>",
    "quote": "{{Acute stress disorder is distinguished from PTSD because the symptom pattern in acute stress disorder is restricted to a duration of 3 days to 1 month following exposure to the traumatic event.}}",
-   "citation": "{{American Psychiatric Association, DSM‑5 (2013) — Trauma- and Stressor-Related Disorders: Acute Stress Disorder}}"
+   "citation": "{{American Psychiatric Association, DSM-5 (2013) — Trauma- and Stressor-Related Disorders: Acute Stress Disorder}}"
   }
  ]
 }
