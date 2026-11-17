@@ -554,8 +554,8 @@ oversight):
 
 - `https://fonts.googleapis.com` (stylesheet) and `https://fonts.gstatic.com` (the font files it
   references) — Google Fonts, every page.
-- `https://cdn.jsdelivr.net` — the Phosphor Icons stylesheet and the icon font files it references,
-  the four specialty pages only.
+- Icons are self-hosted: `/ph.css` draws the Phosphor glyphs as CSS masks from `data:` SVGs, which
+  `img-src` already allows. No third-party icon origin is needed.
 - `https://www.googletagmanager.com` and `https://www.clarity.ms` / `https://*.clarity.ms` — GA4 and
   Microsoft Clarity, loaded by `consent.js` only after opt-in. Clarity's tag itself loads from a
   `scripts.clarity.ms` subdomain, hence the wildcard rather than just `www`.
