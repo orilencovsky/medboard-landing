@@ -644,7 +644,7 @@
             <li aria-current="page">מועדי בחינות</li>
           </ol>
         </div>
-        <h1 class="enter" style="--i:1">מועדי הבחינות 2026-2027</h1>
+        <h1 class="enter" style="--i:1">מועדי הבחינות <span class="ltr-iso" style="white-space: nowrap;">2026-2027</span></h1>
         <p class="lead enter" style="--i:2">בחינות שלב א׳ ובחינות מקצוע-על ב-8 המקצועות שיש להם הכנה ב-MeduXa, במקום אחד ולפי סדר התאריכים. כל מועד לקוח מלוח הבחינות של הר״י.</p>
       </div>
     </div>
@@ -808,14 +808,8 @@
       return n;
     }
 
-    // Hero headline: plays on load, a beat after the chip.
-    var h1 = document.querySelector('.hero h1');
-    if (h1) {
-      h1.classList.remove('enter');
-      h1.style.setProperty('--d', '160ms');
-      split(h1);
-      requestAnimationFrame(function () { requestAnimationFrame(function () { h1.classList.add('seen'); }); });
-    }
+    // The hero headline keeps its CSS entrance (.enter, transform only): no
+    // word split, so it is readable from the first frame.
 
     // Section headlines: play when their block scrolls in (the reveal
     // observer below adds .seen to the block).

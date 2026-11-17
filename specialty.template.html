@@ -173,6 +173,7 @@
      (heroStage). The campaign line, the same on every specialty page, follows
      it as a secondary line. */
   h1 { margin: 0; font-size: clamp(32px, 4vw, 52px); font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; color: #fff; text-wrap: balance; }
+  .nw { white-space: nowrap; }
   .slogan { margin: -8px 0 0; font-size: clamp(20px, 2vw, 26px); font-weight: 600; line-height: 1.4; color: var(--t2); }
   .slogan .grad { background: linear-gradient(90deg, var(--sky-light), var(--cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .lead { margin: 0; font-size: 20px; line-height: 1.65; color: var(--t2); max-width: 30ch; }
@@ -628,7 +629,7 @@
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>{{chip}}</span>
-        <h1 class="enter" style="--i:1">{{heroStage}}</h1>
+        <h1 class="enter" style="--i:1">{{{heroStageHtml}}}</h1>
         <p class="slogan enter" style="--i:2">הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></p>
         <p class="lead enter" style="--i:3"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> {{{leadHtml}}}</p>
 <!-- if:soon -->

@@ -305,6 +305,8 @@ export function renderPage(template, page, track) {
     url: SITE + track.href,
     jsonld: jsonLd(page, track),
     leadHtml: rich(page.lead),
+    // The h1: a hyphenated compound (מקצוע-על) never breaks at its hyphen.
+    heroStageHtml: esc(page.heroStage).replace(/\S+-\S+/g, (w) => `<span class="nw">${w}</span>`),
     countdown: countdown(track),
     sources: sources(track, page.mode === 'live' || page.questions.length > 0, page.sourcesHref),
     questions: page.questions.length ? questions(page.questions, page.examBased) : '',

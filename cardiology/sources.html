@@ -84,6 +84,7 @@
   button, input { font-family: inherit; }
   a { color: var(--cyan-soft); text-decoration: none; } a:hover { text-decoration: underline; }
   .ltr-iso { direction: ltr; unicode-bidi: isolate; }
+  .nw { white-space: nowrap; } /* a hyphenated compound in the h1 never breaks at its hyphen */
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   :focus-visible { outline: 2px solid var(--violet-on); outline-offset: 3px; }
   .skip { position: absolute; top: 0; inset-inline-start: 0; transform: translateY(-120%); z-index: 100; background: var(--foot); color: #fff;
@@ -627,7 +628,7 @@
             <li aria-current="page">מקורות</li>
           </ol>
         </div>
-        <h1 class="enter" style="--i:1">המקורות להכנה לבחינת מקצוע-על בקרדיולוגיה</h1>
+        <h1 class="enter" style="--i:1">המקורות להכנה לבחינת <span class="nw">מקצוע-על</span> בקרדיולוגיה</h1>
         <p class="lead enter" style="--i:2">על אלה מבוססים ההסברים והציטוטים בשאלות לקרדיולוגיה ב-MeduXa. לכל תשובה יש הסבר שמגובה בציטוט מילה במילה מהמקור, כדי שתוכלו לבדוק כל טענה בעצמכם.</p>
         <div class="countdown enter" style="--i:3" data-exam-date="2026-12-15">
           <p class="cd-days" hidden><b data-days></b> <span data-cd-unit></span></p>
@@ -753,14 +754,8 @@
       return n;
     }
 
-    // Hero headline: plays on load, a beat after the chip.
-    var h1 = document.querySelector('.hero h1');
-    if (h1) {
-      h1.classList.remove('enter');
-      h1.style.setProperty('--d', '160ms');
-      split(h1);
-      requestAnimationFrame(function () { requestAnimationFrame(function () { h1.classList.add('seen'); }); });
-    }
+    // The hero headline keeps its CSS entrance (.enter, transform only): no
+    // word split, so it is readable from the first frame.
 
     // Section headlines: play when their block scrolls in (the reveal
     // observer below adds .seen to the block).

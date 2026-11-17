@@ -762,14 +762,8 @@
       return n;
     }
 
-    // Hero headline: plays on load, a beat after the chip.
-    var h1 = document.querySelector('.hero h1');
-    if (h1) {
-      h1.classList.remove('enter');
-      h1.style.setProperty('--d', '160ms');
-      split(h1);
-      requestAnimationFrame(function () { requestAnimationFrame(function () { h1.classList.add('seen'); }); });
-    }
+    // The hero headline keeps its CSS entrance (.enter, transform only): no
+    // word split, so it is readable from the first frame.
 
     // Section headlines: play when their block scrolls in (the reveal
     // observer below adds .seen to the block).
