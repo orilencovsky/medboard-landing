@@ -120,11 +120,11 @@
     banner.setAttribute('aria-label', T.label);
     banner.dir = he ? 'rtl' : 'ltr';
     banner.style.cssText = 'position:fixed;z-index:2147483000;' +
-      (narrow ? 'left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom, 0px));gap:10px;' +
+      (narrow ? 'left:0;right:0;bottom:0;box-sizing:border-box;padding:12px 16px calc(12px + env(safe-area-inset-bottom, 0px));gap:10px;' +
                 'border-top:1px solid #E2E8F0;border-radius:14px 14px 0 0;box-shadow:0 -8px 24px rgba(15,23,42,.16);'
               : 'left:16px;right:16px;bottom:16px;padding:16px 18px;gap:12px;max-width:640px;margin:0 auto;' +
                 'border:1px solid #E2E8F0;border-radius:14px;box-shadow:0 10px 30px rgba(15,23,42,.18);') +
-      'box-sizing:border-box;background:#fff;color:#0F172A;' +
+      'background:#fff;color:#0F172A;' +
       'font-family:inherit;display:flex;flex-direction:column;';
 
     var p = document.createElement('p');

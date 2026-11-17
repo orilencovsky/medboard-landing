@@ -148,6 +148,9 @@
   .qcard.answered .qexp-btn { display: inline-flex; }
   .qcard.expanded .qexp-btn .chev { transform: rotate(180deg); }
 
+  /* The chat field has no frame of its own: its row shows the focus ring. */
+  .qchat-input:focus, .qchat-input:focus-visible { outline: none; }
+  .qinput-row:focus-within { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
   .qopt:focus-visible, .qreply:focus-visible, .qexp-btn:focus-visible, .qsend:focus-visible { outline: 2px solid #22D3EE; outline-offset: 2px; }
 
   @keyframes tDot { 0%,80%,100% { opacity: .25; } 40% { opacity: 1; } }
@@ -226,7 +229,9 @@
   .sci-refs { position: relative; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(125,162,196,.18); }
   .sci-refs-title { font-size: 13px; font-weight: 600; color: #7DA2C4; margin: 0 0 12px; }
   .sci-refs ol { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 8px; }
-  .sci-refs li { font-size: 13px; line-height: 1.6; color: #7DA2C4; }
+  .sci-refs li { font-size: 13px; line-height: 1.6; color: #7DA2C4; scroll-margin-top: 96px; border-radius: 6px; transition: background-color .6s ease; }
+  /* A [n] jump lands below the sticky nav and marks the entry it opened. */
+  .sci-refs li:target { background: rgba(34,211,238,.1); box-shadow: 0 0 0 6px rgba(34,211,238,.1); color: #B8D4EA; }
   .sci-refs a { color: #7DD3FC; text-decoration: underline; text-underline-offset: 2px; }
 
   /* ===== Comparison cards =====
@@ -439,7 +444,7 @@
   .loop-node[data-accent="soon"][aria-selected="true"] .loop-label { color: #B9D4E8; }
   /* The selected state already owns box-shadow, so focus takes the outline. */
   .loop-node:focus-visible { outline: none; }
-  .loop-node:focus-visible .loop-dot { outline: 2px solid #7C5CFF; outline-offset: 4px; }
+  .loop-node:focus-visible .loop-dot { outline: 2px solid var(--focus-ring); outline-offset: 4px; }
 
   .loop-ribbon { display: none; gap: 8px; align-items: center; margin-bottom: 4px; }
   .loop-ribbon > i { width: 14px; height: 2px; background: #1E4A6E; flex-shrink: 0; }
@@ -447,12 +452,12 @@
   .loop-pill[aria-selected="true"] { background: var(--acc-fill); color: #062033; }
   .loop-pill[data-accent="soon"] { border-color: #1E4A6E; color: #7DA2C4; }
   .loop-pill[data-accent="soon"][aria-selected="true"] { background: #0B2545; border-color: #7DA2C4; color: #B9D4E8; }
-  .loop-pill:focus-visible { outline: 2px solid #7C5CFF; outline-offset: 3px; }
+  .loop-pill:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
 
   .loop-panels { display: flex; flex-direction: column; gap: 20px; }
   .loop-panel { box-sizing: border-box; background: #0B2545; border: 1px solid var(--acc-edge); border-radius: 20px; padding: 28px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 18px; transition: border-color .25s; }
   .loop-panel[hidden] { display: none; }
-  .loop-panel:focus-visible { outline: 2px solid #7C5CFF; outline-offset: 3px; }
+  .loop-panel:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   .loop-panel-top { display: flex; align-items: center; gap: 12px; }
   .loop-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: var(--acc); }
   .loop-rule { flex-grow: 1; height: 1px; background: #153650; }
@@ -507,7 +512,7 @@
   .hero-track--live { color: #5EEAD4; border-color: rgba(94,234,212,.4); background: rgba(94,234,212,.07); }
   .hero-track-soon { color: #7DA2C4; font-weight: 500; }
   .hero-track:hover { color: #E2F4FD; border-color: #22D3EE; background: rgba(34,211,238,.1); }
-  .hero-track:focus-visible { outline: 2px solid #A78BFA; outline-offset: 2px; }
+  .hero-track:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
   .tracks { position: relative; background: #061225; border-top: 1px solid #153650; padding: 96px 32px; }
   .tracks-in { max-width: 1200px; margin: 0 auto; }
@@ -584,7 +589,7 @@
   /* Only where :has() works can the card take over the ring; elsewhere the
      link keeps the browser's own focus outline (accessibility statement). */
   @supports selector(:has(a)) { .track-link:focus-visible { outline: none; } }
-  .track:has(.track-link:focus-visible) { outline: 2px solid #A78BFA; outline-offset: 3px; }
+  .track:has(.track-link:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   .track-btn { display: inline-block; border-radius: 12px; padding: 13px 28px; font-size: 16px; font-weight: 700; }
   .track-soon-btn { display: inline-flex; align-items: center; gap: 8px; color: #7DD3FC; font-size: 15px; font-weight: 600; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 10px 16px; }
   .track-arrow { transition: transform .2s var(--ease); }
@@ -750,9 +755,9 @@
     .motion:not([dir="rtl"]) nav::after { transform-origin: 0 50%; background: linear-gradient(90deg, #38BDF8, #22D3EE); }
     @keyframes hp-progress { to { transform: scaleX(1); } }
   }
-  /* Reduced motion switched on after load: whatever the script marked shows
-     at rest. */
-  @media (prefers-reduced-motion: reduce) {
+  /* Reduced motion switched on after load, or printing: whatever the script
+     marked shows at rest. */
+  @media print, (prefers-reduced-motion: reduce) {
     .rv-on .rv, .rv-on .rv-card, .rv-on .rv-deal, .rv-on .rv-pop, .rv-on .rv-chat, .rv-on .split .w, .rv-on .track-icon {
       opacity: 1 !important; transform: none !important; translate: none !important; rotate: none !important; scale: none !important; filter: none !important; transition: none !important; }
     .rv-on .rv-draw { stroke-dashoffset: 0 !important; transition: none !important; }
@@ -962,7 +967,7 @@
                 <div class="qreply" role="button" tabindex="0">eGFR מחושב</div>
               </div>
               <div class="qinput-row" style="display: flex; align-items: center; gap: 8px; background: #08203D; border: 1px solid #1E4A6E; border-radius: 12px; padding: 8px 13px;">
-                <input class="qchat-input" aria-label="השיבו למורה" placeholder="השיבו למורה, או שאלו כל דבר על המקרה…" maxlength="240" style="flex: 1; background: transparent; border: none; outline: none; color: #E2F4FD; font-family: inherit; font-size: 14px;">
+                <input class="qchat-input" aria-label="השיבו למורה" placeholder="השיבו למורה, או שאלו כל דבר על המקרה…" maxlength="240" style="flex: 1; background: transparent; border: none; color: #E2F4FD; font-family: inherit; font-size: 14px;">
                 <div class="qsend" role="button" tabindex="0" aria-label="שליחה" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #0EA5E9, #22D3EE);">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="transform: scaleX(-1);"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="#04263C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                 </div>
@@ -1120,14 +1125,14 @@
       <div class="sci-refs">
         <p class="sci-refs-title">מקורות</p>
         <ol dir="ltr" lang="en">
-        <li id="sci-ref-1">Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science, 17</em>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
-        <li id="sci-ref-2">Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin, 132</em>(3), 354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
-        <li id="sci-ref-3">Brunmair, M., & Richter, T. (2019). Similarity matters: A meta-analysis of interleaved learning and its moderators. <em>Psychological Bulletin, 145</em>(11), 1029–1052. <a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
-        <li id="sci-ref-4">Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. <em>Review of Educational Research, 60</em>(2), 265–299. <a href="https://doi.org/10.3102/00346543060002265" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
-        <li id="sci-ref-5">Metcalfe, J. (2017). Learning from errors. <em>Annual Review of Psychology, 68</em>, 465–489. <a href="https://doi.org/10.1146/annurev-psych-010416-044022" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
-        <li id="sci-ref-6">Bisra, K., Liu, Q., Nesbit, J. C., Salimi, F., & Winne, P. H. (2018). Inducing self-explanation: A meta-analysis. <em>Educational Psychology Review, 30</em>(3), 703–725. <a href="https://doi.org/10.1007/s10648-018-9434-x" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
-        <li id="sci-ref-7">Gardner-Medwin, A. R. (2006). Confidence-based marking: Towards deeper learning and better exams. In <em>Innovative Assessment in Higher Education</em>. Routledge. <a href="https://www.tmedwin.net/~ucgbarg/tea/innovass4.pdf" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
-        <li id="sci-ref-8">Alfieri, L., Brooks, P. J., Aldrich, N. J., & Tenenbaum, J. M. (2011). Does discovery-based instruction enhance learning? <em>Journal of Educational Psychology, 103</em>(1), 1–18. <a href="https://doi.org/10.1037/a0021017" target="_blank" rel="noopener" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-1">Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <em>Psychological Science, 17</em>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-2">Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <em>Psychological Bulletin, 132</em>(3), 354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-3">Brunmair, M., & Richter, T. (2019). Similarity matters: A meta-analysis of interleaved learning and its moderators. <em>Psychological Bulletin, 145</em>(11), 1029–1052. <a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-4">Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. <em>Review of Educational Research, 60</em>(2), 265–299. <a href="https://doi.org/10.3102/00346543060002265" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-5">Metcalfe, J. (2017). Learning from errors. <em>Annual Review of Psychology, 68</em>, 465–489. <a href="https://doi.org/10.1146/annurev-psych-010416-044022" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-6">Bisra, K., Liu, Q., Nesbit, J. C., Salimi, F., & Winne, P. H. (2018). Inducing self-explanation: A meta-analysis. <em>Educational Psychology Review, 30</em>(3), 703–725. <a href="https://doi.org/10.1007/s10648-018-9434-x" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-7">Gardner-Medwin, A. R. (2006). Confidence-based marking: Towards deeper learning and better exams. In <em>Innovative Assessment in Higher Education</em>. Routledge. <a href="https://www.tmedwin.net/~ucgbarg/tea/innovass4.pdf" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
+        <li id="sci-ref-8">Alfieri, L., Brooks, P. J., Aldrich, N. J., & Tenenbaum, J. M. (2011). Does discovery-based instruction enhance learning? <em>Journal of Educational Psychology, 103</em>(1), 1–18. <a href="https://doi.org/10.1037/a0021017" target="_blank" rel="noopener" lang="he" aria-label="למאמר המלא (נפתח בחלון חדש)">↗</a></li>
         </ol>
       </div>
     </div>

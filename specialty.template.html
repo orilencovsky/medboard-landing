@@ -427,6 +427,15 @@
      transitions off for the one layout in which a state is put in place or
      an element is shown at once (keyboard focus, printing). */
   .rv-prep [data-reveal], .rv-prep [data-reveal] *, .rv-prep .split .w, .rv-now, .rv-now * { transition: none !important; }
+  /* Printing never hides anything: every reveal state and every unread
+     statement word at rest. */
+  @media print {
+    .rv-on [data-reveal], .rv-on .split .w, .rv-on .statement.read .w,
+    .rv-on [data-reveal].has-split > p, .rv-on [data-reveal].has-split > ul,
+    .rv-on .tile[data-reveal] > .ph, .rv-on .tile[data-reveal] > .t-avatar, .rv-on .t-tutor[data-reveal] .styles li,
+    .rv-on .group[data-reveal] .techs li, .rv-on .cmp-wrap[data-reveal] tbody tr > *, .rv-on .cmp-wrap[data-reveal] .us .mk .ph {
+      opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  }
   @media (prefers-reduced-motion: no-preference) {
     /* The hero is readable from its first frame: its entrance moves it, never
        fades it in from nothing. */
@@ -963,10 +972,14 @@
       io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } });
       }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      // A block already on screen is shown as it is, never hidden and then
+      // faded back in; the rest wait for the observer.
+      var vh = window.innerHeight;
+      els.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.top < vh && r.bottom > 0) el.classList.add('seen', 'settled'); });
       root.classList.add('rv-prep', 'rv-on');
       void document.body.offsetWidth;
       root.classList.remove('rv-prep');
-      els.forEach(function (el) { io.observe(el); });
+      els.forEach(function (el) { if (!el.classList.contains('seen')) io.observe(el); });
     } catch (err) {
       root.classList.remove('rv-prep', 'rv-on');
       return;
