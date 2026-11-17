@@ -55,7 +55,8 @@ test('title, h1, og and twitter titles carry the years; title fits in 60 charact
   assert.ok(title.length <= 60, title.length);
   assert.ok(page.includes(`<meta property="og:title" content="${title}" />`));
   assert.ok(page.includes(`<meta name="twitter:title" content="${title}" />`));
-  assert.match(page, new RegExp(`<h1[^>]*>מועדי הבחינות ${y}</h1>`));
+  // The year range is one isolated LTR run that never breaks at its hyphen.
+  assert.match(page, new RegExp(`<h1[^>]*>מועדי הבחינות <span class="ltr-iso" style="white-space: nowrap;">${y}</span></h1>`));
 });
 
 test('canonical, JSON-LD and sitemap point at /exams', () => {

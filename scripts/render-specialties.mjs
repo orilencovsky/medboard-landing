@@ -184,7 +184,9 @@ function questions(qs, examBased) {
   const nth = (i) => (many ? ` data-q="${i + 1}"${i ? ' hidden' : ''}` : '');
   const head = [
     '<div class="q-head">',
-    `  <h2 class="q-title" id="q-title">${many ? 'שאלות לדוגמה, נסו לענות' : 'שאלה לדוגמה, נסו לענות'}</h2>`,
+    // A label for the widget (it names the section via aria-labelledby), not a
+    // heading: the page's headings stay h1, then the section h2s.
+    `  <p class="q-title" id="q-title">${many ? 'שאלות לדוגמה, נסו לענות' : 'שאלה לדוגמה, נסו לענות'}</p>`,
     ...qs.map((q, i) => `  <span class="q-topic"${nth(i)}>${rich(q.topic)}</span>`),
     '</div>',
   ];
@@ -303,6 +305,8 @@ export function renderPage(template, page, track) {
     url: SITE + track.href,
     jsonld: jsonLd(page, track),
     leadHtml: rich(page.lead),
+    // The h1: a hyphenated compound (מקצוע-על) never breaks at its hyphen.
+    heroStageHtml: esc(page.heroStage).replace(/\S+-\S+/g, (w) => `<span class="nw">${w}</span>`),
     countdown: countdown(track),
     sources: sources(track, page.mode === 'live' || page.questions.length > 0, page.sourcesHref),
     questions: page.questions.length ? questions(page.questions, page.examBased) : '',

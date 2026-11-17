@@ -417,3 +417,20 @@ test('soon-page titles lead with the exam and still say they are coming soon', (
     assert.ok([...title].length <= 60, `${t.id}: title is ${[...title].length} characters`);
   }
 });
+
+test('the h1 is the page subject (heroStage); the campaign line is a <p>, and the sample-question label is not a heading', () => {
+  for (const id of PAGES) {
+    const html = render(id);
+    const h1s = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/g)];
+    assert.equal(h1s.length, 1, id);
+    assert.equal(h1s[0][1].replace(/<[^>]+>/g, ''), page(id).heroStage, id);
+    assert.match(html, /<p class="slogan[^"]*"[^>]*>הבחינה לא השתנתה\.<br><span class="grad">הדרך להתכונן אליה, כן\.<\/span><\/p>/, id);
+    assert.ok(!/<h[2-6][^>]*class="q-title"/.test(html), id);
+  }
+});
+
+test('the sign-up button names the same action as the nav and hero links', () => {
+  const html = render('geriatrics');
+  assert.ok(html.includes('<button id="notifySubmit" class="btn" type="submit">הרשמה לעדכון</button>'));
+  assert.ok(!html.includes('עדכנו אותי'));
+});

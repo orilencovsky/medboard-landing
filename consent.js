@@ -67,10 +67,22 @@
   };
 
   var banner = null;
+  var padObserver = null;
+  var bodyPad = '';
+
+  // Phones: while the bar shows, the page gets its height as bottom padding,
+  // so the last of the page (the footer links) can still scroll clear of it.
+  function padPage() {
+    if (!banner || !narrow) return;
+    document.body.style.paddingBottom = banner.offsetHeight + 'px';
+  }
 
   function close() {
     if (banner && banner.parentNode) banner.parentNode.removeChild(banner);
     banner = null;
+    if (padObserver) { padObserver.disconnect(); padObserver = null; }
+    window.removeEventListener('resize', padPage);
+    if (narrow) document.body.style.paddingBottom = bodyPad;
   }
 
   function choose(value) {
@@ -81,8 +93,9 @@
     else if (before === 'granted' && loaded) window.location.reload();
   }
 
-  // Phones: a shorter banner, so it covers less of the first screen. Text stays
-  // 14px; the buttons share one row and the frame sits closer to the edges.
+  // Phones: a full-width bar on the bottom edge rather than a floating card, so
+  // nothing peeks out around it, and the page is padded by its height while it
+  // shows (see padPage). Text stays 14px; the buttons share one row.
   var narrow = !!(window.matchMedia && window.matchMedia('(max-width: 600px)').matches);
 
   function button(label, value) {
@@ -107,10 +120,11 @@
     banner.setAttribute('aria-label', T.label);
     banner.dir = he ? 'rtl' : 'ltr';
     banner.style.cssText = 'position:fixed;z-index:2147483000;' +
-      (narrow ? 'left:8px;right:8px;bottom:8px;padding:12px 14px;gap:10px;'
-              : 'left:16px;right:16px;bottom:16px;padding:16px 18px;gap:12px;') +
-      'max-width:640px;margin:0 auto;background:#fff;color:#0F172A;border:1px solid #E2E8F0;' +
-      'border-radius:14px;box-shadow:0 10px 30px rgba(15,23,42,.18);' +
+      (narrow ? 'left:0;right:0;bottom:0;box-sizing:border-box;padding:12px 16px calc(12px + env(safe-area-inset-bottom, 0px));gap:10px;' +
+                'border-top:1px solid #E2E8F0;border-radius:14px 14px 0 0;box-shadow:0 -8px 24px rgba(15,23,42,.16);'
+              : 'left:16px;right:16px;bottom:16px;padding:16px 18px;gap:12px;max-width:640px;margin:0 auto;' +
+                'border:1px solid #E2E8F0;border-radius:14px;box-shadow:0 10px 30px rgba(15,23,42,.18);') +
+      'background:#fff;color:#0F172A;' +
       'font-family:inherit;display:flex;flex-direction:column;';
 
     var p = document.createElement('p');
@@ -130,6 +144,12 @@
     banner.appendChild(p);
     banner.appendChild(row);
     document.body.appendChild(banner);
+    if (narrow) {
+      bodyPad = document.body.style.paddingBottom;
+      padPage();
+      if (window.ResizeObserver) { padObserver = new ResizeObserver(padPage); padObserver.observe(banner); }
+      else window.addEventListener('resize', padPage);
+    }
   }
 
   window.mxConsent = { open: open };
