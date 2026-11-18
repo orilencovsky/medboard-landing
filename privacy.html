@@ -48,6 +48,10 @@
   .doc-nav a { box-sizing: border-box; min-height: 44px; display: inline-flex; align-items: center; }
   .foot-link { color: #7DA2C4; font-size: 14px; transition: color .15s; }
   .foot-link:hover { color: #22D3EE; text-decoration: none; }
+  /* A ~44px tap area around each small footer link, without changing its look
+     (the same rule as the home page). */
+  .foot-link { position: relative; }
+  .foot-link::after { content: ''; position: absolute; inset: -13px -7px; }
   .m-link { color: #B8D4EA; font-size: 15px; padding: 10px 4px; }
   @media (max-width: 640px) {
     .doc { padding: 36px 20px 64px; }

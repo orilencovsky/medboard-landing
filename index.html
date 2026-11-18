@@ -402,6 +402,8 @@
   .btn-action:focus-visible { outline:none; box-shadow:0 0 0 3px var(--focus-gap), 0 0 0 5px var(--focus-ring); }
   .btn-action-md { box-shadow:0 6px 20px rgba(74,56,201,.45); }
   .btn-action-lg { box-shadow:0 10px 34px rgba(74,56,201,.5); }
+  /* Forced colours drop the gradient fill: an outline keeps the button a button. */
+  @media (forced-colors: active) { .btn-action { border: 1px solid ButtonText; } .btn-action:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; } }
 
   /* ===== Features — the loop =====
      Four steps around a ring, a readiness card in the middle, and one detail
@@ -440,7 +442,7 @@
   /* The side nodes sit on the ring line, so their label needs an opaque chip or
      the circle is drawn straight through the word. */
   .loop-label.chip { background: rgba(6,18,37,.88); border-radius: 8px; padding: 3px 12px; }
-  .loop-soon { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 4px 11px; background: rgba(6,18,37,.88); }
+  .loop-soon { font-family: 'IBM Plex Sans Hebrew', sans-serif; font-size: 11px; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 4px 11px; background: rgba(6,18,37,.88); }
   .loop-node[aria-selected="true"] .loop-dot { background: var(--acc-fill); color: #062033; box-shadow: 0 0 0 5px var(--acc-wash); }
   .loop-node[aria-selected="true"] .loop-label { color: #F1F7FC; }
   /* Step 04 is roadmap, not shipped: it never takes the gradient fill, however
@@ -455,7 +457,7 @@
 
   .loop-ribbon { display: none; gap: 8px; align-items: center; margin-bottom: 4px; }
   .loop-ribbon > i { width: 14px; height: 2px; background: #1E4A6E; flex-shrink: 0; }
-  .loop-pill { flex: 1; min-height: 44px; cursor: pointer; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); border-radius: 100px; padding: 10px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; text-align: center; transition: background .25s, color .25s, border-color .25s; }
+  .loop-pill { flex: 1; min-height: 44px; cursor: pointer; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); border-radius: 100px; padding: 10px 6px; font-family: 'IBM Plex Sans Hebrew', sans-serif; font-size: 12px; font-weight: 600; text-align: center; transition: background .25s, color .25s, border-color .25s; }
   .loop-pill[aria-selected="true"] { background: var(--acc-fill); color: #062033; }
   .loop-pill[data-accent="soon"] { border-color: #1E4A6E; color: #7DA2C4; }
   .loop-pill[data-accent="soon"][aria-selected="true"] { background: #0B2545; border-color: #7DA2C4; color: #B9D4E8; }
@@ -466,9 +468,9 @@
   .loop-panel[hidden] { display: none; }
   .loop-panel:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   .loop-panel-top { display: flex; align-items: center; gap: 12px; }
-  .loop-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: var(--acc); }
+  .loop-tag { font-family: 'IBM Plex Sans Hebrew', sans-serif; font-size: 11px; color: var(--acc); }
   .loop-rule { flex-grow: 1; height: 1px; background: #153650; }
-  .loop-status { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; border-radius: 100px; padding: 5px 12px; color: #5EEAD4; border: 1px solid rgba(94,234,212,.4); white-space: nowrap; }
+  .loop-status { font-family: 'IBM Plex Sans Hebrew', sans-serif; font-size: 11px; border-radius: 100px; padding: 5px 12px; color: #5EEAD4; border: 1px solid rgba(94,234,212,.4); white-space: nowrap; }
   .loop-panel[data-accent="soon"] .loop-status { color: #7DA2C4; border-color: #1E4A6E; }
   .loop-panel h3 { margin: 0; font-size: 28px; font-weight: 600; color: #F1F7FC; line-height: 1.3; }
   .loop-lead { margin: 0; font-size: 16px; line-height: 1.75; color: #B9D4E8; }
@@ -480,10 +482,6 @@
      shortest, three bullets) collapses the row and the ring jumps. Once the
      panel is full width the same floor is just an empty half-card. */
   @media (min-width: 981px) { .loop-panel { min-height: 424px; } }
-
-  /* The mono eyebrows carry tracking, but Hebrew letters do not join — the
-     same tracking on חי עכשיו / בקרוב reads as gaps inside the word. */
-  .loop-status, .loop-soon { letter-spacing: normal; }
 
   /* 980px, not the design's 900: between the two the ring keeps its fixed
      520px and squeezes the panel to about 270px of text. */
@@ -623,8 +621,8 @@
   .tracks-more a, .pilot-tracks a { text-decoration: underline; text-underline-offset: 3px; }
   .tracks-more a { color: #7DD3FC; }
   .tracks-more a:hover { color: #22D3EE; }
-  .pilot-tracks { margin: 0; font-size: 15px; color: #475569; }
-  .pilot-tracks a { color: #0E7490; font-weight: 600; }
+  .pilot-tracks { margin: 0; font-size: 15px; line-height: 1.6; color: #475569; }
+  .pilot-tracks a { color: #0E7490; font-weight: 600; white-space: nowrap; }
   /* Last-row soon cards widened by scripts/render-tracks.mjs (fillSpans) so
      the 4-column grid ends without empty cells; the narrower grids reset them. */
   .track--span2 { grid-column: span 2; }
@@ -954,11 +952,11 @@
           </div>
 
           <div class="qreveal" style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="qhint" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #7DA2C4;">בחרו תשובה ←</div>
+            <div class="qhint" style="font-size: 12px; color: #7DA2C4;">בחרו תשובה ←</div>
             <!-- Replaces the hint once the verdict is in, so that options which
                  no longer move the ✓ do not read as broken. Kept short enough to
                  hold one line down to a 320px phone. -->
-            <div class="qhint-review" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #7DA2C4;">לחצו על תשובה כדי לקרוא את ההסבר</div>
+            <div class="qhint-review" style="font-size: 12px; color: #7DA2C4;">לחצו על תשובה כדי לקרוא את ההסבר</div>
 
             <div class="qtutor" aria-live="polite" style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; gap: 12px; align-items: flex-start;">
               <img src="/socrates-avatar-64.png" srcset="/socrates-avatar-64.png 2x, /socrates-avatar-128.png 3x" width="32" height="32" alt="" decoding="async" style="flex-shrink: 0; box-sizing: border-box; width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(124,92,255,.4);">
@@ -968,7 +966,7 @@
             <div class="qchat" style="flex-direction: column; gap: 10px;">
               <div class="qthread" aria-live="polite" style="display: flex; flex-direction: column; gap: 10px;"></div>
               <div class="qreplies" style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
-                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4;">תשובתכם:</span>
+                <span style="font-size: 12px; color: #7DA2C4;">תשובתכם:</span>
                 <div class="qreply" role="button" tabindex="0">תפוקת שתן</div>
                 <div class="qreply" role="button" tabindex="0">רמת אוריאה בדם</div>
                 <div class="qreply" role="button" tabindex="0">eGFR מחושב</div>

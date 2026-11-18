@@ -102,6 +102,8 @@
      --ink), so the ring never touches the button's own violet. */
   .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ink), 0 0 0 6px var(--violet-on-soft); }
   .btn:disabled { opacity: .7; cursor: default; }
+  /* Forced colours drop the gradient fill: an outline keeps the button a button. */
+  @media (forced-colors: active) { .btn { border: 1px solid ButtonText; } .btn:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; } }
   .btn .ph { font-size: 18px; transition: transform .2s var(--ease); }
   /* Hover only where there is a real pointer: a tap on a phone would leave
      the hover state stuck on after the finger lifts. */
@@ -187,6 +189,12 @@
   .cd-note { font-size: 13px; line-height: 1.6; }
   .cd-note a { color: var(--t3); text-decoration: underline; text-underline-offset: 2px; }
   .cd-note a:hover { color: var(--cyan-soft); }
+  /* Each link is one unit (no-wrap), so on a narrow screen the second link moves
+     down whole; a pseudo-element gives each a ~44px tap area without making the
+     note any taller. */
+  .cd-note { isolation: isolate; }
+  .cd-note a { position: relative; display: inline-block; max-width: 100%; }
+  .cd-note a::after { content: ''; position: absolute; inset: -15px 0; z-index: -1; }
 
   /* SAMPLE QUESTION: a real, working component, not a picture of one. */
   .q { background: rgba(11,37,69,.78); border: 1px solid rgba(34,211,238,.22); border-radius: var(--r-xl); padding: 24px;
@@ -267,6 +275,9 @@
   .src-list li { display: flex; align-items: flex-start; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md);
                  padding: 14px 16px; font-size: 15.5px; line-height: 1.55; color: var(--t1); }
   .src-list .ph { flex: none; font-size: 20px; color: var(--cyan); margin-top: 1px; }
+  /* A title is a left-to-right run, so its own start is the left; the card's
+     start is the right, by the icon. Align to that, wrapped or not. */
+  .src-list .ltr-iso { text-align: end; }
   .src-more { margin: 22px 0 0; }
   .src-more a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 16px; font-weight: 600; color: var(--cyan-soft); text-decoration: underline; text-underline-offset: 4px; }
   .src-more a:hover { color: #fff; }

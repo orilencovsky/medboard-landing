@@ -97,6 +97,8 @@
      --ink), so the ring never touches the button's own violet. */
   .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ink), 0 0 0 6px var(--violet-on-soft); }
   .btn:disabled { opacity: .7; cursor: default; }
+  /* Forced colours drop the gradient fill: an outline keeps the button a button. */
+  @media (forced-colors: active) { .btn { border: 1px solid ButtonText; } .btn:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; } }
   .btn .ph { font-size: 18px; transition: transform .2s var(--ease); }
   /* Hover only where there is a real pointer: a tap on a phone would leave
      the hover state stuck on after the finger lifts. */
@@ -181,6 +183,12 @@
   .cd-note { font-size: 13px; line-height: 1.6; }
   .cd-note a { color: var(--t3); text-decoration: underline; text-underline-offset: 2px; }
   .cd-note a:hover { color: var(--cyan-soft); }
+  /* Each link is one unit (no-wrap), so on a narrow screen the second link moves
+     down whole; a pseudo-element gives each a ~44px tap area without making the
+     note any taller. */
+  .cd-note { isolation: isolate; }
+  .cd-note a { position: relative; display: inline-block; max-width: 100%; }
+  .cd-note a::after { content: ''; position: absolute; inset: -15px 0; z-index: -1; }
 
   /* SAMPLE QUESTION: a real, working component, not a picture of one. */
   .q { background: rgba(11,37,69,.78); border: 1px solid rgba(34,211,238,.22); border-radius: var(--r-xl); padding: 24px;
@@ -581,6 +589,11 @@
   .exam-when { margin-top: 6px !important; font-size: 16px; line-height: 1.6; color: var(--t2); }
   .exam-when a, .exam-more a { color: var(--cyan-soft); text-decoration: underline; text-underline-offset: 3px; }
   .exam-more { margin-top: 6px !important; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 14.5px; }
+  /* The row's links are small text: each gets a ~44px tap area from a pseudo-element,
+     so the row keeps its look. */
+  .exam-row h3 a, .exam-when a, .exam-more a { position: relative; }
+  .exam-row h3 a::after { content: ''; position: absolute; inset: -11px 0; }
+  .exam-when a::after, .exam-more a::after { content: ''; position: absolute; inset: -14px 0; }
   .exam-days { text-align: center; font-size: 14px; font-weight: 600; color: var(--t2); white-space: nowrap; }
   .exam-days b { display: block; font-family: 'IBM Plex Sans', var(--sans); font-size: 30px; font-weight: 700; line-height: 1.1; color: var(--cyan-soft);
                  font-variant-numeric: tabular-nums; }
@@ -597,6 +610,11 @@
   .crumbs li + li::before { content: '/'; margin-inline-end: 8px; color: var(--t4); }
   .crumbs a { color: var(--t3); text-decoration: underline; text-underline-offset: 3px; }
   .crumbs a:hover { color: var(--cyan-soft); }
+  /* Breadcrumb links: 44px tap targets, the row pulled up so the text stays put
+     (the 44px box less the 16px line, split above and below). */
+  .crumbs { align-items: center; row-gap: 0; margin-block: -14px 4px; }
+  .crumbs li { display: inline-flex; align-items: center; }
+  .crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
   .src-group + .src-group { margin-top: 40px; }
   .src-group h3.src-group-title { margin: 0 0 16px; font-size: 20px; font-weight: 700; color: #fff; }
   .src-detail { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }

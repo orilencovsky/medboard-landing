@@ -324,7 +324,6 @@ export function buildSourcesPage(id, read = (p) => readFileSync(join(root, p), '
   .crumbs { align-items: center; row-gap: 0; margin-block: -12px 6px; }
   .crumbs li { display: inline-flex; align-items: center; }
   .crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
-  .page-hero .cd-note a { display: inline-flex; align-items: center; min-height: 44px; }
   .src-group + .src-group { margin-top: 40px; }
   .src-group h3.src-group-title { margin: 0 0 16px; font-size: 20px; font-weight: 700; color: #fff; }
   /* Cards fill the row: three sit side by side on wide screens, any other
