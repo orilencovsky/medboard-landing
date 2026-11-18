@@ -22,6 +22,9 @@ en/index.html            English landing page — a full translation, not a wrap
 privacy.html, terms.html, accessibility.html          Legal pages, Hebrew (/privacy, /terms, /accessibility)
 en/privacy.html, en/terms.html, en/accessibility.html Legal pages, English (under /en)
 404.html                 Not-found page — one bilingual file for every missing path
+fonts/                   Self-hosted IBM Plex: `fonts.css` (the @font-face rules every page links), the woff2
+                         subsets, `OFL.txt` (the font license) and `README.md` (source, version, how to regenerate);
+                         see "Fonts"
 hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
@@ -71,7 +74,7 @@ scripts/make-promo-image.mjs renders a specialty promo card: `og|square` × `fm|
                          e.g. `node scripts/make-promo-image.mjs og cardio` -> og-cardiology.png. The raw render is large, so shrink
                          it afterwards: `pngquant --quality 80-95 --ext .png -f <file>` if installed (optional), else
                          Pillow `quantize(256)` (~100-145 KB either way; the Mac these were made on has no pngquant).
-                         The script loads IBM Plex from Google Fonts itself, so it needs network. Chrome binary: `$CHROME`
+                         The script loads IBM Plex from the repo's own `fonts/fonts.css`, so it needs no network. Chrome binary: `$CHROME`
                          if set, else the first of a Playwright headless shell, `/Applications/Google Chrome.app/…`,
                          `google-chrome`, `chromium` that answers `--version` — so on a Mac the local Chrome is used as is.
                          After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
@@ -559,6 +562,50 @@ A newer push to the same pull request cancels the older run; a run on `main` is 
 two quick merges are both checked. The daily exam-date workflow (`ima-dates.yml`) is separate; see
 "Exam dates".
 
+## Fonts
+
+The pages use three IBM Plex families, all served from `/fonts/` (no request leaves the site for a
+font, so no visitor's IP reaches Google before consent):
+
+| Family | Files | Used by |
+|---|---|---|
+| IBM Plex Sans Hebrew 400/500/600/700 | `ibm-plex-sans-hebrew-v12-<weight>-hebrew.woff2` and `-latin.woff2` (~5.6 KB + ~20 KB each) | every Hebrew page, and `/en/accessibility`, `/en/connect` (their body font) |
+| IBM Plex Sans 400–700 (one variable file) | `ibm-plex-sans-v23-latin.woff2` (45 KB) | `/en`, `/en/privacy`, `/en/terms`; the Latin wordmark and countdown digits on the specialty pages, their sources pages and `/exams` |
+| IBM Plex Mono 400/500 | `ibm-plex-mono-v23-400-latin.woff2`, `-500-latin.woff2` (~15 KB each) | labels, numbers, the `.ai` of the wordmark |
+
+Only the Hebrew and Latin subsets are shipped: no page text needs latin-ext, Cyrillic or Greek (the one
+`β` on `/nephrology` is drawn by the system font). Weight 300 is not shipped because nothing uses it.
+One shared `fonts/fonts.css` is fine for every page: a browser downloads only the files whose family,
+weight and `unicode-range` its text needs: ~130 KB on the Hebrew home page, ~115 KB on a Hebrew legal
+page, ~175 KB on a specialty, sources or exams page (the 45 KB Plex Sans file draws only the wordmark and
+the countdown digits there, as it did under Google Fonts), ~75 KB on `/en` and ~60 KB on the English
+legal pages. All 11 files together are 174 KB.
+
+- **Preload.** Each page preloads the files its first screen needs: Hebrew pages the Hebrew and
+  Latin subsets of weights 400 and 700, `/en`, `/en/privacy` and `/en/terms` the Plex Sans file and
+  Mono 400, `/en/accessibility` and `/en/connect` the Latin subsets of Plex Sans Hebrew 400 and 700.
+  A preload that the page does not use is wasted bytes and a console warning, so change the list
+  when a page's fonts change.
+- **Fallbacks.** `fonts.css` also defines `IBM Plex Sans Hebrew Fallback`, `IBM Plex Sans Fallback` and
+  `IBM Plex Mono Fallback`: local Arial / Courier New with `size-adjust` and ascent/descent/line-gap
+  overrides matched to Plex, so the swap from the fallback to the real face (`font-display: swap`)
+  moves almost no text (layout shift). Every font stack names its fallback right after the Plex
+  family, e.g. `'IBM Plex Sans Hebrew', 'IBM Plex Sans Hebrew Fallback', sans-serif`; keep that pattern
+  in new CSS.
+- **Caching.** `vercel.json` serves `/fonts/*.woff2` with `Cache-Control: public, max-age=31536000,
+  immutable`. The file names carry the upstream version (`v12`, `v23`), so **never overwrite a woff2
+  in place**: a changed file gets a new name, and `fonts.css` and the preloads point at it.
+  `fonts.css` itself is not immutable.
+- **License.** IBM Plex is under the SIL Open Font License 1.1 (`fonts/OFL.txt`), which allows
+  self-hosting and subsetting; keep the license file next to the fonts.
+- **Regenerating.** `fonts/README.md` records the source URLs and steps: fetch Google Fonts' CSS2 for
+  the families with a current Chrome user agent (so it answers with woff2 and per-subset
+  `unicode-range` blocks), download the `hebrew` and `latin` files, copy the `unicode-range` values
+  into `fonts.css`, and recompute the fallback overrides if the metrics changed.
+- `scripts/fonts.test.mjs` guards this: no page, script or `vercel.json` names Google Fonts, every
+  file `fonts.css` or a preload references exists, and every page links `fonts.css` with at least one
+  preload of a file it lists.
+
 ## Editing conventions
 
 - **Both languages, every time.** `index.html` (Hebrew, the root) and `en/index.html` are independent
@@ -587,8 +634,9 @@ no bundler and its inline `<script>`/`<style>` blocks mean `script-src`/`style-s
 `'unsafe-inline'` (no nonces are possible on hand-authored static HTML — a tradeoff, not an
 oversight):
 
-- `https://fonts.googleapis.com` (stylesheet) and `https://fonts.gstatic.com` (the font files it
-  references) — Google Fonts, every page.
+- Fonts are self-hosted: every page links `/fonts/fonts.css` and its woff2 files, covered by `'self'`
+  in `style-src` and `font-src`. No font origin is listed (see "Fonts"); `scripts/fonts.test.mjs`
+  fails if a page or `vercel.json` names Google Fonts again.
 - Icons are self-hosted: `/ph.css` draws the Phosphor glyphs as CSS masks from `data:` SVGs, which
   `img-src` already allows. No third-party icon origin is needed.
 - `https://www.googletagmanager.com` and `https://www.clarity.ms` / `https://*.clarity.ms` — GA4 and

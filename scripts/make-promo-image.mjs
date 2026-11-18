@@ -17,6 +17,7 @@ import { writeFileSync, unlinkSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 // The second argument picks the page; family medicine stays the default so
 // the original commands keep producing the same files.
@@ -59,11 +60,12 @@ const MARK = `<svg width="${V.mark}" height="${V.mark}" viewBox="0 0 96 96" fill
   <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
 </svg>`;
 
-// The fonts come from Google Fonts, the same families the pages load, so the
-// card renders the same on a machine without IBM Plex installed (a missing
-// font silently fell back to the system face). display=block + the virtual
-// time budget below give them time to arrive before the screenshot.
-const FONTS = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;600;700&family=IBM+Plex+Sans:wght@700&family=IBM+Plex+Mono:wght@400&display=block';
+// The fonts are the site's own self-hosted files (fonts/fonts.css), the same
+// faces the pages load, so the card renders the same on a machine without
+// IBM Plex installed (a missing font silently fell back to the system face)
+// and needs no network. The virtual time budget below gives them time to
+// load before the screenshot.
+const FONTS = pathToFileURL(join(fileURLToPath(new URL('..', import.meta.url)), 'fonts', 'fonts.css')).href;
 const html = `<!doctype html><html lang="he"><head><meta charset="utf-8"><link rel="stylesheet" href="${FONTS}"><style>
   html, body { margin: 0; padding: 0; }
   .card {

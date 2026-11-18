@@ -19,10 +19,11 @@
 <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/ibm-plex-sans-v23-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-mono-v23-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
-  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans', sans-serif; }
+  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans', 'IBM Plex Sans Fallback', sans-serif; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
   .doc { max-width: 820px; margin: 0 auto; padding: 56px 32px 88px; }
   .doc h1 { margin: 0 0 8px; font-size: 38px; font-weight: 700; color: #0F172A; line-height: 1.25; }
@@ -34,7 +35,7 @@
      body #334155 is 1.9:1, under WCAG 1.4.1's 3:1) — so it keeps its underline. */
   .doc p a, .doc li a, .doc td a { text-decoration: underline; text-underline-offset: 2px; }
   /* #64748B on this background is 4.37:1 — under the 4.5:1 this page claims. */
-  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
+  .updated { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 13px; color: #5B6B80; letter-spacing: .04em; }
   .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 22px 26px; margin: 22px 0; }
   .card p:first-child { margin-top: 0; } .card p:last-child { margin-bottom: 0; }
   .card-warn { background: #FFF7ED; border-color: #FED7AA; }
@@ -76,7 +77,7 @@
           <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
           <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
         </svg>
-        <span style="display: flex; align-items: baseline;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
+        <span style="display: flex; align-items: baseline;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
       </a>
       <div style="display: flex; align-items: center; gap: 18px;">
         <a href="/en/privacy" style="color: #B8D4EA; font-size: 14px;">Privacy Policy</a>
@@ -146,7 +147,7 @@
   <!-- FOOTER -->
   <footer style="background: #04101E; padding: 36px 32px;">
     <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-      <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
       <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
         <a class="foot-link" href="/en/privacy">Privacy Policy</a>
         <a class="foot-link" href="/en/terms">Terms of Use</a>

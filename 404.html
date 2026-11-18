@@ -14,17 +14,20 @@
 <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-400-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-700-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
-  body { margin: 0; background: #061225; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  body { margin: 0; background: #061225; font-family: 'IBM Plex Sans Hebrew', 'IBM Plex Sans Hebrew Fallback', sans-serif; }
   a { color: #7DD3FC; text-decoration: none; }
   a:hover, a:focus-visible { color: #22D3EE; text-decoration: underline; }
   :focus-visible { outline: 2px solid #22D3EE; outline-offset: 3px; }
   .wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
           gap: 20px; text-align: center; padding: 48px 24px;
           background: linear-gradient(165deg, #061225 0%, #0A1F3D 100%); }
-  .code { font-family: 'IBM Plex Mono', monospace; font-size: 15px; letter-spacing: .22em; color: #22D3EE; margin: 0; }
+  .code { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 15px; letter-spacing: .22em; color: #22D3EE; margin: 0; }
   h1 { margin: 0; font-size: 40px; font-weight: 700; color: #fff; line-height: 1.2; }
   p.lead { margin: 0; max-width: 460px; font-size: 17px; color: #B8D4EA; line-height: 1.7; }
   .home { margin-top: 8px; display: inline-flex; align-items: center; gap: 9px; background: linear-gradient(135deg, #4A38C9, #6D4AFF);
