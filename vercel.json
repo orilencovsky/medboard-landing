@@ -54,7 +54,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": "^.*([Bb][Oo][Tt]|[Ss][Pp][Ii][Dd][Ee][Rr]|[Cc][Rr][Aa][Ww][Ll]|Google-InspectionTool|GoogleOther|Mediapartners-Google|facebookexternalhit|WhatsApp|Chrome-Lighthouse|Google-Read-Aloud|BingPreview|SkypeUriPreview|Viber|Claude-User|Perplexity-User).*$"
+          "value": "^.*([Bb][Oo][Tt]|[Ss][Pp][Ii][Dd][Ee][Rr]|[Cc][Rr][Aa][Ww][Ll]|Google-InspectionTool|GoogleOther|Mediapartners-Google|facebookexternalhit|WhatsApp|Chrome-Lighthouse|Google-Read-Aloud|BingPreview|SkypeUriPreview|Claude-User|Perplexity-User).*$"
         }
       ],
       "destination": "/en",
