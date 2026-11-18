@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
-<!-- Vercel Web Analytics. Deliberately not GA4: this measurement sets no cookie
-     and derives no persistent visitor id, so the page carries nothing that needs
-     a consent banner. The shim queues events fired before script.js loads.
+<!-- Vercel Web Analytics. Cookieless, with no persistent visitor id,
+     so it is not behind the consent banner and measures every visitor; GA4 and
+     Microsoft Clarity are the trackers that wait for opt-in (see /consent.js).
+     The shim queues events fired before script.js loads.
      Requires Web Analytics enabled on the Vercel project; /_vercel/insights/*
      is served by the platform, so it 404s on a local static server. -->
 <script>
@@ -696,7 +697,7 @@
         <p><strong>זו רשימת המקורות המרכזיים של MeduXa, לא רשימה רשמית.</strong> אלה המקורות שמהם לקוחים ההסברים והציטוטים בשאלות אצלנו. את הפרטים הרשמיים על הבחינה מפרסמת ההסתדרות הרפואית, ב<a href="https://www.ima.org.il/Internship/Events.aspx" target="_blank" rel="noopener">לוח הבחינות של הר״י</a>.</p>
         <p><strong>הסילבוס הרשמי.</strong> את הסילבוס של גריאטריה מפרסמת ההסתדרות הרפואית, ב<a href="https://www.ima.org.il/Internship/Syllabus.aspx?SpId=42" target="_blank" rel="noopener">עמוד הסילבוס באתר הר״י</a>.</p>
         <p data-exam-fact><strong>מועד הבחינה.</strong> בחינת שלב א׳ תתקיים ב-<span class="ltr-iso">14.06.2027</span>, לפי לוח הר״י.</p>
-        <p><strong>איך זה נראה בתרגול.</strong> שאלות בסגנון שלב א׳, שמבוססות על נושאים ממבחני עבר ונערכו על ידי הצוות שלנו. לכל תשובה יש הסבר עם ציטוט מהמקור, מורה <span class="ltr-iso">AI</span> סוקרטי שמנחה בשאלות במקום למסור את התשובה, וחזרה מרווחת. <a href="/geriatrics" data-geri-cta="sources_more">עוד על ההכנה לגריאטריה</a></p>
+        <p><strong>איך זה נראה בתרגול.</strong> שאלות בסגנון שלב א׳. לכל תשובה יש הסבר עם ציטוט מהמקור, מורה <span class="ltr-iso">AI</span> סוקרטי שמנחה בשאלות במקום למסור את התשובה, וחזרה מרווחת. <a href="/geriatrics" data-geri-cta="sources_more">עוד על ההכנה לגריאטריה</a></p>
       </div>
     </div>
   </section>
@@ -716,7 +717,7 @@
   <div class="wrap foot">
     <span class="word"><b>MeduXa</b><i>.ai</i></span>
     <span class="foot-links"><a class="foot-link" href="/exams">מועדי בחינות</a><a class="foot-link" href="/privacy">מדיניות פרטיות</a><a class="foot-link" href="/terms">תנאי שימוש</a><a class="foot-link" href="/accessibility">הצהרת נגישות</a><a class="foot-link" href="mailto:hello@meduxa.ai" dir="ltr">hello@meduxa.ai</a></span>
-    <small>© 2026 MeduXa. ללמוד חכם יותר לבחינות ההתמחות. כל הזכויות שמורות.</small>
+    <small>© 2026 MeduXa · מדוקסה. ללמוד חכם יותר לבחינות ההתמחות. כל הזכויות שמורות.</small>
   </div>
 </footer>
 

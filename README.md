@@ -26,16 +26,16 @@ hero.mp4 / hero.webm             Desktop hero video
 hero-mobile.mp4 / hero-mobile.webm   Phone hero video (<=600px)
 og-image.png             Open Graph / Twitter card — English (/en)
 og-image-he.png          Open Graph / Twitter card — Hebrew (root)
-specialty.template.html  The ONE template behind the four specialty pages below (header + exam countdown, sample
+specialty.template.html  The ONE template behind the eight specialty pages below (header + exam countdown, sample
                          questions, sources, status, method, features, comparison, closing). Hand-authored input to
                          `scripts/render-specialties.mjs`, which renders it with the page data; not deployed
 specialties/             Per-specialty page data (`nephrology|family-medicine|pediatrics|cardiology|geriatrics|psychiatry|anesthesia|obgyn.json`): copy,
                          sample questions, sign-up settings. Exam dates and sources are NOT here — see "Exam dates"
 nephrology.html          /nephrology — the live nephrology sub-specialty (part A) page, with an app CTA
                          (`התחילו ללמוד — חינם`, `pl=hero|closing`); linked from the homepage's #tracks card
-cardiology.html          /cardiology — "coming soon" page for the cardiology sub-specialty (part A), with a
-                         consented email sign-up (waitlist source 'landing_cardio', interest 'cardiology');
-                         linked from the homepage's #tracks card. No launch-price copy anywhere
+cardiology.html          /cardiology — the live cardiology sub-specialty page, with an app CTA
+                         (`התחילו ללמוד — חינם`, `pl=cardio_hero|cardio_closing`); linked from the homepage's
+                         #tracks card. No launch-price copy anywhere
 family-medicine.html     /family-medicine — "coming soon" page for family medicine Stage A, with a consented
                          email sign-up (waitlist, source 'landing_fm'); linked from the homepage's #tracks card
 pediatrics.html          /pediatrics — the same "coming soon" page for pediatrics Stage A (waitlist source
@@ -44,7 +44,7 @@ geriatrics.html, psychiatry.html, anesthesia.html, obgyn.html
                          /geriatrics, /psychiatry, /anesthesia, /obgyn — "coming soon" pages for Stage A, with a
                          consented email sign-up (sources 'landing_geri|psych|anes|obgyn'; interests
                          'geriatrics|psychiatry|anesthesia|obgyn'). No launch-price copy
-                         (all four pages are generated: `node scripts/render-specialties.mjs`; see "Specialty pages")
+                         (all eight specialty pages are generated: `node scripts/render-specialties.mjs`; see "Specialty pages")
 og-nephrology.png, og-cardiology.png, og-family-medicine.png, og-pediatrics.png,
 og-geriatrics.png, og-psychiatry.png, og-anesthesia.png, og-obgyn.png
                          link-preview cards (what WhatsApp shows for each page's link)
@@ -54,15 +54,15 @@ tracks.json              The study tracks (live / coming soon) behind the homepa
                          top banner and closing line, in both languages; see "Study tracks" below
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
-.vercelignore            Keeps `specialty.template.html`, `specialties/` and `docs/` out of the deployment, so the raw
-                         template (full of `{{…}}` placeholders), the page data and the internal docs (specs, plans,
-                         unapproved question candidates) are not served. Only those three:
+.vercelignore            Keeps `specialty.template.html`, `exams.template.html`, `specialties/` and `docs/` out of the
+                         deployment, so the raw templates (full of `{{…}}` placeholders), the page data and the internal
+                         docs (specs, plans, unapproved question candidates) are not served. Only those four:
                          `api/`, `scripts/` and everything else still deploy
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
 scripts/make-promo-image.mjs renders a specialty promo card: `og|square` × `fm|peds|nephro|cardio` (`fm` is the default;
-                         `nephro` is "open now" with no launch-price line, `cardio` is "coming soon" with none either),
+                         `nephro` and `cardio` are "open now" with no launch-price line),
                          e.g. `node scripts/make-promo-image.mjs og cardio` -> og-cardiology.png. The raw render is large, so shrink
                          it afterwards: `pngquant --quality 80-95 --ext .png -f <file>` if installed (optional), else
                          Pillow `quantize(256)` (~100-145 KB either way; the Mac these were made on has no pngquant).
@@ -72,7 +72,7 @@ scripts/make-promo-image.mjs renders a specialty promo card: `og|square` × `fm|
                          After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
 scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
 scripts/render-tracks.mjs    renders tracks.json into both landing pages (`--check` = drift guard; tests beside it)
-scripts/render-specialties.mjs  renders specialty.template.html + specialties/*.json + tracks.json into the four
+scripts/render-specialties.mjs  renders specialty.template.html + specialties/*.json + tracks.json into the eight
                          specialty pages (`--check` = drift guard; tests beside it)
 scripts/build-sources-page.mjs  builds /<track>/sources for a "soon" track from its rendered page, tracks.json and
                          its own copy (`node scripts/build-sources-page.mjs <obgyn|pediatrics|psychiatry|anesthesia>`, `--check` = drift guard); see "Sources pages"
@@ -135,7 +135,7 @@ The pages stay plain static HTML, so crawlers, no-JS visitors and the first pain
 - `exam` and `sources` on an entry feed the specialty pages, and `launchOffer` puts a `soon` track in the
   top banner (see "Exam dates" and "Specialty pages").
 - `pageLang` marks a destination page in another language: on `/en`, every card whose page is Hebrew
-  (all four today) shows a "Hebrew content" pill, which is also part of the link's accessible
+  (all eight today) shows a "Hebrew content" pill, which is also part of the link's accessible
   description, and the link carries `hreflang="he"`.
 - `{{…}}` inside a Hebrew blurb marks a Latin run (`1,000+`, `AI`) that is rendered as
   `<span class="ltr-iso">`.
@@ -155,12 +155,12 @@ beside the other checks); never hand-edit a generated page. Tests:
 `node --test scripts/render-specialties.test.mjs scripts/countdown.test.mjs`.
 
 Page order: header + exam countdown, sample questions (absent when there are none), sources, status,
-method, features, comparison, closing. A `mode: "live"` page (nephrology) ends in an app button; a
+method, features, comparison, closing. A `mode: "live"` page (nephrology, cardiology) ends in an app button; a
 `mode: "soon"` page ends in the consented sign-up form. Exam name, date and sources come from the
 track's entry in `tracks.json`, never from the page data (see "Exam dates").
 
 The template, the page data and `docs/` are not meant to be served: `.vercelignore` keeps
-`specialty.template.html`, `specialties/` and `docs/` out of the deployment. Nothing else is excluded —
+`specialty.template.html`, `exams.template.html`, `specialties/` and `docs/` out of the deployment. Nothing else is excluded —
 `api/` and `scripts/` still deploy.
 
 | Track id | Analytics prefix | Waitlist source / interest | App module |
@@ -168,7 +168,7 @@ The template, the page data and `docs/` are not meant to be served: `.verceligno
 | `nephrology` | `nephro` | — (live: app button) | `nephrology` |
 | `family-medicine` | `fm` | `landing_fm` / `family_medicine` | `family` |
 | `pediatrics` | `peds` | `landing_peds` / `pediatrics` | `peds` |
-| `cardiology` | `cardio` | `landing_cardio` / `cardiology` | `cardio` |
+| `cardiology` | `cardio` | — (live: app button) | `cardio` |
 | `geriatrics` | `geri` | `landing_geri` / `geriatrics` | `geriatrics` |
 | `psychiatry` | `psych` | `landing_psych` / `psychiatry` | `psychiatry` |
 | `anesthesia` | `anes` | `landing_anes` / `anesthesia` | `anesthesia` |
@@ -270,7 +270,7 @@ statement says both of those in its own text rather than implying otherwise.
 | The statement says | So keep true |
 |---|---|
 | Every interactive element is reachable by `Tab` and fires on `Enter`/`Space` | The demo card's options, chips, send and expand controls are `div`s with `role="button"`; their keyboard handling is wired by hand in the page script. A new `div` control needs the same wiring — see the `keydown` delegation at the bottom of `index.html` |
-| Every page has a skip link, first in the tab order, pointing at `<main id="main">` | All eight pages carry `<a class="skip" href="#main">` right after `<body>` and exactly one `<main id="main">`. A new page needs both |
+| Every page has a skip link, first in the tab order, pointing at `<main id="main">` | Every page except `404.html` carries `<a class="skip" href="#main">` right after `<body>` and exactly one `<main id="main">`. A new page needs both |
 | Every text colour meets 4.5:1 against its background | Check any new colour before using it. Two were fixed to make this true: the waitlist status line (`#94A3B8` → `#64748B`, 2.56:1 → 4.76:1) and the legal pages' "last updated" line (`#64748B` → `#5B6B80`, 4.37:1 → 4.99:1 on `#F0F6FA`) |
 | The hero video is silent, decorative and hidden under `prefers-reduced-motion` | It is `muted`, `aria-hidden="true"`, and hidden by the reduced-motion media query. Any new motion follows the same rule |
 | Section 4 lists the known gaps | It names four, honestly — unmarked `lang` on Latin terms inside Hebrew (WCAG 3.1.2), the hover-and-click science cards, unreviewed live tutor wording, and third-party DOI links. **Fixing one means deleting it from the list; adding a gap means adding it** |
@@ -423,13 +423,13 @@ the consent checkbox and the § 11 notice at the point of collection. They call 
 stored in `waitlist.interests` (`family_medicine`, `pediatrics`, `cardiology`, `geriatrics`, `psychiatry`,
 `anesthesia`, `obgyn`). The last four come from the product migration
 `20261113190000_waitlist_interest_new_tracks.sql` (applied on prod by the merge of Pilot #1371; same
-rule as cardiology below: a new interest key needs its migration live before the page ships).
+rule as below: a new interest key needs its migration live before the page ships).
 
-**`/cardiology` must not go live before the product's migration is applied.** The interest has to exist
-as a row in the product repo's `waitlist_interest_keys` table (key `cardiology`, active), added by
-orilencovsky/Pilot#1045. Without it a cardiology sign-up is saved with no interest mark, and nobody
-sees an error. Gate the deploy on a read-only check:
-`select key, active from public.waitlist_interest_keys where key = 'cardiology';` must return one
+**A sign-up page must not go live before the product's migration is applied.** The interest has to exist
+as a row in the product repo's `waitlist_interest_keys` table, active (for `cardiology`, back when it was
+a "coming soon" page, that row was added by orilencovsky/Pilot#1045). Without it a sign-up is saved with
+no interest mark, and nobody sees an error. Gate the deploy on a read-only check:
+`select key, active from public.waitlist_interest_keys where key = '<interest>';` must return one
 active row. A new "coming soon" specialty needs the same row first.
 
 ### Handling a deletion request
@@ -580,8 +580,8 @@ no entry.
 
 Two layers, with different consent rules.
 
-**Vercel Web Analytics — every visitor.** Wired inline on both landing pages and on
-the four specialty pages (the shim plus `/_vercel/insights/script.js`). Cookieless, no visitor id, so it
+**Vercel Web Analytics — every visitor.** Wired inline on both landing pages, the
+eight specialty pages, their sources pages and `/exams` (the shim plus `/_vercel/insights/script.js`). Cookieless, no visitor id, so it
 needs no consent. It has to be switched on under **Vercel → Project → Analytics**; the path is
 served by the platform, so it 404s on a local static server. Custom events, all through
 `va('event', { name, data })`:
@@ -686,8 +686,9 @@ styles, nav, footer and countdown script of its track page.
   `specialties/<id>.json`, and the copy from its `CONTENT` object. A `launchOffer` adds the
   family-medicine page's launch-price words to the closing line; a `cmpReview` claim (shown on the
   track page) is repeated in the questions line, and the script refuses a page that would make
-  either promise without its source. Each of the three newer pages links the IMA's official
-  syllabus page for its specialty (never calling the list the syllabus). To add a track, add a
+  either promise without its source. Every sources page, hand-built or generated, links the IMA's
+  official syllabus page for its specialty (never calling the list the syllabus); pediatrics also links
+  the Ministry of Health's vaccine guide. To add a track, add a
   `CONTENT` entry (only facts the repo already states), run the script, then set `sourcesHref` and
   add the sitemap entry and a `PAGES` row in the test. It builds only `soon` tracks, and refuses the
   four older pages, which are not in `CONTENT`. Re-run it after a change to `specialty.template.html`
