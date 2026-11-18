@@ -19,10 +19,13 @@
 <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-400-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-700-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-sans-hebrew-v12-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
-  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
+  body { margin: 0; background: #F0F6FA; font-family: 'IBM Plex Sans Hebrew', 'IBM Plex Sans Hebrew Fallback', sans-serif; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #0891B2; text-decoration: underline; }
   .ltr-iso { direction: ltr; unicode-bidi: isolate; }
   .doc { max-width: 820px; margin: 0 auto; padding: 56px 32px 88px; }
@@ -77,7 +80,7 @@
           <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
           <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
         </svg>
-        <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
+        <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 20px; color: #22D3EE;">.ai</span></span>
       </a>
       <div style="display: flex; align-items: center; gap: 18px;">
         <a href="/privacy" style="color: #B8D4EA; font-size: 14px;">מדיניות פרטיות</a>
@@ -147,7 +150,7 @@
   <!-- FOOTER -->
   <footer style="background: #04101E; padding: 36px 32px;">
     <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-      <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: baseline; direction: ltr;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
       <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
         <a class="foot-link" href="/exams">מועדי בחינות</a>
         <a class="foot-link" href="/privacy">מדיניות פרטיות</a>

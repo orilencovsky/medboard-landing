@@ -12,7 +12,7 @@ import { Hero, Navbar, FeatureCard } from 'meduxa-landing-ds';
 
 **Dark-surface components must be composed on a dark background.** `Button` (`variant="secondary"`), `Badge`, `StatItem`, and `Logo`'s default wordmark color are styled for the brand's navy surfaces (`--ds-ink` / `--ds-deep`) — placing them directly on white renders illegibly light text. `Navbar`, `Hero`, `VisionSection`, and `Footer` already carry their own dark background and don't need wrapping.
 
-Fonts (IBM Plex Sans + IBM Plex Mono) load via a Google Fonts `@import` shipped in the bundled stylesheet — no local font files to configure.
+Fonts (IBM Plex Sans + IBM Plex Mono) are self-hosted: `design-system/src/styles.css` imports `../../fonts/fonts.css` (the repo's `fonts/` folder, see README "Fonts"); the design-system folder itself is not deployed.
 
 ## Styling idiom: CSS custom properties, not utility classes
 

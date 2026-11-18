@@ -90,10 +90,11 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"MeduXa","alternateName":["MeduXa.ai","מדוקסה"],"url":"https://meduxa.ai/","logo":"https://meduxa.ai/android-chrome-512x512.png","email":"hello@meduxa.ai"}
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/ibm-plex-sans-v23-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-mono-v23-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
-  body { margin: 0; background: #061225; font-family: 'IBM Plex Sans', sans-serif; }
+  body { margin: 0; background: #061225; font-family: 'IBM Plex Sans', 'IBM Plex Sans Fallback', sans-serif; }
   a { color: #0E7490; text-decoration: none; } a:hover { color: #22D3EE; }
   /* The video sits in .hero-bg rather than in <header> directly: object-fit
      re-crops on every height change, and the demo card below grows as it is
@@ -109,7 +110,7 @@
   /* ===== Hero demo card (interactive) ===== */
   .qopt { border: 1px solid #1E4A6E; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #B8D4EA; display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: pointer; transition: border-color .15s, background .15s; }
   .qopt:hover { border-color: #2E6D9E; background: rgba(34,211,238,.04); }
-  .qopt .mark { font-family: 'IBM Plex Mono', monospace; font-size: 13px; opacity: 0; }
+  .qopt .mark { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 13px; opacity: 0; }
   .qopt.sel { border: 1.5px solid #7C5CFF; background: rgba(124,92,255,.12); color: #E2F4FD; font-weight: 600; }
   .qopt.bad { border: 1.5px solid #F87171; background: rgba(248,113,113,.1); color: #FECACA; font-weight: 600; }
   /* The right answer, revealed after a wrong pick. Teal, never the violet of
@@ -192,7 +193,7 @@
   .sci-desc { margin: 0; font-size: 15px; line-height: 1.7; color: #B8D4EA; }
   /* The reference marker is a real link to its entry below; the ::after
      gives the small label a ~44px tap area. */
-  .sci-cite { position: relative; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; color: #67E8F9; text-decoration: none; direction: ltr; }
+  .sci-cite { position: relative; font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; font-weight: 500; color: #67E8F9; text-decoration: none; direction: ltr; }
   .sci-cite::after { content: ''; position: absolute; inset: -14px -12px; }
   .sci-cite:hover { color: #A5F3FC; text-decoration: underline; text-underline-offset: 2px; }
   .sci-cite:focus-visible { outline: 2px solid #C4B5FD; outline-offset: 3px; border-radius: 3px; }
@@ -225,7 +226,7 @@
   }
 
   .sci-refs { position: relative; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(125,162,196,.18); }
-  .sci-refs-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: #6B95B5; margin: 0 0 12px; }
+  .sci-refs-title { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 11px; letter-spacing: .04em; color: #6B95B5; margin: 0 0 12px; }
   .sci-refs ol { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 8px; }
   .sci-refs li { font-size: 13px; line-height: 1.6; color: #7DA2C4; scroll-margin-top: 96px; border-radius: 6px; transition: background-color .6s ease; }
   /* A [n] jump lands below the sticky nav and marks the entry it opened. */
@@ -255,7 +256,7 @@
   .cmp2-meter-track i { flex: 1; height: 5px; border-radius: 3px; background: #E2E8F0; font-style: normal; }
   .cmp2-meter-track i.is-filled { background: linear-gradient(90deg, #0EA5E9, #22D3EE); }
   .cmp2-card--brand .cmp2-meter-track i.is-filled { box-shadow: 0 0 8px rgba(34,211,238,.55); }
-  .cmp2-meter-score { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #64748B; direction: ltr; }
+  .cmp2-meter-score { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 13px; color: #64748B; direction: ltr; }
   .cmp2-card--brand .cmp2-meter-score { color: #0E7490; font-weight: 600; }
   .cmp2-list { margin: 0; padding: 0; }
   .cmp2-list dt { display: flex; align-items: center; gap: 10px; margin: 0; padding-block-start: 14px; font-size: 14.5px; font-weight: 600; color: #0F172A; }
@@ -283,7 +284,7 @@
   .cmp3-score-label { font-size: 11px; font-weight: 700; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
   .cmp3-score-col--brand .cmp3-score-label { color: #0E7490; }
   .cmp3-score-col .cmp2-meter-track { flex: none; width: 100%; }
-  .cmp3-score-value { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #64748B; direction: ltr; }
+  .cmp3-score-value { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; color: #64748B; direction: ltr; }
   .cmp3-score-col--brand .cmp3-score-value { color: #0E7490; font-weight: 600; }
   .cmp3-row { padding: 16px; border-bottom: 1px solid #E2E8F0; }
   .cmp3-row:last-child { border-bottom: none; }
@@ -426,8 +427,8 @@
   @keyframes loopComet { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -1100; } }
   .loop-comet { stroke-dasharray: 46 1054; animation: loopComet 16s linear infinite; }
   .loop-center { position: absolute; left: 260px; top: 215px; transform: translate(-50%, -50%); width: 186px; display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 18px 14px; border-radius: 16px; border: 1px solid #1E4A6E; background: rgba(8,29,58,.92); box-shadow: 0 20px 50px rgba(2,8,20,.55); }
-  .loop-center-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; color: #7DA2C4; direction: ltr; }
-  .loop-center-value { font-family: 'IBM Plex Mono', monospace; font-size: 34px; font-weight: 500; color: #22D3EE; line-height: 1; direction: ltr; }
+  .loop-center-label { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 11px; letter-spacing: .16em; color: #7DA2C4; direction: ltr; }
+  .loop-center-value { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 34px; font-weight: 500; color: #22D3EE; line-height: 1; direction: ltr; }
   .loop-center-caption { font-size: 12px; color: #7DA2C4; text-align: center; }
   .loop-heat { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; width: 100%; }
   .loop-heat i { height: 12px; border-radius: 3px; background: #5EEAD4; }
@@ -435,12 +436,12 @@
   .loop-nodes { position: absolute; inset: 0; pointer-events: none; }
 
   .loop-node { position: absolute; transform: translate(-50%, -22px); width: 150px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0; background: transparent; border: none; font: inherit; cursor: pointer; pointer-events: auto; }
-  .loop-dot { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 500; direction: ltr; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); transition: background .25s, color .25s, border-color .25s, box-shadow .25s; }
+  .loop-dot { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 16px; font-weight: 500; direction: ltr; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); transition: background .25s, color .25s, border-color .25s, box-shadow .25s; }
   .loop-label { font-size: 15px; font-weight: 600; text-align: center; color: #B9D4E8; transition: color .25s; }
   /* The side nodes sit on the ring line, so their label needs an opaque chip or
      the circle is drawn straight through the word. */
   .loop-label.chip { background: rgba(6,18,37,.88); border-radius: 8px; padding: 3px 12px; }
-  .loop-soon { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 4px 11px; background: rgba(6,18,37,.88); }
+  .loop-soon { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 11px; letter-spacing: .16em; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 4px 11px; background: rgba(6,18,37,.88); }
   .loop-node[aria-selected="true"] .loop-dot { background: var(--acc-fill); color: #062033; box-shadow: 0 0 0 5px var(--acc-wash); }
   .loop-node[aria-selected="true"] .loop-label { color: #F1F7FC; }
   /* Step 04 is roadmap, not shipped: it never takes the gradient fill, however
@@ -455,7 +456,7 @@
 
   .loop-ribbon { display: none; gap: 8px; align-items: center; margin-bottom: 4px; }
   .loop-ribbon > i { width: 14px; height: 2px; background: #1E4A6E; flex-shrink: 0; }
-  .loop-pill { flex: 1; min-height: 44px; cursor: pointer; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); border-radius: 100px; padding: 10px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; text-align: center; transition: background .25s, color .25s, border-color .25s; }
+  .loop-pill { flex: 1; min-height: 44px; cursor: pointer; border: 1px solid var(--acc); background: #0B2545; color: var(--acc-soft); border-radius: 100px; padding: 10px 6px; font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; font-weight: 600; text-align: center; transition: background .25s, color .25s, border-color .25s; }
   .loop-pill[aria-selected="true"] { background: var(--acc-fill); color: #062033; }
   .loop-pill[data-accent="soon"] { border-color: #1E4A6E; color: #7DA2C4; }
   .loop-pill[data-accent="soon"][aria-selected="true"] { background: #0B2545; border-color: #7DA2C4; color: #B9D4E8; }
@@ -466,9 +467,9 @@
   .loop-panel[hidden] { display: none; }
   .loop-panel:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   .loop-panel-top { display: flex; align-items: center; gap: 12px; }
-  .loop-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; color: var(--acc); }
+  .loop-tag { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 11px; letter-spacing: .04em; color: var(--acc); }
   .loop-rule { flex-grow: 1; height: 1px; background: #153650; }
-  .loop-status { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; border-radius: 100px; padding: 5px 12px; color: #5EEAD4; border: 1px solid rgba(94,234,212,.4); white-space: nowrap; }
+  .loop-status { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 11px; letter-spacing: .16em; border-radius: 100px; padding: 5px 12px; color: #5EEAD4; border: 1px solid rgba(94,234,212,.4); white-space: nowrap; }
   .loop-panel[data-accent="soon"] .loop-status { color: #7DA2C4; border-color: #1E4A6E; }
   .loop-panel h3 { margin: 0; font-size: 28px; font-weight: 600; color: #F1F7FC; line-height: 1.3; }
   .loop-lead { margin: 0; font-size: 16px; line-height: 1.75; color: #B9D4E8; }
@@ -838,7 +839,7 @@
           <path d="M18 74 C 30 70, 40 60, 48 48 C 56 36, 66 26, 78 22" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" fill="none"></path>
           <circle cx="48" cy="48" r="9" fill="#22D3EE"></circle>
         </svg>
-        <span data-mq-logo-text style="display: flex; align-items: baseline;"><span style="font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; color: #22D3EE;">.ai</span></span>
+        <span data-mq-logo-text style="display: flex; align-items: baseline;"><span style="font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">MeduXa</span><span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 21px; color: #22D3EE;">.ai</span></span>
       </div>
       <div data-mq-navright style="display: flex; align-items: center; gap: 26px;">
         <a data-mq-hide class="nav-link" href="#tracks">Specialties</a>
@@ -920,7 +921,7 @@
       <div style="flex: 1 1 420px; max-width: 520px;">
         <div class="qcard" data-mq-demo style="background: #0B2545; border: 1px solid #1E4A6E; border-radius: 20px; padding: 26px; box-shadow: 0 30px 80px rgba(2,8,20,.6); display: flex; flex-direction: column; gap: 16px;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #7DA2C4;">Q-1838 · AKI</span>
+            <span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 13px; color: #7DA2C4;">Q-1838 · AKI</span>
             <span style="font-size: 13px; font-weight: 600; color: #5EEAD4;">Scheduled review · day 6</span>
           </div>
 
@@ -934,21 +935,21 @@
           </div>
 
           <div class="qreveal" style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="qhint" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #7DA2C4;">Pick an answer →</div>
+            <div class="qhint" style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; letter-spacing: .04em; color: #7DA2C4;">Pick an answer →</div>
             <!-- Replaces the hint once the verdict is in, so that options which
                  no longer move the ✓ do not read as broken. Kept short enough to
                  hold one line down to a 320px phone. -->
-            <div class="qhint-review" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; color: #7DA2C4;">Answer locked · read any option</div>
+            <div class="qhint-review" style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; letter-spacing: .04em; color: #7DA2C4;">Answer locked · read any option</div>
 
             <div class="qtutor" aria-live="polite" style="background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.28); border-radius: 12px; padding: 14px 16px; gap: 12px; align-items: flex-start;">
               <img src="/socrates-avatar-64.png" srcset="/socrates-avatar-64.png 2x, /socrates-avatar-128.png 3x" width="32" height="32" alt="" decoding="async" style="flex-shrink: 0; box-sizing: border-box; width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(124,92,255,.4);">
-              <div style="font-size: 14px; color: #9CC3DF; line-height: 1.6;"><span style="color: #C9BCFF; font-weight: 600;">AI tutor:</span> <span class="t-msg"></span><span style="display: block; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4;">[KDIGO staging]</span></div>
+              <div style="font-size: 14px; color: #9CC3DF; line-height: 1.6;"><span style="color: #C9BCFF; font-weight: 600;">AI tutor:</span> <span class="t-msg"></span><span style="display: block; margin-top: 6px; font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; color: #7DA2C4;">[KDIGO staging]</span></div>
             </div>
 
             <div class="qchat" style="flex-direction: column; gap: 10px;">
               <div class="qthread" aria-live="polite" style="display: flex; flex-direction: column; gap: 10px;"></div>
               <div class="qreplies" style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
-                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4;">Your answer:</span>
+                <span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; color: #7DA2C4;">Your answer:</span>
                 <div class="qreply" role="button" tabindex="0">Urine output</div>
                 <div class="qreply" role="button" tabindex="0">Blood urea</div>
                 <div class="qreply" role="button" tabindex="0">Calculated eGFR</div>
@@ -976,12 +977,12 @@
               <div><span style="color: #67E8F9; font-weight: 600;">Stage 3:</span> ≥3.0× baseline, or creatinine ≥4.0 mg/dL, or initiation of dialysis, <span style="color:#5EEAD4;">or</span> urine output &lt;0.3 mL/kg/h for ≥24 hours, or anuria ≥12 hours.</div>
             </div>
             <div style="border-top: 1px solid rgba(34,211,238,.18); padding-top: 10px; font-size: 13.5px; color: #B8D4EA; line-height: 1.55;"><span style="color: #5EEAD4; font-weight: 600;">In this case:</span> a difference of 0.27 mg/dL (under 0.3) and a ratio of 1.18× (under 1.5) — neither creatinine threshold was crossed. Urine output was never given, and without it AKI cannot be ruled out with confidence.</div>
-            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4;">KDIGO CPG for AKI · Section 2.1</div>
+            <div style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; color: #7DA2C4;">KDIGO CPG for AKI · Section 2.1</div>
           </div>
 
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="flex: 1; height: 6px; background: #153650; border-radius: 3px; overflow: hidden;"><div style="width: 68%; height: 100%; background: linear-gradient(90deg, #0EA5E9, #22D3EE);"></div></div>
-            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7DA2C4;">17/25</span>
+            <span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 12px; color: #7DA2C4;">17/25</span>
           </div>
         </div>
       </div>
@@ -1288,7 +1289,7 @@
               </svg>
             </span>
             <div>
-              <h3 class="cmp2-name">MeduXa<span style="font-family: 'IBM Plex Mono', monospace; color: #0E7490;">.ai</span></h3>
+              <h3 class="cmp2-name">MeduXa<span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; color: #0E7490;">.ai</span></h3>
               <span class="cmp2-name-sub">Already built around the exam</span>
             </div>
           </div>
@@ -1528,7 +1529,7 @@
   <!-- FOOTER -->
   <footer style="background: #04101E; padding: 36px 32px;">
     <div data-mq-footer style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-      <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
+      <span style="display: flex; align-items: baseline;"><span style="font-size: 17px; font-weight: 700; color: #7DA2C4;">MeduXa</span><span style="font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 17px; color: #22D3EE;">.ai</span></span>
       <span style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: center;">
         <a class="foot-link" href="/en/privacy">Privacy Policy</a>
         <a class="foot-link" href="/en/terms">Terms of Use</a>
