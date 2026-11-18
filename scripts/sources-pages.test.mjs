@@ -23,11 +23,13 @@ const visible = (html) => html.replace(/<script\b[\s\S]*?<\/script>/g, '').repla
 const PAGES = [
   {
     id: 'cardiology', crumb: 'קרדיולוגיה', expertReview: false,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=2',
     sources: ["Braunwald's Heart Disease 13e", 'ESC Guidelines', 'מאמרים עדכניים מכתבי עת (Eur Heart J, JACC, Circulation, JAMA)'],
     shows: ["Braunwald's Heart Disease", 'מהדורה 13', 'הנחיות ESC', 'European Heart Journal', 'JACC', 'Circulation', 'JAMA'],
   },
   {
     id: 'nephrology', crumb: 'נפרולוגיה', expertReview: true,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=3',
     sources: ["Brenner & Rector's The Kidney 11e", 'Johnson, Comprehensive Clinical Nephrology 7e', 'Daugirdas, Handbook of Dialysis 6e',
       'Rose & Post, Clinical Physiology of Acid-Base and Electrolyte Disorders 5e', 'Danovitch, Handbook of Kidney Transplantation 7e',
       'KDIGO', 'KDOQI', 'ISPD', 'נייר עמדה ישראלי ליתר לחץ דם 2026', 'UpToDate'],
@@ -37,6 +39,7 @@ const PAGES = [
   },
   {
     id: 'family-medicine', crumb: 'רפואת משפחה', expertReview: true,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=99',
     sources: ['Goroll, Primary Care Medicine 9e', 'Nelson Textbook of Pediatrics 22e', 'AFP review articles',
       'הנחיות וניירות עמדה של ההסתדרות הרפואית', 'GINA', 'GOLD', 'ADA 2026', 'תדריך החיסונים של משרד הבריאות'],
     shows: ['Primary Care Medicine, מהדורה 9', 'Goroll', 'Nelson Textbook of Pediatrics, מהדורה 22',
@@ -45,11 +48,13 @@ const PAGES = [
   },
   {
     id: 'geriatrics', crumb: 'גריאטריה', expertReview: false,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=42',
     sources: ["Hazzard's Geriatric Medicine and Gerontology 8e", "Harrison's Principles of Internal Medicine 22e", 'פרסומי משרד הבריאות', 'מאמרים מכתבי עת'],
     shows: ["Hazzard's Geriatric Medicine and Gerontology, מהדורה 8", "Harrison's Principles of Internal Medicine, מהדורה 22", 'פרסומי משרד הבריאות', 'מאמרים מכתבי עת'],
   },
   {
     id: 'obgyn', crumb: 'מיילדות וגינקולוגיה', expertReview: false, built: true,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=20',
     sources: ["Gabbe's Obstetrics: Normal and Problem Pregnancies 9e", "Berek & Novak's Gynecology 17e", "Speroff's Clinical Gynecologic Endocrinology and Infertility 10e"],
     shows: ["Gabbe's Obstetrics: Normal and Problem Pregnancies, מהדורה 9", 'ספר לימוד במיילדות.',
       "Berek & Novak's Gynecology, מהדורה 17", 'ספר לימוד בגינקולוגיה.',
@@ -197,6 +202,13 @@ for (const cfg of PAGES) {
     });
   }
 
+  // The Ministry of Health publishes the immunization guide; pediatrics links it directly.
+  if (cfg.id === 'pediatrics') {
+    test('pediatrics/sources: links the Ministry of Health immunization guide page', () => {
+      assert.ok(page.includes('<a href="https://www.gov.il/he/pages/vaccine-guidelines-main" target="_blank" rel="noopener">'));
+      assert.ok(text.includes('האגף לאפידמיולוגיה במשרד הבריאות'));
+    });
+  }
   // The official syllabus is the IMA's: linked as such, never as the source of this list.
   if (cfg.syllabus) {
     test(`${cfg.id}/sources: links the IMA syllabus page without calling the list the syllabus`, () => {
