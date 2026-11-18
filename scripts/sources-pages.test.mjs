@@ -1,12 +1,15 @@
-// /cardiology/sources, /nephrology/sources, /family-medicine/sources and /geriatrics/sources: hand-built static pages
-// (<track>/sources.html). Nothing regenerates them, so these checks keep each
-// one reachable, indexable and in step with tracks.json and
-// scripts/countdown.mjs.
+// /<track>/sources: static pages (<track>/sources.html). cardiology,
+// nephrology, family-medicine and geriatrics were built by hand; obgyn by
+// scripts/build-sources-page.mjs, which only runs when someone runs it. The
+// daily date bot edits all of them as text. These checks keep each one
+// reachable, indexable and in step with tracks.json, specialties/<track>.json
+// and scripts/countdown.mjs.
 // Run: node --test scripts/*.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { renderPage } from './render-specialties.mjs';
+import { buildSourcesPage } from './build-sources-page.mjs';
 
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const tracks = JSON.parse(read('tracks.json')).tracks;
@@ -44,6 +47,14 @@ const PAGES = [
     id: 'geriatrics', crumb: 'גריאטריה', expertReview: false,
     sources: ["Hazzard's Geriatric Medicine and Gerontology 8e", "Harrison's Principles of Internal Medicine 22e", 'פרסומי משרד הבריאות', 'מאמרים מכתבי עת'],
     shows: ["Hazzard's Geriatric Medicine and Gerontology, מהדורה 8", "Harrison's Principles of Internal Medicine, מהדורה 22", 'פרסומי משרד הבריאות', 'מאמרים מכתבי עת'],
+  },
+  {
+    id: 'obgyn', crumb: 'מיילדות וגינקולוגיה', expertReview: false, built: true,
+    sources: ["Gabbe's Obstetrics: Normal and Problem Pregnancies 9e", "Berek & Novak's Gynecology 17e", "Speroff's Clinical Gynecologic Endocrinology and Infertility 10e"],
+    shows: ["Gabbe's Obstetrics: Normal and Problem Pregnancies, מהדורה 9", 'ספר לימוד במיילדות.',
+      "Berek & Novak's Gynecology, מהדורה 17", 'ספר לימוד בגינקולוגיה.',
+      "Speroff's Clinical Gynecologic Endocrinology and Infertility, מהדורה 10", 'ספר לימוד באנדוקרינולוגיה גינקולוגית ובפוריות.',
+      'בלוח הר״י המקצוע נקרא יילוד וגינקולוגיה', 'ציטוט מהמקור, לדוגמה', 'נסו את השאלה'],
   },
 ];
 
@@ -120,12 +131,53 @@ for (const cfg of PAGES) {
     for (const [, id] of page.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(id), `#${id} has no target`);
   });
 
+  // The date bot swaps dd.mm.yyyy as text across the file, so the page may
+  // show no date but its own exam's (and any date inside the exam name).
+  test(`${cfg.id}/sources: shows no date but the track's own exam date`, () => {
+    const body = visible(page.slice(page.indexOf('<body>')));
+    const allowed = new Set([dmy(track.exam.date), ...(track.exam.nameHe.match(/\d{2}\.\d{2}\.\d{4}/g) || [])]);
+    for (const [d] of body.matchAll(/\d{2}\.\d{2}\.\d{4}/g)) assert.ok(allowed.has(d), `${d} is not ${cfg.id}'s exam date`);
+    assert.equal(page.match(/data-exam-date="/g).length, 1, 'one countdown per page');
+  });
+
+  // A citation shown as an example is one the track's sample questions really carry.
+  test(`${cfg.id}/sources: a citation example is a real sample-question citation`, () => {
+    const spec = JSON.parse(read(`specialties/${cfg.id}.json`));
+    const plain = (s) => s.replace(/\{\{|\}\}/g, '');
+    const known = (spec.questions || []).map((q) => plain(q.citation || ''));
+    for (const [, c] of page.matchAll(/<cite>([\s\S]*?)<\/cite>/g)) assert.ok(known.includes(visible(c).trim()), `unknown citation: ${visible(c)}`);
+  });
+
+  // "based on past-exam topics" only where specialties/<track>.json says so.
+  // Generated pages must also say it where it is set; the hand-built
+  // nephrology page predates examBased and does not, which is allowed.
+  test(`${cfg.id}/sources: the past-exam sentence matches examBased`, () => {
+    const spec = JSON.parse(read(`specialties/${cfg.id}.json`));
+    if (!spec.examBased) assert.ok(!text.includes('ממבחני עבר'), 'claims past-exam topics without examBased');
+    else if (cfg.built) assert.ok(text.includes('ממבחני עבר'), 'examBased is set but the page does not say it');
+  });
+
+  if (cfg.built) {
+    test(`${cfg.id}/sources: is what scripts/build-sources-page.mjs makes`, () => {
+      assert.equal(buildSourcesPage(cfg.id).html, page, `run: node scripts/build-sources-page.mjs ${cfg.id}`);
+    });
+  }
+
   test(`/${cfg.id} links to its sources page, and the sitemap lists it`, () => {
     assert.ok(read(`${cfg.id}.html`).includes(`<a href="/${cfg.id}/sources">`));
     assert.ok(read('sitemap.xml').includes(`<loc>${url}</loc>`));
     assert.equal(JSON.parse(read(`specialties/${cfg.id}.json`)).sourcesHref, `/${cfg.id}/sources`);
   });
 }
+
+test('build-sources-page refuses tracks it has no copy for (the four older pages included)', () => {
+  assert.throws(() => buildSourcesPage('geriatrics'), /no CONTENT/);
+  assert.throws(() => buildSourcesPage('nope'), /no CONTENT/);
+});
+
+test('every sources page has a 44px breadcrumb tap target rule', () => {
+  for (const cfg of PAGES) assert.match(read(`${cfg.id}/sources.html`), /\.crumbs a \{ display: inline-flex; align-items: center; min-height: 44px; \}/, cfg.id);
+});
 
 test('sourcesHref adds the link only where set, and is validated', () => {
   const template = read('specialty.template.html');

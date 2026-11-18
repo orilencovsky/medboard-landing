@@ -585,6 +585,10 @@
   .crumbs li + li::before { content: '/'; margin-inline-end: 8px; color: var(--t4); }
   .crumbs a { color: var(--t3); text-decoration: underline; text-underline-offset: 3px; }
   .crumbs a:hover { color: var(--cyan-soft); }
+  /* Breadcrumb links: 44px tap targets, the row pulled up so the text stays put. */
+  .crumbs { align-items: center; row-gap: 0; margin-block: -12px 6px; }
+  .crumbs li { display: inline-flex; align-items: center; }
+  .crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
   .src-detail { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
   .src-detail li { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 20px 22px; }
   .src-detail .ph { grid-row: span 2; font-size: 24px; color: var(--cyan); margin-top: 2px; }
