@@ -53,7 +53,7 @@
     {
      "key": "a",
      "text": "{{Ampicillin}}",
-     "tutor": "<span class=\"ltr-iso\">Ampicillin</span> משמש כבר היום כחלופה ל-<span class=\"ltr-iso\">cefazolin</span> בפרופילקסיס הרגיל. מה שונה אצל המטופלת הזו מניתוח קיסרי מתוכנן, ואיזה כיסוי זה מחייב?"
+     "tutor": "מה שונה אצל המטופלת הזו מניתוח קיסרי מתוכנן, ואיזה כיסוי זה מחייב?"
     },
     {
      "key": "b",
@@ -71,7 +71,7 @@
      "tutor": "<span class=\"ltr-iso\">Cefuroxime</span> הוא צפלוספורין, כמו <span class=\"ltr-iso\">cefazolin</span>. מה מוסיפה עוד תרופה מאותה משפחה לכיסוי שכבר יש?"
     }
    ],
-   "explanationHtml": "<p><strong>נכון.</strong> חום, רגישות של הרחם והפרשה עם ריח רע שבוע אחרי ניתוח קיסרי מתאימים לאנדומטריטיס. לידה פעילה או ירידת מים לפני הניתוח מעלות את הסיכון לזיהום, ובמטופלות האלה מוסיפים <span class=\"ltr-iso\">azithromycin</span> ל-<span class=\"ltr-iso\">cefazolin</span> לפני הניתוח. בשאר הניתוחים הקיסריים, כיסוי רחב יותר לא הראה יתרון.</p><p><strong>א. <span class=\"ltr-iso\">Ampicillin</span>:</strong> הוא חלופה ל-<span class=\"ltr-iso\">cefazolin</span> בפרופילקסיס הרגיל, לא התוספת שמומלצת לירידת מים או ללידה פעילה.</p><p><strong>ג. <span class=\"ltr-iso\">Vancomycin</span>:</strong> מכוון בעיקר לחיידקים גראם-חיוביים עמידים, ואינו התוספת שמומלצת לירידת מים או ללידה פעילה.</p><p><strong>ד. <span class=\"ltr-iso\">Cefuroxime</span>:</strong> עוד צפלוספורין לא מוסיף כיסוי של ממש על <span class=\"ltr-iso\">cefazolin</span>. לפי המקור, כיסוי רחב יותר לא הראה יתרון, פרט למצב הזה, שבו מוסיפים <span class=\"ltr-iso\">azithromycin</span>.</p>",
+   "explanationHtml": "<p><strong>נכון.</strong> חום, רגישות של הרחם והפרשה עם ריח רע שבוע אחרי ניתוח קיסרי מתאימים לאנדומטריטיס. לידה פעילה או ירידת מים לפני הניתוח מעלות את הסיכון לזיהום, ובמטופלות האלה מוסיפים <span class=\"ltr-iso\">azithromycin</span> ל-<span class=\"ltr-iso\">cefazolin</span> לפני הניתוח. בשאר הניתוחים הקיסריים, כיסוי רחב יותר לא הראה יתרון.</p><p><strong>א. <span class=\"ltr-iso\">Ampicillin</span>:</strong> אינו התוספת שהמקור ממליץ עליה לירידת מים או ללידה פעילה: שם מוסיפים <span class=\"ltr-iso\">azithromycin</span> ל-<span class=\"ltr-iso\">cefazolin</span>.</p><p><strong>ג. <span class=\"ltr-iso\">Vancomycin</span>:</strong> מכוון בעיקר לחיידקים גראם-חיוביים עמידים, ואינו התוספת שמומלצת לירידת מים או ללידה פעילה.</p><p><strong>ד. <span class=\"ltr-iso\">Cefuroxime</span>:</strong> עוד צפלוספורין לא מוסיף כיסוי של ממש על <span class=\"ltr-iso\">cefazolin</span>. לפי המקור, כיסוי רחב יותר לא הראה יתרון, פרט למצב הזה, שבו מוסיפים <span class=\"ltr-iso\">azithromycin</span>.</p>",
    "quote": "{{No apparent advantage has been shown with more broad-spectrum antibiotic prophylaxis (e.g., metronidazole), except for patients in labor or with rupture of membranes; preoperative azithromycin should be added to cefazolin in these patients.}}",
    "citation": "{{Gabbe's Obstetrics: Normal and Problem Pregnancies, 9th ed. — Chapter 21: Cesarean Delivery}}"
   }
