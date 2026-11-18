@@ -146,13 +146,13 @@ const CONTENT = {
   },
   anesthesia: {
     title: 'מקורות להכנה לשלב א׳ בהרדמה | MeduXa.ai',
-    description: "על אילו מקורות מבוססות השאלות לשלב א׳ בהרדמה ב-MeduXa: Miller's Anesthesia ועוד אחד-עשר ספרי לימוד, וקישור לסילבוס וללוח הבחינות של הר״י.",
-    ogDescription: "Miller's Anesthesia ועוד אחד-עשר ספרי לימוד: המקורות שמהם לקוחים ההסברים והציטוטים בשאלות להרדמה ב-MeduXa.",
+    description: "על אילו מקורות מבוססות השאלות לשלב א׳ בהרדמה ב-MeduXa: Miller's Anesthesia ועוד אחד-עשר ספרים, וקישור לסילבוס וללוח הבחינות של הר״י.",
+    ogDescription: "Miller's Anesthesia ועוד אחד-עשר ספרים: המקורות שמהם לקוחים ההסברים והציטוטים בשאלות להרדמה ב-MeduXa.",
     ogImageAlt: 'MeduXa.ai: מקורות להכנה לשלב א׳ בהרדמה',
     h1: 'המקורות להכנה לשלב א׳ בהרדמה',
     lead: 'על אלה מבוססים ההסברים והציטוטים בשאלות להרדמה ב-MeduXa. לכל תשובה יש הסבר שמגובה בציטוט מילה במילה מהמקור, כדי שתוכלו לבדוק כל טענה בעצמכם.',
-    sourcesTitle: 'שנים-עשר ספרי לימוד בהרדמה',
-    sourcesIntro: "{{Miller's Anesthesia}} ועוד אחד-עשר ספרי לימוד.",
+    sourcesTitle: 'שנים-עשר ספרים',
+    sourcesIntro: "{{Miller's Anesthesia}} ועוד אחד-עשר ספרים.",
     // tracks.json order: Miller's first, then the rest as listed there.
     groups: [
       { title: null, cols: true, items: [
