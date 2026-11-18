@@ -138,6 +138,7 @@ const CONTENT = {
     facts: ({ dmy, imaLink, examName, syllabusLink }) => [
       `<p><strong>זו הרשימה של MeduXa, לא רשימה רשמית.</strong> מאלה לקוחים ההסברים והציטוטים בשאלות לפסיכיאטריה אצלנו. את הפרטים הרשמיים על הבחינה מפרסמת ההסתדרות הרפואית, ב${imaLink}.</p>`,
       `<p><strong>הסילבוס הרשמי.</strong> את הסילבוס של פסיכיאטריה מפרסמת ההסתדרות הרפואית, ב${syllabusLink}.</p>`,
+      `<p><strong>החוקים.</strong> סעיף החוקים ברשימה הוא החוקים הנוגעים לפסיכיאטריה בישראל. הסילבוס של הר״י מזכיר, בין השאר, את <a href="https://www.nevo.co.il/law_html/law00/70314.htm" target="_blank" rel="noopener">חוק טיפול בחולי נפש</a> ואת <a href="https://www.nevo.co.il/law_html/law00/71833.htm" target="_blank" rel="noopener">חוק זכויות החולה</a>.</p>`,
       `<p data-exam-fact><strong>מועד הבחינה.</strong> ${examName} בפסיכיאטריה תתקיים ב-<span class="ltr-iso">${dmy}</span>, לפי לוח הר״י.</p>`,
     ],
     pastExam: () => '<p><strong>השאלות.</strong> שאלות בסגנון שלב א׳, ולכל תשובה הסבר עם ציטוט מהמקור. השאלה לדוגמה בעמוד פסיכיאטריה מבוססת על נושא ממבחני עבר ונערכה על ידי הצוות שלנו.</p>',

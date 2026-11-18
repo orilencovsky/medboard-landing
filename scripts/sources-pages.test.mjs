@@ -202,6 +202,14 @@ for (const cfg of PAGES) {
     });
   }
 
+  // Psychiatry: the laws item is explained with the two laws the IMA syllabus names, linked to their public texts.
+  if (cfg.id === 'psychiatry') {
+    test('psychiatry/sources: names and links the laws the syllabus mentions, without calling the list the syllabus', () => {
+      assert.ok(page.includes('https://www.nevo.co.il/law_html/law00/70314.htm') && page.includes('https://www.nevo.co.il/law_html/law00/71833.htm'));
+      assert.ok(text.includes('חוק טיפול בחולי נפש') && text.includes('חוק זכויות החולה'));
+      assert.ok(text.includes('הסילבוס של הר״י מזכיר, בין השאר'));
+    });
+  }
   // The Ministry of Health publishes the immunization guide; pediatrics links it directly.
   if (cfg.id === 'pediatrics') {
     test('pediatrics/sources: links the Ministry of Health immunization guide page', () => {
