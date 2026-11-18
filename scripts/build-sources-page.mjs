@@ -108,6 +108,9 @@ export function buildSourcesPage(id, read = (p) => readFileSync(join(root, p), '
     throw new Error(`CONTENT.${id}.groups must list exactly the tracks.json sources:\n  tracks.json: ${titles.join(' | ')}\n  CONTENT:     ${cards.join(' | ')}`);
   }
 
+  for (const m of ['</head>', '<main id="main">', '</main>', '<footer>']) {
+    if (!src.includes(m)) throw new Error(`${href}.html: slice marker not found: ${m}`);
+  }
   let head = src.slice(0, src.indexOf('</head>'));
   const swap = (re, to) => { if (!re.test(head)) throw new Error('no match ' + re); head = head.replace(re, () => to); };
   swap(/<title>[^<]*<\/title>/, `<title>${c.title}</title>`);
@@ -224,7 +227,7 @@ ${g.items.map(card).join('\n')}
     <div class="wrap">
       <div class="sec-head" data-reveal>
         <h2 id="t-cite">ציטוט מהמקור, לדוגמה</h2>
-        <p>${esc(c.citeIntro(q.topic))}</p>
+        <p>${inline(c.citeIntro(q.topic))}</p>
       </div>
       <figure class="cite-line" data-reveal style="--i:1">
         <i class="ph ph-quotes" aria-hidden="true"></i>
