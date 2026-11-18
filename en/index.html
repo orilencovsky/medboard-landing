@@ -24,7 +24,7 @@
       // explicit choice — the Hebrew page does the same in reverse.
       document.addEventListener('click', function (ev) {
         var a = ev.target && ev.target.closest && ev.target.closest('[data-mq-lang]');
-        if (a) document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax';
+        if (a) document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax;secure';
       }, true);
     } catch (e) {}
   })();

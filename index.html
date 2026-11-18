@@ -20,11 +20,11 @@
     try {
       document.addEventListener('click', function (ev) {
         var a = ev.target && ev.target.closest && ev.target.closest('[data-mq-lang]');
-        if (a) document.cookie = 'mx_lang=en;path=/;max-age=31536000;samesite=lax';
+        if (a) document.cookie = 'mx_lang=en;path=/;max-age=31536000;samesite=lax;secure';
       }, true);
       var u = new URL(location.href);
       if (!u.searchParams.has('lang')) return;
-      if (u.searchParams.get('lang') === 'he') document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax';
+      if (u.searchParams.get('lang') === 'he') document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax;secure';
       u.searchParams.delete('lang');
       history.replaceState(null, '', u.pathname + u.search + u.hash);
     } catch (e) {}

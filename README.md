@@ -54,10 +54,15 @@ tracks.json              The study tracks (live / coming soon) behind the homepa
                          top banner and closing line, in both languages; see "Study tracks" below
 robots.txt, sitemap.xml  Indexing — this site is the only indexed MeduXa surface
 vercel.json              Vercel config (cleanUrls + the language routing rules)
-.vercelignore            Keeps `specialty.template.html`, `exams.template.html`, `specialties/` and `docs/` out of the
-                         deployment, so the raw templates (full of `{{…}}` placeholders), the page data and the internal
-                         docs (specs, plans, unapproved question candidates) are not served. Only those four:
-                         `api/`, `scripts/` and everything else still deploy
+.vercelignore            Keeps eight entries out of the deployment: `specialty.template.html`, `exams.template.html`,
+                         `specialties/`, `docs/`, `scripts/`, `design-system/`, `.design-sync/` and `.github/`. So the
+                         raw templates (full of `{{…}}` placeholders), the page data, the internal docs (specs, plans,
+                         unapproved question candidates), the build/check scripts, the design-system sources and the CI
+                         config are not served. `api/` and everything else still deploy (no page loads anything from
+                         `scripts/`: the shared countdown is inlined into each page by the renderers)
+.github/workflows/ci.yml On every pull request and on main after a merge: the unit tests, the renderers' `--check`
+                         modes and `scripts/check-crawler-exemption.mjs` (see "Continuous integration")
+.github/workflows/ima-dates.yml  the daily exam-date check against the IMA calendar (see "Exam dates")
 api/tutor.js             Serverless endpoint behind the hero card's live AI tutor
 scripts/prep-hero-video.sh   ffmpeg pipeline that produces the four hero video files
 scripts/make-og-image.mjs    renders an OG card to PNG (`node scripts/make-og-image.mjs he`)
@@ -70,7 +75,9 @@ scripts/make-promo-image.mjs renders a specialty promo card: `og|square` × `fm|
                          if set, else the first of a Playwright headless shell, `/Applications/Google Chrome.app/…`,
                          `google-chrome`, `chromium` that answers `--version` — so on a Mac the local Chrome is used as is.
                          After re-rendering, bump the `?v=` on og:image/twitter:image so WhatsApp refetches
-scripts/check-crawler-exemption.mjs  guards the crawler exemption in the language router
+scripts/check-crawler-exemption.mjs  guards the language router in vercel.json: the crawler exemption, plus a
+                         simulation of every `/` redirect against a table of router cases (`--table` prints it;
+                         `--config <file>` checks another copy). Run by CI
 scripts/render-tracks.mjs    renders tracks.json into both landing pages (`--check` = drift guard; tests beside it)
 scripts/render-specialties.mjs  renders specialty.template.html + specialties/*.json + tracks.json into the eight
                          specialty pages (`--check` = drift guard; tests beside it)
@@ -160,8 +167,8 @@ method, features, comparison, closing. A `mode: "live"` page (nephrology, cardio
 track's entry in `tracks.json`, never from the page data (see "Exam dates").
 
 The template, the page data and `docs/` are not meant to be served: `.vercelignore` keeps
-`specialty.template.html`, `exams.template.html`, `specialties/` and `docs/` out of the deployment. Nothing else is excluded —
-`api/` and `scripts/` still deploy.
+`specialty.template.html`, `exams.template.html`, `specialties/` and `docs/` out of the deployment, along with
+`scripts/`, `design-system/`, `.design-sync/` and `.github/` (eight entries in all). `api/` still deploys.
 
 | Track id | Analytics prefix | Waitlist source / interest | App module |
 |---|---|---|---|
@@ -309,7 +316,7 @@ for `/` is sent on to `/en` only when one of these holds:
 | # | Condition | Why |
 |---|---|---|
 | 1 | Cookie `mx_lang=en` | The visitor has chosen English before |
-| 2 | `Accept-Language` does **not** start with `he`, **and** `x-vercel-ip-country` is **not** `IL`, **and** the `User-Agent` is not a crawler | Neither a Hebrew-language browser nor an Israeli visitor — and a person rather than a bot |
+| 2 | `Accept-Language` lists **no** `he` or `iw` tag (in any position), **and** `x-vercel-ip-country` is **not** `IL`, **and** the `User-Agent` is not a crawler | Neither a Hebrew-language browser nor an Israeli visitor — and a person rather than a bot |
 
 Rule 2 is skipped once the `mx_lang` cookie exists, so a stated preference always beats a guessed
 one. Note it is a single rule with all the conditions at once: an Israeli visitor on an
@@ -338,18 +345,30 @@ a bot that a reader cannot reach. The pattern covers search crawlers and also so
 into an Israeli WhatsApp thread was unfurled by following the redirect, so the preview showed the
 **English** title and `og-image.png` instead of the Hebrew ones.
 
-`node scripts/check-crawler-exemption.mjs` is the guard: 20 real crawler user-agents must reach `/`
-un-redirected and 7 real browser user-agents must stay routed. Run it after any edit to the
-`redirects` block. It exists because this bug is **invisible from Israel** — the owner's own
+`node scripts/check-crawler-exemption.mjs` is the guard: 26 real crawler and fetcher user-agents
+must reach `/` un-redirected, 7 real browser user-agents must stay routed, and 19 router cases
+(Accept-Language with and without Hebrew, near misses such as `hebrew` or `she-IL`, no header at
+all, Israel, the cookie, `?lang=he`, a crawler) must land where expected, with every `has`/`missing`
+value matched against the whole string as Vercel does. It also fails on any redirect whose `source`
+is not `/` or `/he`, since the simulation would not see it. Run it after any edit to the
+`redirects` block; CI runs it on every pull request.
+
+PageSpeed Insights / Lighthouse are **not** exempt: their user-agents carry no tool-specific token,
+so from abroad they are routed like any English browser. To audit the Hebrew page, give them
+`https://meduxa.ai/?lang=he`, which is never redirected. It exists because this bug is **invisible from Israel** — the owner's own
 browser satisfies rule 2 and sees a 200 — so nothing short of a request from abroad, or this
 check, would notice the condition being dropped again.
 
-The `mx_lang` cookie (one year, `SameSite=Lax`) is written client-side by the pages themselves,
-since only the router reads it:
+The `mx_lang` cookie (one year, `SameSite=Lax`, `Secure`) is written client-side by the pages
+themselves, since only the router reads it, and it records only an **explicit** choice — merely
+landing on a page writes nothing, so a Hebrew speaker who follows a shared `/en` link is not pinned
+to English for a year:
 
-- `/` sets `mx_lang=he` on load, and strips any `lang` param back out of the URL (leaving any
-  `utm_*` intact) so a copied link doesn't carry the lock to the next person.
-- `/en` sets `mx_lang=en` on load.
+- `/` writes `mx_lang=en` when the EN switch is clicked, and `mx_lang=he` when it is reached with
+  `?lang=he` (the `עברית` switch on `/en` and the 404 page, and the old `/he` address). It then
+  strips the `lang` param back out of the URL (leaving any `utm_*` intact) so a copied link doesn't
+  carry the lock to the next person.
+- `/en` writes `mx_lang=he` when its `עברית` switch is clicked.
 
 Every rule also requires the `lang` query param to be **absent** — that is what keeps `/?lang=he`
 from being bounced straight to `/en` before the cookie can be written. The `עברית` switcher on `/en`
@@ -525,6 +544,20 @@ each tier. To regenerate them from a raw clip:
 The script strips audio, scales to 1600px (desktop) and 800px (phone), and targets roughly
 "desktop pair under 5 MB, mobile pair under 1 MB"; the desktop mp4 is capped at 1200 kbps (~1 MB),
 since it used to come out at 4.5 MB against a 0.3 MB webm. It needs `ffmpeg` (`brew install ffmpeg`).
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on every pull request and on `main` after a merge, with a read-only
+token, no secrets and no network beyond checkout. It runs the same commands as before a commit:
+
+- every `scripts/*.test.mjs` with `node --test`;
+- the drift guards: `render-specialties.mjs`, `render-exams.mjs` and `render-tracks.mjs` with
+  `--check`, and `build-sources-page.mjs <id> --check` for obgyn, pediatrics, psychiatry and anesthesia;
+- `node scripts/check-crawler-exemption.mjs --table` (see "Language routing").
+
+A newer push to the same pull request cancels the older run; a run on `main` is never cancelled, so
+two quick merges are both checked. The daily exam-date workflow (`ima-dates.yml`) is separate; see
+"Exam dates".
 
 ## Editing conventions
 
