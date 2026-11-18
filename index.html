@@ -23,11 +23,10 @@
     } catch (e) {}
   })();
 </script>
-<!-- Vercel Web Analytics. Deliberately not GA4: this measurement sets no cookie
-     and derives no persistent visitor id, so the page carries nothing that needs
-     a consent banner — which the edge router makes a live question, since every
-     visitor who is neither in Israel nor Hebrew-speaking is sent to /en, EU
-     traffic included. The shim queues events fired before script.js loads.
+<!-- Vercel Web Analytics. Cookieless, with no persistent visitor id,
+     so it is not behind the consent banner and measures every visitor; GA4 and
+     Microsoft Clarity are the trackers that wait for opt-in (see /consent.js).
+     The shim queues events fired before script.js loads.
      Requires Web Analytics enabled on the Vercel project; /_vercel/insights/*
      is served by the platform, so it 404s on a local static server. -->
 <script>
@@ -1119,7 +1118,7 @@
         <li class="sci-card" style="--texture:repeating-linear-gradient(180deg, rgba(56,189,248,0.38) 0 1px, transparent 1px 13px), linear-gradient(180deg, transparent 52%, rgba(34,211,238,0.29));">
           <div class="sci-card-top"><span class="sci-eyebrow">עיקרון</span></div>
           <h3>אמת מעוגנת-מקור</h3>
-          <p class="sci-desc">כל הסבר מגובה בציטוט מילה-במילה מהספר. כל טענה ניתנת לבדיקה מול המקור.</p>
+          <p class="sci-desc">כל הסבר מגובה בציטוט מילה במילה מהספר. כל טענה ניתנת לבדיקה מול המקור.</p>
         </li>
       </ul>
       <div class="sci-refs">
@@ -1172,7 +1171,7 @@
         </div>
         <div style="grid-column: 1 / -1; background: #F0F6FA; border: 1px solid #A5E3F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
           <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>לוח למידה חכם</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65; max-width: 680px;">בחר תאריך בחינה וכמה שעות ביום יש לך, וקבל לו״ז יום אחר יום עד הבחינה: קריאה, תרגול שאלות, חזרה מרווחת ומבחני הדמיה, לפי משקל כל נושא בבחינות עבר. שלושה סגנונות למידה לבחירה, ומעקב משימות במקום אחד.</p>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65; max-width: 680px;">בחרו תאריך בחינה וכמה שעות ביום יש לכם, וקבלו לו״ז יום אחר יום עד הבחינה: קריאה, תרגול שאלות, חזרה מרווחת ומבחני הדמיה, לפי משקל כל נושא בבחינות עבר. שלושה סגנונות למידה לבחירה, ומעקב משימות במקום אחד.</p>
         </div>
       </div>
     </div>
@@ -1194,7 +1193,7 @@
           <i></i>
           <button type="button" role="tab" class="loop-pill" data-loop-tab="1" data-accent="violet" aria-controls="loop-panel-1" aria-selected="false" tabindex="-1">02 · הבנה</button>
           <i></i>
-          <button type="button" role="tab" class="loop-pill" data-loop-tab="2" aria-controls="loop-panel-2" aria-selected="false" tabindex="-1">03 · שינון</button>
+          <button type="button" role="tab" class="loop-pill" data-loop-tab="2" aria-controls="loop-panel-2" aria-selected="false" tabindex="-1">03 · מעקב ושינון</button>
           <i></i>
           <button type="button" role="tab" class="loop-pill" data-loop-tab="3" aria-controls="loop-panel-3" aria-selected="false" tabindex="-1">04 · הסבר עצמי</button>
         </div>

@@ -25,11 +25,10 @@
     } catch (e) {}
   })();
 </script>
-<!-- Vercel Web Analytics. Deliberately not GA4: this measurement sets no cookie
-     and derives no persistent visitor id, so the page carries nothing that needs
-     a consent banner — which matters most here, since the edge router sends
-     every visitor who is neither in Israel nor Hebrew-speaking to this page,
-     EU traffic included. The shim queues events fired before script.js loads.
+<!-- Vercel Web Analytics. Cookieless, with no persistent visitor id,
+     so it is not behind the consent banner and measures every visitor; GA4 and
+     Microsoft Clarity are the trackers that wait for opt-in (see /consent.js).
+     The shim queues events fired before script.js loads.
      Requires Web Analytics enabled on the Vercel project; /_vercel/insights/*
      is served by the platform, so it 404s on a local static server. -->
 <script>
