@@ -1,15 +1,15 @@
 // /<track>/sources: static pages (<track>/sources.html). cardiology,
-// nephrology, family-medicine and geriatrics were built by hand; obgyn by
-// scripts/build-sources-page.mjs, which only runs when someone runs it. The
-// daily date bot edits all of them as text. These checks keep each one
-// reachable, indexable and in step with tracks.json, specialties/<track>.json
-// and scripts/countdown.mjs.
+// nephrology, family-medicine and geriatrics were built by hand; obgyn,
+// pediatrics, psychiatry and anesthesia by scripts/build-sources-page.mjs,
+// which only runs when someone runs it. The daily date bot edits all of them
+// as text. These checks keep each one reachable, indexable and in step with
+// tracks.json, specialties/<track>.json and scripts/countdown.mjs.
 // Run: node --test scripts/*.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { renderPage } from './render-specialties.mjs';
-import { buildSourcesPage } from './build-sources-page.mjs';
+import { buildSourcesPage, firstCaption } from './build-sources-page.mjs';
 
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const tracks = JSON.parse(read('tracks.json')).tracks;
@@ -55,6 +55,39 @@ const PAGES = [
       "Berek & Novak's Gynecology, מהדורה 17", 'ספר לימוד בגינקולוגיה.',
       "Speroff's Clinical Gynecologic Endocrinology and Infertility, מהדורה 10", 'ספר לימוד באנדוקרינולוגיה גינקולוגית ובפוריות.',
       'בלוח הר״י המקצוע נקרא יילוד וגינקולוגיה', 'ציטוט מהמקור, לדוגמה', 'נסו את השאלה'],
+  },
+  {
+    id: 'pediatrics', crumb: 'רפואת ילדים', expertReview: true, built: true,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=10',
+    sources: ['Nelson Textbook of Pediatrics 22e', 'הנחיות קליניות ישראליות עדכניות', 'תדריך החיסונים של משרד הבריאות'],
+    shows: ['Nelson Textbook of Pediatrics, מהדורה 22', 'ספר לימוד ברפואת ילדים.', 'גם בין המקורות לרפואת משפחה',
+      'הנחיות קליניות ישראליות עדכניות', 'תדריך החיסונים של משרד הבריאות',
+      'כל שאלה עוברת ביקורת מומחה ברפואת ילדים', 'עם מחיר ההשקה לנרשמים מראש',
+      'דוגמה לשורת מקור מתדריך החיסונים', 'משרד הבריאות, תדריך החיסונים, פרק אבעבועות רוח, עדכון יוני 2026', 'נסו את השאלה'],
+  },
+  {
+    id: 'psychiatry', crumb: 'פסיכיאטריה', expertReview: false, built: true,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=50',
+    sources: ['DSM-5 (American Psychiatric Association, 2013)', "Kaplan & Sadock's Comprehensive Textbook of Psychiatry",
+      "Kaplan & Sadock's Synopsis of Psychiatry", 'חוקי משרד הבריאות'],
+    shows: ['DSM-5 (American Psychiatric Association, 2013)', "Kaplan & Sadock's Comprehensive Textbook of Psychiatry",
+      "Kaplan & Sadock's Synopsis of Psychiatry", 'חוקי משרד הבריאות', 'ספרים', 'חוקים',
+      'Trauma- and Stressor-Related Disorders: Acute Stress Disorder', 'נסו את השאלה'],
+  },
+  {
+    id: 'anesthesia', crumb: 'הרדמה', expertReview: false, built: true,
+    syllabus: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=47',
+    sources: ["Miller's Anesthesia 10e", 'Barash, Clinical Anesthesia', 'Marino, The ICU Book',
+      "Yao & Artusio's Anesthesiology: Problem-Oriented Patient Management", "Kaplan's Cardiac Anesthesia",
+      "Hines & Jones, Stoelting's Anesthesia and Co-Existing Disease", "Jaffe, Anesthesiologist's Manual of Surgical Procedures",
+      "Chestnut's Obstetric Anesthesia: Principles and Practice", "Hadzic's Textbook of Regional Anesthesia and Acute Pain Management",
+      'Cote, A Practice of Anesthesia for Infants and Children', "Cottrell and Patel's Neuroanesthesia", 'Ehrenwerth, Anesthesia Equipment'],
+    shows: ["Miller's Anesthesia, מהדורה 10", 'Barash, Clinical Anesthesia', 'Marino, The ICU Book',
+      "Yao & Artusio's Anesthesiology: Problem-Oriented Patient Management", "Kaplan's Cardiac Anesthesia",
+      "Hines & Jones, Stoelting's Anesthesia and Co-Existing Disease", "Jaffe, Anesthesiologist's Manual of Surgical Procedures",
+      "Chestnut's Obstetric Anesthesia: Principles and Practice", "Hadzic's Textbook of Regional Anesthesia and Acute Pain Management",
+      'Cote, A Practice of Anesthesia for Infants and Children', "Cottrell and Patel's Neuroanesthesia", 'Ehrenwerth, Anesthesia Equipment',
+      'Chapter 44: Perioperative Acid–Base Balance', 'נסו את השאלה'],
   },
 ];
 
@@ -144,7 +177,8 @@ for (const cfg of PAGES) {
   test(`${cfg.id}/sources: a citation example is a real sample-question citation`, () => {
     const spec = JSON.parse(read(`specialties/${cfg.id}.json`));
     const plain = (s) => s.replace(/\{\{|\}\}/g, '');
-    const known = (spec.questions || []).map((q) => plain(q.citation || ''));
+    // A question's citation, or (sources kept in explanationHtml) its first source caption.
+    const known = (spec.questions || []).map((q) => plain(q.citation || firstCaption(q.explanationHtml) || ''));
     for (const [, c] of page.matchAll(/<cite>([\s\S]*?)<\/cite>/g)) assert.ok(known.includes(visible(c).trim()), `unknown citation: ${visible(c)}`);
   });
 
@@ -162,6 +196,25 @@ for (const cfg of PAGES) {
       assert.equal(buildSourcesPage(cfg.id).html, page, `run: node scripts/build-sources-page.mjs ${cfg.id}`);
     });
   }
+
+  // The official syllabus is the IMA's: linked as such, never as the source of this list.
+  if (cfg.syllabus) {
+    test(`${cfg.id}/sources: links the IMA syllabus page without calling the list the syllabus`, () => {
+      assert.ok(page.includes(`<a href="${cfg.syllabus}" target="_blank" rel="noopener">`));
+      assert.ok(!/לפי הסילבוס|הסילבוס של MeduXa|זו רשימת הסילבוס/.test(text));
+    });
+  }
+
+  // A link to another track's sources page must land on a page that lists the
+  // same source, and must not carry that page's date.
+  test(`${cfg.id}/sources: links to other sources pages are backed by tracks.json`, () => {
+    for (const [, other] of page.matchAll(/href="\/([a-z-]+)\/sources"/g)) {
+      if (other === cfg.id) continue;
+      const theirs = tracks.find((t) => t.id === other).sources.map((s) => s.title);
+      assert.ok(cfg.sources.some((s) => theirs.includes(s)), `${other} shares no source with ${cfg.id}`);
+      read(`${other}/sources.html`);
+    }
+  });
 
   test(`/${cfg.id} links to its sources page, and the sitemap lists it`, () => {
     assert.ok(read(`${cfg.id}.html`).includes(`<a href="/${cfg.id}/sources">`));

@@ -204,7 +204,11 @@
           "kind": "book"
         },
         {
-          "title": "הנחיות קליניות ישראליות (25)",
+          "title": "הנחיות קליניות ישראליות עדכניות",
+          "kind": "guideline"
+        },
+        {
+          "title": "תדריך החיסונים של משרד הבריאות",
           "kind": "guideline"
         }
       ]
@@ -336,6 +340,18 @@
         {
           "title": "DSM-5 (American Psychiatric Association, 2013)",
           "kind": "book"
+        },
+        {
+          "title": "Kaplan & Sadock's Comprehensive Textbook of Psychiatry",
+          "kind": "book"
+        },
+        {
+          "title": "Kaplan & Sadock's Synopsis of Psychiatry",
+          "kind": "book"
+        },
+        {
+          "title": "חוקי משרד הבריאות",
+          "kind": "guideline"
         }
       ]
     },
@@ -371,6 +387,50 @@
       "sources": [
         {
           "title": "Miller's Anesthesia 10e",
+          "kind": "book"
+        },
+        {
+          "title": "Barash, Clinical Anesthesia",
+          "kind": "book"
+        },
+        {
+          "title": "Marino, The ICU Book",
+          "kind": "book"
+        },
+        {
+          "title": "Yao & Artusio's Anesthesiology: Problem-Oriented Patient Management",
+          "kind": "book"
+        },
+        {
+          "title": "Kaplan's Cardiac Anesthesia",
+          "kind": "book"
+        },
+        {
+          "title": "Hines & Jones, Stoelting's Anesthesia and Co-Existing Disease",
+          "kind": "book"
+        },
+        {
+          "title": "Jaffe, Anesthesiologist's Manual of Surgical Procedures",
+          "kind": "book"
+        },
+        {
+          "title": "Chestnut's Obstetric Anesthesia: Principles and Practice",
+          "kind": "book"
+        },
+        {
+          "title": "Hadzic's Textbook of Regional Anesthesia and Acute Pain Management",
+          "kind": "book"
+        },
+        {
+          "title": "Cote, A Practice of Anesthesia for Infants and Children",
+          "kind": "book"
+        },
+        {
+          "title": "Cottrell and Patel's Neuroanesthesia",
+          "kind": "book"
+        },
+        {
+          "title": "Ehrenwerth, Anesthesia Equipment",
           "kind": "book"
         }
       ]
