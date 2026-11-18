@@ -103,4 +103,13 @@
   <url>
     <loc>https://meduxa.ai/obgyn/sources</loc>
   </url>
+  <url>
+    <loc>https://meduxa.ai/pediatrics/sources</loc>
+  </url>
+  <url>
+    <loc>https://meduxa.ai/psychiatry/sources</loc>
+  </url>
+  <url>
+    <loc>https://meduxa.ai/anesthesia/sources</loc>
+  </url>
 </urlset>

@@ -2,6 +2,7 @@
  "_comment": "Page data for specialty.template.html, rendered by scripts/render-specialties.mjs into <track href>.html. Exam date/name and sources come from tracks.json, not from here. Plain-text fields are escaped; in lead, states, quote, citation, stem, topic, option text and why, {{…}} marks a Latin run inside Hebrew (rendered as <span class=\"ltr-iso\">). Fields ending in Html, perk html and tutor are trusted HTML, inserted as they are.",
  "trackId": "anesthesia",
  "prefix": "anes",
+ "sourcesHref": "/anesthesia/sources",
  "mode": "soon",
  "title": "הכנה לשלב א׳ בהרדמה, בקרוב | MeduXa.ai",
  "description": "בקרוב ב-MeduXa: הכנה לשלב א׳ בהרדמה. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי.",
