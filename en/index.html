@@ -17,11 +17,15 @@
         location.replace('/?lang=he');
         return;
       }
-      // Landing here means the visitor wants English. Record it in the cookie
-      // the router reads, so meduxa.ai keeps resolving to /en on later visits
-      // — even from a Hebrew-language browser or an Israeli address — and any
-      // earlier Hebrew choice is un-stuck.
-      document.cookie = 'mx_lang=en;path=/;max-age=31536000;samesite=lax';
+      // Landing here is NOT a language choice: a search result or a shared
+      // /en link brings Hebrew speakers here too, and a cookie written on load
+      // would pin them to /en for a year. The cookie the router reads is
+      // written only when the visitor clicks the language switch, which is the
+      // explicit choice — the Hebrew page does the same in reverse.
+      document.addEventListener('click', function (ev) {
+        var a = ev.target && ev.target.closest && ev.target.closest('[data-mq-lang]');
+        if (a) document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax;secure';
+      }, true);
     } catch (e) {}
   })();
 </script>

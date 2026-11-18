@@ -20,19 +20,31 @@
 // Only a request from abroad with no Hebrew in Accept-Language reproduced it,
 // and nothing in the repo would have failed if the condition were dropped again.
 //
-// Run: node scripts/check-crawler-exemption.mjs
+// Run: node scripts/check-crawler-exemption.mjs   (--table prints the router cases)
 //
 // Note the regex is evaluated here by JavaScript and on Vercel by Go's RE2. It
 // is written in the syntax subset both read identically — plain alternation and
 // character classes, and case spelled out rather than an inline flag, the same
 // idiom `accept-language` already uses in this file for the same reason.
+//
+// PageSpeed Insights / Lighthouse are deliberately NOT exempted: current
+// Lighthouse user-agents end at "Safari/537.36" with no tool-specific token, so
+// nothing in the UA tells them apart from a browser. To audit the Hebrew page,
+// point them at https://meduxa.ai/?lang=he — a `lang` query is never redirected.
+//
+// The simulator below models only redirects whose `source` is exactly `/` or
+// `/he`, and fails loudly on any other source (a later `/(.*)` or `/:path*`
+// rule would otherwise be ignored here while still applying on Vercel).
 
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const config = JSON.parse(readFileSync(join(root, 'vercel.json'), 'utf8'));
+// --config <file> checks another copy (e.g. git show HEAD:vercel.json) instead.
+const configArg = process.argv.indexOf('--config');
+const configPath = configArg > -1 ? process.argv[configArg + 1] : join(root, 'vercel.json');
+const config = JSON.parse(readFileSync(configPath, 'utf8'));
 
 // Crawlers that must reach the Hebrew page at `/` without a redirect. Search
 // engines so the page can be indexed; social unfurlers so a Hebrew link shared
@@ -59,6 +71,17 @@ const CRAWLERS = [
   'Slackbot-LinkExpanding 1.0 (+https://api.slack.com/robots)',
   'TelegramBot (like TwitterBot)',
   'Mozilla/5.0 (compatible; SemrushBot/7~bl; +http://www.semrush.com/bot.html)',
+  // Fetchers that carry no "bot" in their UA but render the page for someone
+  // else: AI assistants fetching a URL a user handed them, Google's read-aloud,
+  // and link previews in Bing and Skype. Redirected, each of them read (or
+  // previewed) /en instead of the Hebrew page it was given. (Lighthouse is not
+  // here: see the header — audit it via /?lang=he.)
+  'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Claude-User/1.0; +Claude-User@anthropic.com)',
+  'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; ChatGPT-User/1.0; +https://openai.com/bot',
+  'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Perplexity-User/1.0; +https://perplexity.ai/perplexity-user)',
+  'Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0 BingPreview/1.0b',
+  'Mozilla/5.0 (Windows NT 6.1; WOW64) SkypeUriPreview Preview/0.5 skype-url-preview@microsoft.com',
 ];
 
 // Real visitors, who must keep today's routing untouched. GSA (the Google
@@ -106,6 +129,80 @@ if (!uaCondition) {
   }
 }
 
+// --- The whole router, simulated --------------------------------------------
+//
+// The checks above pin one condition. These evaluate every `/` redirect the way
+// Vercel does — rules in order, first match wins; a `has` entry must be present
+// (and match its `value` regex against the WHOLE value, as Vercel anchors it, if
+// it has one); a `missing` entry must not — so a
+// change to any other condition (the Accept-Language pattern above all) is
+// caught too. Accept-Language: any `he` or `iw` tag keeps a visitor on Hebrew,
+// not only a first-place one — an English-first browser that also lists Hebrew
+// belongs to someone who reads it.
+
+function conditionHolds(cond, req) {
+  let actual;
+  if (cond.type === 'header') actual = req.headers?.[cond.key.toLowerCase()];
+  else if (cond.type === 'cookie') actual = req.cookies?.[cond.key];
+  else if (cond.type === 'query') actual = req.query?.[cond.key];
+  else if (cond.type === 'host') actual = req.host;
+  else throw new Error(`Unsimulated condition type: ${cond.type}`);
+  if (actual === undefined) return false;
+  return cond.value === undefined ? true : new RegExp('^(?:' + cond.value + ')$').test(actual);
+}
+
+const SIMULATED_SOURCES = new Set(['/', '/he']);
+for (const r of config.redirects ?? []) {
+  if (!SIMULATED_SOURCES.has(r.source)) {
+    failures.push(`Redirect with source ${JSON.stringify(r.source)} is not simulated (only "/" and "/he" are) — it may apply to "/" on Vercel; extend this check before adding it.`);
+  }
+}
+
+function route(cfg, req) {
+  for (const r of cfg.redirects ?? []) {
+    if (r.source !== '/') continue;
+    if (!(r.has ?? []).every((c) => conditionHolds(c, req))) continue;
+    if ((r.missing ?? []).some((c) => conditionHolds(c, req))) continue;
+    return r.destination;
+  }
+  return '/';
+}
+
+const BROWSER = VISITORS[2];
+const CLAUDE_USER = CRAWLERS.find((ua) => ua.includes('Claude-User'));
+const ROUTER_CASES = [
+  { name: "'en-US,en;q=0.9,he;q=0.8', abroad", headers: { 'accept-language': 'en-US,en;q=0.9,he;q=0.8' }, expect: '/' },
+  { name: "'he-IL', abroad", headers: { 'accept-language': 'he-IL' }, expect: '/' },
+  { name: "'he-IL,he;q=0.9,en-US;q=0.8', abroad", headers: { 'accept-language': 'he-IL,he;q=0.9,en-US;q=0.8' }, expect: '/' },
+  { name: "'iw', abroad", headers: { 'accept-language': 'iw' }, expect: '/' },
+  { name: "'en-GB,iw-IL;q=0.7', abroad", headers: { 'accept-language': 'en-GB,iw-IL;q=0.7' }, expect: '/' },
+  { name: "'en-US', abroad", headers: { 'accept-language': 'en-US' }, expect: '/en' },
+  { name: "'en-US,en;q=0.9', abroad", headers: { 'accept-language': 'en-US,en;q=0.9' }, expect: '/en' },
+  { name: "'de-DE,de;q=0.9,en;q=0.8', abroad", headers: { 'accept-language': 'de-DE,de;q=0.9,en;q=0.8' }, expect: '/en' },
+  { name: "'en-US', in Israel", headers: { 'accept-language': 'en-US', 'x-vercel-ip-country': 'IL' }, expect: '/' },
+  { name: "cookie mx_lang=en + 'he-IL' (explicit English choice)", headers: { 'accept-language': 'he-IL' }, cookies: { mx_lang: 'en' }, expect: '/en' },
+  { name: "cookie mx_lang=en + /?lang=he (the switch back)", headers: { 'accept-language': 'en-US' }, cookies: { mx_lang: 'en' }, query: { lang: 'he' }, expect: '/' },
+  { name: "cookie mx_lang=he + 'en-US', abroad", headers: { 'accept-language': 'en-US' }, cookies: { mx_lang: 'he' }, expect: '/' },
+  { name: 'Googlebot, no Accept-Language, abroad', headers: { 'user-agent': CRAWLERS[0] }, expect: '/' },
+  { name: "Claude-User, 'en-US', abroad", headers: { 'user-agent': CLAUDE_USER, 'accept-language': 'en-US' }, expect: '/' },
+  // Near misses: a pattern loosened to "contains he" would keep these on Hebrew.
+  { name: "'hebrew', abroad", headers: { 'accept-language': 'hebrew' }, expect: '/en' },
+  { name: "'she-IL', abroad", headers: { 'accept-language': 'she-IL' }, expect: '/en' },
+  { name: "'en-he', abroad", headers: { 'accept-language': 'en-he' }, expect: '/en' },
+  { name: "'x-he', abroad", headers: { 'accept-language': 'x-he' }, expect: '/en' },
+  { name: 'browser with no Accept-Language, abroad', headers: { 'accept-language': undefined }, expect: '/en' },
+];
+for (const c of ROUTER_CASES) {
+  c.headers = { 'user-agent': BROWSER, ...c.headers };
+  for (const k of Object.keys(c.headers)) if (c.headers[k] === undefined) delete c.headers[k];
+  c.got = route(config, c);
+  if (c.got !== c.expect) failures.push(`Router: ${c.name} -> ${c.got}, expected ${c.expect}`);
+}
+
+if (process.argv.includes('--table')) {
+  for (const c of ROUTER_CASES) console.log(`  ${c.got === c.expect ? 'ok  ' : 'FAIL'} ${c.name.padEnd(56)} -> ${c.got}`);
+}
+
 if (failures.length) {
   console.error('FAIL — crawler exemption is broken:\n');
   for (const f of failures) console.error(`  - ${f}`);
@@ -113,4 +210,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`OK — ${CRAWLERS.length} crawlers reach the Hebrew page at /, ${VISITORS.length} visitor agents stay language-routed.`);
+console.log(`OK — ${CRAWLERS.length} crawlers reach the Hebrew page at /, ${VISITORS.length} visitor agents stay language-routed, ${ROUTER_CASES.length} router cases route as expected.`);

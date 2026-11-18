@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
@@ -21,7 +22,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; connect-src 'self' https://pappjpdsajkcoqrfqqqx.supabase.co https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://c.bing.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://c.bing.com; connect-src 'self' https://pappjpdsajkcoqrfqqqx.supabase.co https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://c.bing.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
         }
       ]
     }
@@ -47,13 +48,13 @@
         {
           "type": "header",
           "key": "accept-language",
-          "value": "^[Hh][Ee]([-;,].*)?$"
+          "value": "^(.*[, ])?([Hh][Ee]|[Ii][Ww])([-_;, ].*)?$"
         },
         { "type": "header", "key": "x-vercel-ip-country", "value": "IL" },
         {
           "type": "header",
           "key": "user-agent",
-          "value": "^.*([Bb][Oo][Tt]|[Ss][Pp][Ii][Dd][Ee][Rr]|[Cc][Rr][Aa][Ww][Ll]|Google-InspectionTool|GoogleOther|Mediapartners-Google|facebookexternalhit|WhatsApp).*$"
+          "value": "^.*([Bb][Oo][Tt]|[Ss][Pp][Ii][Dd][Ee][Rr]|[Cc][Rr][Aa][Ww][Ll]|Google-InspectionTool|GoogleOther|Mediapartners-Google|facebookexternalhit|WhatsApp|Google-Read-Aloud|BingPreview|SkypeUriPreview|Claude-User|ChatGPT-User|Perplexity-User).*$"
         }
       ],
       "destination": "/en",
