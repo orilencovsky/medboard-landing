@@ -53,7 +53,7 @@
         {
           "key": "b",
           "text": "מדובר בנוגדנים מונוקלונלים {{(monoclonal)}} בד\"כ מסוג {{Lambda}}",
-          "why": "המילה השגויה באפשרות זו היא \"מונוקלונליים\": ה-{{IgA}} השוקע במזנגיום ב-{{IgAN}} הוא פולימרי ופוליקלונלי — '{{polymeric polyclonal IgA}}'. החלק השני דווקא נכון חלקית: בשקעים המזנגיאליים ב-{{IgAN}} נמצאות כמויות מוגברות של שרשראות קלות מסוג {{Lambda}}, אבל עודף {{Lambda}} אינו הופך את הנוגדנים למונוקלונליים. {{IgA}} מונוקלונלי, כמו במיאלומה, רק לעיתים רחוקות גורם לשקיעה מזנגיאלית — '{{High circulating levels of monoclonal IgA in myeloma... only infrequently provoke mesangial IgA deposition}}'."
+          "why": "המילה השגויה באפשרות זו היא \"מונוקלונלים\": ה-{{IgA}} השוקע במזנגיום ב-{{IgAN}} הוא פולימרי ופוליקלונלי — '{{polymeric polyclonal IgA}}'. החלק השני דווקא נכון חלקית: בשקעים המזנגיאליים ב-{{IgAN}} נמצאות כמויות מוגברות של שרשראות קלות מסוג {{Lambda}}, אבל עודף {{Lambda}} אינו הופך את הנוגדנים למונוקלונליים. {{IgA}} מונוקלונלי, כמו במיאלומה, רק לעיתים רחוקות גורם לשקיעה מזנגיאלית — '{{High circulating levels of monoclonal IgA in myeloma... only infrequently provoke mesangial IgA deposition}}'."
         },
         {
           "key": "c",
@@ -77,12 +77,12 @@
         {
           "key": "a",
           "text": "היפרקלמיה",
-          "why": "היפוקלמיה {{(hypokalemia)}} — ולא היפרקלמיה — מוזכרת כגורם סיכון ל-{{ODS}}. היפרקלמיה אינה מופיעה כגורם סיכון ל-{{ODS}} במקור, ולמעשה היא שכיחה בהיפונתרמיה הנגרמת מאי-ספיקת אדרנל ואינה מגבירה סיכון לדמיאלינציה."
+          "why": "היפוקלמיה {{(hypokalemia)}} — ולא היפרקלמיה — מוזכרת כגורם סיכון ל-{{ODS}}. היפרקלמיה אינה מופיעה כגורם סיכון ל-{{ODS}} במקור."
         },
         {
           "key": "b",
           "text": "המודיאליזה במטופל אורמי",
-          "why": "המודיאליזה במטופל אורמי אינה מוזכרת כגורם סיכון ל-{{ODS}}. אי-ספיקת כליות כרונית מתקדמת עם אוליגוריה עלולה לגרום להיפונתרמיה, אך לא מדובר בגורם סיכון מוכר לתסמונת זו; קצב תיקון הנתרן בהמודיאליזה עשוי להיות מהיר ולדרוש ניטור, אך עצם הדיאליזה אינה מגדירה סיכון ל-{{ODS}}."
+          "why": "המודיאליזה במטופל אורמי אינה מוזכרת במקור כגורם סיכון ל-{{ODS}}."
         },
         {
           "key": "c",
@@ -95,7 +95,7 @@
           "right": true
         }
       ],
-      "explanationHtml": "<p><strong>נכון.</strong> תסמונת הדמיאלינציה האוסמוטית <span class=\"ltr-iso\">(ODS)</span> היא סיבוך חמור של תיקון מהיר מדי של היפונתרמיה כרונית חמורה. גורמי סיכון מוכרים ל-<span class=\"ltr-iso\">ODS</span> כוללים: ריכוז נתרן בסרום של <span class=\"ltr-iso\">105 mEq/L</span> ומטה, היפוקלמיה, הפרעת שימוש באלכוהול <span class=\"ltr-iso\">(alcohol use disorder)</span>, תת-תזונה ומחלת כבד. לכן תשובה ד, אלכוהוליזם, נכונה. נקודת הלמידה: בחולים עם גורמי סיכון אלה, קצב התיקון המרבי הבטוח הוא <span class=\"ltr-iso\">8 mEq/L</span> בכל פרק זמן של 24 שעות.</p>",
+      "explanationHtml": "<p><strong>נכון.</strong> תסמונת הדמיאלינציה האוסמוטית <span class=\"ltr-iso\">(ODS)</span> היא סיבוך חמור של תיקון מהיר מדי של היפונתרמיה כרונית חמורה. גורמי סיכון מוכרים ל-<span class=\"ltr-iso\">ODS</span> כוללים: ריכוז נתרן בסרום של <span class=\"ltr-iso\">105 mEq/L</span> ומטה, היפוקלמיה, הפרעת שימוש באלכוהול <span class=\"ltr-iso\">(alcohol use disorder)</span>, תת-תזונה ומחלת כבד. לכן תשובה ד, אלכוהוליזם, נכונה. נקודת הלמידה: בהיפונתרמיה כרונית חמורה, הפרעת שימוש באלכוהול נמנית עם גורמי הסיכון הגבוה ביותר ל-<span class=\"ltr-iso\">ODS</span>.</p>",
       "quote": "{{Among patients with severe, chronic hyponatremia, individuals at highest risk for ODS include those with serum sodium concentrations of less than or equal to 105 mEq/L; those with hypokalemia, alcohol use disorder, malnutrition, or liver disease; and, possibly, those with hypophosphatemia.}}",
       "citation": "{{UpToDate — Overview of the treatment of hyponatremia in adults}}"
     },
@@ -126,7 +126,7 @@
       ],
       "explanationHtml": "<p><strong>נכון.</strong> <span class=\"ltr-iso\">sFlt-1</span> הוא וריאנט שחבור <span class=\"ltr-iso\">(splice variant)</span> מקוצר של קולטן ה-<span class=\"ltr-iso\">VEGF (Flt1)</span>, החסר את הדומיין התוך-תאי והטרנס-ממברנלי אך שומר על הדומיין החוץ-תאי הקושר <span class=\"ltr-iso\">VEGF</span> ו-<span class=\"ltr-iso\">PlGF</span>. ברעלת הריון, השליה מייצרת עודף <span class=\"ltr-iso\">sFlt-1</span> שמשתחרר למחזור הדם האימהי. שם הוא לוכד את ה-<span class=\"ltr-iso\">VEGF</span> החופשי ואת ה-<span class=\"ltr-iso\">PlGF</span> ומונע מהם להתקשר לקולטניהם על תאי האנדותל. כתוצאה מכך, האנדותל מאבד את תמיכת ה-<span class=\"ltr-iso\">VEGF</span> הנחוצה לשמירת תפקודו התקין, מה שמוביל לעווית כלי דם, פגיעה אנדותליאלית מפושטת, יתר לחץ דם ופרוטאינוריה — כל הסימנים הקליניים של רעלת הריון. זוהי נקודת הלמידה המרכזית: <span class=\"ltr-iso\">sFlt-1</span> פועל כ-״<span class=\"ltr-iso\">decoy receptor</span>״ במחזור הדם ולא כמולקולה הפועלת ישירות על הגרעין או על הממברנה הבזלית.</p>",
       "quote": "{{sFlt1, a truncated splice variant of the VEGFR Flt1, antagonizes VEGF and PlGF by binding them in the circulation and preventing interaction with their endogenous receptors in the vasculature.}}",
-      "citation": "{{Brenner & Rector's The Kidney, 11th ed. — Ch. 48, Pregnancy and Kidney Disease}}"
+      "citation": "{{Brenner & Rector's The Kidney, 11th ed. — Chapter 48: Pregnancy and Kidney Disease}}"
     },
     {
       "topic": "השתלת כליה",
@@ -135,7 +135,7 @@
         {
           "key": "a",
           "text": "קשורה להופעה של פוליציטמיה ורה",
-          "why": "{{PTE}} אינה קשורה לפוליציטמיה ורה {{(Polycythemia Vera)}}, שהיא מחלה מיאלופרוליפרטיבית ראשונית הנגרמת ממוטציה ב-{{JAK2}}. {{PTE}} היא תופעה משנית הנובעת מתפקוד טוב של השתל הכלייתי ומייצור עודף אריתרופויאטין. שתי הישויות נפרדות לחלוטין מבחינה פתופיזיולוגית."
+          "why": "אריתרוציטוזיס לאחר השתלת כליה {{(PTE)}} אינה קשורה לפוליציטמיה ורה {{(Polycythemia Vera)}}, שהיא מחלה מיאלופרוליפרטיבית ראשונית הנגרמת ממוטציה ב-{{JAK2}}. שתי הישויות נפרדות לחלוטין מבחינה פתופיזיולוגית."
         },
         {
           "key": "b",
@@ -145,17 +145,17 @@
         {
           "key": "c",
           "text": "מלווה בדרך כלל בעודפי פריטין בדם",
-          "why": "{{PTE}} אינה מלווה בעודפי פריטין בדם. להפך — מאחר שמדובר בייצור מוגבר של תאי דם אדומים, צריכת הברזל עולה ועלולה להתפתח דלדול מאגרי ברזל. עודף פריטין אופייני לתהליכים דלקתיים כרוניים, המוכרומטוזיס, או למצבי עומס ברזל — לא ל-{{PTE}}."
+          "why": "אריתרוציטוזיס לאחר השתלת כליה {{(PTE)}} אינה מלווה בעודפי פריטין בדם. עודף פריטין אופייני לתהליכים דלקתיים כרוניים, המוכרומטוזיס, או למצבי עומס ברזל — לא ל-{{PTE}}."
         },
         {
           "key": "d",
           "text": "שכיחה יותר במטופלים ב-{{mTOR inhibitors}}",
-          "why": "המקור מציין כגורמי סיכון ל-{{PTE}}: נוכחות כליות נטיביות, מין זכר, היעדר דחייה, המוגלובין גבוה לפני ההשתלה, יתר לחץ דם, עישון, סוכרת, מחלת כליות פוליציסטית וגלומרולונפריטיס — ואין כל אזכור לקשר בין מעכבי {{mTOR}} לבין שכיחות מוגברת של {{PTE}}. בפועל, מעכבי {{mTOR}} ידועים כגורמים לאנמיה ולא לאריתרוציטוזיס."
+          "why": "המקור מציין כגורמי סיכון לאריתרוציטוזיס לאחר השתלת כליה {{(PTE)}}: נוכחות כליות נטיביות, מין זכר, היעדר דחייה, המוגלובין גבוה לפני ההשתלה, יתר לחץ דם, עישון, סוכרת, מחלת כליות פוליציסטית וגלומרולונפריטיס — ואין כל אזכור לקשר בין מעכבי {{mTOR}} לבין שכיחות מוגברת של {{PTE}}."
         }
       ],
-      "explanationHtml": "<p><strong>נכון.</strong> אריתרוציטוזיס לאחר השתלת כליה <span class=\"ltr-iso\">(PTE)</span> מטופלת בהצלחה באמצעות מעכבי <span class=\"ltr-iso\">ACE</span> או תרופות ממשפחת <span class=\"ltr-iso\">ARB</span>, אשר לרוב מספיקים לשמירה על ערכי המוגלובין בטווח תקין. הטיפול מומלץ כאשר רמת ההמוגלובין עולה על 17–18 ג׳/ד״ל או ה-<span class=\"ltr-iso\">Hct</span> עולה על <span class=\"ltr-iso\">51%–52%</span>, בשל הסיכון לסיבוכים תרומבואמבוליים, יתר לחץ דם וכאבי ראש. נקודת הלמידה המרכזית: מעכבי <span class=\"ltr-iso\">ACE/ARB</span> הם קו הטיפול הראשון ב-<span class=\"ltr-iso\">PTE</span>, והפלבוטומיה שמורה רק למקרים עמידים.</p>",
+      "explanationHtml": "<p><strong>נכון.</strong> אריתרוציטוזיס לאחר השתלת כליה <span class=\"ltr-iso\">(PTE)</span> מטופלת בהצלחה באמצעות מעכבי <span class=\"ltr-iso\">ACE</span> או תרופות ממשפחת <span class=\"ltr-iso\">ARB</span>, אשר לרוב מספיקים לשמירה על ערכי המוגלובין בטווח תקין. נקודת הלמידה המרכזית: מעכבי <span class=\"ltr-iso\">ACE/ARB</span> לרוב מספיקים לטיפול ב-<span class=\"ltr-iso\">PTE</span>, ורק לעיתים יש צורך בפלבוטומיה.</p>",
       "quote": "{{Treatment with ACE inhibitors or ARBs is often sufficient, although phlebotomy may occasionally be necessary.}}",
-      "citation": "{{Danovitch, Handbook of Kidney Transplantation, 7th ed. — Ch. 11, Posttransplant: The First 3 Months}}"
+      "citation": "{{Danovitch, Handbook of Kidney Transplantation, 7th ed. — Chapter 11: Posttransplant: The First 3 Months}}"
     },
     {
       "topic": "אבנים בדרכי השתן",
