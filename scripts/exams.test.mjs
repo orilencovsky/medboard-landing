@@ -14,6 +14,9 @@ const page = read('exams.html');
 const served = (html) => html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
 const clone = () => JSON.parse(JSON.stringify(data));
 const dotted = (iso) => iso.split('-').reverse().join('.');
+// Every sources page, from sourcesHref in specialties/<track>.json.
+const sourcesPages = data.tracks.map((t) => existsSync(new URL(`../specialties/${t.id}.json`, import.meta.url)) && JSON.parse(read(`specialties/${t.id}.json`)).sourcesHref)
+  .filter(Boolean).map((h) => h.slice(1) + '.html');
 
 test('exams.html is what the renderer makes from tracks.json', () => {
   assert.equal(renderExams(template, data), page);
@@ -104,8 +107,8 @@ test('the inlined day math is scripts/countdown.mjs', () => {
 });
 
 test('every footer links to /exams', () => {
-  const files = ['index.html', 'specialty.template.html', 'cardiology/sources.html', 'nephrology/sources.html', 'family-medicine/sources.html',
-    'geriatrics/sources.html', 'privacy.html', 'terms.html', 'accessibility.html', 'connect.html',
+  assert.ok(sourcesPages.length >= 5, 'sourcesHref lookup found too few sources pages');
+  const files = ['index.html', 'specialty.template.html', ...sourcesPages, 'privacy.html', 'terms.html', 'accessibility.html', 'connect.html',
     ...data.tracks.map((t) => t.href.slice(1) + '.html')];
   for (const f of files) assert.match(read(f), /<a class="foot-link" href="\/exams">מועדי בחינות<\/a>/, f);
 });
@@ -180,7 +183,6 @@ test('pages inside the site link to /exams, not only footers', () => {
   // Home: the line under the study tracks.
   assert.match(read('index.html'), /<p class="tracks-more">[^\n]*<a href="\/exams">/);
   // Every dated countdown, on the specialty pages and the sources pages.
-  const files = [...data.tracks.filter((t) => t.exam.date).map((t) => t.href.slice(1) + '.html'),
-    'cardiology/sources.html', 'nephrology/sources.html', 'family-medicine/sources.html', 'geriatrics/sources.html'];
+  const files = [...data.tracks.filter((t) => t.exam.date).map((t) => t.href.slice(1) + '.html'), ...sourcesPages];
   for (const f of files) assert.match(read(f), /<p class="cd-note">[^\n]*<a href="\/exams">כל מועדי הבחינות<\/a><\/p>/, f);
 });

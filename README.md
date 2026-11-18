@@ -74,6 +74,8 @@ scripts/check-crawler-exemption.mjs  guards the crawler exemption in the languag
 scripts/render-tracks.mjs    renders tracks.json into both landing pages (`--check` = drift guard; tests beside it)
 scripts/render-specialties.mjs  renders specialty.template.html + specialties/*.json + tracks.json into the four
                          specialty pages (`--check` = drift guard; tests beside it)
+scripts/build-sources-page.mjs  builds /<track>/sources for a "soon" track from its rendered page, tracks.json and
+                         its own copy (`node scripts/build-sources-page.mjs obgyn`, `--check` = drift guard); see "Sources pages"
 scripts/countdown.mjs    the Israel-date day count to an exam, shared by the renderer and the page's script (tests beside it)
 docs/hero-video-prompt.md    The generation prompt behind the hero footage
 ```
@@ -624,6 +626,9 @@ served by the platform, so it 404s on a local static server. Custom events, all 
   family medicine.
 - `geri_sources_click` — the same on `/geriatrics/sources` (`data-geri-cta`): `sources_crumb`,
   `sources_nav`, `sources_more` and `sources_closing`; its logo and nav send `geri_home_click`.
+- `obgyn_sources_click` — the same on `/obgyn/sources` (`data-obgyn-cta`): `sources_crumb`,
+  `sources_nav`, `sources_try` (the link under the citation example), `sources_more` and
+  `sources_closing`; its logo and nav send `obgyn_home_click`.
 - `exams_click` — the links on `/exams` that carry `data-ex-cta` (all but the footer). `data.placement` is
   `logo`, `nav`, `nav_tracks`, `crumb`, `row` (the specialty name), `row_sources`, `row_ima` (a row with no date yet),
   `facts_ima` or `closing`; on a specialty row `data.track` names the track.
@@ -658,17 +663,34 @@ from the line under the study tracks on the home page, and from every dated coun
 moves its row to the end and says the next date is coming, until `tracks.json` gets the new date.
 `exams.template.html` is in `.vercelignore`, like `specialty.template.html`.
 
+## Sources pages (/cardiology/sources, /nephrology/sources, /family-medicine/sources, /geriatrics/sources, /obgyn/sources)
+
+`<track>/sources.html` is a static page served at `/<track>/sources` (thanks to `cleanUrls`): the
+sources behind a track's explanations, its exam date and a way to the track page. Each reuses the
+styles, nav, footer and countdown script of its track page.
+
+- `cardiology`, `nephrology`, `family-medicine` and `geriatrics` were built by hand (geriatrics by a
+  one-off script that became the generator below). After a template change that matters there, copy
+  it in by hand.
+- `obgyn` is generated: `node scripts/build-sources-page.mjs obgyn` (`--check` exits 1 on drift).
+  The script takes the shell from the rendered `obgyn.html` (cutting out the sample-question code and
+  the hero video pin), the exam and the source titles from `tracks.json`, the analytics prefix,
+  `examBased` and the first sample question's citation line from `specialties/obgyn.json`, and the
+  copy from its `CONTENT` object. To add a track, add a `CONTENT` entry (only facts the repo already
+  states), run the script, then set `sourcesHref` and add the sitemap entry and a `PAGES` row in the
+  test. It builds only `soon` tracks without a `launchOffer`, and refuses the four older pages, which
+  are not in `CONTENT`. Re-run it after a change to `specialty.template.html` (the test fails until
+  you do). It is not part of the daily date check.
+
+Dates: the daily check (`scripts/check-ima-dates.mjs`, see "Exam dates") swaps the old date for the
+new one as text in `data-exam-date` and every `dd.mm.yyyy`, so a sources page shows no date other
+than its own exam's. `scripts/sources-pages.test.mjs` checks each page's canonical URL, JSON-LD, exam
+name and dates and sources (against `tracks.json`), that no other date appears, the inlined countdown
+(against `scripts/countdown.mjs`), the "not an official list" line, the expert-review claim (only
+where the track page makes it), the past-exam sentence (only where `examBased` is set), any
+citation example (against the sample questions), the 44px breadcrumb rule, the link from the track
+page (`sourcesHref` in `specialties/<track>.json`) and the sitemap entry.
+
 ## License
 
 Private project. All rights reserved.
-
-## Sources pages (/cardiology/sources, /nephrology/sources, /family-medicine/sources, /geriatrics/sources)
-
-`cardiology/sources.html`, `nephrology/sources.html`, `family-medicine/sources.html` and `geriatrics/sources.html` are hand-built static pages
-(served at `/<track>/sources` thanks to `cleanUrls`). Each reuses the styles, nav,
-footer and countdown script of its track page, so after a template change that matters
-there, copy the change in by hand. `scripts/sources-pages.test.mjs` checks each one's
-canonical URL, JSON-LD, exam name and dates and sources (against `tracks.json`), the
-inlined countdown (against `scripts/countdown.mjs`), the "not an official list" line,
-the expert-review claim (only where the track page makes it), the link from the track
-page (`sourcesHref` in `specialties/<track>.json`) and the sitemap entry.
