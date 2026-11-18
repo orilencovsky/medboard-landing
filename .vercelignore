@@ -2,3 +2,7 @@ specialty.template.html
 specialties/
 docs/
 exams.template.html
+.design-sync/
+.github/
+design-system/
+scripts/

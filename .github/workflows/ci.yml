@@ -1,0 +1,48 @@
+# Checks every pull request (and main after a merge) with the same commands
+# that are run by hand before a commit: the unit tests, the renderers' --check
+# modes (generated pages must match their templates and data), and the guard
+# on vercel.json's language router. No network, no secrets, read-only token.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Unit tests
+        run: |
+          for f in scripts/*.test.mjs; do
+            echo "::group::$f"
+            node --test "$f"
+            echo "::endgroup::"
+          done
+
+      - name: Generated pages are up to date
+        run: |
+          node scripts/render-specialties.mjs --check
+          node scripts/render-exams.mjs --check
+          node scripts/render-tracks.mjs --check
+          for id in obgyn pediatrics psychiatry anesthesia; do
+            node scripts/build-sources-page.mjs "$id" --check
+          done
+
+      - name: Language router and crawler exemption
+        run: node scripts/check-crawler-exemption.mjs --table

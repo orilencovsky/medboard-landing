@@ -10,14 +10,21 @@
   // country and Accept-Language, so anyone who is neither Hebrew-speaking nor
   // in Israel is sent to /en before this page is ever served. Reaching here
   // means Hebrew is the right page.
-  // So: record that in the cookie the router reads, and drop any ?lang=he the
-  // switcher (or the /he redirect) left behind, so a copied URL doesn't carry
-  // the lock to the next person. Other params (utm_*) are preserved.
+  // The cookie the router reads records only an explicit choice: clicking the
+  // EN switch here writes mx_lang=en, and arriving through /en's עברית switch
+  // (/?lang=he, also where the old /he address lands) writes mx_lang=he. Merely
+  // landing here writes nothing, so the router keeps deciding by language and
+  // country. Then drop the ?lang=he, so a copied URL doesn't carry the lock to
+  // the next person. Other params (utm_*) are preserved.
   (function () {
     try {
-      document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax';
+      document.addEventListener('click', function (ev) {
+        var a = ev.target && ev.target.closest && ev.target.closest('[data-mq-lang]');
+        if (a) document.cookie = 'mx_lang=en;path=/;max-age=31536000;samesite=lax';
+      }, true);
       var u = new URL(location.href);
       if (!u.searchParams.has('lang')) return;
+      if (u.searchParams.get('lang') === 'he') document.cookie = 'mx_lang=he;path=/;max-age=31536000;samesite=lax';
       u.searchParams.delete('lang');
       history.replaceState(null, '', u.pathname + u.search + u.hash);
     } catch (e) {}
@@ -91,6 +98,7 @@
 {"@context":"https://schema.org","@type":"FAQPage","inLanguage":"he","mainEntity":[{"@type":"Question","name":"מה זה MeduXa?","acceptedAnswer":{"@type":"Answer","text":"MeduXa, או בעברית מדוקסה, היא פלטפורמה להכנה לבחינות ההתמחות: שאלות ברמת הבחינה, הסבר לכל תשובה שמגובה בציטוט מהמקור, מורה AI סוקרטי, וחזרה מרווחת שמחזירה לתרגול את מה שפספסתם. נעשה על ידי רופאים, עבור רופאים."}},{"@type":"Question","name":"לאילו בחינות אפשר להתכונן?","acceptedAnswer":{"@type":"Answer","text":"לכל בחינה נבנה מסלול נפרד, עם תוכן משלו ואותו מנוע למידה: נפרולוגיה וקרדיולוגיה (מקצוע-על), ורפואת משפחה, רפואת ילדים, גריאטריה, פסיכיאטריה, הרדמה, ומיילדות וגינקולוגיה (שלב א׳). בחלק מהמסלולים כבר אפשר להתחיל ללמוד, ובאחרים אפשר להשאיר מייל ונעדכן כשהמסלול נפתח."}},{"@type":"Question","name":"אפשר להתחיל חינם?","acceptedAnswer":{"@type":"Answer","text":"כן. במסלולים הפתוחים אפשר להתחיל ללמוד חינם, ישר מהכפתור ״התחילו ללמוד — חינם״."}},{"@type":"Question","name":"מי כותב ובודק את השאלות?","acceptedAnswer":{"@type":"Answer","text":"השאלות נבנו ברמת הבחינה על בסיס בחינות עבר, וכל שאלה עוברת ביקורת מומחה לפני שהיא מגיעה אליכם."}},{"@type":"Question","name":"איך אפשר לדעת שההסבר נכון?","acceptedAnswer":{"@type":"Answer","text":"לכל תשובה יש הסבר שמגובה בציטוט מילה במילה מהמקור שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם."}},{"@type":"Question","name":"מה עושה המורה הסוקרטי?","acceptedAnswer":{"@type":"Answer","text":"כשנתקעים בשאלה, המורה לא מוסר את התשובה. הוא מנחה אתכם בשאלות, בזמן אמת, כך שאתם מגיעים לתשובה בעצמכם."}},{"@type":"Question","name":"במה זה שונה ממאגר שאלות או מכלי AI כללי?","acceptedAnswer":{"@type":"Answer","text":"מאגר שאלות נותן תרגול בלי הכוונה. כלי AI כללי נותן הכוונה רק אחרי שאוספים לבד את המקורות ובונים לו את ההקשר. MeduXa בנויה מראש סביב בחינת ההתמחות הישראלית, עם שניהם יחד."}},{"@type":"Question","name":"יש סימולציית בחינה?","acceptedAnswer":{"@type":"Answer","text":"כן. אפשר לתרגל ברוגע עם רמזים, או לעשות סימולציית בחינה מלאה עם טיימר, ולבחור מצב לכל סשן."}},{"@type":"Question","name":"אפשר לתרגל מתוך Claude או ChatGPT?","acceptedAnswer":{"@type":"Answer","text":"כן. מחברים פעם אחת את החשבון ב-MeduXa לכלי ה-AI, ומתרגלים בשיחה: שאלות מהחבילה שלכם, בדיקת תשובה ומעקב אחרי ההתקדמות. החיבור דורש חבילת לימוד פעילה, וב-ChatGPT הוא זמין כרגע דרך מצב המפתחים (Developer mode)."}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   body { margin: 0; background: #061225; font-family: 'IBM Plex Sans Hebrew', sans-serif; }
