@@ -108,6 +108,8 @@
      --ink), so the ring never touches the button's own violet. */
   .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ink), 0 0 0 6px var(--violet-on-soft); }
   .btn:disabled { opacity: .7; cursor: default; }
+  /* Forced colours drop the gradient fill: an outline keeps the button a button. */
+  @media (forced-colors: active) { .btn { border: 1px solid ButtonText; } }
   .btn .ph { font-size: 18px; transition: transform .2s var(--ease); }
   /* Hover only where there is a real pointer: a tap on a phone would leave
      the hover state stuck on after the finger lifts. */
@@ -192,6 +194,11 @@
   .cd-note { font-size: 13px; line-height: 1.6; }
   .cd-note a { color: var(--t3); text-decoration: underline; text-underline-offset: 2px; }
   .cd-note a:hover { color: var(--cyan-soft); }
+  /* Each link is one unit (no-wrap), so on a narrow screen the second link moves
+     down whole; a pseudo-element gives each a ~44px tap area without making the
+     note any taller. */
+  .cd-note a { position: relative; white-space: nowrap; }
+  .cd-note a::after { content: ''; position: absolute; inset: -15px 0; }
 
   /* SAMPLE QUESTION: a real, working component, not a picture of one. */
   .q { background: rgba(11,37,69,.78); border: 1px solid rgba(34,211,238,.22); border-radius: var(--r-xl); padding: 24px;
