@@ -64,8 +64,8 @@ const CRAWLERS = [
   'Mozilla/5.0 (compatible; SemrushBot/7~bl; +http://www.semrush.com/bot.html)',
   // Fetchers that carry no "bot" in their UA but render the page for someone
   // else: PageSpeed Insights / Lighthouse audits, AI assistants fetching a URL
-  // a user handed them, Google's read-aloud, and link previews in Bing, Skype
-  // and Viber. Redirected, each of them reported on (or previewed) /en instead
+  // a user handed them, Google's read-aloud, and link previews in Bing and Skype.
+  // Redirected, each of them reported on (or previewed) /en instead
   // of the Hebrew page it was given.
   'Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36 Chrome-Lighthouse',
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Chrome-Lighthouse',
@@ -74,7 +74,6 @@ const CRAWLERS = [
   'Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)',
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0 BingPreview/1.0b',
   'Mozilla/5.0 (Windows NT 6.1; WOW64) SkypeUriPreview Preview/0.5 skype-url-preview@microsoft.com',
-  'Viber/20.3.0 CFNetwork/1474 Darwin/23.0.0',
 ];
 
 // Real visitors, who must keep today's routing untouched. GSA (the Google
