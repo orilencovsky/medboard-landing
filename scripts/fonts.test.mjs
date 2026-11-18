@@ -66,3 +66,27 @@ test('every IBM Plex stack names its metric-matched fallback', () => {
   }
   for (const fam of ['Sans Hebrew', 'Sans', 'Mono']) assert.match(fontsCss, new RegExp(`font-family: 'IBM Plex ${fam} Fallback'`));
 });
+
+test('every @font-face that loads a file uses font-display: swap', () => {
+  const faces = fontsCss.split('@font-face').slice(1).filter((b) => /url\(/.test(b));
+  assert.ok(faces.length >= 10);
+  assert.deepEqual(faces.filter((b) => !/font-display:\s*swap/.test(b)).length, 0);
+});
+
+test('fonts.css does not import anything from another host', () => {
+  assert.doesNotMatch(fontsCss, /@import|https?:\/\//);
+});
+
+test('woff2 files are cached for a year and fonts/ is deployed', () => {
+  const cfg = JSON.parse(readFileSync(join(root, 'vercel.json'), 'utf8'));
+  const rule = cfg.headers.find((h) => /^\/fonts\//.test(h.source));
+  assert.ok(rule, 'no headers rule for /fonts/');
+  assert.match(JSON.stringify(rule.headers), /max-age=31536000, immutable/);
+  const ignore = readFileSync(join(root, '.vercelignore'), 'utf8').split(/\r?\n/).map((l) => l.trim());
+  assert.ok(!ignore.some((l) => /^\/?fonts\/?$/.test(l)), '.vercelignore excludes fonts/');
+});
+
+test('the Hebrew family fallback is split by script (Hebrew and Latin ratios differ)', () => {
+  const heb = fontsCss.match(/font-family: 'IBM Plex Sans Hebrew Fallback'[^}]*unicode-range/g) || [];
+  assert.equal(heb.length, 8, 'expected a Hebrew and a Latin fallback face for each of the four weights');
+});
