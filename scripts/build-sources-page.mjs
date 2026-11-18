@@ -58,8 +58,10 @@ const CONTENT = {
     citeIntro: (topic) => `בשאלה לדוגמה בנושא ${topic}, זו שורת המקור שמופיעה מתחת לציטוט בהסבר.`,
     citeTry: 'נסו את השאלה',
     factsTitle: 'על הרשימה, על הבחינה ועל השאלות',
-    facts: ({ dmy, imaLink, imaSpecialty, examName }) => [
+    syllabusUrl: 'https://www.ima.org.il/Internship/Syllabus.aspx?SpId=20',
+    facts: ({ dmy, imaLink, imaSpecialty, examName, syllabusLink }) => [
       `<p><strong>זו הרשימה של MeduXa, לא רשימה רשמית.</strong> מאלה לקוחים ההסברים והציטוטים בשאלות למיילדות וגינקולוגיה אצלנו. את הפרטים הרשמיים על הבחינה מפרסמת ההסתדרות הרפואית, ב${imaLink}.</p>`,
+      `<p><strong>הסילבוס הרשמי.</strong> את הסילבוס של מיילדות וגינקולוגיה מפרסמת ההסתדרות הרפואית, ב${syllabusLink}.</p>`,
       `<p data-exam-fact><strong>מועד הבחינה.</strong> ${examName} במיילדות וגינקולוגיה תתקיים ב-<span class="ltr-iso">${dmy}</span>, לפי לוח הר״י.</p>`,
       `<p><strong>השם בלוח הר״י.</strong> בלוח הר״י המקצוע נקרא ${imaSpecialty}.</p>`,
     ],
@@ -98,6 +100,7 @@ const CONTENT = {
     facts: ({ dmy, imaLink, examName, syllabusLink }) => [
       `<p><strong>זו הרשימה של MeduXa, לא רשימה רשמית.</strong> מאלה לקוחים ההסברים והציטוטים בשאלות לרפואת ילדים אצלנו. את הפרטים הרשמיים על הבחינה מפרסמת ההסתדרות הרפואית, ב${imaLink}.</p>`,
       `<p><strong>הסילבוס הרשמי.</strong> את הסילבוס של רפואת ילדים מפרסמת ההסתדרות הרפואית, ב${syllabusLink}.</p>`,
+      `<p><strong>תדריך החיסונים.</strong> את תדריך החיסונים מפרסם האגף לאפידמיולוגיה במשרד הבריאות, ב<a href="https://www.gov.il/he/pages/vaccine-guidelines-main" target="_blank" rel="noopener">עמוד התדריך באתר משרד הבריאות</a>.</p>`,
       `<p data-exam-fact><strong>מועד הבחינה.</strong> ${examName} ברפואת ילדים תתקיים ב-<span class="ltr-iso">${dmy}</span>, לפי לוח הר״י.</p>`,
     ],
     // `review` is specialties/pediatrics.json cmpReview.full, the claim /pediatrics makes.
