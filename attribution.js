@@ -8,6 +8,11 @@
    carrying src=landing) it appends `pg` (this page, from <html data-page>) and `via`, at click
    time. The waitlist form sends the same `via` (window.MeduxaAttribution.current()).
 
+   Every public page loads this script, so the first touch is taken on the real entry page. If a
+   visit's first page is somehow unscripted (or storage is blocked) and the referrer is our own
+   origin with nothing stored, the source is unknown: 'other', never 'direct' (which would be
+   inflated by unscripted entries).
+
    The host/utm mapping mirrors api/_lib/external/via.js in the app repo — keep the two lists
    identical (scripts/attribution.test.mjs pins VIAS). Not behind the consent gate: nothing here
    identifies a person or leaves the tab until the visitor signs up. */
@@ -31,6 +36,7 @@
     ig: 'instagram', whatsapp: 'whatsapp', wa: 'whatsapp', linkedin: 'linkedin', x: 'x',
     twitter: 'x', chatgpt: 'chatgpt', newsletter: 'newsletter', direct: 'direct'
   };
+  var GOOGLE_RE = /^(?:[a-z0-9-]+\.)*google\.[a-z]{2,3}(?:\.[a-z]{2})?$/;
   var has = function (o, k) { return Object.prototype.hasOwnProperty.call(o, k); };
   var matches = function (host, d) { return host === d || host.slice(-(d.length + 1)) === '.' + d; };
 
@@ -41,7 +47,7 @@
     var i;
     for (i = 0; i < INTERNAL_HOSTS.length; i++) if (matches(h, INTERNAL_HOSTS[i])) return null;
     if (has(ALIASES, h)) return ALIASES[h];
-    if (/^(?:[a-z0-9-]+\.)*google\.[a-z]{2,3}(?:\.[a-z]{2})?$/.test(h)) return 'google';
+    if (GOOGLE_RE.test(h)) return 'google';
     for (i = 0; i < HOST_SUFFIXES.length; i++) {
       var ds = HOST_SUFFIXES[i][1];
       for (var j = 0; j < ds.length; j++) if (matches(h, ds[j])) return HOST_SUFFIXES[i][0];
@@ -78,7 +84,7 @@
         computed = host === undefined ? 'other' : viaOfHost(host);
       }
     }
-    if (computed === null) computed = 'direct'; // internal referrer and nothing stored yet
+    if (computed === null) computed = 'other'; // internal referrer, nothing stored: unknown, not direct
     try { storage.setItem(KEY, computed); } catch (e) {}
     return computed;
   }
@@ -95,7 +101,7 @@
     return changed ? u.toString() : href;
   }
 
-  var api = { VIAS: VIAS, viaOfHost: viaOfHost, viaOfUtm: viaOfUtm, firstTouch: firstTouch, decorate: decorate, current: function () { return null; } };
+  var api = { VIAS: VIAS, TABLES: { HOST_SUFFIXES: HOST_SUFFIXES, ALIASES: ALIASES, INTERNAL_HOSTS: INTERNAL_HOSTS, GOOGLE_RE: GOOGLE_RE }, viaOfHost: viaOfHost, viaOfUtm: viaOfUtm, firstTouch: firstTouch, decorate: decorate, current: function () { return null; } };
   root.MeduxaAttribution = api;
 
   if (typeof document === 'undefined') return;
