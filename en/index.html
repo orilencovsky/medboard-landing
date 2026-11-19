@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-page="home" lang="en">
 <head>
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
+<script defer src="/attribution.js"></script>
 
 <meta charset="UTF-8" />
 <script>
@@ -14,7 +15,7 @@
       if (document.cookie.indexOf('mx_lang=') === -1 &&
           localStorage.getItem('mbil_lang') === 'he') {
         localStorage.removeItem('mbil_lang');
-        location.replace('/?lang=he');
+        location.replace('/?lang=he' + (location.search ? '&' + location.search.slice(1) : '') + location.hash); // keep utm_source for /attribution.js
         return;
       }
       // Landing here is NOT a language choice: a search result or a shared

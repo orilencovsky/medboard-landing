@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-page="privacy" lang="en">
 <head>
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
+<script defer src="/attribution.js"></script>
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -134,6 +135,11 @@
           <td data-label="Data"><strong>Aggregate traffic data</strong> — how many visitors reached which page, roughly which country from, and which on-page events occurred (for example, a click on the start button).</td>
           <td data-label="Purpose">To understand what works on the page. Measurement runs on Vercel Web Analytics, which sets no cookies and creates no persistent visitor identifier, so it cannot track you across sites or identify you.</td>
           <td data-label="Legal basis">Legitimate interest — Art. 6(1)(f): aggregate, non-identifying measurement.</td>
+        </tr>
+        <tr>
+          <td data-label="Data"><strong>Traffic source and page</strong> — the kind of source your visit came from (for example Google or WhatsApp — never the address itself) and which page of the site.</td>
+          <td data-label="Purpose">To learn which channels and pages bring sign-ups. The value is kept only in the open tab until it is closed; it is passed to MeduXa in the link when you click a button that opens the app, and is saved with your account or your waitlist entry only if you sign up.</td>
+          <td data-label="Legal basis">Legitimate interest — Art. 6(1)(f): understanding which channels and pages bring sign-ups.</td>
         </tr>
         <tr>
           <td data-label="Data"><strong>Operational server logs</strong> (IP address, timestamp, requested URL).</td>
