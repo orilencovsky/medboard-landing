@@ -86,8 +86,20 @@ test('decorate leaves non-app links alone and drops an invalid page key', () => 
   const app = 'https://app.meduxa.ai/?signup=1&src=landing&pl=nav';
   assert.equal(A.decorate(app, 'Bad Page!', 'google'), app + '&via=google');
   assert.equal(A.decorate(app, 'exams', 'bogus'), app + '&pg=exams');
-  assert.equal(A.decorate(app, 'x'.repeat(41), 'bogus'), app);
+  assert.equal(A.decorate(app, 'x'.repeat(32), 'bogus'), app);
+  for (const bad of ['Home', 'cardio_hero', '1abc', 'a1', '-a', '']) assert.equal(A.decorate(app, bad, 'bogus'), app, bad);
+  assert.equal(A.decorate(app, 'family-medicine', 'bogus'), app + '&pg=family-medicine');
+  assert.equal(A.decorate(app, 'x'.repeat(31), 'bogus'), app + '&pg=' + 'x'.repeat(31));
   // idempotent: a second decoration replaces rather than duplicates
   const once = A.decorate(app, 'home', 'google');
   assert.equal(A.decorate(once, 'exams', 'bing'), app + '&pg=exams&via=bing');
+});
+
+test('en old-visitor redirect keeps the query and hash', () => {
+  const html = readFileSync(new URL('../en/index.html', import.meta.url), 'utf8');
+  const m = html.match(/location\.replace\(([^;]*)\);/);
+  assert.ok(m, 'redirect present');
+  const run = (search, hash) => { let to; vm.runInNewContext(`location.replace(${m[1]})`, { location: { search, hash, replace: (u) => { to = u; } } }); return to; };
+  assert.equal(run('', ''), '/?lang=he');
+  assert.equal(run('?utm_source=whatsapp', '#x'), '/?lang=he&utm_source=whatsapp#x');
 });

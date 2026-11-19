@@ -90,7 +90,7 @@
     if (u.protocol !== 'https:' || u.hostname !== APP_HOST) return href;
     if (u.searchParams.get('src') !== 'landing') return href;
     var changed = false;
-    if (typeof page === 'string' && /^[a-z0-9][a-z0-9_-]{0,39}$/.test(page)) { u.searchParams.set('pg', page); changed = true; }
+    if (typeof page === 'string' && /^[a-z][a-z-]{0,30}$/.test(page)) { u.searchParams.set('pg', page); changed = true; }
     if (isVia(via)) { u.searchParams.set('via', via); changed = true; }
     return changed ? u.toString() : href;
   }

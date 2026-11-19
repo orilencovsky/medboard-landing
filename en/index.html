@@ -15,7 +15,7 @@
       if (document.cookie.indexOf('mx_lang=') === -1 &&
           localStorage.getItem('mbil_lang') === 'he') {
         localStorage.removeItem('mbil_lang');
-        location.replace('/?lang=he');
+        location.replace('/?lang=he' + (location.search ? '&' + location.search.slice(1) : '') + location.hash); // keep utm_source for /attribution.js
         return;
       }
       // Landing here is NOT a language choice: a search result or a shared
