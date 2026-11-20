@@ -1,4 +1,4 @@
-/* Live "questions answered so far" line in the hero (home he/en and every specialty page).
+/* Live "answers given by users so far" line in the hero (home he/en and every specialty page).
 
    What it shows: two aggregate numbers read from the app, https://app.meduxa.ai/api/answer-counter
    ({ok:true,total,last24h}, CDN-cached ~30 s, CORS-allowed for https://meduxa.ai only): answers recorded on the
@@ -34,16 +34,16 @@
 
   var STRINGS = {
     he: {
-      label: 'תשובות לשאלות עד היום',
+      label: 'תשובות שניתנו על ידי משתמשים עד היום',
       dayAfter: ' ב-24 השעות האחרונות',
-      srTotal: '{total} תשובות לשאלות עד היום.',
+      srTotal: '{total} תשובות שניתנו על ידי משתמשים עד היום.',
       srDay: ' {day} ב-24 השעות האחרונות.',
       intl: 'he-IL'
     },
     en: {
-      label: 'questions answered so far',
+      label: 'answers given by users so far',
       dayAfter: ' in the last 24 hours',
-      srTotal: '{total} questions answered so far.',
+      srTotal: '{total} answers given by users so far.',
       srDay: ' {day} in the last 24 hours.',
       intl: 'en-US'
     }
