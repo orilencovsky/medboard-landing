@@ -6,6 +6,7 @@
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
 <script defer src="/attribution.js"></script>
+<script defer src="/answer-counter.js"></script>
 <!-- Vercel Web Analytics. Cookieless, with no persistent visitor id,
      so it is not behind the consent banner and measures every visitor; GA4 and
      Microsoft Clarity are the trackers that wait for opt-in (see /consent.js).
@@ -644,6 +645,9 @@
         <p class="slogan enter" style="--i:2">הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></p>
         <p class="lead enter" style="--i:3"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.</p>
         <a class="btn hero-cta enter" style="--i:4" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
+        <!-- Live answer counter (see /answer-counter.js): reserves its height so the hero does not shift; hidden again when it has nothing real to show. -->
+        <div data-mx-live style="min-height: 56px;" lang="he"></div>
+        <noscript><style>[data-mx-live] { display: none; }</style></noscript>
         <div class="countdown enter" style="--i:4" data-exam-date="2027-06-14">
           <p class="cd-days" hidden><b data-days></b> <span data-cd-unit></span></p>
           <p class="cd-exam">בחינת שלב א׳ · <span class="ltr-iso">14.06.2027</span></p>

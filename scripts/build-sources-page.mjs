@@ -279,6 +279,8 @@ export function buildSourcesPage(id, read = (p) => readFileSync(join(root, p), '
   }
   let head = src.slice(0, src.indexOf('</head>'));
   const swap = (re, to) => { if (!re.test(head)) throw new Error('no match ' + re); head = head.replace(re, () => to); };
+  // The sources page has no hero, so it carries no live answer counter: drop its script from the head it inherits from the track page.
+  swap(/<script defer src="\/answer-counter\.js"><\/script>\n/, '');
   swap(/<title>[^<]*<\/title>/, `<title>${c.title}</title>`);
   swap(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${URL_}" />`);
   swap(/<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${esc(c.description)}" />`);
