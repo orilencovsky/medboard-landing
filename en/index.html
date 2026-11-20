@@ -4,6 +4,9 @@
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
 <script defer src="/attribution.js"></script>
+<script defer src="/answer-counter.js" onerror="document.documentElement.classList.add('mx-live-off')"></script>
+<style>.mx-live-off [data-mx-live] { display: none; }</style>
+<noscript><style>[data-mx-live] { display: none; }</style></noscript>
 
 <meta charset="UTF-8" />
 <script>
@@ -900,6 +903,8 @@
           <a class="btn-action btn-action-lg" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=hero" data-cta="hero" style="border-radius: 12px; padding: 16px 34px; font-size: 18px; font-weight: 700;">Start studying free</a>
           <a href="#how" data-mq-secondary style="color: #7DD3FC; border: 1.5px solid #1E4A6E; border-radius: 12px; padding: 15px 34px; font-size: 18px; font-weight: 600;">See how it works</a>
         </div>
+        <!-- Live answer counter (see /answer-counter.js): reserves its height so the hero does not shift; hidden again when it has nothing real to show. -->
+        <div data-mx-live style="min-height: 56px;" lang="en"></div>
         <!-- One chip per study track, jumping to its card in #tracks. -->
         <div class="hero-tracks" data-mq-hero-tracks>
           <span class="hero-tracks-label">Or jump to a specialty:</span>
