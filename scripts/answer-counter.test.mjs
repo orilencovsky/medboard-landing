@@ -386,7 +386,7 @@ test('every hero that should carry the counter has the mount, the script tag and
     assert.equal((html.match(/<div data-mx-live /g) || []).length, 1, `${p}: one mount`);
     assert.equal((html.match(/<script defer src="\/answer-counter\.js" onerror="document\.documentElement\.classList\.add\('mx-live-off'\)"><\/script>/g) || []).length, 1, `${p}: one script tag with the blocked-script close-up`);
     assert.equal((html.match(/<script defer src="\/answer-counter\.js"/g) || []).length, 1, `${p}: exactly one answer-counter script tag`);
-    assert.ok(html.includes('<style>.mx-live-off [data-mx-live] { display: none; }</style>'), `${p}: script-blocked rule`);
+    assert.ok(html.includes('<style>.mx-live-off [data-mx-live] { display: none; } @media (max-width: 480px) { [data-mx-live] { min-height: 66px !important; } }</style>'), `${p}: script-blocked rule + phone reservation`);
     assert.ok(html.includes('<noscript><style>[data-mx-live] { display: none; }</style></noscript>'), `${p}: no-script rule`);
     const headEnd = html.indexOf('</head>');
     assert.ok(html.indexOf('mx-live-off') < headEnd && html.indexOf('<noscript><style>[data-mx-live]') < headEnd, `${p}: both rules live in <head> (valid HTML)`);
