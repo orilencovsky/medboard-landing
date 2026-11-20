@@ -44,12 +44,12 @@ test('formatCount: Latin digits with grouping in both languages', () => {
 });
 test('strings: he and en, number-first label, 24 h clause, screen-reader sentence drops the day clause when hidden', () => {
   const he = C.text('he'), en = C.text('en-GB'), other = C.text('fr');
-  assert.equal(he.label, 'תשובות לשאלות עד היום');
+  assert.equal(he.label, 'תשובות שניתנו על ידי משתמשים עד היום');
   assert.equal(he.dayAfter, ' ב-24 השעות האחרונות');
-  assert.equal(en.label, 'questions answered so far');
+  assert.equal(en.label, 'answers given by users so far');
   assert.equal(other.label, en.label, 'unknown language falls back to English');
-  assert.equal(he.srSummary('14,082', '654'), '14,082 תשובות לשאלות עד היום. 654 ב-24 השעות האחרונות.');
-  assert.equal(en.srSummary('14,082', null), '14,082 questions answered so far.');
+  assert.equal(he.srSummary('14,082', '654'), '14,082 תשובות שניתנו על ידי משתמשים עד היום. 654 ב-24 השעות האחרונות.');
+  assert.equal(en.srSummary('14,082', null), '14,082 answers given by users so far.');
   for (const lang of ['he', 'en']) { const t = C.STRINGS[lang]; for (const v of Object.values(t)) assert.ok(!/[–—]/.test(v), 'no en/em dash'); }
 });
 
@@ -221,8 +221,8 @@ test('mount: stays hidden=false/reserved until a value, shows numbers and the sc
   await tick();
   assert.ok(host.className.includes('mx-on'));
   const txt = findText(host);
-  assert.ok(txt.includes('14,082') && txt.includes('654') && txt.includes('תשובות לשאלות עד היום'));
-  assert.ok(txt.includes('14,082 תשובות לשאלות עד היום. 654 ב-24 השעות האחרונות.'), 'sr summary present');
+  assert.ok(txt.includes('14,082') && txt.includes('654') && txt.includes('תשובות שניתנו על ידי משתמשים עד היום'));
+  assert.ok(txt.includes('14,082 תשובות שניתנו על ידי משתמשים עד היום. 654 ב-24 השעות האחרונות.'), 'sr summary present');
   handle.stop();
 });
 test('mount: a first-read failure removes the reserved space; a below-floor read does too', async () => {
@@ -245,7 +245,7 @@ test('mount: the visible digits are aria-hidden and only the sr span is announce
 });
 test('mount: the English page renders English copy and the day line only above its floor', async () => {
   const a = mountWith([{ ok: true, total: 5000, last24h: 24 }], 'en'); await tick();
-  assert.ok(a.host.textContent.includes('questions answered so far'));
+  assert.ok(a.host.textContent.includes('answers given by users so far'));
   const dayEl = a.host.children[0].children[1];
   assert.equal(dayEl.hidden, true, '24 h line hidden below its floor');
   a.handle.stop();
@@ -386,7 +386,7 @@ test('every hero that should carry the counter has the mount, the script tag and
     assert.equal((html.match(/<div data-mx-live /g) || []).length, 1, `${p}: one mount`);
     assert.equal((html.match(/<script defer src="\/answer-counter\.js" onerror="document\.documentElement\.classList\.add\('mx-live-off'\)"><\/script>/g) || []).length, 1, `${p}: one script tag with the blocked-script close-up`);
     assert.equal((html.match(/<script defer src="\/answer-counter\.js"/g) || []).length, 1, `${p}: exactly one answer-counter script tag`);
-    assert.ok(html.includes('<style>.mx-live-off [data-mx-live] { display: none; }</style>'), `${p}: script-blocked rule`);
+    assert.ok(html.includes('<style>.mx-live-off [data-mx-live] { display: none; } @media (max-width: 480px) { [data-mx-live] { min-height: 66px !important; } }</style>'), `${p}: script-blocked rule + phone reservation`);
     assert.ok(html.includes('<noscript><style>[data-mx-live] { display: none; }</style></noscript>'), `${p}: no-script rule`);
     const headEnd = html.indexOf('</head>');
     assert.ok(html.indexOf('mx-live-off') < headEnd && html.indexOf('<noscript><style>[data-mx-live]') < headEnd, `${p}: both rules live in <head> (valid HTML)`);

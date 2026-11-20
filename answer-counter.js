@@ -1,4 +1,4 @@
-/* Live "questions answered so far" line in the hero (home he/en and every specialty page).
+/* Live "answers given by users so far" line in the hero (home he/en and every specialty page).
 
    What it shows: two aggregate numbers read from the app, https://app.meduxa.ai/api/answer-counter
    ({ok:true,total,last24h}, CDN-cached ~30 s, CORS-allowed for https://meduxa.ai only): answers recorded on the
@@ -34,16 +34,16 @@
 
   var STRINGS = {
     he: {
-      label: 'תשובות לשאלות עד היום',
+      label: 'תשובות שניתנו על ידי משתמשים עד היום',
       dayAfter: ' ב-24 השעות האחרונות',
-      srTotal: '{total} תשובות לשאלות עד היום.',
+      srTotal: '{total} תשובות שניתנו על ידי משתמשים עד היום.',
       srDay: ' {day} ב-24 השעות האחרונות.',
       intl: 'he-IL'
     },
     en: {
-      label: 'questions answered so far',
+      label: 'answers given by users so far',
       dayAfter: ' in the last 24 hours',
-      srTotal: '{total} questions answered so far.',
+      srTotal: '{total} answers given by users so far.',
       srDay: ' {day} in the last 24 hours.',
       intl: 'en-US'
     }
@@ -209,7 +209,7 @@
     '.mx-live[hidden]{display:none;}' +
     '.mx-live-body{opacity:0;visibility:hidden;}' +
     '.mx-live.mx-on .mx-live-body{opacity:1;visibility:visible;}' +
-    '.mx-live-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:15px;line-height:1.35;}' +
+    '.mx-live-row{display:flex;align-items:baseline;gap:0 8px;flex-wrap:wrap;font-size:15px;line-height:1.35;}' +
     '.mx-live-num{display:inline-block;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;font-size:22px;line-height:1.15;font-weight:700;letter-spacing:-.01em;color:#22D3EE;}' +
     '.mx-live-day{font-size:14px;line-height:1.4;color:#9FBBD3;}' +
     '.mx-live-daynum{display:inline-block;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;font-weight:600;color:#E2F4FD;}' +
