@@ -4,7 +4,9 @@
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
 <script defer src="/attribution.js"></script>
-<script defer src="/answer-counter.js"></script>
+<script defer src="/answer-counter.js" onerror="document.documentElement.classList.add('mx-live-off')"></script>
+<style>.mx-live-off [data-mx-live] { display: none; }</style>
+<noscript><style>[data-mx-live] { display: none; }</style></noscript>
 
 <meta charset="UTF-8" />
 <script>
@@ -903,7 +905,6 @@
         </div>
         <!-- Live answer counter (see /answer-counter.js): reserves its height so the hero does not shift; hidden again when it has nothing real to show. -->
         <div data-mx-live style="min-height: 56px;" lang="en"></div>
-        <noscript><style>[data-mx-live] { display: none; }</style></noscript>
         <!-- One chip per study track, jumping to its card in #tracks. -->
         <div class="hero-tracks" data-mq-hero-tracks>
           <span class="hero-tracks-label">Or jump to a specialty:</span>

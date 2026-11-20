@@ -189,22 +189,28 @@ function fakeDom() {
   const listeners = {};
   const doc = {
     documentElement: { lang: 'he' }, visibilityState: 'visible', readyState: 'complete',
-    createElement: (t) => new El(t), querySelectorAll: () => [], head: new El('head'),
-    addEventListener: (e, f) => { listeners[e] = f; }, removeEventListener: () => {},
+    createElement: (t) => new El(t), querySelectorAll: () => [], querySelector: () => null, head: new El('head'),
+    addEventListener: (e, f) => { (listeners[e] = listeners[e] || []).push(f); },
+    removeEventListener: (e, f) => { listeners[e] = (listeners[e] || []).filter((x) => x !== f); },
+    fire(e) { (listeners[e] || []).slice().forEach((f) => f()); },
   };
   return { El, doc };
 }
-function mountWith(loads, lang = 'he') {
+function mountWith(loads, lang = 'he', o = {}) {
   const { El, doc } = fakeDom();
   const clock = fakeClock();
-  const w = { matchMedia: () => ({ matches: true }), requestAnimationFrame: () => 1, cancelAnimationFrame() {}, performance: { now: () => 0 } };
-  const sandbox = { window: w, document: doc, Intl, Math, Promise, setTimeout: clock.setTimeoutFn, clearTimeout: clock.clearTimeoutFn, isFinite };
+  const raf = { cb: null, t: 0 };
+  const w = { matchMedia: () => ({ matches: true }), requestAnimationFrame: (cb) => { raf.cb = cb; return 1; }, cancelAnimationFrame() { raf.cb = null; }, performance: { now: () => raf.t } };
+  const sandbox = { window: w, document: doc, Intl, Math, Promise, setTimeout: clock.setTimeoutFn, clearTimeout: clock.clearTimeoutFn, isFinite, fetch: o.fetch };
   vm.runInNewContext(src, sandbox);
   const host = new El('div');
   const q = [...loads];
-  const handle = w.MeduxaAnswerCounter.mount(host, { lang, load: () => Promise.resolve(q.length ? q.shift() : GOOD), reducedMotion: () => true });
-  return { host, handle, clock };
+  const opts = { lang, reducedMotion: () => (o.reduced === undefined ? true : o.reduced) };
+  if (!o.defaultLoad) opts.load = () => Promise.resolve(q.length ? q.shift() : GOOD);
+  const handle = w.MeduxaAnswerCounter.mount(host, opts);
+  return { host, handle, clock, raf, doc, api: w.MeduxaAnswerCounter, El };
 }
+const numOf = (host) => host.children[0].children[0].children[1].textContent;
 const flat = (e) => [e.className, ...e.children.map(flat)].join('|');
 const findText = (e) => e.textContent;
 
@@ -245,6 +251,130 @@ test('mount: the English page renders English copy and the day line only above i
   a.handle.stop();
 });
 
+
+test('mount: a failed poll after a good value keeps the last number; a later drop below the floor closes the space again', async () => {
+  const m = mountWith([GOOD, { ok: false }, { ok: true, total: 500, last24h: 5 }]);
+  await tick(); assert.equal(numOf(m.host), '5,000');
+  m.clock.advance(30000); await tick();
+  assert.equal(m.host.hidden, false, 'after a failure the last good value stays');
+  assert.equal(numOf(m.host), '5,000');
+  assert.equal(m.host.children[0].children[0].children[0].getAttribute('data-on'), 'false', 'the live dot goes off while reads fail');
+  m.clock.advance(60000); await tick();
+  assert.equal(m.host.hidden, true, 'a real read below the floor hides it');
+  assert.equal(m.host.className.includes('mx-on'), false);
+  m.handle.stop();
+});
+test('mount: a rise above the floor re-opens the space after a hidden first read', async () => {
+  const m = mountWith([{ ok: true, total: 100, last24h: 1 }, { ok: true, total: 5000, last24h: 100 }]);
+  await tick(); assert.equal(m.host.hidden, true);
+  m.clock.advance(30000); await tick();
+  assert.equal(m.host.hidden, false); assert.equal(numOf(m.host), '5,000');
+  m.handle.stop();
+});
+test('mount: a real increase tweens through the DOM (from, in-between, exactly the new total) and rings the dot once', async () => {
+  const m = mountWith([GOOD, { ok: true, total: 5100, last24h: 150 }], 'he', { reduced: false });
+  await tick(); assert.equal(numOf(m.host), '5,000');
+  const dot = m.host.children[0].children[0].children[0];
+  assert.equal(dot.children.length, 0, 'no ring for the first value');
+  m.clock.advance(30000); await tick();
+  assert.equal(numOf(m.host), '5,000', 'starts from the shown value, never the target first');
+  assert.equal(dot.children.length, 1, 'one ring for the real increase');
+  m.raf.t = 200; m.raf.cb();
+  const mid = Number(numOf(m.host).replace(',', ''));
+  assert.ok(mid > 5000 && mid < 5100, `in between (${mid})`);
+  m.raf.t = 700; m.raf.cb();
+  assert.equal(numOf(m.host), '5,100');
+  assert.ok(m.host.children[1].textContent.startsWith('5,100'), 'screen-reader sentence is the final value');
+  m.handle.stop();
+});
+test('mount: hiding the tab settles a running count-up on the latest real total', async () => {
+  const m = mountWith([GOOD, { ok: true, total: 5100, last24h: 150 }], 'he', { reduced: false });
+  await tick(); m.clock.advance(30000); await tick();
+  m.raf.t = 100; m.raf.cb();
+  m.doc.visibilityState = 'hidden'; m.doc.fire('visibilitychange');
+  assert.equal(numOf(m.host), '5,100');
+  m.handle.stop();
+});
+test('mount: a second mount on the same host is a no-op (no second poller or listeners)', async () => {
+  const m = mountWith([GOOD]);
+  const again = m.api.mount(m.host, { lang: 'he', load: () => { throw new Error('second poller must not start'); } });
+  await tick();
+  assert.equal(typeof again.stop, 'function');
+  assert.equal(numOf(m.host), '5,000');
+  m.handle.stop();
+});
+test('mount: the default load times out after FETCH_TIMEOUT_MS and counts as a failed read (hung request closes the space)', async () => {
+  const m = mountWith([], 'he', { defaultLoad: true, fetch: () => new Promise(() => {}) });
+  assert.equal(m.api.FETCH_TIMEOUT_MS, 8000);
+  assert.equal(m.host.hidden, false);
+  m.clock.advance(7999); await tick(); assert.equal(m.host.hidden, false);
+  m.clock.advance(1); await tick(); assert.equal(m.host.hidden, true);
+  m.handle.stop();
+});
+test('mount: the default load reads only a 200 JSON body, with no credentials and no query string', async () => {
+  let seen;
+  const m = mountWith([], 'he', { defaultLoad: true, fetch: (url, opts) => { seen = { url, opts }; return Promise.resolve({ status: 200, json: () => Promise.resolve(GOOD) }); } });
+  await tick();
+  assert.equal(seen.url, 'https://app.meduxa.ai/api/answer-counter');
+  assert.equal(seen.opts.credentials, 'omit'); assert.equal(seen.opts.mode, 'cors');
+  assert.equal(numOf(m.host), '5,000');
+  m.handle.stop();
+  const f = mountWith([], 'he', { defaultLoad: true, fetch: () => Promise.resolve({ status: 503, json: () => Promise.resolve({ ok: false }) }) });
+  await tick(); assert.equal(f.host.hidden, true, 'a 503 is a failed read');
+  f.handle.stop();
+});
+
+// ---- init: kill switch and exceptions close the reserved space ----
+function initWith(patch, mutateDoc) {
+  const { El, doc } = fakeDom();
+  const hosts = [new El('div'), new El('div')];
+  doc.querySelectorAll = (sel) => (sel === '[data-mx-live]' ? hosts : []);
+  doc.readyState = 'complete';
+  if (mutateDoc) mutateDoc(doc);
+  const w = { matchMedia: () => ({ matches: true }), requestAnimationFrame: () => 1, cancelAnimationFrame() {}, performance: { now: () => 0 } };
+  vm.runInNewContext(patch ? patch(src) : src, { window: w, document: doc, Intl, Math, Promise, setTimeout: () => 1, clearTimeout() {}, isFinite, fetch: () => new Promise(() => {}) });
+  return { hosts, doc };
+}
+test('init: ENABLED=false hides every mount and starts nothing', () => {
+  const { hosts, doc } = initWith((t) => t.replace('var ENABLED = true;', 'var ENABLED = false;'));
+  assert.deepEqual(hosts.map((h) => h.hidden), [true, true]);
+  assert.equal(doc.head.children.length, 0, 'no stylesheet injected');
+});
+test('init: an exception while mounting closes the reserved space instead of leaving an empty gap', () => {
+  const { hosts } = initWith(null, (doc) => { doc.head = null; });
+  assert.deepEqual(hosts.map((h) => h.hidden), [true, true]);
+});
+test('init: the shipped constant is ON and the stylesheet is injected once for several mounts', () => {
+  const { hosts, doc } = initWith(null);
+  assert.deepEqual(hosts.map((h) => h.hidden), [false, false]);
+  assert.equal(doc.head.children.length, 1);
+});
+
+test('tweener: before the end it never emits the target, even for +1 (clamped to to-1)', () => {
+  const frames = []; let cb = null; let t = 0;
+  const tw = C.createTweener({ raf: (f) => { cb = f; return 1; }, caf() {}, now: () => t, reducedMotion: () => false, onFrame: (v, d) => frames.push([v, d]) });
+  tw.start(1000, 1001);
+  for (t = 50; t < 600; t += 50) cb();
+  assert.ok(frames.filter(([, d]) => !d).every(([v]) => v <= 1000), 'only `from` until the end');
+  t = 600; cb(); assert.deepEqual(frames[frames.length - 1], [1001, true]);
+});
+test('poller: health goes false on hide and on failure, never true while hidden; the backoff is capped', async () => {
+  const h = harness({ loads: [GOOD, null] });
+  h.poller.start(); await tick();
+  assert.deepEqual(h.log.health, [true]);
+  h.setVisible(false); assert.deepEqual(h.log.health, [true, false]);
+  h.setVisible(true); await tick(); // second load fails
+  assert.equal(h.log.health[h.log.health.length - 1], false);
+  h.poller.stop();
+  const clock = fakeClock(); const delays = [];
+  const p = C.createPoller({ load: () => Promise.resolve(null), pollMs: 30000, maxFailures: 99, backoffCapMs: 300000, onFail: () => {},
+    isVisible: () => true, subscribeVisibility: () => () => {}, setTimeoutFn: (fn, ms) => { delays.push(ms); return clock.setTimeoutFn(fn, ms); }, clearTimeoutFn: clock.clearTimeoutFn });
+  p.start(); await tick();
+  for (let i = 0; i < 6; i++) { clock.advance(300000); await tick(); }
+  assert.ok(Math.max(...delays) === 300000 && delays.every((d) => d <= 300000), `capped: ${delays}`);
+  p.stop();
+});
+
 // ---- the page wiring ----
 const HOME_PAGES = ['index.html', 'en/index.html'];
 const SPECIALTIES = readdirSync(new URL('../specialties/', import.meta.url)).filter((f) => f.endsWith('.json')).map((f) => f.replace(/\.json$/, '.html'));
@@ -254,8 +384,12 @@ test('every hero that should carry the counter has the mount, the script tag and
   for (const p of [...HOME_PAGES, ...SPECIALTIES, 'specialty.template.html']) {
     const html = read(p);
     assert.equal((html.match(/<div data-mx-live /g) || []).length, 1, `${p}: one mount`);
-    assert.equal((html.match(/<script defer src="\/answer-counter\.js"><\/script>/g) || []).length, 1, `${p}: one script tag`);
+    assert.equal((html.match(/<script defer src="\/answer-counter\.js" onerror="document\.documentElement\.classList\.add\('mx-live-off'\)"><\/script>/g) || []).length, 1, `${p}: one script tag with the blocked-script close-up`);
+    assert.equal((html.match(/<script defer src="\/answer-counter\.js"/g) || []).length, 1, `${p}: exactly one answer-counter script tag`);
+    assert.ok(html.includes('<style>.mx-live-off [data-mx-live] { display: none; }</style>'), `${p}: script-blocked rule`);
     assert.ok(html.includes('<noscript><style>[data-mx-live] { display: none; }</style></noscript>'), `${p}: no-script rule`);
+    const headEnd = html.indexOf('</head>');
+    assert.ok(html.indexOf('mx-live-off') < headEnd && html.indexOf('<noscript><style>[data-mx-live]') < headEnd, `${p}: both rules live in <head> (valid HTML)`);
   }
 });
 test('the home hero mounts the counter directly after the CTA row and before the track chips', () => {
@@ -280,9 +414,16 @@ test('CSP: connect-src gained exactly https://app.meduxa.ai on the meduxa.ai hos
   const dirs = Object.fromEntries(csp.split(';').map((d) => d.trim()).filter(Boolean).map((d) => { const [k, ...v] = d.split(/\s+/); return [k, v]; }));
   assert.ok(dirs['connect-src'].includes('https://app.meduxa.ai'));
   assert.deepEqual(dirs['connect-src'].filter((x) => /meduxa/.test(x)), ['https://app.meduxa.ai']);
-  assert.deepEqual(dirs['script-src'], ["'self'", "'unsafe-inline'", 'https://www.googletagmanager.com', 'https://www.clarity.ms', 'https://*.clarity.ms'], 'script-src untouched');
-  assert.deepEqual(dirs['default-src'], ["'self'"]);
-  assert.deepEqual(dirs['style-src'], ["'self'", "'unsafe-inline'"], 'the injected <style> is allowed as before');
+  // The whole policy, pinned: the previous directives are byte-for-byte what they were, plus the one new connect-src origin.
+  assert.deepEqual(dirs, {
+    'default-src': ["'self'"],
+    'script-src': ["'self'", "'unsafe-inline'", 'https://www.googletagmanager.com', 'https://www.clarity.ms', 'https://*.clarity.ms'],
+    'style-src': ["'self'", "'unsafe-inline'"],
+    'font-src': ["'self'"],
+    'img-src': ["'self'", 'data:', 'https://*.googletagmanager.com', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.clarity.ms', 'https://c.bing.com'],
+    'connect-src': ["'self'", 'https://pappjpdsajkcoqrfqqqx.supabase.co', 'https://app.meduxa.ai', 'https://*.googletagmanager.com', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.clarity.ms', 'https://c.bing.com'],
+    'media-src': ["'self'"], 'object-src': ["'none'"], 'base-uri': ["'self'"], 'form-action': ["'self'"], 'frame-ancestors': ["'none'"], 'upgrade-insecure-requests': [],
+  });
   assert.equal(ENDPOINT_ORIGIN(), 'https://app.meduxa.ai');
 });
 function ENDPOINT_ORIGIN() { return new URL(C.ENDPOINT).origin; }
@@ -301,5 +442,8 @@ test('privacy section 14 (en + he) names the information site as well as the app
   assert.ok(he.includes('באתר המידע של <span class="ltr-iso">MeduXa</span> (<span class="ltr-iso">meduxa.ai</span>) עשוי להופיע'));
   for (const html of [en, he]) assert.ok(!/cannot be used to identify|אי אפשר להשתמש בהם כדי לזהות/.test(html.split('14.')[html.split('14.').length - 1]), 'no overclaim');
   assert.ok(en.includes('it carries no cookie, it sets none'));
+  assert.equal(C.POLL_MS, 30000);
+  assert.ok(en.includes(`about every ${C.POLL_MS / 1000} seconds while the page is open and visible`), 'cadence in the policy matches POLL_MS');
+  assert.ok(he.includes(`כל ${C.POLL_MS / 1000} שניות כל עוד העמוד פתוח ונראה`));
   assert.ok(he.includes('היא אינה נושאת עוגייה, אינה יוצרת עוגייה'));
 });

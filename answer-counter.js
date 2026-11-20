@@ -14,7 +14,9 @@
 
    Layout: the mount (<div data-mx-live style="min-height:...">) reserves the line's height from the first paint, so the
    hero does not shift when the number arrives. If the counter never shows (failure, below the floor, script blocked,
-   ENABLED = false) the mount is hidden and the hero closes up exactly as it was before this feature.
+   ENABLED = false, an exception in init) the mount is hidden and the hero closes up exactly as it was before this feature.
+   If this file itself never runs (blocked by an ad blocker, network error) the script tag's onerror puts `mx-live-off` on <html>
+   and a rule in each page's own <style> hides the mount; with JavaScript off a <noscript> rule does.
 
    Kill switch: ENABLED below. Floors and cadence are constants, not configuration. */
 (function (root) {
@@ -28,6 +30,7 @@
   var MAX_FAILURES = 3;
   var BACKOFF_CAP_MS = 5 * 60 * 1000;
   var TWEEN_MS = 600;
+  var FETCH_TIMEOUT_MS = 8000; // a hung request counts as a failed read
 
   var STRINGS = {
     he: {
@@ -204,8 +207,8 @@
   var CSS =
     '.mx-live{position:relative;display:flex;flex-direction:column;gap:3px;align-items:flex-start;color:#B8D4EA;font-family:inherit;}' +
     '.mx-live[hidden]{display:none;}' +
-    '.mx-live-body{opacity:0;}' +
-    '.mx-live.mx-on .mx-live-body{opacity:1;}' +
+    '.mx-live-body{opacity:0;visibility:hidden;}' +
+    '.mx-live.mx-on .mx-live-body{opacity:1;visibility:visible;}' +
     '.mx-live-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:15px;line-height:1.35;}' +
     '.mx-live-num{display:inline-block;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;font-size:22px;line-height:1.15;font-weight:700;letter-spacing:-.01em;color:#22D3EE;}' +
     '.mx-live-day{font-size:14px;line-height:1.4;color:#9FBBD3;}' +
@@ -229,7 +232,9 @@
 
   function mount(host, opts) {
     opts = opts || {};
-    var t = text(opts.lang || document.documentElement.lang);
+    if (host.getAttribute('data-mx-mounted')) return { stop: function () {} };
+    host.setAttribute('data-mx-mounted', '1');
+    var t = text(opts.lang || host.lang || document.documentElement.lang);
     host.className = (host.className ? host.className + ' ' : '') + 'mx-live';
     host.textContent = '';
     var body = el('div', 'mx-live-body');
@@ -249,15 +254,21 @@
 
     var realPrev = null, shown = null, shownVisible = false, ping = 0, closed = false;
     var load = opts.load || function (signal) {
-      return fetch(ENDPOINT, { signal: signal, mode: 'cors', credentials: 'omit' }).then(function (res) {
+      var timer;
+      var timeout = new Promise(function (resolve) { timer = setTimeout(function () { resolve(null); }, FETCH_TIMEOUT_MS); });
+      var read = fetch(ENDPOINT, { signal: signal, mode: 'cors', credentials: 'omit' }).then(function (res) {
         return res.status === 200 ? res.json() : null;
       });
+      var done = function () { clearTimeout(timer); };
+      read.then(done, done);
+      return Promise.race([read, timeout]);
     };
 
     function hide() {
       // Nothing real to show: remove the reserved space so the hero closes up exactly as it was.
       host.hidden = true;
       host.classList.remove('mx-on');
+      dot.textContent = ''; // no stale ring left to replay when the line comes back
     }
     function paint(v, totalOnScreen) {
       num.textContent = formatCount(totalOnScreen, t.intl);
@@ -324,17 +335,25 @@
     if (typeof document === 'undefined') return;
     var hosts = document.querySelectorAll('[data-mx-live]');
     if (!hosts.length) return;
-    if (!ENABLED) { for (var i = 0; i < hosts.length; i++) hosts[i].hidden = true; return; }
-    var style = document.createElement('style');
-    style.setAttribute('data-mx-live-css', '');
-    style.textContent = CSS;
-    document.head.appendChild(style);
-    for (var j = 0; j < hosts.length; j++) mount(hosts[j]);
+    try {
+      if (!ENABLED) throw new Error('disabled');
+      if (!document.querySelector('style[data-mx-live-css]')) {
+        var style = document.createElement('style');
+        style.setAttribute('data-mx-live-css', '');
+        style.textContent = CSS;
+        document.head.appendChild(style);
+      }
+      for (var j = 0; j < hosts.length; j++) mount(hosts[j]);
+    } catch (e) {
+      // Anything wrong, or the kill switch: close the reserved space so the hero is exactly as it was.
+      for (var i = 0; i < hosts.length; i++) hosts[i].hidden = true;
+    }
   }
 
   var api = {
     ENDPOINT: ENDPOINT, FLOOR_TOTAL: FLOOR_TOTAL, FLOOR_24H: FLOOR_24H, POLL_MS: POLL_MS, MAX_FAILURES: MAX_FAILURES,
     BACKOFF_CAP_MS: BACKOFF_CAP_MS, TWEEN_MS: TWEEN_MS, STRINGS: STRINGS,
+    FETCH_TIMEOUT_MS: FETCH_TIMEOUT_MS,
     isEnabled: function () { return ENABLED; },
     parsePayload: parsePayload, view: view, countUpFrames: countUpFrames, formatCount: formatCount, text: text,
     createPoller: createPoller, createTweener: createTweener, tweenStart: tweenStart, ringBumps: ringBumps, mount: mount, init: init
