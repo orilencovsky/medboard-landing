@@ -24,7 +24,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const LAUNCH_OFFER = 'מחיר השקה מיוחד לנרשמים מראש';
 const PAGES = {
   fm:     { slug: 'family-medicine', h1: 'הכנה לשלב א׳<br>ברפואת משפחה',            pill: 'בקרוב',      offer: LAUNCH_OFFER },
-  peds:   { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים',            pill: 'בקרוב',      offer: LAUNCH_OFFER },
+  peds:   { slug: 'pediatrics',      h1: 'הכנה לשלב א׳<br>ברפואת ילדים',            pill: 'פתוח עכשיו', offer: null },
   nephro: { slug: 'nephrology',      h1: 'הכנה לבחינת<br>מקצוע-על בנפרולוגיה',      pill: 'פתוח עכשיו', offer: null },
   cardio: { slug: 'cardiology',      h1: 'הכנה לבחינת<br>מקצוע-על בקרדיולוגיה',     pill: 'פתוח עכשיו', offer: null },
   geri:   { slug: 'geriatrics',      h1: 'הכנה לשלב א׳<br>בגריאטריה',               pill: 'בקרוב',      offer: null },
