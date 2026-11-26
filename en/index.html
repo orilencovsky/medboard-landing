@@ -396,7 +396,7 @@
      then the focus colour, so the ring never touches the button's own violet. */
   :root { --focus-ring: #C4B5FD; --focus-gap: #061225; }
   #features, #compare, #faq, #pilot { --focus-ring: #4A38C9; --focus-gap: #fff; }
-  #ai { --focus-ring: #4A38C9; --focus-gap: #F0F6FA; }
+  #ai, #contact { --focus-ring: #4A38C9; --focus-gap: #F0F6FA; }
   :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   .btn-action:focus-visible { outline:none; box-shadow:0 0 0 3px var(--focus-gap), 0 0 0 5px var(--focus-ring); }
   .btn-action-md { box-shadow:0 6px 20px rgba(74,56,201,.45); }
@@ -830,6 +830,29 @@
   .team-role { margin: 0; font-size: 14px; line-height: 1.55; color: #9CC0DC; }
   @media (max-width: 600px) { .team-card { max-width: 100%; flex-basis: 100%; } .team-head { margin-block-end: 36px; } }
   @media (prefers-reduced-motion: reduce) { .team-card { transition: none; } .team-card:hover { transform: none; } }
+
+  /* ===== Contact section ===== */
+  .contact-sec { background: #F0F6FA; padding: 88px 32px; border-top: 1px solid #DCE7F1; }
+  .contact-wrap { max-width: 1060px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 40px; align-items: start; }
+  .contact-eyebrow { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 999px; background: rgba(14,116,144,.1); color: #0E7490; font-size: 13px; font-weight: 700; margin-block-end: 14px; }
+  .contact-copy h2 { margin: 0 0 14px; font-size: 38px; font-weight: 700; color: #0F172A; line-height: 1.2; text-wrap: balance; }
+  .contact-copy p { margin: 0 0 24px; font-size: 17px; line-height: 1.7; color: #475569; max-width: 46ch; }
+  .contact-direct { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 16px; background: #fff; border: 1px solid #DCE7F1; }
+  .contact-mail { font-family: 'IBM Plex Mono', 'IBM Plex Mono Fallback', monospace; font-size: 15px; font-weight: 600; color: #0E7490; text-decoration: underline; text-underline-offset: 3px; }
+  .contact-copy-btn { min-height: 44px; padding: 8px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #F8FAFC; color: #0F172A; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background .15s ease, border-color .15s ease; }
+  .contact-copy-btn:hover { background: #EEF6FB; border-color: #94A3B8; }
+  .contact-card { background: #fff; border: 1px solid #DCE7F1; border-radius: 20px; padding: 28px; box-shadow: 0 16px 36px rgba(15,23,42,.06); }
+  .contact-field { display: flex; flex-direction: column; gap: 6px; margin-block-end: 18px; }
+  .contact-field label { font-size: 14px; font-weight: 600; color: #0F172A; }
+  .contact-field input, .contact-field textarea { font: inherit; font-size: max(1rem, 1em); line-height: 1.5; color: #0F172A; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 11px 14px; min-height: 48px; box-sizing: border-box; inline-size: 100%; transition: border-color .15s ease, background .15s ease; }
+  .contact-field textarea { min-height: 116px; resize: vertical; }
+  .contact-field input:focus, .contact-field textarea:focus { background: #fff; border-color: #0E7490; outline: none; }
+  .contact-field input:user-invalid, .contact-field textarea:user-invalid { border-color: #DC2626; }
+  .contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .contact-submit { min-height: 48px; padding: 12px 26px; border: none; border-radius: 12px; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+  .contact-status { margin: 0; font-size: 14px; color: #0E7490; font-weight: 500; }
+  @media (max-width: 860px) { .contact-wrap { grid-template-columns: 1fr; gap: 28px; } }
+  @media (max-width: 600px) { .contact-card { padding: 20px; } }
 </style>
 <script>
   // html.motion: motion is welcome. It hides nothing by itself: the reveal
@@ -867,6 +890,7 @@
         <a data-mq-hide class="nav-link" href="#how">How it works</a>
         <a data-mq-hide class="nav-link" href="#compare">Comparison</a>
         <a data-mq-hide class="nav-link" href="#team">Team</a>
+        <a data-mq-hide class="nav-link" href="#contact">Contact</a>
         <a data-mq-lang href="/?lang=he" style="color: #7DD3FC; font-size: 14px; font-weight: 600; border: 1px solid #1E4A6E; border-radius: 8px; padding: 7px 14px;">עברית</a>
         <a data-mq-cta class="btn-action btn-action-md" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=nav" data-cta="nav" style="border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 700;">Start studying</a>
         <button data-mq-burger onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu" style="background: transparent; border: 1px solid #1E4A6E; border-radius: 8px; width: 44px; height: 44px; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
@@ -881,6 +905,7 @@
       <a class="m-link" href="#how" onclick="closeMenu()">How it works</a>
       <a class="m-link" href="#compare" onclick="closeMenu()">Comparison</a>
       <a class="m-link" href="#team" onclick="closeMenu()">Team</a>
+      <a class="m-link" href="#contact" onclick="closeMenu()">Contact</a>
     </div>
   </nav>
 
@@ -1613,6 +1638,40 @@
     </div>
   </section>
 
+  <!-- CONTACT -->
+  <section id="contact" class="contact-sec" data-mq-section aria-labelledby="contact-title">
+    <div class="contact-wrap">
+      <div class="contact-copy">
+        <span class="contact-eyebrow">Contact</span>
+        <h2 id="contact-title" data-mq-h2>Get in touch</h2>
+        <p>Questions about our live study packs, department group pricing, partnerships, or upcoming specialties? Write to us and we'll get back to you.</p>
+        <div class="contact-direct">
+          <a class="contact-mail" href="mailto:hello@meduxa.ai">hello@meduxa.ai</a>
+          <button type="button" class="contact-copy-btn" id="copyEmailBtn">Copy email</button>
+          <span class="contact-status" id="copyEmailStatus" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+      <form class="contact-card" id="contactForm" aria-labelledby="contact-title">
+        <div class="contact-field">
+          <label for="contact-name">Full name <span aria-hidden="true">*</span></label>
+          <input type="text" id="contact-name" name="name" autocomplete="name" enterkeyhint="next" required />
+        </div>
+        <div class="contact-field">
+          <label for="contact-email">Email <span aria-hidden="true">*</span></label>
+          <input type="email" id="contact-email" name="email" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="next" required />
+        </div>
+        <div class="contact-field">
+          <label for="contact-message">Message <span aria-hidden="true">*</span></label>
+          <textarea id="contact-message" name="message" enterkeyhint="done" required></textarea>
+        </div>
+        <div class="contact-actions">
+          <button type="submit" class="btn-action btn-action-md contact-submit">Send message</button>
+          <p class="contact-status" id="contactFormStatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -2147,6 +2206,35 @@
       // doesn't animate beats a page that stays hidden.
       restore();
       if (window.console) console.error(err);
+    }
+  })();
+</script>
+<script>
+  (function () {
+    var copyBtn = document.getElementById('copyEmailBtn');
+    var copyStatus = document.getElementById('copyEmailStatus');
+    if (copyBtn && copyStatus && navigator.clipboard) {
+      copyBtn.addEventListener('click', function () {
+        navigator.clipboard.writeText('hello@meduxa.ai').then(function () {
+          copyStatus.textContent = 'Copied!';
+          setTimeout(function () { copyStatus.textContent = ''; }, 3000);
+        });
+      });
+    }
+    var form = document.getElementById('contactForm');
+    var status = document.getElementById('contactFormStatus');
+    if (form && status) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        var name = document.getElementById('contact-name').value.trim();
+        var email = document.getElementById('contact-email').value.trim();
+        var msg = document.getElementById('contact-message').value.trim();
+        var subject = encodeURIComponent('MeduXa.ai contact — ' + name);
+        var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + msg);
+        location.href = 'mailto:hello@meduxa.ai?subject=' + subject + '&body=' + body;
+        status.textContent = 'Email draft opened for hello@meduxa.ai.';
+      });
     }
   })();
 </script>
