@@ -338,6 +338,8 @@
   .features { background: var(--deep); }
   .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
            grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report" "builder builder builder builder"; }
+  .bento.has-library { grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report" "library library builder builder"; }
+  .t-library { grid-area: library; }
   .tile { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 26px;
           display: flex; flex-direction: column; gap: 10px; transition: border-color .25s ease, transform .35s var(--ease); }
   @media (hover: hover) and (pointer: fine) {
@@ -560,6 +562,7 @@
     .method-layout .sec-head { position: static; }
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr));
              grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report" "builder builder"; }
+    .bento.has-library { grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report" "library library" "builder builder"; }
     .t-tutor { min-height: 320px; }
   }
   @media (max-width: 767px) {
@@ -583,6 +586,7 @@
     .group { padding: 22px 18px; }
     .techs { grid-template-columns: 1fr; gap: 18px; }
     .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report" "builder"; }
+    .bento.has-library { grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report" "library" "builder"; }
     .t-tutor { min-height: 0; padding: 26px; }
     .t-tutor h3 { font-size: 22px; }
     .tile { padding: 22px; }
@@ -739,7 +743,7 @@
         <h2 id="t-what">מה תקבלו</h2>
         <p>{{featuresLead}}</p>
       </div>
-      <div class="bento">
+      <div class="bento<!-- if:library --> has-library<!-- /if:library -->">
         <article class="tile t-tutor" data-reveal>
           <img class="t-avatar" src="/socrates-avatar-64.png" srcset="/socrates-avatar-64.png 1x, /socrates-avatar-128.png 2x" width="44" height="44" alt="" decoding="async">
           <h3>מורה <span class="ltr-iso">AI</span> סוקרטי לכל שאלה</h3>
@@ -783,6 +787,13 @@
           <h3>דיווח על בעיה בשאלה</h3>
           <p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p>
         </article>
+<!-- if:library -->
+        <article class="tile t-library" data-reveal style="--i:1">
+          <i class="ph ph-book-open" aria-hidden="true"></i>
+          <h3>ספרייה רפואית חכמה</h3>
+          <p>שיעורים מסודרים לפי נושאים ותתי-נושאים — קראו על הנושא, קפצו ישירות לשאלות שלו, ושוחחו עם סוקרטס על מה שלא ברור.</p>
+        </article>
+<!-- /if:library -->
         <article class="tile t-builder" data-reveal style="--i:1">
           <i class="ph ph-calendar-check" aria-hidden="true"></i>
           <h3>לוח למידה חכם</h3>
