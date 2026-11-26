@@ -830,6 +830,25 @@
   .faq-a a:hover { color: #155E75; }
   @media (max-width: 600px) { .faq-item summary { font-size: 17px; padding: 16px 2px; } .faq-a p { font-size: 16px; } }
   @media (prefers-reduced-motion: reduce) { .faq-item summary svg { transition: none; } }
+
+  /* ===== Team section ===== */
+  .team-sec { position: relative; overflow: hidden; background: linear-gradient(180deg, #061225 0%, #091D3A 100%); padding: 96px 32px; border-top: 1px solid rgba(34,211,238,.14); }
+  .team-sec::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(58% 42% at 50% 0%, rgba(34,211,238,.14), transparent 70%); }
+  .team-wrap { position: relative; max-width: 1180px; margin-inline: auto; }
+  .team-head { text-align: center; max-width: 680px; margin-inline: auto; margin-block-end: 52px; }
+  .team-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgba(34,211,238,.1); border: 1px solid rgba(34,211,238,.28); color: #67E8F9; font-size: 13px; font-weight: 600; margin-block-end: 16px; }
+  .team-head h2 { margin: 0 0 14px; font-size: 40px; font-weight: 700; color: #F1F5F9; line-height: 1.2; text-wrap: balance; }
+  .team-head p { margin: 0; font-size: 17px; line-height: 1.7; color: #9CC0DC; }
+  .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
+  .team-card { flex: 1 1 240px; max-width: 274px; min-inline-size: 0; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(11,37,69,.82), rgba(7,22,44,.94)); border: 1px solid #1B3E63; border-radius: 20px; padding: 18px; box-shadow: 0 20px 44px rgba(2,8,20,.42); transition: transform .2s ease, border-color .2s ease; }
+  .team-card:hover { transform: translateY(-3px); border-color: rgba(34,211,238,.45); }
+  .team-avatar { display: block; inline-size: 100%; block-size: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 14px; background: #0B2545; border: 1px solid rgba(34,211,238,.22); margin-block-end: 16px; }
+  .team-badge { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: rgba(34,211,238,.12); border: 1px solid rgba(34,211,238,.24); color: #67E8F9; font-size: 12px; font-weight: 600; margin-block-end: 10px; }
+  .team-badge svg { flex-shrink: 0; }
+  .team-card h3 { margin: 0 0 6px; font-size: 19px; font-weight: 700; color: #F1F5F9; line-height: 1.3; }
+  .team-role { margin: 0; font-size: 14px; line-height: 1.55; color: #9CC0DC; }
+  @media (max-width: 600px) { .team-card { max-width: 100%; flex-basis: 100%; } .team-head { margin-block-end: 36px; } }
+  @media (prefers-reduced-motion: reduce) { .team-card { transition: none; } .team-card:hover { transform: none; } }
 </style>
 <script>
   // html.motion: motion is welcome. It hides nothing by itself: the reveal
@@ -1589,6 +1608,61 @@
       <!-- tracks:closing -->
       <p class="pilot-tracks">מתכוננים לבחינה ברפואת משפחה, ברפואת ילדים, בגריאטריה, בפסיכיאטריה, בהרדמה או במיילדות וגינקולוגיה? <a href="#tracks">לפרטים ולהרשמה לעדכון</a></p>
       <!-- /tracks:closing -->
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="team-sec" data-mq-section aria-labelledby="team-title">
+    <div class="team-wrap">
+      <div class="team-head">
+        <span class="team-eyebrow">האנשים שמאחורי המוצר</span>
+        <h2 id="team-title" data-mq-h2>הצוות של MeduXa</h2>
+        <p>רופאים ומתמחים מתחומי התמחות שונים לצד אנשי טכנולוגיה ומוצר — בונים יחד את סביבת הלמידה שהיינו רוצים שתיבנה עבורנו.</p>
+      </div>
+      <div class="team-grid">
+        <article class="team-card">
+          <img class="team-avatar" src="/team/ori.jpg" alt="ד״ר אורי לנקובסקי" width="512" height="512" loading="lazy" decoding="async" />
+          <span class="team-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 4.5C6.5 4.5 4.5 7 4.5 10.5c0 2.6 1.2 4.3 2.5 5.4.8.7 1 1.7.7 2.8-.2.8.4 1.3 1.1 1.3 1.4 0 2.4-1.5 2.4-3.8V9.2c0-2.7-.3-4.7-1.7-4.7Zm5 0c3 0 5 2.5 5 6 0 2.6-1.2 4.3-2.5 5.4-.8.7-1 1.7-.7 2.8.2.8-.4 1.3-1.1 1.3-1.4 0-2.4-1.5-2.4-3.8V9.2c0-2.7.3-4.7 1.7-4.7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>פנימית ונפרולוגיה</span>
+          <h3>ד״ר אורי לנקובסקי</h3>
+          <p class="team-role">ניהול מוצר · רפואה פנימית ונפרולוגיה</p>
+        </article>
+        <article class="team-card">
+          <img class="team-avatar" src="/team/mor.jpg" alt="מור יגרמן" width="512" height="512" loading="lazy" decoding="async" />
+          <span class="team-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13.5 7l-3 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>טכנולוגיה וארכיטקטורה</span>
+          <h3>מור יגרמן</h3>
+          <p class="team-role">CTO</p>
+        </article>
+        <article class="team-card">
+          <img class="team-avatar" src="/team/yaniv.jpg" alt="יניב לוינסון" width="512" height="512" loading="lazy" decoding="async" />
+          <span class="team-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17l6-6 4 4 6-7M15 8h5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>פיתוח עסקי</span>
+          <h3>יניב לוינסון</h3>
+          <p class="team-role">מנהל פיתוח עסקי</p>
+        </article>
+        <article class="team-card">
+          <img class="team-avatar" src="/team/tal.jpg" alt="ד״ר טל לנקובסקי" width="512" height="512" loading="lazy" decoding="async" />
+          <span class="team-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5M5 9.5V20h14V9.5M12 12v5M9.5 14.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>רפואת משפחה</span>
+          <h3>ד״ר טל לנקובסקי</h3>
+          <p class="team-role">רפואת משפחה</p>
+        </article>
+        <article class="team-card">
+          <img class="team-avatar" src="/team/noam.jpg" alt="ד״ר נועם שטיינברג" width="512" height="512" loading="lazy" decoding="async" />
+          <span class="team-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l2.2 4.6 5.1.7-3.7 3.6.9 5-4.5-2.4-4.5 2.4.9-5-3.7-3.6 5.1-.7L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>רפואת ילדים</span>
+          <h3>ד״ר נועם שטיינברג</h3>
+          <p class="team-role">רפואת ילדים</p>
+        </article>
+        <article class="team-card">
+          <img class="team-avatar" src="/team/elisha.jpg" alt="ד״ר אלישע ארנסט" width="512" height="512" loading="lazy" decoding="async" />
+          <span class="team-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 4v5a4 4 0 0 0 8 0V4M10 13v3a4 4 0 0 0 8 0v-2M18 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>רפואת משפחה</span>
+          <h3>ד״ר אלישע ארנסט</h3>
+          <p class="team-role">רפואת משפחה</p>
+        </article>
+        <article class="team-card">
+          <img class="team-avatar" src="/team/dvir.jpg" alt="ד״ר דביר שלם" width="512" height="512" loading="lazy" decoding="async" />
+          <span class="team-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h4l2.5-5 3 10 2.5-5H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>קרדיולוגיה</span>
+          <h3>ד״ר דביר שלם</h3>
+          <p class="team-role">קרדיולוגיה</p>
+        </article>
+      </div>
     </div>
   </section>
 
