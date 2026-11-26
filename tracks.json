@@ -170,24 +170,25 @@
     },
     {
       "id": "pediatrics",
-      "status": "soon",
+      "status": "live",
       "icon": "pediatrics",
-      "launchOffer": true,
       "href": "/pediatrics",
       "pageLang": "he",
       "he": {
         "name": "רפואת ילדים",
         "inline": "רפואת ילדים",
         "stage": "שלב א׳",
-        "blurb": "שאלות שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
-        "action": "הרשמה לעדכון"
+        "blurb": "שאלות שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, מורה {{AI}} סוקרטי וחזרה מרווחת.",
+        "action": "התחילו ללמוד — חינם"
       },
       "en": {
         "name": "Pediatrics",
         "inline": "pediatrics",
         "stage": "Stage A",
-        "blurb": "Questions checked by a pediatrics specialist, answers explained with a quote from the source, and launch pricing for early sign-ups.",
-        "action": "Get notified"
+        "blurb": "Questions checked by a pediatrics specialist, answers explained with a quote from the source, a Socratic {{AI}} tutor and spaced repetition.",
+        "action": "Start studying free",
+        "href": "https://app.meduxa.ai/?signup=1&src=landing&pl=peds_hero",
+        "cta": "hero"
       },
       "exam": {
         "date": "2027-06-14",
@@ -475,6 +476,45 @@
         },
         {
           "title": "Speroff's Clinical Gynecologic Endocrinology and Infertility 10e",
+          "kind": "book"
+        }
+      ]
+    },
+    {
+      "id": "orthopedics",
+      "status": "soon",
+      "icon": "orthopedics",
+      "href": "/orthopedics",
+      "pageLang": "he",
+      "he": {
+        "name": "אורתופדיה",
+        "inline": "אורתופדיה",
+        "stage": "שלב א׳",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Orthopedics",
+        "inline": "orthopedics",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, and launch pricing for early sign-ups.",
+        "action": "Coming soon"
+      },
+      "exam": {
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "כירורגיה אורתופדית",
+          "event": "בחינת שלב א'"
+        }
+      },
+      "sources": [
+        {
+          "title": "Miller's Review of Orthopaedics 8e",
+          "kind": "book"
+        },
+        {
+          "title": "Campbell's Operative Orthopaedics 14e",
           "kind": "book"
         }
       ]

@@ -1,0 +1,47 @@
+{
+  "_comment": "Page data for specialty.template.html, rendered by scripts/render-specialties.mjs into <track href>.html.",
+  "trackId": "orthopedics",
+  "prefix": "ortho",
+  "mode": "soon",
+  "title": "הכנה לשלב א׳ באורתופדיה, בקרוב | MeduXa.ai",
+  "description": "בקרוב ב-MeduXa: הכנה לשלב א׳ באורתופדיה. שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי.",
+  "ogDescription": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, חזרה מרווחת ומורה AI סוקרטי.",
+  "ogImage": "https://meduxa.ai/og-image-he.png",
+  "ogImageAlt": "MeduXa.ai: בקרוב, הכנה לשלב א׳ באורתופדיה",
+  "chip": "בקרוב: אורתופדיה, שלב א׳",
+  "heroStage": "הכנה לשלב א׳ באורתופדיה",
+  "lead": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ועדכון במייל כשההכנה תיפתח.",
+  "states": [
+    {
+      "kind": "done",
+      "icon": "check-circle",
+      "title": "המנוע קיים ועובד",
+      "text": "מתמחים כבר מתכוננים איתו לשלב א׳."
+    },
+    {
+      "kind": "build",
+      "icon": "hammer",
+      "title": "התוכן לאורתופדיה נבנה עכשיו",
+      "text": "השאירו מייל ונעדכן ברגע שזה נפתח."
+    }
+  ],
+  "statementHtml": "שאלות בסגנון שלב א׳, ולכל תשובה <em>הסבר שמגובה בציטוט מילה במילה מהמקור</em> שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם.",
+  "featuresLead": "כל מה שמתמחים כבר משתמשים בו באפליקציה, מותאם לבחינת שלב א׳ באורתופדיה.",
+  "cmpStyle": {
+    "label": "שאלות בסגנון שלב א׳",
+    "full": "שאלות בפורמט שלב א׳, עם הסבר מלא"
+  },
+  "signup": {
+    "source": "landing_ortho",
+    "interest": "orthopedics",
+    "consentText": "אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א׳ באורתופדיה תיפתח.",
+    "successText": "נרשמתם לעדכונים על אורתופדיה. נכתוב לכם כשההכנה לשלב א׳ תיפתח.",
+    "perks": [
+      {
+        "icon": "envelope-simple",
+        "html": "נכתוב לכם ברגע שההכנה באורתופדיה תיפתח."
+      }
+    ]
+  },
+  "questions": []
+}

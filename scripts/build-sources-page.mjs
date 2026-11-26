@@ -107,9 +107,9 @@ const CONTENT = {
     pastExam: null,
     noPastExam: (review) => `<p><strong>השאלות.</strong> שאלות בסגנון שלב א׳, ו${esc(review)}. לכל תשובה הסבר עם ציטוט מהמקור.</p>`,
     moreText: 'עוד על ההכנה לרפואת ילדים',
-    closingTitle: 'עדכון במייל כשההכנה תיפתח',
-    closingHtml: (launch) => `<strong>ההכנה לשלב א׳ ברפואת ילדים</strong> נבנית עכשיו. הירשמו לעדכון ונכתוב לכם כשהיא נפתחת${launch}.`,
-    closingButton: 'הרשמה לעדכון',
+    closingTitle: 'רוצים להתחיל לתרגל?',
+    closingHtml: () => '<strong>הפיילוט לשלב א׳ ברפואת ילדים</strong> פתוח עכשיו באפליקציה. אפשר להתחיל לתרגל חינם.',
+    closingButton: 'התחילו ללמוד — חינם',
   },
   psychiatry: {
     title: 'מקורות להכנה לשלב א׳ בפסיכיאטריה | MeduXa.ai',
@@ -242,8 +242,8 @@ export function buildSourcesPage(id, read = (p) => readFileSync(join(root, p), '
   if (!c) throw new Error(`no CONTENT for "${id}" in scripts/build-sources-page.mjs (built: ${Object.keys(CONTENT).join(', ')})`);
   const track = JSON.parse(read('tracks.json')).tracks.find((t) => t.id === id);
   if (!track) throw new Error(`no track "${id}" in tracks.json`);
-  if (track.status !== 'soon') throw new Error(`${id} is ${track.status}: this script builds pages for "soon" tracks (sign-up, no app link)`);
   const spec = JSON.parse(read(`specialties/${id}.json`));
+  if (track.status !== 'soon' && !(track.status === 'live' && spec.app)) throw new Error(`${id} is ${track.status}: this script builds pages for "soon" or live-with-app tracks`);
   const prefix = spec.prefix || PREFIX[id];
   if (!/^[a-z]+$/.test(prefix || '')) throw new Error(`no analytics prefix for ${id}`);
   const DATE = track.exam.date;
@@ -293,7 +293,7 @@ export function buildSourcesPage(id, read = (p) => readFileSync(join(root, p), '
   // Analytics: the logo and nav keep the track page's <prefix>_home_click; the
   // links that stay on the page or go to /<track> get their own event.
   const p = prefix;
-  swap(new RegExp(`  // ${p}_home_click: [\\s\\S]*?    if \\(a\\) window\\.va\\('event', \\{ name: '${p}_home_click', data: \\{ placement: a\\.getAttribute\\('data-${p}-cta'\\) \\} \\}\\);`),
+  swap(new RegExp(`  // (?:${p}_home_click|${p}_app_click): [\\s\\S]*?window\\.va\\('event',[\\s\\S]*?\\);`),
     `  // ${p}_home_click: the logo or nav sent a visitor back to the homepage.
   // ${p}_sources_click: any other link on this page (to ${href} and its
   // signup). Cookieless like the rest of Vercel Analytics.
@@ -355,11 +355,13 @@ export function buildSourcesPage(id, read = (p) => readFileSync(join(root, p), '
 ${extraCss(c)}</style>`);
 
   const body0 = src.slice(src.indexOf('</head>'), src.indexOf('<main id="main">'));
-  // The nav button points at the sign-up form, which lives on /<track>.
-  const navCta = '<a class="btn nav-cta" href="#signup">';
+  const isLive = track.status === 'live' && spec.app;
+  // The nav button points at the sign-up form (or #start for live tracks) on /<track>.
+  const navCta = isLive ? '<a class="btn nav-cta" href="#start">' : '<a class="btn nav-cta" href="#signup">';
   if (!body0.includes(navCta)) throw new Error('nav cta marker');
+  const navTarget = isLive ? spec.app.hrefHero : `${href}#signup`;
   const nav = body0.replace('<nav>', '<nav aria-label="ניווט ראשי">')
-    .replace(navCta, `<a class="btn nav-cta" href="${href}#signup" ${cta}="sources_nav">`);
+    .replace(navCta, `<a class="btn nav-cta" href="${navTarget}" ${cta}="sources_nav">`);
   if (!nav.includes('<nav aria-label="ניווט ראשי">')) throw new Error('nav marker');
   const footer = src.slice(src.indexOf('</main>') + '</main>'.length, src.indexOf('<script>', src.indexOf('<footer>')));
   let script = src.slice(src.indexOf('<script>', src.indexOf('<footer>')));
@@ -478,7 +480,7 @@ ${facts.map((f) => '        ' + f).join('\n')}
       <div class="signup-copy" data-reveal>
         <h2 id="t-start">${esc(c.closingTitle)}</h2>
         <p class="signup-for">${c.closingHtml(launch)}</p>
-        <a class="btn hero-cta" href="${href}#signup" ${cta}="sources_closing">${esc(c.closingButton)}<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
+        <a class="btn hero-cta" href="${isLive ? spec.app.hrefClosing : `${href}#signup`}" ${cta}="sources_closing">${esc(c.closingButton)}<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
       </div>
     </div>
   </section>

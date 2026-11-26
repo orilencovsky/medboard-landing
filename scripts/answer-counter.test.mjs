@@ -380,7 +380,7 @@ const HOME_PAGES = ['index.html', 'en/index.html'];
 const SPECIALTIES = readdirSync(new URL('../specialties/', import.meta.url)).filter((f) => f.endsWith('.json')).map((f) => f.replace(/\.json$/, '.html'));
 
 test('every hero that should carry the counter has the mount, the script tag and the no-script rule, exactly once', () => {
-  assert.equal(SPECIALTIES.length, 8);
+  assert.equal(SPECIALTIES.length, 9);
   for (const p of [...HOME_PAGES, ...SPECIALTIES, 'specialty.template.html']) {
     const html = read(p);
     assert.equal((html.match(/<div data-mx-live /g) || []).length, 1, `${p}: one mount`);
