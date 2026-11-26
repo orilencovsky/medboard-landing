@@ -179,15 +179,8 @@ test('cardiology is live: a live card, out of the launch-price bar and the closi
   assert.doesNotMatch(html, /בקרדיולוגיה\? <a href="#tracks">/);
 });
 
-test('fillSpans widens the soon cards of the last row so the 4-column grid has no empty cells', () => {
-  const L = (id) => ({ id, status: 'live' }), S = (id) => ({ id, status: 'soon' });
-  assert.deepEqual(fillSpans([L('a'), S('b'), S('c')]), {}); // full row
-  assert.deepEqual(fillSpans([L('a'), S('b'), S('c'), S('d'), S('e')]), { d: 2, e: 2 });
-  assert.deepEqual(fillSpans([S('a'), S('b'), S('c'), S('d'), S('e')]), { e: 4 });
-  assert.deepEqual(fillSpans([S('a'), S('b'), S('c'), S('d'), S('e'), S('f'), S('g')]), { e: 2 });
-  assert.deepEqual(fillSpans([L('a'), L('b'), L('c')]), {}); // a live-only last row stays as it is
-  // the shipped list: 3 live + 6 soon (orthopedics is alone on the 3rd row, spans 4)
-  assert.deepEqual(fillSpans(real.tracks), { orthopedics: 4 });
+test('fillSpans keeps every track card the same size', () => {
+  assert.deepEqual(fillSpans(real.tracks), {});
 });
 
 test('every track has its specialty icon on the card and the chip, hidden from screen readers', () => {

@@ -327,7 +327,8 @@
   /* FEATURES: bento, nine items in nine cells (the study plan spans the last row). */
   .features { background: var(--deep); }
   .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
-           grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report" "builder builder builder builder"; }
+           grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report" "library library builder builder"; }
+  .t-library { grid-area: library; }
   .tile { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 26px;
           display: flex; flex-direction: column; gap: 10px; transition: border-color .25s ease, transform .35s var(--ease); }
   @media (hover: hover) and (pointer: fine) {
@@ -549,7 +550,7 @@
     .method-layout { grid-template-columns: 1fr; gap: 40px; }
     .method-layout .sec-head { position: static; }
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr));
-             grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report" "builder builder"; }
+             grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report" "library library" "builder builder"; }
     .t-tutor { min-height: 320px; }
   }
   @media (max-width: 767px) {
@@ -572,7 +573,7 @@
     .sec-head p, .signup-for { font-size: 16px; }
     .group { padding: 22px 18px; }
     .techs { grid-template-columns: 1fr; gap: 18px; }
-    .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report" "builder"; }
+    .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report" "library" "builder"; }
     .t-tutor { min-height: 0; padding: 26px; }
     .t-tutor h3 { font-size: 22px; }
     .tile { padding: 22px; }
@@ -798,6 +799,11 @@
           <h3>דיווח על בעיה בשאלה</h3>
           <p>מצאתם טעות? מדווחים מתוך השאלה, ומקבלים חזרה עדכון מה נעשה.</p>
         </article>
+        <article class="tile t-library" data-reveal style="--i:1">
+          <i class="ph ph-book-open" aria-hidden="true"></i>
+          <h3>ספרייה רפואית חכמה</h3>
+          <p>שיעורים מסודרים לפי נושאים ותתי-נושאים — קראו על הנושא, קפצו ישירות לשאלות שלו, ושוחחו עם סוקרטס על מה שלא ברור.</p>
+        </article>
         <article class="tile t-builder" data-reveal style="--i:1">
           <i class="ph ph-calendar-check" aria-hidden="true"></i>
           <h3>לוח למידה חכם</h3>
@@ -807,7 +813,7 @@
           </ul>
         </article>
       </div>
-      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</span></p>
+      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך, לא ביום הפתיחה:</strong> דו-קרבות בין מתמחים.</span></p>
     </div>
   </section>
 
@@ -828,6 +834,7 @@
           <tr><th scope="row">תרגול ממוקד בחולשות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">הדשבורד מזהה ופותח תרגול בלחיצה</span><span class="short">יש</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>לרוב אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
           <tr><th scope="row">סימולציית בחינה עם טיימר</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>משתנה<span class="full">&nbsp;בין מאגרים</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
           <tr><th scope="row">מפת נושאים ומעקב התקדמות</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i>יש</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>משתנה<span class="full">&nbsp;בין מאגרים</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
+          <tr><th scope="row">ספרייה רפואית חכמה</th><td class="us"><span class="mk"><i class="ph ph-check" aria-hidden="true"></i><span class="full">שיעורים מסודרים לפי נושאים ומקורות</span><span class="short">יש</span></span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td><td class="no"><span class="mk"><i class="ph ph-minus" aria-hidden="true"></i>אין</span></td></tr>
           </tbody>
         </table>
       </div>

@@ -84,23 +84,9 @@ export function validate(data) {
 // the cards out in order (a card that does not fit starts the next row) and,
 // if the last row has room left, widen its soon cards to fill it, so the grid
 // never ends in empty cells. Returns { [track id]: span } for widened cards.
-export const GRID_COLS = 4;
-export function fillSpans(tracks) {
-  let row = [], used = 0;
-  for (const t of tracks) {
-    const w = t.status === 'live' ? 2 : 1;
-    if (used + w > GRID_COLS) { row = []; used = 0; }
-    row.push(t); used += w;
-  }
-  const soon = row.filter((t) => t.status !== 'live');
-  let free = GRID_COLS - used;
-  const out = {};
-  if (!free || !soon.length) return out;
-  soon.forEach((t, i) => {
-    const extra = Math.floor(free / soon.length) + (i < free % soon.length ? 1 : 0);
-    if (extra) out[t.id] = 1 + extra;
-  });
-  return out;
+export const GRID_COLS = 3;
+export function fillSpans() {
+  return {};
 }
 
 // The pack label shown on hover over a card's icon and a hero chip

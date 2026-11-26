@@ -327,7 +327,8 @@
   /* FEATURES: bento, nine items in nine cells (the study plan spans the last row). */
   .features { background: var(--deep); }
   .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
-           grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report" "builder builder builder builder"; }
+           grid-template-areas: "tutor tutor quote quote" "tutor tutor exam filter" "map dash board report" "library library builder builder"; }
+  .t-library { grid-area: library; }
   .tile { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 26px;
           display: flex; flex-direction: column; gap: 10px; transition: border-color .25s ease, transform .35s var(--ease); }
   @media (hover: hover) and (pointer: fine) {
@@ -549,7 +550,7 @@
     .method-layout { grid-template-columns: 1fr; gap: 40px; }
     .method-layout .sec-head { position: static; }
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr));
-             grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report" "builder builder"; }
+             grid-template-areas: "tutor tutor" "quote quote" "exam filter" "map dash" "board report" "library library" "builder builder"; }
     .t-tutor { min-height: 320px; }
   }
   @media (max-width: 767px) {
@@ -572,7 +573,7 @@
     .sec-head p, .signup-for { font-size: 16px; }
     .group { padding: 22px 18px; }
     .techs { grid-template-columns: 1fr; gap: 18px; }
-    .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report" "builder"; }
+    .bento { grid-template-columns: 1fr; grid-template-areas: "tutor" "quote" "exam" "filter" "map" "dash" "board" "report" "library" "builder"; }
     .t-tutor { min-height: 0; padding: 26px; }
     .t-tutor h3 { font-size: 22px; }
     .tile { padding: 22px; }
