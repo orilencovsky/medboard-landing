@@ -316,7 +316,7 @@ export function renderPage(template, page, track) {
     daysUntilFn: String(daysUntil),
     countdownStateFn: String(countdownState),
   };
-  const flags = { soon: page.mode === 'soon', live: page.mode === 'live', questions: page.questions.length > 0, review: page.cmpReview !== undefined, library: Boolean(page.libraryFeature) };
+  const flags = { soon: page.mode === 'soon', live: page.mode === 'live', questions: page.questions.length > 0, review: page.cmpReview !== undefined };
   return fill(keepBlocks(template, flags), view);
 }
 

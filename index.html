@@ -530,11 +530,11 @@
   .tracks-head { display: flex; flex-direction: column; gap: 14px; max-width: 720px; margin-bottom: 44px; }
   .tracks-head h2 { margin: 0; font-size: 40px; font-weight: 700; color: #fff; line-height: 1.2; letter-spacing: -0.01em; text-wrap: balance; }
   .tracks-head p { margin: 0; font-size: 18px; line-height: 1.7; color: #B8D4EA; max-width: 62ch; }
-  .tracks-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+  .tracks-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
 
   .track { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 28px 26px; border-radius: 20px; background: #081D3A; border: 1px solid #1E4A6E;
            scroll-margin-top: 96px; transition: border-color .2s ease, box-shadow .25s var(--ease), translate .25s var(--ease); }
-  .track--live { grid-column: span 2; background: #0B2545; border-color: rgba(34,211,238,.45); box-shadow: 0 24px 60px rgba(2,8,20,.55); padding: 32px 32px 30px; }
+  .track--live { background: #0B2545; border-color: rgba(34,211,238,.45); box-shadow: 0 24px 60px rgba(2,8,20,.55); }
   /* The #compare brand card's cyan top rule, so the open track reads as ours. */
   .track--live::after { content: ''; position: absolute; inset-block-start: -1.5px; inset-inline: 26px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #0EA5E9, #22D3EE); pointer-events: none; }
   /* Specialty icons (scripts/icons, Health Icons CC0): a tinted tile on the
@@ -543,8 +543,7 @@
   .track-icon { display: inline-grid; place-items: center; flex-shrink: 0; width: 52px; height: 52px; border-radius: 14px;
                 color: #67E8F9; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.28); }
   .track-icon-svg { width: 34px; height: 34px; }
-  .track--live .track-icon { width: 60px; height: 60px; border-radius: 16px; color: #5EEAD4; background: rgba(94,234,212,.09); border-color: rgba(94,234,212,.4); }
-  .track--live .track-icon-svg { width: 40px; height: 40px; }
+  .track--live .track-icon { color: #5EEAD4; background: rgba(94,234,212,.09); border-color: rgba(94,234,212,.4); }
   .hero-track-icon { width: 20px; height: 20px; flex-shrink: 0; margin-inline-start: -4px; }
   /* Specialty icon motion and pack label.
      Entrance (once, with the card reveal): the tile rises out of a light blur
@@ -587,10 +586,9 @@
   .track-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; line-height: 1; color: #7DA2C4; border: 1px solid #1E4A6E; border-radius: 100px; padding: 6px 12px; }
   .track-pill--live { color: #5EEAD4; border-color: rgba(94,234,212,.4); background: rgba(94,234,212,.07); }
   .track-name { margin: 6px 0 0; display: flex; flex-direction: column; gap: 4px; font-size: 26px; font-weight: 700; line-height: 1.2; color: #F1F7FC; }
-  .track--live .track-name { font-size: 34px; }
   .track-stage { font-size: 14px; font-weight: 600; color: #7DA2C4; }
   .track-blurb { margin: 0; font-size: 15px; line-height: 1.7; color: #9CC3DF; max-width: 46ch; }
-  .track--live .track-blurb { font-size: 16.5px; color: #B8D4EA; }
+  .track--live .track-blurb { color: #B8D4EA; }
   /* The whole card is the link's hit area: one tab stop per card. Stretched
      with ::before on the plain <a>, never on .btn-action, which already owns
      ::after (its hover fade) and clips with overflow: hidden. */
@@ -1123,7 +1121,7 @@
           <p class="track-blurb">שאלות בסגנון הבחינה, והסבר עם ציטוט מ-<span class="ltr-iso">Gabbe</span>, <span class="ltr-iso">Novak</span> ו-<span class="ltr-iso">Speroff</span>.</p>
           <a class="track-link track-link--soon" href="/obgyn" data-track="obgyn" data-track-via="card" aria-describedby="track-obgyn-name"><span class="track-soon-btn">הרשמה לעדכון<svg class="track-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
         </article>
-        <article class="track track--soon track--span4" id="track-orthopedics">
+        <article class="track track--soon" id="track-orthopedics">
           <div class="track-top"><span class="track-icon" data-pack="חבילת אורתופדיה · שלב א׳"><svg class="track-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 48 48" fill="none"><path d="M16.2 12.2C14.1 10.1 10.6 10.3 8.8 12.6C7.3 14.5 7.5 17.2 9.1 18.9C8.2 20.6 8.5 22.8 10 24.2C11.7 25.8 14.3 25.9 16.1 24.5L23.5 31.9C22.1 33.7 22.2 36.3 23.8 38C25.2 39.5 27.4 39.8 29.1 38.9C30.8 40.5 33.5 40.7 35.4 39.2C37.7 37.4 37.9 33.9 35.8 31.8C34.5 30.5 32.5 30.1 30.8 30.7L23.3 23.2C23.9 21.5 23.5 19.5 22.2 18.2C20.5 16.5 17.9 16.4 16.1 17.8L16.2 12.2Z" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="track-pills"><span class="track-pill">בקרוב</span></div></div>
           <h3 class="track-name" id="track-orthopedics-name">אורתופדיה <span class="track-stage">שלב א׳</span></h3>
           <p class="track-blurb">שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.</p>
@@ -1242,7 +1240,7 @@
         </div>
         <div style="background: #F0F6FA; border: 1px solid #A5E3F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
           <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>ספרייה רפואית חכמה</h3>
-          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">שיעורים מסודרים לפי נושאים ותתי-נושאים, מעוגנים בספרי המקור — קראו על הנושא, קפצו ישירות לשאלות שלו, ושוחחו עם סוקרטס. זמין כעת בנפרולוגיה, ובהמשך בהתמחויות נוספות.</p>
+          <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.65;">שיעורים מסודרים לפי נושאים ותתי-נושאים, מעוגנים בספרי המקור — קראו על הנושא, קפצו ישירות לשאלות שלו, ושוחחו עם סוקרטס על מה שלא ברור.</p>
         </div>
         <div style="background: #F0F6FA; border: 1px solid #A5E3F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
           <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, #0EA5E9, #22D3EE); display: inline-block; flex-shrink: 0;"></span>לוח למידה חכם</h3>
@@ -1380,8 +1378,8 @@
             </div>
           </div>
           <div class="cmp2-meter">
-            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span>
-            <span class="cmp2-meter-score">7/7</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span>
+            <span class="cmp2-meter-score">8/8</span>
           </div>
           <dl class="cmp2-list">
             <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>שאלות ברמת הבחינה</dt>
@@ -1392,6 +1390,8 @@
             <dd>נבדק על ידי רופאים</dd>
             <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><img src="/socrates-avatar-64.png" srcset="/socrates-avatar-64.png 1x, /socrates-avatar-128.png 2x" width="18" height="18" alt="" decoding="async" style="display:inline-block; flex-shrink:0; border-radius:50%; vertical-align:middle; margin-inline-end:6px;">מורה AI סוקרטי</dt>
             <dd>מובנה בכל שאלה, בזמן אמת</dd>
+            <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>ספרייה רפואית חכמה</dt>
+            <dd>שיעורים מסודרים לפי נושאים ומקורות</dd>
             <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>איתור חולשות + חזרה מרווחת</dt>
             <dd>מפת חום + אלגוריתם חזרה מבוסס-מדע</dd>
             <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>סימולציית בחינה מלאה</dt>
@@ -1417,8 +1417,8 @@
             </div>
           </div>
           <div class="cmp2-meter">
-            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="cmp2-meter-score">2/7</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp2-meter-score">2/8</span>
           </div>
           <dl class="cmp2-list">
             <dt><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>שאלות ברמת הבחינה</dt>
@@ -1428,6 +1428,8 @@
             <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>ביקורת רפואית</dt>
             <dd>משתנה בין מאגרים</dd>
             <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>מורה AI סוקרטי</dt>
+            <dd>אין</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>ספרייה רפואית חכמה</dt>
             <dd>אין</dd>
             <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>איתור חולשות + חזרה מרווחת</dt>
             <dd>אין</dd>
@@ -1451,8 +1453,8 @@
             </div>
           </div>
           <div class="cmp2-meter">
-            <span class="cmp2-meter-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="cmp2-meter-score">0/7</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp2-meter-score">0/8</span>
           </div>
           <dl class="cmp2-list">
             <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>שאלות ברמת הבחינה</dt>
@@ -1463,6 +1465,8 @@
             <dd>אין</dd>
             <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>מורה AI סוקרטי</dt>
             <dd>רק אם תבנו לו את כל ההקשר</dd>
+            <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>ספרייה רפואית חכמה</dt>
+            <dd>אין</dd>
             <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>איתור חולשות + חזרה מרווחת</dt>
             <dd>אין</dd>
             <dt><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>סימולציית בחינה מלאה</dt>
@@ -1477,18 +1481,18 @@
         <div class="cmp3-score">
           <div class="cmp3-score-col cmp3-score-col--brand">
             <span class="cmp3-score-label">MeduXa</span>
-            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span>
-            <span class="cmp3-score-value">7/7</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span>
+            <span class="cmp3-score-value">8/8</span>
           </div>
           <div class="cmp3-score-col">
             <span class="cmp3-score-label">מאגר</span>
-            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="cmp3-score-value">2/7</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp3-score-value">2/8</span>
           </div>
           <div class="cmp3-score-col">
             <span class="cmp3-score-label">AI כללי</span>
-            <span class="cmp2-meter-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="cmp3-score-value">0/7</span>
+            <span class="cmp2-meter-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cmp3-score-value">0/8</span>
           </div>
         </div>
 
@@ -1525,6 +1529,15 @@
             <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>בזמן אמת</span></div>
             <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
             <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>רק אם תבנו</span></div>
+          </div>
+        </div>
+
+        <div class="cmp3-row">
+          <h3 class="cmp3-row-title">ספרייה רפואית חכמה</h3>
+          <div class="cmp3-row-cells">
+            <div class="cmp3-cell cmp3-cell--brand"><span class="cmp3-cell-tag">MeduXa</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--yes" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>שיעורים ומקורות</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">מאגר</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
+            <div class="cmp3-cell"><span class="cmp3-cell-tag">AI כללי</span><span class="cmp3-cell-verdict"><span class="cmp2-icon cmp2-icon--no" aria-hidden="true">–</span>אין</span></div>
           </div>
         </div>
 
