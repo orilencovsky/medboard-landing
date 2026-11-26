@@ -71,7 +71,7 @@ test('Hebrew page never shows the language pill', () => {
 test('announce and closing name every soon track, with Hebrew prefixes', () => {
   const out = render(real, page(ALL), 'he', 'x');
   assert.match(out, /הכנה לשלב א׳ ברפואת משפחה/);
-  assert.match(out, /מתכוננים לבחינה ברפואת משפחה, בגריאטריה, בפסיכיאטריה, בהרדמה או במיילדות וגינקולוגיה\?/);
+  assert.match(out, /מתכוננים לבחינה ברפואת משפחה, בגריאטריה, בפסיכיאטריה, בהרדמה, במיילדות וגינקולוגיה או באורתופדיה\?/);
 });
 
 test('a new soon entry is one list item: it reaches cards, chips, announce and closing', () => {
@@ -83,7 +83,7 @@ test('a new soon entry is one list item: it reaches cards, chips, announce and c
   assert.match(out, /id="track-internal"/);
   assert.match(out, /href="#track-internal"/);
   assert.match(out, /ברפואת משפחה ובפנימית/);
-  assert.match(out, /במיילדות וגינקולוגיה או בפנימית/);
+  assert.match(out, /באורתופדיה או בפנימית/);
 });
 
 test('no soon tracks: announce and closing render empty, markers kept', () => {
@@ -143,7 +143,7 @@ test('validate accepts a track whose exam date is not published yet, but not an 
 
 test('the shipped list has the eight tracks, IMA dates and the nephrology page link', () => {
   const by = Object.fromEntries(real.tracks.map((t) => [t.id, t]));
-  assert.deepEqual(Object.keys(by).sort(), ['anesthesia', 'cardiology', 'family-medicine', 'geriatrics', 'nephrology', 'obgyn', 'pediatrics', 'psychiatry']);
+  assert.deepEqual(Object.keys(by).sort(), ['anesthesia', 'cardiology', 'family-medicine', 'geriatrics', 'nephrology', 'obgyn', 'orthopedics', 'pediatrics', 'psychiatry']);
   for (const id of ['geriatrics', 'psychiatry', 'anesthesia', 'obgyn']) {
     assert.equal(by[id].status, 'soon', id);
     assert.equal(by[id].href, '/' + id, id);
@@ -175,7 +175,7 @@ test('cardiology is live: a live card, out of the launch-price bar and the closi
   // announce bar keeps today's text: launch price, FM only
   assert.match(html, /הכנה לשלב א׳ ברפואת משפחה · מחיר השקה/);
   // the closing line names soon tracks only
-  assert.match(html, /מתכוננים לבחינה ברפואת משפחה, בגריאטריה, בפסיכיאטריה, בהרדמה או במיילדות וגינקולוגיה\?/);
+  assert.match(html, /מתכוננים לבחינה ברפואת משפחה, בגריאטריה, בפסיכיאטריה, בהרדמה, במיילדות וגינקולוגיה או באורתופדיה\?/);
   assert.doesNotMatch(html, /בקרדיולוגיה\? <a href="#tracks">/);
 });
 
@@ -186,8 +186,8 @@ test('fillSpans widens the soon cards of the last row so the 4-column grid has n
   assert.deepEqual(fillSpans([S('a'), S('b'), S('c'), S('d'), S('e')]), { e: 4 });
   assert.deepEqual(fillSpans([S('a'), S('b'), S('c'), S('d'), S('e'), S('f'), S('g')]), { e: 2 });
   assert.deepEqual(fillSpans([L('a'), L('b'), L('c')]), {}); // a live-only last row stays as it is
-  // the shipped list: 3 live + 5 soon leaves the last soon card on the second row? No, 8 tracks = 2 full rows of 4.
-  assert.deepEqual(fillSpans(real.tracks), {});
+  // the shipped list: 3 live + 6 soon (orthopedics is alone on the 3rd row, spans 4)
+  assert.deepEqual(fillSpans(real.tracks), { orthopedics: 4 });
 });
 
 test('every track has its specialty icon on the card and the chip, hidden from screen readers', () => {

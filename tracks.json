@@ -479,6 +479,45 @@
           "kind": "book"
         }
       ]
+    },
+    {
+      "id": "orthopedics",
+      "status": "soon",
+      "icon": "orthopedics",
+      "href": "/orthopedics",
+      "pageLang": "he",
+      "he": {
+        "name": "אורתופדיה",
+        "inline": "אורתופדיה",
+        "stage": "שלב א׳",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Orthopedics",
+        "inline": "orthopedics",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, and launch pricing for early sign-ups.",
+        "action": "Coming soon"
+      },
+      "exam": {
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "כירורגיה אורתופדית",
+          "event": "בחינת שלב א'"
+        }
+      },
+      "sources": [
+        {
+          "title": "Miller's Review of Orthopaedics 8e",
+          "kind": "book"
+        },
+        {
+          "title": "Campbell's Operative Orthopaedics 14e",
+          "kind": "book"
+        }
+      ]
     }
   ]
 }
