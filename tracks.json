@@ -104,71 +104,6 @@
       ]
     },
     {
-      "id": "family-medicine",
-      "status": "soon",
-      "icon": "family-medicine",
-      "launchOffer": true,
-      "href": "/family-medicine",
-      "pageLang": "he",
-      "he": {
-        "name": "רפואת משפחה",
-        "inline": "רפואת משפחה",
-        "stage": "שלב א׳",
-        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
-        "action": "הרשמה לעדכון"
-      },
-      "en": {
-        "name": "Family medicine",
-        "inline": "family medicine",
-        "stage": "Stage A",
-        "blurb": "Exam-style questions, answers explained with a quote from the source, and launch pricing for early sign-ups.",
-        "action": "Get notified"
-      },
-      "exam": {
-        "date": "2027-06-14",
-        "nameHe": "בחינת שלב א׳",
-        "url": "https://www.ima.org.il/Internship/Events.aspx",
-        "ima": {
-          "specialty": "רפואת משפחה",
-          "event": "בחינת שלב א'"
-        }
-      },
-      "sources": [
-        {
-          "title": "Goroll, Primary Care Medicine 9e",
-          "kind": "book"
-        },
-        {
-          "title": "Nelson Textbook of Pediatrics 22e",
-          "kind": "book"
-        },
-        {
-          "title": "AFP review articles",
-          "kind": "guideline"
-        },
-        {
-          "title": "הנחיות וניירות עמדה של ההסתדרות הרפואית",
-          "kind": "guideline"
-        },
-        {
-          "title": "GINA",
-          "kind": "guideline"
-        },
-        {
-          "title": "GOLD",
-          "kind": "guideline"
-        },
-        {
-          "title": "ADA 2026",
-          "kind": "guideline"
-        },
-        {
-          "title": "תדריך החיסונים של משרד הבריאות",
-          "kind": "guideline"
-        }
-      ]
-    },
-    {
       "id": "pediatrics",
       "status": "live",
       "icon": "pediatrics",
@@ -256,6 +191,71 @@
         },
         {
           "title": "מאמרים עדכניים מכתבי עת (Eur Heart J, JACC, Circulation, JAMA)",
+          "kind": "guideline"
+        }
+      ]
+    },
+    {
+      "id": "family-medicine",
+      "status": "soon",
+      "icon": "family-medicine",
+      "launchOffer": true,
+      "href": "/family-medicine",
+      "pageLang": "he",
+      "he": {
+        "name": "רפואת משפחה",
+        "inline": "רפואת משפחה",
+        "stage": "שלב א׳",
+        "blurb": "שאלות בסגנון הבחינה, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
+        "action": "הרשמה לעדכון"
+      },
+      "en": {
+        "name": "Family medicine",
+        "inline": "family medicine",
+        "stage": "Stage A",
+        "blurb": "Exam-style questions, answers explained with a quote from the source, and launch pricing for early sign-ups.",
+        "action": "Get notified"
+      },
+      "exam": {
+        "date": "2027-06-14",
+        "nameHe": "בחינת שלב א׳",
+        "url": "https://www.ima.org.il/Internship/Events.aspx",
+        "ima": {
+          "specialty": "רפואת משפחה",
+          "event": "בחינת שלב א'"
+        }
+      },
+      "sources": [
+        {
+          "title": "Goroll, Primary Care Medicine 9e",
+          "kind": "book"
+        },
+        {
+          "title": "Nelson Textbook of Pediatrics 22e",
+          "kind": "book"
+        },
+        {
+          "title": "AFP review articles",
+          "kind": "guideline"
+        },
+        {
+          "title": "הנחיות וניירות עמדה של ההסתדרות הרפואית",
+          "kind": "guideline"
+        },
+        {
+          "title": "GINA",
+          "kind": "guideline"
+        },
+        {
+          "title": "GOLD",
+          "kind": "guideline"
+        },
+        {
+          "title": "ADA 2026",
+          "kind": "guideline"
+        },
+        {
+          "title": "תדריך החיסונים של משרד הבריאות",
           "kind": "guideline"
         }
       ]
