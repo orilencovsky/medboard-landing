@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html data-page="{{trackId}}" lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- GA4 + Microsoft Clarity load only after opt-in: see /consent.js. -->
 <script defer src="/consent.js"></script>
+<script defer src="/attribution.js"></script>
+<script defer src="/answer-counter.js" onerror="document.documentElement.classList.add('mx-live-off')"></script>
+<style>.mx-live-off [data-mx-live] { display: none; } @media (max-width: 480px) { [data-mx-live] { min-height: 66px !important; } }</style>
+<noscript><style>[data-mx-live] { display: none; }</style></noscript>
 <!-- Vercel Web Analytics. Cookieless, with no persistent visitor id,
      so it is not behind the consent banner and measures every visitor; GA4 and
      Microsoft Clarity are the trackers that wait for opt-in (see /consent.js).
@@ -663,6 +667,8 @@
 <!-- if:live -->
         <a class="btn hero-cta enter" style="--i:4" href="{{app.hrefHero}}" data-{{prefix}}-cta="hero">התחילו ללמוד — חינם<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
 <!-- /if:live -->
+        <!-- Live answer counter (see /answer-counter.js): reserves its height so the hero does not shift; hidden again when it has nothing real to show. -->
+        <div data-mx-live style="min-height: 56px;" lang="he"></div>
         {{{countdown}}}
       </div>
 <!-- if:questions -->
@@ -1189,11 +1195,24 @@
       if (!val || !consent.checked) return;
       btn.disabled = true; btn.innerHTML = '<span class="spin" aria-hidden="true"></span><span class="sr">שולחים</span>'; form.setAttribute('aria-busy', 'true');
       if (msg.textContent) swapHeight(card, function () { msg.textContent = ''; msg.className = ''; });
-      fetch(SUPA_URL + '/rest/v1/waitlist', {
-        method: 'POST',
-        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
-                   'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ email: val, locale: 'he', source: '{{signup.source}}', consent_at: new Date().toISOString() })
+      var via = window.MeduxaAttribution && window.MeduxaAttribution.current();
+      function entry(withVia) {
+        var row = { email: val, locale: 'he', source: '{{signup.source}}', consent_at: new Date().toISOString() };
+        if (withVia && via) row.via = via;
+        return row;
+      }
+      function post(row) {
+        return fetch(SUPA_URL + '/rest/v1/waitlist', {
+          method: 'POST',
+          headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
+                     'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify(row)
+        });
+      }
+      post(entry(true)).then(function (r) {
+        // `via` (traffic source, /attribution.js) is a newer column: if the insert is refused (400 —
+        // column not there yet, or a value the CHECK rejects), retry once without it.
+        return r.status === 400 && via ? post(entry(false)) : r;
       }).then(function (r) {
         if (!(r.ok || r.status === 409)) { var err = new Error('status ' + r.status); err.server = true; throw err; } // 409 = already listed
         // Every bundle's early signup is a mark in waitlist.interests, so this
