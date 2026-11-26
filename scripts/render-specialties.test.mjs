@@ -18,7 +18,7 @@ const page = (id) => JSON.parse(read(`specialties/${id}.json`));
 // Every specialties/*.json page, so a new track is covered the day it is added.
 const PAGES = readdirSync(new URL('../specialties/', import.meta.url))
   .filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)).sort();
-const SOON = ['family-medicine', 'pediatrics'];
+const SOON = ['family-medicine'];
 const render = (id, edit = (p, t) => {}) => {
   const p = page(id), t = track(id);
   edit(p, t);
@@ -37,9 +37,8 @@ test('FM and peds regenerate with their own source, interest and events', () => 
   assert.ok(fm.includes('fm_signup'));
   assert.ok(fm.includes('<link rel="canonical" href="https://meduxa.ai/family-medicine" />'));
   const peds = render('pediatrics');
-  assert.ok(peds.includes('landing_peds'));
-  assert.ok(peds.includes("'pediatrics'"));
-  assert.ok(peds.includes('peds_signup'));
+  assert.ok(peds.includes('peds_hero'));
+  assert.ok(peds.includes('peds_closing'));
   assert.ok(!peds.includes('landing_fm'));
 });
 

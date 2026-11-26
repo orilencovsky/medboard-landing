@@ -13,35 +13,39 @@
      is served by the platform, so it 404s on a local static server. -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  // peds_home_click: which link sent a visitor from this "coming soon" page back
-  // to the homepage (logo / nav). Cookieless like the rest of Vercel Analytics,
-  // so it counts regardless of the GA4/Clarity consent choice.
+  // peds_app_click: which of the two "start" links (hero / closing) sent a
+  // visitor to the app. peds_home_click: which link (logo / nav) sent them to
+  // the homepage. Cookieless like the rest of Vercel Analytics, so both count
+  // regardless of the GA4/Clarity consent choice.
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[data-peds-cta]') : null;
-    if (a) window.va('event', { name: 'peds_home_click', data: { placement: a.getAttribute('data-peds-cta') } });
+    if (!a) return;
+    var placement = a.getAttribute('data-peds-cta');
+    var toApp = placement === 'hero' || placement === 'closing';
+    window.va('event', { name: toApp ? 'peds_app_click' : 'peds_home_click', data: { placement: placement } });
   }, true);
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
-<title>הכנה לשלב א׳ ברפואת ילדים, בקרוב | MeduXa.ai</title>
+<title>הכנה לשלב א׳ ברפואת ילדים | MeduXa.ai</title>
 <link rel="canonical" href="https://meduxa.ai/pediatrics" />
-<meta name="description" content="בקרוב ב-MeduXa: הכנה לשלב א׳ ברפואת ילדים, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה עם ביקורת מומחה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי." />
+<meta name="description" content="MeduXa: הכנה לשלב א׳ ברפואת ילדים. שאלות בסגנון הבחינה עם ביקורת מומחה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. ההכנה פתוחה עכשיו, ואפשר להתחיל חינם." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MeduXa.ai" />
-<meta property="og:title" content="הכנה לשלב א׳ ברפואת ילדים, בקרוב | MeduXa.ai" />
-<meta property="og:description" content="שאלות בסגנון הבחינה שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
+<meta property="og:title" content="הכנה לשלב א׳ ברפואת ילדים | MeduXa.ai" />
+<meta property="og:description" content="שאלות בסגנון הבחינה שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. ההכנה פתוחה עכשיו, ואפשר להתחיל ללמוד חינם." />
 <meta property="og:url" content="https://meduxa.ai/pediatrics" />
 <meta property="og:image" content="https://meduxa.ai/og-pediatrics.png?v=2" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="MeduXa.ai: בקרוב, הכנה לשלב א׳ ברפואת ילדים" />
+<meta property="og:image:alt" content="MeduXa.ai: ההכנה לשלב א׳ ברפואת ילדים פתוחה עכשיו" />
 <meta property="og:locale" content="he_IL" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="הכנה לשלב א׳ ברפואת ילדים, בקרוב | MeduXa.ai" />
-<meta name="twitter:description" content="שאלות בסגנון הבחינה שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. מחיר השקה מיוחד לנרשמים מראש." />
+<meta name="twitter:title" content="הכנה לשלב א׳ ברפואת ילדים | MeduXa.ai" />
+<meta name="twitter:description" content="שאלות בסגנון הבחינה שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. ההכנה פתוחה עכשיו, ואפשר להתחיל ללמוד חינם." />
 <meta name="twitter:image" content="https://meduxa.ai/og-pediatrics.png?v=2" />
 <meta name="robots" content="index, follow" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","@id":"https://meduxa.ai/pediatrics#webpage","url":"https://meduxa.ai/pediatrics","name":"הכנה לשלב א׳ ברפואת ילדים, בקרוב | MeduXa.ai","description":"בקרוב ב-MeduXa: הכנה לשלב א׳ ברפואת ילדים, במחיר השקה מיוחד לנרשמים מראש. שאלות בסגנון הבחינה עם ביקורת מומחה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי.","inLanguage":"he","isPartOf":{"@type":"WebSite","name":"MeduXa.ai","url":"https://meduxa.ai/"}}
+{"@context":"https://schema.org","@type":"WebPage","@id":"https://meduxa.ai/pediatrics#webpage","url":"https://meduxa.ai/pediatrics","name":"הכנה לשלב א׳ ברפואת ילדים | MeduXa.ai","description":"MeduXa: הכנה לשלב א׳ ברפואת ילדים. שאלות בסגנון הבחינה עם ביקורת מומחה, הסבר עם ציטוט מהמקור ומורה AI סוקרטי. ההכנה פתוחה עכשיו, ואפשר להתחיל חינם.","inLanguage":"he","isPartOf":{"@type":"WebSite","name":"MeduXa.ai","url":"https://meduxa.ai/"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MeduXa.ai","item":"https://meduxa.ai/"},{"@type":"ListItem","position":2,"name":"רפואת ילדים","item":"https://meduxa.ai/pediatrics"}]}
@@ -607,7 +611,7 @@
     </a>
     <div class="nav-r">
       <a class="nav-link" href="/" data-peds-cta="nav">לעמוד הבית</a>
-      <a class="btn nav-cta" href="#signup">הרשמה לעדכון</a>
+      <a class="btn nav-cta" href="#start">התחילו ללמוד</a>
     </div>
   </div>
 </nav>
@@ -638,11 +642,11 @@
     </svg>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>בקרוב: רפואת ילדים, שלב א׳</span>
+        <span class="chip enter" style="--i:0"><span class="live" aria-hidden="true"></span>פתוח עכשיו: רפואת ילדים, שלב א׳</span>
         <h1 class="enter" style="--i:1">הכנה לשלב א׳ ברפואת ילדים</h1>
         <p class="slogan enter" style="--i:2">הבחינה לא השתנתה.<br><span class="grad">הדרך להתכונן אליה, כן.</span></p>
-        <p class="lead enter" style="--i:3"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.</p>
-        <a class="btn hero-cta enter" style="--i:4" href="#signup">הרשמה לעדכון<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
+        <p class="lead enter" style="--i:3"><strong>נעשה על ידי רופאים, עבור רופאים.</strong> שאלות בסגנון הבחינה שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, מורה <span class="ltr-iso">AI</span> סוקרטי וחזרה מרווחת.</p>
+        <a class="btn hero-cta enter" style="--i:4" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=peds_hero" data-peds-cta="hero">התחילו ללמוד — חינם<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
         <div class="countdown enter" style="--i:4" data-exam-date="2027-06-14">
           <p class="cd-days" hidden><b data-days></b> <span data-cd-unit></span></p>
           <p class="cd-exam">בחינת שלב א׳ · <span class="ltr-iso">14.06.2027</span></p>
@@ -686,11 +690,11 @@
   </section>
 
   <section class="status" aria-labelledby="t-status">
-    <h2 id="t-status" class="sr">מה כבר קיים ומה נבנה עכשיו</h2>
+    <h2 id="t-status" class="sr">מה כבר קיים</h2>
     <div class="wrap status-grid">
       <div class="status-state" data-reveal>
         <div class="state done"><i class="ph ph-check-circle" aria-hidden="true"></i><div><h3>המנוע קיים ועובד</h3><p>מתמחים כבר מתכוננים איתו לשלב א׳.</p></div></div>
-        <div class="state build"><i class="ph ph-hammer" aria-hidden="true"></i><div><h3>התוכן לרפואת ילדים נבנה עכשיו</h3><p>השאירו מייל ונעדכן ברגע שזה נפתח.</p></div></div>
+        <div class="state done"><i class="ph ph-rocket-launch" aria-hidden="true"></i><div><h3>ההכנה לרפואת ילדים פתוחה עכשיו</h3><p>פיילוט חינמי לשלב א׳, באפליקציה.</p></div></div>
         <div class="state done"><i class="ph ph-stethoscope" aria-hidden="true"></i><div><h3>כל שאלה נבדקת בידי רופא מומחה ברפואת ילדים</h3><p><span class="ltr-iso">AI</span> עוזר לנו לעבוד מהר, אבל הוא לא המילה האחרונה. שאלה עולה לאתר רק אחרי שרופא מומחה עבר עליה ואישר אותה.</p></div></div>
       </div>
       <p class="statement" data-reveal style="--i:1">שאלות בסגנון שלב א׳, ולכל תשובה <em>הסבר שמגובה בציטוט מילה במילה מהמקור</em> שממנו היא נלקחה, כדי שתוכלו לבדוק כל טענה בעצמכם.</p>
@@ -792,7 +796,7 @@
           </ul>
         </article>
       </div>
-      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך, לא ביום הפתיחה:</strong> ספריית שיעורים לפי נושאים ודו-קרבות בין מתמחים.</span></p>
+      <p class="later"><i class="ph ph-clock" aria-hidden="true"></i><span><strong>בהמשך:</strong> דו-קרבות בין מתמחים.</span></p>
     </div>
   </section>
 
@@ -821,32 +825,12 @@
     </div>
   </section>
 
-  <section id="signup" class="sec signup-band" aria-labelledby="t-signup">
-    <div class="wrap signup-grid">
+  <section id="start" class="sec signup-band" aria-labelledby="t-start">
+    <div class="wrap">
       <div class="signup-copy" data-reveal>
-        <span class="eyebrow">גישה מוקדמת</span>
-        <h2 id="t-signup">הרשמה לעדכון: רפואת ילדים</h2>
-        <p class="signup-for">ההרשמה היא ל<strong>הכנה לשלב א׳ ברפואת ילדים</strong>. נכתוב לכם כשהיא תיפתח.</p>
-        <ul class="perks">
-          <li><i class="ph ph-tag" aria-hidden="true"></i><span><strong>מחיר השקה מיוחד</strong> לנרשמים מראש.</span></li>
-          <li><i class="ph ph-users-three" aria-hidden="true"></i><span>מתכוננים כקבוצה, למשל כל המתמחים במחלקה? <strong>תהיה גם הנחה קבוצתית</strong>, הפרטים במייל הפתיחה.</span></li>
-        </ul>
-      </div>
-      <div class="signup" data-reveal style="--i:1">
-        <!-- `required` inside a real <form> makes the browser block the submit
-             itself, so the handler never sees an unconsented address. -->
-        <form id="notifyForm">
-          <label class="field" for="notifyEmail">כתובת מייל
-            <input id="notifyEmail" dir="auto" type="email" required autocomplete="email" inputmode="email" placeholder="name@example.com">
-          </label>
-          <label class="consent" for="notifyConsent">
-            <input id="notifyConsent" type="checkbox" required>
-            <span>אני מאשר/ת שתשלחו לי עדכון במייל כשההכנה לשלב א׳ ברפואת ילדים תיפתח.</span>
-          </label>
-          <button id="notifySubmit" class="btn" type="submit">הרשמה לעדכון</button>
-          <p class="notice">מסירת המייל היא מרצון ואינה חובה חוקית. הוא נשמר אצל ספק אחסון הנתונים שלנו (<span class="ltr-iso">Supabase</span>), משמש רק לעדכוני <span class="ltr-iso">MeduXa</span> ולא נמסר למפרסמים, ואפשר לבקש את מחיקתו בכל עת. הפרטים המלאים ב<a href="/privacy">מדיניות הפרטיות</a> וב<a href="/terms">תנאי השימוש</a>.</p>
-        </form>
-        <span id="notifyMsg" role="status" aria-live="polite"></span>
+        <h2 id="t-start">מוכנים להתחיל?</h2>
+        <p class="signup-for"><strong>הכנה לשלב א׳ ברפואת ילדים</strong> פתוחה עכשיו באפליקציה.</p>
+        <a class="btn hero-cta" href="https://app.meduxa.ai/?signup=1&amp;src=landing&amp;pl=peds_closing" data-peds-cta="closing">התחילו ללמוד — חינם<i class="ph ph-arrow-left" aria-hidden="true"></i></a>
       </div>
     </div>
   </section>
@@ -1171,66 +1155,6 @@ function countdownState(days) {
     }, 250);
   })();
 
-  // "Notify me" → Supabase waitlist (insert-only via the publishable key; RLS
-  // blocks reads). source 'landing_peds' marks these rows as pediatrics
-  // sign-ups, apart from 'landing' (old homepage form) and 'app_door'/'app_gate'.
-  (function () {
-    var SUPA_URL = 'https://pappjpdsajkcoqrfqqqx.supabase.co';
-    var SUPA_KEY = 'sb_publishable_tV1q0WG7_bMLfsCIqOU1tA_PH8gZfCU';
-    var LABEL = 'הרשמה לעדכון';
-    var form = document.getElementById('notifyForm');
-    var email = document.getElementById('notifyEmail');
-    var consent = document.getElementById('notifyConsent');
-    var btn = document.getElementById('notifySubmit');
-    var msg = document.getElementById('notifyMsg');
-    var card = form.parentNode;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var val = (email.value || '').trim();
-      if (!val || !consent.checked) return;
-      btn.disabled = true; btn.innerHTML = '<span class="spin" aria-hidden="true"></span><span class="sr">שולחים</span>'; form.setAttribute('aria-busy', 'true');
-      if (msg.textContent) swapHeight(card, function () { msg.textContent = ''; msg.className = ''; });
-      fetch(SUPA_URL + '/rest/v1/waitlist', {
-        method: 'POST',
-        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
-                   'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ email: val, locale: 'he', source: 'landing_peds', consent_at: new Date().toISOString() })
-      }).then(function (r) {
-        if (!(r.ok || r.status === 409)) { var err = new Error('status ' + r.status); err.server = true; throw err; } // 409 = already listed
-        // Every bundle's early signup is a mark in waitlist.interests, so this
-        // page's list is simply interests ? 'pediatrics'. Set it on a new
-        // row and on a 409 (the address is already listed from an earlier form;
-        // the email is unique). Best effort: a failure here must not turn a
-        // sign-up the person already has into an error on screen; the row's
-        // source 'landing_peds' still identifies a new sign-up.
-        return fetch(SUPA_URL + '/rest/v1/rpc/waitlist_add_interest', {
-          method: 'POST',
-          headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ p_email: val, p_interest: 'pediatrics' })
-        }).catch(function () {});
-      }).then(function () {
-        form.removeAttribute('aria-busy');
-        swapHeight(card, function () {
-          form.style.display = 'none';
-          msg.className = 'ok-box';
-          msg.innerHTML = '<i class="ph ph-check-circle" aria-hidden="true"></i><span></span>';
-          msg.lastChild.textContent = 'נרשמתם לעדכונים על רפואת ילדים. נכתוב לכם כשההכנה לשלב א׳ תיפתח, עם מחיר ההשקה.';
-        });
-        if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'waitlist_pediatrics' });
-        if (typeof window.va === 'function') window.va('event', { name: 'peds_signup' });
-      }).catch(function (err) {
-        form.removeAttribute('aria-busy');
-        btn.disabled = false; btn.textContent = LABEL;
-        // A thrown fetch (offline, blocked) is not the address's fault.
-        swapHeight(card, function () {
-          msg.className = 'err';
-          msg.textContent = err && err.server
-            ? 'ההרשמה לא נשמרה. בדקו את כתובת המייל ונסו שוב.'
-            : 'לא הצלחנו להתחבר. בדקו את החיבור לאינטרנט ונסו שוב בעוד רגע.';
-        });
-      });
-    });
-  })();
 </script>
 </body>
 </html>

@@ -170,24 +170,25 @@
     },
     {
       "id": "pediatrics",
-      "status": "soon",
+      "status": "live",
       "icon": "pediatrics",
-      "launchOffer": true,
       "href": "/pediatrics",
       "pageLang": "he",
       "he": {
         "name": "רפואת ילדים",
         "inline": "רפואת ילדים",
         "stage": "שלב א׳",
-        "blurb": "שאלות שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, ומחיר השקה לנרשמים מראש.",
-        "action": "הרשמה לעדכון"
+        "blurb": "שאלות שעברו ביקורת מומחה ברפואת ילדים, הסבר עם ציטוט מהמקור, מורה {{AI}} סוקרטי וחזרה מרווחת.",
+        "action": "התחילו ללמוד — חינם"
       },
       "en": {
         "name": "Pediatrics",
         "inline": "pediatrics",
         "stage": "Stage A",
-        "blurb": "Questions checked by a pediatrics specialist, answers explained with a quote from the source, and launch pricing for early sign-ups.",
-        "action": "Get notified"
+        "blurb": "Questions checked by a pediatrics specialist, answers explained with a quote from the source, a Socratic {{AI}} tutor and spaced repetition.",
+        "action": "Start studying free",
+        "href": "https://app.meduxa.ai/?signup=1&src=landing&pl=peds_hero",
+        "cta": "hero"
       },
       "exam": {
         "date": "2027-06-14",
